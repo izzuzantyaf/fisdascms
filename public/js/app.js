@@ -1842,6 +1842,8 @@ module.exports = {
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
+__webpack_require__(/*! ./dashboard */ "./resources/js/dashboard.js");
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
@@ -1872,6 +1874,20 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/dashboard.js":
+/*!***********************************!*\
+  !*** ./resources/js/dashboard.js ***!
+  \***********************************/
+/***/ (() => {
+
+var hamburgerMenu = document.querySelector('.hamburger-menu');
+var mobileMenu = document.querySelector('.mobile-menu');
+hamburgerMenu.addEventListener('click', function () {
+  if (mobileMenu.classList.contains('hidden')) mobileMenu.classList.replace('hidden', 'block');else mobileMenu.classList.replace('block', 'hidden');
+});
 
 /***/ }),
 
