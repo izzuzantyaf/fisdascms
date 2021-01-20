@@ -1883,10 +1883,19 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
   \***********************************/
 /***/ (() => {
 
+var showOrHide = function showOrHide(element) {
+  if (element.classList.contains('hidden')) element.classList.replace('hidden', 'block');else element.classList.replace('block', 'hidden');
+};
+
 var hamburgerMenu = document.querySelector('.hamburger-menu');
 var mobileMenu = document.querySelector('.mobile-menu');
 hamburgerMenu.addEventListener('click', function () {
-  if (mobileMenu.classList.contains('hidden')) mobileMenu.classList.replace('hidden', 'block');else mobileMenu.classList.replace('block', 'hidden');
+  showOrHide(mobileMenu);
+});
+var avatar = document.querySelector('.avatar');
+var profileDropdown = document.querySelector('.profile-dropdown');
+avatar.addEventListener('click', function () {
+  showOrHide(profileDropdown);
 });
 
 /***/ }),
