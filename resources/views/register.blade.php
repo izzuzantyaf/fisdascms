@@ -17,7 +17,7 @@
           <label for="username" class="sr-only">Username</label>
           <input id="username" name="username" type="text" autocomplete="on" required class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Username" value="{{ old('username') }}">
         </div>
-        @if(session('register_username_error'))
+        @if(session('register_email_error'))
         <div class="text-red-600 text-xs">Email sudah dipakai</div>
         @endif
         <div>
