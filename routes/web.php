@@ -16,7 +16,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/', function (Request $request) {
+    if (!$request->session()->has('admin_logged_in')) return redirect('login');
     return view('welcome');
 });
 
