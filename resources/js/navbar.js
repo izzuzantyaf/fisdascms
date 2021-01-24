@@ -1,10 +1,3 @@
-const showOrHide = (element) => {
-  if (element.classList.contains('hidden'))
-    element.classList.replace('hidden', 'block')
-  else
-    element.classList.replace('block', 'hidden')
-}
-
 const hamburgerMenu = document.querySelector('.hamburger-menu')
 const backBtn = document.querySelector('.back-btn')
 const sidebar = document.querySelector('.sidebar')

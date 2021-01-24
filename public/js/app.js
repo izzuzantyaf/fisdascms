@@ -1883,10 +1883,6 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
   \********************************/
 /***/ (() => {
 
-var showOrHide = function showOrHide(element) {
-  if (element.classList.contains('hidden')) element.classList.replace('hidden', 'block');else element.classList.replace('block', 'hidden');
-};
-
 var hamburgerMenu = document.querySelector('.hamburger-menu');
 var backBtn = document.querySelector('.back-btn');
 var sidebar = document.querySelector('.sidebar');
