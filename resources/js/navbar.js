@@ -6,13 +6,20 @@ const showOrHide = (element) => {
 }
 
 const hamburgerMenu = document.querySelector('.hamburger-menu')
-const mobileMenu = document.querySelector('.mobile-menu')
+const backBtn = document.querySelector('.back-btn')
+const sidebar = document.querySelector('.sidebar')
 hamburgerMenu.addEventListener('click', () => {
-  showOrHide(mobileMenu)
+  sidebar.classList.remove('-translate-x-64')
+})
+backBtn.addEventListener('click', () => {
+  sidebar.classList.add('-translate-x-64')
 })
 
 const avatar = document.querySelector('.avatar')
 const profileDropdown = document.querySelector('.profile-dropdown')
 avatar.addEventListener('click', () => {
-  showOrHide(profileDropdown)
+  if (profileDropdown.classList.contains('scale-0'))
+    profileDropdown.classList.replace('scale-0', 'scale-100')
+  else
+    profileDropdown.classList.replace('scale-100', 'scale-0')
 })

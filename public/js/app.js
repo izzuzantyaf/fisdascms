@@ -1842,7 +1842,7 @@ module.exports = {
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
-__webpack_require__(/*! ./dashboard */ "./resources/js/dashboard.js");
+__webpack_require__(/*! ./navbar */ "./resources/js/navbar.js");
 
 /***/ }),
 
@@ -1877,10 +1877,10 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
-/***/ "./resources/js/dashboard.js":
-/*!***********************************!*\
-  !*** ./resources/js/dashboard.js ***!
-  \***********************************/
+/***/ "./resources/js/navbar.js":
+/*!********************************!*\
+  !*** ./resources/js/navbar.js ***!
+  \********************************/
 /***/ (() => {
 
 var showOrHide = function showOrHide(element) {
@@ -1888,14 +1888,18 @@ var showOrHide = function showOrHide(element) {
 };
 
 var hamburgerMenu = document.querySelector('.hamburger-menu');
-var mobileMenu = document.querySelector('.mobile-menu');
+var backBtn = document.querySelector('.back-btn');
+var sidebar = document.querySelector('.sidebar');
 hamburgerMenu.addEventListener('click', function () {
-  showOrHide(mobileMenu);
+  sidebar.classList.remove('-translate-x-64');
+});
+backBtn.addEventListener('click', function () {
+  sidebar.classList.add('-translate-x-64');
 });
 var avatar = document.querySelector('.avatar');
 var profileDropdown = document.querySelector('.profile-dropdown');
 avatar.addEventListener('click', function () {
-  showOrHide(profileDropdown);
+  if (profileDropdown.classList.contains('scale-0')) profileDropdown.classList.replace('scale-0', 'scale-100');else profileDropdown.classList.replace('scale-100', 'scale-0');
 });
 
 /***/ }),
