@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\View\Components\Navbar;
+use App\View\Components\Sidebar;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +26,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Blade::component('sidebar', Sidebar::class);
+        Blade::component('navbar', Navbar::class);
     }
 }
