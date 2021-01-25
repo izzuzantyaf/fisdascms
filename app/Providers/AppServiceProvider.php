@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\View\Components\Navbar;
 use App\View\Components\Sidebar;
+use App\View\Components\Banner;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
