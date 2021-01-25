@@ -58,6 +58,7 @@ class Sidebar extends Component
             'route' => '/organigram',
         ],
     ];
+
     /**
      * Create a new component instance.
      *
