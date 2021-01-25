@@ -28,5 +28,6 @@ class AppServiceProvider extends ServiceProvider
     {
         Blade::component('sidebar', Sidebar::class);
         Blade::component('navbar', Navbar::class);
+        Blade::component('banner', Banner::class);
     }
 }

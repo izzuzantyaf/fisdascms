@@ -13,7 +13,7 @@
 <body>
 
   @if(session('registration_message'))
-  @include('component.banner')
+  <x-banner />
   @endif
 
   <div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
