@@ -13,7 +13,7 @@
 
   <x-navbar />
 
-  <div class="flex border h-screen">
+  <div class="flex min-h-screen">
     <x-sidebar />
     @yield('content')
   </div>
