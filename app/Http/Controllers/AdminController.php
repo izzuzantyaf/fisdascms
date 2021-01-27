@@ -9,11 +9,6 @@ use Illuminate\Http\Request;
 class AdminController extends Controller
 {
 
-    function __construct()
-    {
-        $this->admin = new Admin;
-    }
-
     public function register(Request $request)
     {
         $admin = new Admin;
