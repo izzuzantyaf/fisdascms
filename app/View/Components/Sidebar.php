@@ -20,7 +20,7 @@ class Sidebar extends Component
         [
             'name' => 'Modul',
             'icon' => 'fas fa-book',
-            'route' => '/handouts',
+            'route' => '/practicum-handouts',
         ],
         [
             'name' => 'Tugas pendahuluan',
