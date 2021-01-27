@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
-use App\Models\Admin;
+use App\Http\Controllers\PracticumHandoutController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -56,4 +56,17 @@ Route::post('/register', function (Request $request) {
             ->with('register_username_error', $register_status['register_username_error'])
             ->with('register_email_error', $register_status['register_email_error'])
             ->with('register_password_error', $register_status['register_password_error']);
+});
+
+Route::get('/practicum-handouts', function () {
+    $semester1_handouts = PracticumHandoutController::get_semester1_handouts();
+    $semester2_handouts = PracticumHandoutController::get_semester2_handouts();
+
+    return view('practicum-handouts', [
+        'semester1_handouts' => $semester1_handouts,
+        'semester2_handouts' => $semester2_handouts,
+    ]);
+});
+
+Route::post('/practicum-handouts', function (Request $request) {
 });

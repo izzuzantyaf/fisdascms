@@ -6079,6 +6079,8 @@ __webpack_require__(/*! @fortawesome/fontawesome-free/js/fontawesome */ "./node_
 
 __webpack_require__(/*! ./navbar */ "./resources/js/navbar.js");
 
+__webpack_require__(/*! ./practicum-handouts */ "./resources/js/practicum-handouts.js");
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
@@ -6131,6 +6133,23 @@ var avatar = document.querySelector('.avatar');
 var profileDropdown = document.querySelector('.profile-dropdown');
 avatar.addEventListener('click', function () {
   if (profileDropdown.classList.contains('scale-0')) profileDropdown.classList.replace('scale-0', 'scale-100');else profileDropdown.classList.replace('scale-100', 'scale-0');
+});
+
+/***/ }),
+
+/***/ "./resources/js/practicum-handouts.js":
+/*!********************************************!*\
+  !*** ./resources/js/practicum-handouts.js ***!
+  \********************************************/
+/***/ (() => {
+
+var editIcons = document.querySelectorAll('.edit-icon');
+editIcons = Array.from(editIcons);
+editIcons = editIcons.map(function (editIcon) {
+  var linkField = document.getElementById(editIcon.id);
+  editIcon.addEventListener('click', function () {
+    linkField.toggleAttribute('disabled');
+  });
 });
 
 /***/ }),
