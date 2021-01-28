@@ -6149,6 +6149,7 @@ editIcons = editIcons.map(function (editIcon) {
   var linkField = document.getElementById(editIcon.id);
   editIcon.addEventListener('click', function () {
     linkField.toggleAttribute('disabled');
+    if (!linkField.hasAttribute('disabled')) linkField.parentElement.classList.add('border-blue-500');else linkField.parentElement.classList.remove('border-blue-500');
   });
 });
 

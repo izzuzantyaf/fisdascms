@@ -69,4 +69,6 @@ Route::get('/practicum-handouts', function () {
 });
 
 Route::post('/practicum-handouts', function (Request $request) {
+    PracticumHandoutController::update_handouts($request);
+    return redirect('practicum-handouts');
 });
