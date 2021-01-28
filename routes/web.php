@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AssistantController;
 use App\Http\Controllers\PracticumHandoutController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -71,4 +72,9 @@ Route::get('/practicum-handouts', function () {
 Route::post('/practicum-handouts', function (Request $request) {
     PracticumHandoutController::update_handouts($request);
     return redirect('practicum-handouts');
+});
+
+Route::get('/assistants', function () {
+    $assistants = AssistantController::get_all_assistants();
+    return view('assistants', ['assistants' => $assistants]);
 });
