@@ -59,8 +59,8 @@ Route::post('/register', function (Request $request) {
 });
 
 Route::get('/practicum-handouts', function () {
-    $semester1_handouts = PracticumHandoutController::get_semester1_handouts();
-    $semester2_handouts = PracticumHandoutController::get_semester2_handouts();
+    $semester1_handouts = PracticumHandoutController::get_handouts_by_semester(1);
+    $semester2_handouts = PracticumHandoutController::get_handouts_by_semester(2);
 
     return view('practicum-handouts', [
         'semester1_handouts' => $semester1_handouts,

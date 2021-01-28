@@ -7,14 +7,12 @@ use Illuminate\Http\Request;
 
 class PracticumHandoutController extends Controller
 {
-    public static function get_semester1_handouts()
+    public static function get_handouts_by_semester($semester)
     {
-        return PracticumHandout::where('semester', 1)->get();
-    }
-
-    public static function get_semester2_handouts()
-    {
-        return PracticumHandout::where('semester', 2)->get();
+        return PracticumHandout::where('semester', $semester)
+            ->orderBy('faculty', 'asc')
+            ->orderBy('lang', 'asc')
+            ->get();
     }
 
     public static function update_handouts(Request $request)
