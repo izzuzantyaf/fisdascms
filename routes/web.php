@@ -59,22 +59,26 @@ Route::post('/register', function (Request $request) {
             ->with('register_password_error', $register_status['register_password_error']);
 });
 
-Route::get('/practicum-handouts', function () {
-    $semester1_handouts = PracticumHandoutController::get_handouts_by_semester(1);
-    $semester2_handouts = PracticumHandoutController::get_handouts_by_semester(2);
+Route::get('/practicum-handouts', function (Request $request) {
+    if (!$request->session()->has('admin_logged_in')) return redirect('login');
+
+    $practicum_handouts = PracticumHandoutController::get_handouts();
 
     return view('practicum-handouts', [
-        'semester1_handouts' => $semester1_handouts,
-        'semester2_handouts' => $semester2_handouts,
+        'practicum_handouts' => $practicum_handouts,
     ]);
 });
 
 Route::post('/practicum-handouts', function (Request $request) {
+    if (!$request->session()->has('admin_logged_in')) return redirect('login');
+
     PracticumHandoutController::update_handouts($request);
     return redirect('practicum-handouts');
 });
 
-Route::get('/assistants', function () {
+Route::get('/assistants', function (Request $request) {
+    if (!$request->session()->has('admin_logged_in')) return redirect('login');
+
     $assistants = AssistantController::get_all_assistants();
     return view('assistants', ['assistants' => $assistants]);
 });

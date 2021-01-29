@@ -8,18 +8,18 @@ class PracticumHandoutInputField extends Component
 {
     public $faculty;
     public $lang;
-    public $semester;
+    public $visibility;
     public $file_url;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($faculty, $lang, $semester, $fileUrl)
+    public function __construct($faculty, $lang, $visibility, $fileUrl)
     {
         $this->faculty = $faculty;
         $this->lang = $lang;
-        $this->semester = $semester;
+        $this->visibility = $visibility;
         $this->file_url = $fileUrl;
     }
 

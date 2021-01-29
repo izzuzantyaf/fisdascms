@@ -6152,6 +6152,22 @@ editIcons = editIcons.map(function (editIcon) {
     if (!linkField.hasAttribute('disabled')) linkField.parentElement.classList.add('border-blue-500');else linkField.parentElement.classList.remove('border-blue-500');
   });
 });
+var handoutVisibilityTogglers = document.querySelectorAll('.handout-visibility-toggler');
+handoutVisibilityTogglers = Array.from(handoutVisibilityTogglers);
+handoutVisibilityTogglers = handoutVisibilityTogglers.map(function (toggler) {
+  var visibilityInput = document.querySelector('input#' + toggler.id);
+  toggler.addEventListener('click', function () {
+    if (parseInt(visibilityInput.value)) {
+      visibilityInput.value = 0;
+      toggler.classList.replace('bg-green-500', 'bg-gray-300');
+      toggler.classList.remove('justify-end');
+    } else {
+      visibilityInput.value = 1;
+      toggler.classList.replace('bg-gray-300', 'bg-green-500');
+      toggler.classList.add('justify-end');
+    }
+  });
+});
 
 /***/ }),
 

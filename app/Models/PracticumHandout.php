@@ -12,50 +12,22 @@ class PracticumHandout extends Model
         [
             'faculty' => 'FTE',
             'lang' => 'id',
-            'file_url' => '',
-            'semester' => '1',
+            'visibility' => '1',
         ],
         [
             'faculty' => 'FTE',
             'lang' => 'en',
-            'file_url' => '',
-            'semester' => '1',
-        ],
-        [
-            'faculty' => 'FTE',
-            'lang' => 'id',
-            'file_url' => '',
-            'semester' => '2',
-        ],
-        [
-            'faculty' => 'FTE',
-            'lang' => 'en',
-            'file_url' => '',
-            'semester' => '2',
+            'visibility' => '1',
         ],
         [
             'faculty' => 'FRI',
             'lang' => 'id',
-            'file_url' => '',
-            'semester' => '1',
+            'visibility' => '1',
         ],
         [
             'faculty' => 'FRI',
             'lang' => 'en',
-            'file_url' => '',
-            'semester' => '1',
-        ],
-        [
-            'faculty' => 'FRI',
-            'lang' => 'id',
-            'file_url' => '',
-            'semester' => '2',
-        ],
-        [
-            'faculty' => 'FRI',
-            'lang' => 'en',
-            'file_url' => '',
-            'semester' => '2',
+            'visibility' => '1',
         ],
     ];
 }

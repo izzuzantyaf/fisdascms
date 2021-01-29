@@ -10,3 +10,22 @@ editIcons = editIcons.map((editIcon) => {
       linkField.parentElement.classList.remove('border-blue-500')
   })
 })
+
+let handoutVisibilityTogglers = document.querySelectorAll('.handout-visibility-toggler')
+handoutVisibilityTogglers = Array.from(handoutVisibilityTogglers)
+handoutVisibilityTogglers = handoutVisibilityTogglers.map((toggler) => {
+  const visibilityInput = document.querySelector('input#' + toggler.id)
+
+  toggler.addEventListener('click', () => {
+    if (parseInt(visibilityInput.value)) {
+      visibilityInput.value = 0
+      toggler.classList.replace('bg-green-500', 'bg-gray-300')
+      toggler.classList.remove('justify-end')
+    }
+    else {
+      visibilityInput.value = 1
+      toggler.classList.replace('bg-gray-300', 'bg-green-500')
+      toggler.classList.add('justify-end')
+    }
+  })
+})

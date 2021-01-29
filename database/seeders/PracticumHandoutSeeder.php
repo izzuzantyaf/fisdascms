@@ -15,8 +15,8 @@ class PracticumHandoutSeeder extends Seeder
      */
     public static function run()
     {
-        array_map(function ($handout) {
+        array_walk(PracticumHandout::$initial_data, function ($handout) {
             DB::table('practicum_handouts')->insert($handout);
-        }, PracticumHandout::$initial_data);
+        });
     }
 }

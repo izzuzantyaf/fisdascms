@@ -7,11 +7,10 @@ use Illuminate\Http\Request;
 
 class PracticumHandoutController extends Controller
 {
-    public static function get_handouts_by_semester($semester)
+    public static function get_handouts()
     {
-        return PracticumHandout::where('semester', $semester)
-            ->orderBy('faculty', 'asc')
-            ->orderBy('lang', 'asc')
+        return PracticumHandout::orderBy('faculty', 'desc')
+            ->orderBy('lang', 'desc')
             ->get();
     }
 
@@ -21,11 +20,10 @@ class PracticumHandoutController extends Controller
         array_pop($request_input);
         array_shift($request_input);
         foreach ($request_input as $key => $value) {
-            [$faculty, $semester, $lang] = explode('_', $key);
+            [$faculty, $lang, $column] = explode('-', $key);
             PracticumHandout::where('faculty', $faculty)
-                ->where('semester', intval($semester))
                 ->where('lang', $lang)
-                ->update(['file_url' => $value]);
+                ->update([$column => $value]);
         }
     }
 }
