@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AssistantController;
 use App\Http\Controllers\PracticumHandoutController;
+use App\Http\Middleware\EnsureAdminIsLoggedIn;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,9 +18,32 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function (Request $request) {
-    if (!$request->session()->has('admin_logged_in')) return redirect('login');
-    return view('welcome');
+Route::middleware(EnsureAdminIsLoggedIn::class)->group(function () {
+
+    Route::get('/', function () {
+        return view('welcome');
+    });
+
+    Route::get('/practicum-handouts', function () {
+
+        $practicum_handouts = PracticumHandoutController::get_handouts();
+
+        return view('practicum-handouts', [
+            'practicum_handouts' => $practicum_handouts,
+        ]);
+    });
+
+    Route::post('/practicum-handouts', function (Request $request) {
+
+        PracticumHandoutController::update_handouts($request);
+        return redirect('practicum-handouts');
+    });
+
+    Route::get('/assistants', function () {
+
+        $assistants = AssistantController::get_all_assistants();
+        return view('assistants', ['assistants' => $assistants]);
+    });
 });
 
 Route::get('/login', function (Request $request) {
@@ -57,28 +81,4 @@ Route::post('/register', function (Request $request) {
             ->with('register_username_error', $register_status['register_username_error'])
             ->with('register_email_error', $register_status['register_email_error'])
             ->with('register_password_error', $register_status['register_password_error']);
-});
-
-Route::get('/practicum-handouts', function (Request $request) {
-    if (!$request->session()->has('admin_logged_in')) return redirect('login');
-
-    $practicum_handouts = PracticumHandoutController::get_handouts();
-
-    return view('practicum-handouts', [
-        'practicum_handouts' => $practicum_handouts,
-    ]);
-});
-
-Route::post('/practicum-handouts', function (Request $request) {
-    if (!$request->session()->has('admin_logged_in')) return redirect('login');
-
-    PracticumHandoutController::update_handouts($request);
-    return redirect('practicum-handouts');
-});
-
-Route::get('/assistants', function (Request $request) {
-    if (!$request->session()->has('admin_logged_in')) return redirect('login');
-
-    $assistants = AssistantController::get_all_assistants();
-    return view('assistants', ['assistants' => $assistants]);
 });
