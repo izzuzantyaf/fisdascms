@@ -14,8 +14,8 @@ class CreateJournalCoversTable extends Migration
     public function up()
     {
         Schema::create('journal_covers', function (Blueprint $table) {
-            $table->foreignId('practicum_modules');
-            $table->text('link');
+            $table->foreignId('practicum_module_id')->constrained();
+            $table->text('link')->nullable();
             $table->timestamps();
         });
     }

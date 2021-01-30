@@ -14,7 +14,7 @@ class CreatePracticumVideosTable extends Migration
     public function up()
     {
         Schema::create('practicum_videos', function (Blueprint $table) {
-            $table->foreignId('practicum_modules');
+            $table->foreignId('practicum_module_id')->constrained();
             $table->string('video_id');
             $table->timestamps();
         });
