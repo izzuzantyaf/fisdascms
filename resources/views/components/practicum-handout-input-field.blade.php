@@ -5,7 +5,7 @@
             <div class="handout-lang"><?= $lang === 'id' ? 'Bahasa Indonesia' : 'English' ?></div>
         </div>
         <div id="<?= $faculty . '-' . $lang . '-visibility' ?>" class="handout-visibility-toggler flex <?= $visibility ? 'bg-green-500 justify-end' : 'bg-gray-300' ?> rounded-full w-10 p-1 items-center gap-2 cursor-pointer">
-            <input type="hidden" name="<?= $faculty . '-' . $lang . '-visibility' ?>" id="<?= $faculty . '-' . $lang . '-visibility' ?>" value="<?= $visibility ?>" />
+            <input type="hidden" name="<?= $faculty . '-' . $lang . '-visibility' ?>" id="<?= $faculty . '-' . $lang . '-visibility' ?>" value="<?= $visibility ?>" disabled />
             <div id="<?= $faculty . '-' . $lang . '-visibility' ?>" class="toggler-btn w-4 h-4 bg-white rounded-full"></div>
         </div>
     </div>

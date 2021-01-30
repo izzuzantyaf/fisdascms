@@ -12,22 +12,18 @@ class PracticumHandout extends Model
         [
             'faculty' => 'FTE',
             'lang' => 'id',
-            'visibility' => '1',
         ],
         [
             'faculty' => 'FTE',
             'lang' => 'en',
-            'visibility' => '1',
         ],
         [
             'faculty' => 'FRI',
             'lang' => 'id',
-            'visibility' => '1',
         ],
         [
             'faculty' => 'FRI',
             'lang' => 'en',
-            'visibility' => '1',
         ],
     ];
 }

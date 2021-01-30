@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCodeOfConductsTable extends Migration
+class RefreshPracticumHandoutsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,13 @@ class CreateCodeOfConductsTable extends Migration
      */
     public function up()
     {
-        Schema::create('code_of_conducts', function (Blueprint $table) {
+        Schema::drop('practicum_handouts');
+        Schema::create('practicum_handouts', function (Blueprint $table) {
             $table->id();
-            $table->text('image_url');
+            $table->string('faculty');
+            $table->string('lang');
+            $table->text('file_url')->nullable();
+            $table->integer('visibility')->default(1);
             $table->timestamps();
         });
     }
@@ -27,6 +31,6 @@ class CreateCodeOfConductsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('code_of_conducts');
+        //
     }
 }
