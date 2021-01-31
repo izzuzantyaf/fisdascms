@@ -19,7 +19,7 @@ class CreateAssistantsTable extends Migration
             $table->string('code', 3);
             $table->string('gender');
             $table->string('standing');
-            $table->text('feedback_link');
+            $table->text('feedback_link')->nullable();
             $table->timestamps();
         });
     }

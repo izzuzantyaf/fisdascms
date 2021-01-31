@@ -16,9 +16,14 @@ class CreatePracticumModulesTable extends Migration
         Schema::create('practicum_modules', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('acronym');
             $table->string('lang');
-            $table->integer('semester');
-            $table->string('icon');
+            $table->string('icon')->nullable();
+            $table->string('reactjs_icon')->nullable();
+            $table->string('journal_cover_link')->nullable();
+            $table->string('preliminary_test_link')->nullable();
+            $table->string('video_id')->nullable();
+            $table->string('simulator_link')->nullable();
             $table->timestamps();
         });
     }

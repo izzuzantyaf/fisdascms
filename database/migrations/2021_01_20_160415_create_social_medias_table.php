@@ -13,13 +13,11 @@ class CreateSocialMediasTable extends Migration
      */
     public function up()
     {
-        //         name
-        // icon
-        // link
         Schema::create('social_medias', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('icon');
+            $table->string('icon')->nullable();
+            $table->string('reactjs_icon')->nullable();
             $table->text('link');
             $table->timestamps();
         });

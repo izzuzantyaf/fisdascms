@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateJournalCoversTable extends Migration
+class CreateWebConfigsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class CreateJournalCoversTable extends Migration
      */
     public function up()
     {
-        Schema::create('journal_covers', function (Blueprint $table) {
-            $table->foreignId('practicum_module_id')->constrained();
-            $table->text('link')->nullable();
+        Schema::create('web_configs', function (Blueprint $table) {
+            $table->id();
+            $table->integer('active_semester');
+            $table->string('active_year');
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ class CreateJournalCoversTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('journal_covers');
+        Schema::dropIfExists('web_configs');
     }
 }

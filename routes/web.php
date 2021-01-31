@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AssistantController;
 use App\Http\Controllers\PracticumHandoutController;
+use App\Http\Controllers\PreliminaryTestController;
 use App\Http\Middleware\EnsureAdminIsLoggedIn;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -43,6 +44,20 @@ Route::middleware(EnsureAdminIsLoggedIn::class)->group(function () {
 
         $assistants = AssistantController::get_all_assistants();
         return view('assistants', ['assistants' => $assistants]);
+    });
+
+    Route::get('/preliminary-test', function () {
+
+        $preliminary_tests = PreliminaryTestController::get_preliminary_tests();
+
+        return view('preliminary-test', [
+            'preliminary_tests' => $preliminary_tests,
+        ]);
+    });
+
+    Route::post('/preliminary-test', function (Request $request) {
+        PreliminaryTestController::update_preliminary_test($request);
+        return redirect('preliminary-test');
     });
 });
 

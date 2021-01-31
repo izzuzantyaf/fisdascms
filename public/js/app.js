@@ -6146,7 +6146,7 @@ avatar.addEventListener('click', function () {
 var editIcons = document.querySelectorAll('.edit-icon');
 editIcons = Array.from(editIcons);
 editIcons = editIcons.map(function (editIcon) {
-  var linkField = document.getElementById(editIcon.id);
+  var linkField = editIcon.parentElement.querySelector('input#' + editIcon.id);
   editIcon.addEventListener('click', function () {
     linkField.toggleAttribute('disabled');
     if (!linkField.hasAttribute('disabled')) linkField.parentElement.classList.add('border-blue-500');else linkField.parentElement.classList.remove('border-blue-500');
