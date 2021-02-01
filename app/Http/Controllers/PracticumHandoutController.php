@@ -14,6 +14,14 @@ class PracticumHandoutController extends Controller
             ->get();
     }
 
+    public static function get_visible_handouts()
+    {
+        return PracticumHandout::where('visibility', 1)
+            ->orderBy('faculty', 'desc')
+            ->orderBy('lang', 'desc')
+            ->get();
+    }
+
     public static function update_handouts(Request $request)
     {
         $request_input = $request->input();

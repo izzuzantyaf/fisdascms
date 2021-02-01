@@ -26,8 +26,8 @@ Route::get('/assistant', function () {
     return AssistantController::get_all_assistants();
 });
 
-Route::get('/practicum-handouts', function () {
-    return PracticumHandoutController::get_handouts();
+Route::get('/practicum-handout', function () {
+    return PracticumHandoutController::get_visible_handouts();
 });
 
 Route::get('/practicum-module', function () {
