@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AssistantController;
 use App\Http\Controllers\PracticumHandoutController;
+use App\Http\Controllers\PracticumVideoController;
 use App\Http\Controllers\PreliminaryTestController;
 use App\Http\Middleware\EnsureAdminIsLoggedIn;
 use Illuminate\Http\Request;
@@ -58,6 +59,19 @@ Route::middleware(EnsureAdminIsLoggedIn::class)->group(function () {
     Route::post('/preliminary-test', function (Request $request) {
         PreliminaryTestController::update_preliminary_test($request);
         return redirect('preliminary-test');
+    });
+
+    Route::get('/practicum-video', function () {
+
+        $practicum_videos = PracticumVideoController::get_practicum_videos();
+        return view('practicum-video', [
+            'practicum_videos' => $practicum_videos,
+        ]);
+    });
+
+    Route::post('/practicum-video', function (Request $request) {
+        PracticumVideoController::update_practicum_video($request);
+        return redirect('/practicum-video');
     });
 });
 

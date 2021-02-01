@@ -11,10 +11,10 @@ editIcons = editIcons.map((editIcon) => {
   })
 })
 
-let handoutVisibilityTogglers = document.querySelectorAll('.handout-visibility-toggler')
-handoutVisibilityTogglers = Array.from(handoutVisibilityTogglers)
-handoutVisibilityTogglers = handoutVisibilityTogglers.map((toggler) => {
-  const visibilityInput = document.querySelector('input#' + toggler.id)
+let visibilityTogglers = document.querySelectorAll('.visibility-toggler')
+visibilityTogglers = Array.from(visibilityTogglers)
+visibilityTogglers = visibilityTogglers.map((toggler) => {
+  const visibilityInput = toggler.querySelector('input#' + toggler.id)
 
   toggler.addEventListener('click', () => {
     visibilityInput.toggleAttribute('disabled')

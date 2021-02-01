@@ -11,18 +11,20 @@ class PreliminaryTestInputField extends Component
     public $acronym;
     public $icon;
     public $link;
+    public $visibility;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($id, $name, $acronym, $icon, $link)
+    public function __construct($id, $name, $acronym, $icon, $link, $visibility)
     {
         $this->id = $id;
         $this->name = $name;
         $this->acronym = $acronym;
         $this->icon = $icon;
         $this->link = $link;
+        $this->visibility = $visibility;
     }
 
     /**

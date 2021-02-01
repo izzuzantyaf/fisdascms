@@ -5,17 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\PracticumModule;
 use Illuminate\Http\Request;
 
-class PreliminaryTestController extends Controller
+class PracticumVideoController extends Controller
 {
-    public static function get_preliminary_tests()
+    public static function get_practicum_videos()
     {
-        return PracticumModule::select('id', 'name', 'acronym', 'icon', 'preliminary_test_link', 'preliminary_test_visibility')
-            ->where('lang', 'id')
+        return PracticumModule::select('id', 'name', 'acronym', 'icon', 'video_id', 'video_visibility')
             ->orderBy('id', 'asc')
             ->get();
     }
 
-    public static function update_preliminary_test(Request $request)
+    public static function update_practicum_video(Request $request)
     {
         $request_input = $request->input();
         array_pop($request_input);

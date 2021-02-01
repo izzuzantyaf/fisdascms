@@ -21,9 +21,13 @@ class CreatePracticumModulesTable extends Migration
             $table->string('icon')->nullable();
             $table->string('reactjs_icon')->nullable();
             $table->string('journal_cover_link')->nullable();
+            $table->integer('journal_cover_visibility')->default(0);
             $table->string('preliminary_test_link')->nullable();
+            $table->integer('preliminary_test_visibility')->default(0);
             $table->string('video_id')->nullable();
+            $table->integer('video_visibility')->default(0);
             $table->string('simulator_link')->nullable();
+            $table->integer('simulator_visibility')->default(0);
             $table->timestamps();
         });
     }

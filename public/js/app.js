@@ -6152,10 +6152,10 @@ editIcons = editIcons.map(function (editIcon) {
     if (!linkField.hasAttribute('disabled')) linkField.parentElement.classList.add('border-blue-500');else linkField.parentElement.classList.remove('border-blue-500');
   });
 });
-var handoutVisibilityTogglers = document.querySelectorAll('.handout-visibility-toggler');
-handoutVisibilityTogglers = Array.from(handoutVisibilityTogglers);
-handoutVisibilityTogglers = handoutVisibilityTogglers.map(function (toggler) {
-  var visibilityInput = document.querySelector('input#' + toggler.id);
+var visibilityTogglers = document.querySelectorAll('.visibility-toggler');
+visibilityTogglers = Array.from(visibilityTogglers);
+visibilityTogglers = visibilityTogglers.map(function (toggler) {
+  var visibilityInput = toggler.querySelector('input#' + toggler.id);
   toggler.addEventListener('click', function () {
     visibilityInput.toggleAttribute('disabled');
 

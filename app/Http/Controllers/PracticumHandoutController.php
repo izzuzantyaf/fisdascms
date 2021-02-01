@@ -28,10 +28,8 @@ class PracticumHandoutController extends Controller
         array_pop($request_input);
         array_shift($request_input);
         foreach ($request_input as $key => $value) {
-            [$faculty, $lang, $column] = explode('-', $key);
-            if ($value === '1' || $value === '0') $value = (int) $value;
-            PracticumHandout::where('faculty', $faculty)
-                ->where('lang', $lang)
+            [$column, $id] = explode('-', $key);
+            PracticumHandout::where('id', $id)
                 ->update([$column => $value]);
         }
     }

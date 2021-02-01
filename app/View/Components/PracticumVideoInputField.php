@@ -4,25 +4,27 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class PracticumHandoutInputField extends Component
+class PracticumVideoInputField extends Component
 {
     public $id;
-    public $faculty;
-    public $lang;
+    public $name;
+    public $acronym;
+    public $icon;
+    public $video_id;
     public $visibility;
-    public $file_url;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($id, $faculty, $lang, $visibility, $fileUrl)
+    public function __construct($id, $name, $acronym, $icon, $videoId, $visibility)
     {
         $this->id = $id;
-        $this->faculty = $faculty;
-        $this->lang = $lang;
+        $this->name = $name;
+        $this->acronym = $acronym;
+        $this->icon = $icon;
+        $this->video_id = $videoId;
         $this->visibility = $visibility;
-        $this->file_url = $fileUrl;
     }
 
     /**
@@ -32,6 +34,6 @@ class PracticumHandoutInputField extends Component
      */
     public function render()
     {
-        return view('components.practicum-handout-input-field');
+        return view('components.practicum-video-input-field');
     }
 }
