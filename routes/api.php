@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AssistantController;
+use App\Http\Controllers\PracticumHandoutController;
 use App\Models\PracticumModule;
 use App\Models\SocialMedia;
 use Illuminate\Http\Request;
@@ -23,6 +24,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('/assistant', function () {
     return AssistantController::get_all_assistants();
+});
+
+Route::get('/practicum-handouts', function () {
+    PracticumHandoutController::get_handouts();
 });
 
 Route::get('/practicum-module', function () {
