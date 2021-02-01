@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class SocialMedia extends Model
 {
+    protected $table = 'social_medias';
+
     public static $initial_data = [
         [
             'name' => 'Instagram',

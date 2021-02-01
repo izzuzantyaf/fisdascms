@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\AssistantController;
+use App\Models\PracticumModule;
+use App\Models\SocialMedia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,4 +19,16 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::get('/assistant', function () {
+    return AssistantController::get_all_assistants();
+});
+
+Route::get('/practicum-module', function () {
+    return PracticumModule::all();
+});
+
+Route::get('/social-media', function () {
+    return SocialMedia::all();
 });
