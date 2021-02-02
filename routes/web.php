@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AssistantController;
+use App\Http\Controllers\JournalCoverController;
 use App\Http\Controllers\PracticumHandoutController;
+use App\Http\Controllers\PracticumSimulatorController;
 use App\Http\Controllers\PracticumVideoController;
 use App\Http\Controllers\PreliminaryTestController;
 use App\Http\Middleware\EnsureAdminIsLoggedIn;
@@ -72,6 +74,32 @@ Route::middleware(EnsureAdminIsLoggedIn::class)->group(function () {
     Route::post('/practicum-video', function (Request $request) {
         PracticumVideoController::update_practicum_video($request);
         return redirect('/practicum-video');
+    });
+
+    Route::get('/practicum-simulator', function () {
+
+        $practicum_simulators = PracticumSimulatorController::get_practicum_simulators();
+        return view('practicum-simulator', [
+            'practicum_simulators' => $practicum_simulators,
+        ]);
+    });
+
+    Route::post('/practicum-simulator', function (Request $request) {
+        PracticumSimulatorController::update_practicum_simulator($request);
+        return redirect('/practicum-simulator');
+    });
+
+    Route::get('/journal-cover', function () {
+
+        $journal_covers = JournalCoverController::get_journal_covers();
+        return view('journal-cover', [
+            'journal_covers' => $journal_covers,
+        ]);
+    });
+
+    Route::post('/journal-cover', function (Request $request) {
+        JournalCoverController::update_journal_cover($request);
+        return redirect('/journal-cover');
     });
 });
 
