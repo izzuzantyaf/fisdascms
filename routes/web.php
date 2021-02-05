@@ -105,7 +105,9 @@ Route::middleware(EnsureAdminIsLoggedIn::class)->group(function () {
     });
 
     Route::get('/organigram', function () {
-        $file_name = explode('/', OrganigramController::get_all_organigram()[0]->image_url)[1];
+        $file_name = null;
+        if (OrganigramController::get_all_organigram()[0]->image_url)
+            $file_name = explode('/', OrganigramController::get_all_organigram()[0]->image_url)[1];
         $organigram_url = asset("storage/$file_name");
         return view('organigram', ['organigram_url' => $organigram_url]);
     });

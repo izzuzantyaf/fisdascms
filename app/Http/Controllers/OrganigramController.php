@@ -24,8 +24,6 @@ class OrganigramController extends Controller
 
     public static function get_all_organigram()
     {
-        return Organigram::select('image_url')
-            ->where('id', 1)
-            ->get();
+        return Organigram::firstWhere('id', 1)->get();
     }
 }
