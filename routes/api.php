@@ -5,7 +5,6 @@ use App\Http\Controllers\JournalCoverController;
 use App\Http\Controllers\PracticumHandoutController;
 use App\Http\Controllers\PracticumSimulatorController;
 use App\Http\Controllers\PracticumVideoController;
-use App\Models\PracticumModule;
 use App\Models\SocialMedia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
