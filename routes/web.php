@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AssistantController;
 use App\Http\Controllers\JournalCoverController;
+use App\Http\Controllers\OrganigramController;
 use App\Http\Controllers\PracticumHandoutController;
 use App\Http\Controllers\PracticumSimulatorController;
 use App\Http\Controllers\PracticumVideoController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\PreliminaryTestController;
 use App\Http\Middleware\EnsureAdminIsLoggedIn;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -100,6 +102,27 @@ Route::middleware(EnsureAdminIsLoggedIn::class)->group(function () {
     Route::post('/journal-cover', function (Request $request) {
         JournalCoverController::update_journal_cover($request);
         return redirect('/journal-cover');
+    });
+
+    Route::get('/organigram', function () {
+        $file_name = explode('/', OrganigramController::get_all_organigram()[0]->image_url)[1];
+        $organigram_url = asset("storage/$file_name");
+        return view('organigram', ['organigram_url' => $organigram_url]);
+    });
+
+    Route::post('/organigram', function (Request $request) {
+        $path = OrganigramController::store_organigram($request);
+        if ($path) {
+            OrganigramController::update_organigram($path);
+            return redirect('/organigram')
+                ->with('upload_status', 'Gambar berhasil diupload')
+                ->with('theme', 'bg-green-200 text-green-600
+            border border-green-300');
+        }
+        return redirect('/organigram')
+            ->with('upload_status', 'Gambar gagal diupload')
+            ->with('theme', 'bg-red-200 text-red-600
+            border border-red-300');
     });
 });
 
