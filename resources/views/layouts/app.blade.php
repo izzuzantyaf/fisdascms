@@ -7,6 +7,7 @@
   <title>@yield('title','Dashboard') | Fisdas CMS</title>
   <link rel="stylesheet" href="/css/app.css">
   <script defer type="text/javascript" src="/js/app.js"></script>
+  <script defer src="https://app.simplefileupload.com/buckets/a29c61c07761ea09e44844a7c3fbd2bb.js"></script>
 </head>
 
 <body>

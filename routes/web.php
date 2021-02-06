@@ -8,10 +8,10 @@ use App\Http\Controllers\PracticumHandoutController;
 use App\Http\Controllers\PracticumSimulatorController;
 use App\Http\Controllers\PracticumVideoController;
 use App\Http\Controllers\PreliminaryTestController;
+use App\Http\Controllers\ScheduleController;
 use App\Http\Middleware\EnsureAdminIsLoggedIn;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -105,17 +105,14 @@ Route::middleware(EnsureAdminIsLoggedIn::class)->group(function () {
     });
 
     Route::get('/organigram', function () {
-        $file_name = null;
-        if (OrganigramController::get_all_organigram()[0]->image_url)
-            $file_name = explode('/', OrganigramController::get_all_organigram()[0]->image_url)[1];
-        $organigram_url = asset("storage/$file_name");
+        $organigram_url = OrganigramController::get_all_organigram()[0]->image_url;
         return view('organigram', ['organigram_url' => $organigram_url]);
     });
 
     Route::post('/organigram', function (Request $request) {
-        $path = OrganigramController::store_organigram($request);
-        if ($path) {
-            OrganigramController::update_organigram($path);
+        $organigram_url = $request->input('organigram_url');
+        if ($organigram_url) {
+            OrganigramController::update_organigram($organigram_url);
             return redirect('/organigram')
                 ->with('upload_status', 'Gambar berhasil diupload')
                 ->with('theme', 'bg-green-200 text-green-600
@@ -125,6 +122,22 @@ Route::middleware(EnsureAdminIsLoggedIn::class)->group(function () {
             ->with('upload_status', 'Gambar gagal diupload')
             ->with('theme', 'bg-red-200 text-red-600
             border border-red-300');
+    });
+
+    Route::get('/schedule', function () {
+
+        $class_schedule = ScheduleController::get_class_schedule();
+        $module_schedules = ScheduleController::get_module_schedule();
+
+        return view('schedule', [
+            'class_schedule' => $class_schedule,
+            'module_schedules' => $module_schedules,
+        ]);
+    });
+
+    Route::post('/schedule', function (Request $request) {
+        ScheduleController::update_schedule($request);
+        return redirect('/schedule');
     });
 });
 
