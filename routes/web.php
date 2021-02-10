@@ -116,7 +116,7 @@ Route::middleware(EnsureAdminIsLoggedIn::class)->group(function () {
         $organigram_url = OrganigramController::get_all_organigram()[0]->image_url;
         $signature = hash('sha256', 'cloud_name='
             . env('CLOUDINARY_USERNAME')
-            . '&timestamp=' . time() . '&username='
+            . '&timestamp=' . time() + 300 . '&username='
             . env('CLOUDINARY_USERNAME')
             . env('CLOUDINARY_SECRET_API'));
 
