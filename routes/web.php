@@ -147,7 +147,7 @@ Route::middleware(EnsureAdminIsLoggedIn::class)->group(function () {
         $module_schedules = ScheduleController::get_module_schedule();
         $signature = hash('sha256', 'cloud_name='
             . env('CLOUDINARY_USERNAME')
-            . '&timestamp=' . time() . '&username='
+            . '&timestamp=' . time() + 300 . '&username='
             . env('CLOUDINARY_USERNAME')
             . env('CLOUDINARY_SECRET_API'));
 
@@ -155,6 +155,7 @@ Route::middleware(EnsureAdminIsLoggedIn::class)->group(function () {
             'class_schedule' => $class_schedule,
             'module_schedules' => $module_schedules,
             'signature' => $signature,
+            'time' => time() + 300,
         ]);
     });
 
