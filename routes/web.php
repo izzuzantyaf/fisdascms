@@ -30,6 +30,13 @@ Route::middleware(EnsureAdminIsLoggedIn::class)->group(function () {
         return view('welcome');
     });
 
+    Route::get('/code-of-conduct', function () {
+        return view('code-of-conduct');
+    });
+
+    Route::post('/code-of-conduct', function (Request $request) {
+    });
+
     Route::get('/practicum-handouts', function () {
 
         $practicum_handouts = PracticumHandoutController::get_handouts();
@@ -105,8 +112,18 @@ Route::middleware(EnsureAdminIsLoggedIn::class)->group(function () {
     });
 
     Route::get('/organigram', function () {
+
         $organigram_url = OrganigramController::get_all_organigram()[0]->image_url;
-        return view('organigram', ['organigram_url' => $organigram_url]);
+        $signature = hash('sha256', 'cloud_name='
+            . env('CLOUDINARY_USERNAME')
+            . '&timestamp=' . time() . '&username='
+            . env('CLOUDINARY_USERNAME')
+            . env('CLOUDINARY_SECRET_API'));
+
+        return view('organigram', [
+            'organigram_url' => $organigram_url,
+            'signature' => $signature,
+        ]);
     });
 
     Route::post('/organigram', function (Request $request) {
@@ -114,12 +131,12 @@ Route::middleware(EnsureAdminIsLoggedIn::class)->group(function () {
         if ($organigram_url) {
             OrganigramController::update_organigram($organigram_url);
             return redirect('/organigram')
-                ->with('upload_status', 'Gambar berhasil diupload')
+                ->with('upload_status', 'Organigram berhasil diupdate')
                 ->with('theme', 'bg-green-200 text-green-600
             border border-green-300');
         }
         return redirect('/organigram')
-            ->with('upload_status', 'Gambar gagal diupload')
+            ->with('upload_status', 'Organigram gagal diupdate')
             ->with('theme', 'bg-red-200 text-red-600
             border border-red-300');
     });
@@ -128,10 +145,16 @@ Route::middleware(EnsureAdminIsLoggedIn::class)->group(function () {
 
         $class_schedule = ScheduleController::get_class_schedule();
         $module_schedules = ScheduleController::get_module_schedule();
+        $signature = hash('sha256', 'cloud_name='
+            . env('CLOUDINARY_USERNAME')
+            . '&timestamp=' . time() . '&username='
+            . env('CLOUDINARY_USERNAME')
+            . env('CLOUDINARY_SECRET_API'));
 
         return view('schedule', [
             'class_schedule' => $class_schedule,
             'module_schedules' => $module_schedules,
+            'signature' => $signature,
         ]);
     });
 

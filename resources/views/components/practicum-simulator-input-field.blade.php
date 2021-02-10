@@ -13,7 +13,7 @@
         </div>
     </div>
     <div class="practicum-simulator-link-input flex border rounded-md">
-        <input type="url" name="<?= 'simulator_link-' . $id ?>" id="<?= 'simulator_link-' . $id ?>" class="p-2 focus:ring-indigo-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 flex-grow rounded-l-md" placeholder="File url" value="<?= $link ?>" disabled>
+        <input type="url" name="<?= 'simulator_link-' . $id ?>" id="<?= 'simulator_link-' . $id ?>" class="p-2 focus:ring-indigo-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 flex-grow rounded-l-md" placeholder="Alamat web simulator" value="<?= $link ?>" disabled>
         <div id="<?= 'simulator_link-' . $id ?>" class="edit-icon rounded-r-md p-2 flex justify-center items-center bg-gray-50 hover:bg-gray-100 cursor-pointer">
             <i class="fas fa-pen text-gray-500"></i>
         </div>
