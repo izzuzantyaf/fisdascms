@@ -24,7 +24,7 @@
       <form action="/login" method="POST">
         @csrf
         <input type="hidden" name="remember" value="true">
-        <div class="flex flex-col gap-4 shadow-sm -space-y-px mt-8">
+        <div class="flex flex-col gap-4 mt-8">
 
           <h2 class="text-3xl font-extrabold text-gray-900 self-center">
             Log in dulu
