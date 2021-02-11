@@ -17,6 +17,7 @@ class CreateWebConfigsTable extends Migration
             $table->id();
             $table->integer('active_semester');
             $table->string('active_year');
+            $table->integer('assistant_feedback_time')->default(0);
             $table->timestamps();
         });
     }

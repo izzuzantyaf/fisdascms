@@ -21,7 +21,7 @@
                         <div class="menu-icon w-12">
                             <i class="<?= $icon ?> text-2xl"></i>
                         </div>
-                        <span class="ml-4 font-medium"><?= $name ?></span>
+                        <span class="ml-4 <?= $current_route === trim($route, '/') ? 'font-bold' : 'font-medium' ?>"><?= $name ?></span>
                     </div>
                 </a>
             <?php } ?>

@@ -10,7 +10,7 @@
 
       <div class="flex flex-col gap-4 col-span-full sm:col-span-6 lg:col-span-4">
         <h3 class="text-2xl">Jadwal kelas</h3>
-        <img src="{{ $class_schedule->image_url }}" alt="Jadwal kelas" class="rounded-md flex-grow">
+        <img src="{{ $class_schedule->image_url }}" alt="Jadwal praktikum" class="rounded-md flex-grow">
         <div class="flex border rounded-md">
           <input type="url" name="class_schedules-image_url-{{ $class_schedule->id }}" id="class_schedules-image_url-{{ $class_schedule->id }}" class="p-2 focus:ring-indigo-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 flex-grow rounded-l-md" placeholder="File url" value="{{ $class_schedule->image_url }}" disabled />
           <div id="class_schedules-image_url-{{ $class_schedule->id }}" class="edit-icon rounded-r-md p-2 flex justify-center items-center bg-gray-50 hover:bg-gray-100 cursor-pointer">
