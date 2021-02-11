@@ -6,12 +6,14 @@
   <h1 class="text-4xl font-bold">Organigram</h1>
   <form action="/organigram" method="post" enctype="multipart/form-data">
     @csrf
-    @if(session('upload_status'))
-    <div class="flash {{ session('theme') }} inline-block px-4 py-2 mt-8 rounded-md">{{ session('upload_status') }}</div>
-    @endif
-    <div class="flex flex-col sm:flex-row sm:items-start gap-8 mt-8">
-      <img src="{{ $organigram_url }}" class="rounded-md self-start xl:w-1/3 sm:w-1/2" alt="organigram">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-8 bg-white rounded-md p-4 shadow-md">
+      @if(session('upload_status'))
+      <div class="flash col-span-full lg:justify-self-start {{ session('theme') }} inline-block px-4 py-2 rounded-md">{{ session('upload_status') }}</div>
+      @endif
+      <img src="{{ $organigram_url }}" class="rounded-md" alt="organigram">
       <div class="flex flex-col gap-4">
+
+        <x-media-library-credentials />
 
         <label for="organigram_url">Image URL</label>
         <div class="organigram-link-input flex border rounded-md">
@@ -31,11 +33,6 @@
         </div>
         <x-cloudinary-js />
 
-        <div class="p-2 rounded-md bg-yellow-100 border border-yellow-300 text-yellow-500">
-          <p class="font-bold">Akun media library</p>
-          <p>Username : msi.fisdas@gmail.com</p>
-          <p>Password : Msi@ayee007</p>
-        </div>
       </div>
     </div>
   </form>

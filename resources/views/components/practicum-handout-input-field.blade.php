@@ -1,4 +1,4 @@
-<div class="handout-section flex flex-col gap-4">
+<div class="handout-section col-span-full sm:col-span-6 flex flex-col gap-4">
     <div class="flex items-center justify-between">
         <div class="handout-info">
             <div class="handout-title text-2xl font-semibold"><?= $faculty ?></div>

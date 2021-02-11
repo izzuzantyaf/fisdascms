@@ -11,15 +11,16 @@
 
 </head>
 
-<body>
+<body class="bg-gray-100">
 
   <x-navbar />
-
-  <div class="flex min-h-screen">
-    <x-sidebar />
-    @yield('content')
+  <div class="lg:container mx-auto">
+    <div class="flex min-h-screen">
+      <?php $current_route = explode('/', url()->current())[3] ?>
+      <x-sidebar :current-route="$current_route" />
+      @yield('content')
+    </div>
   </div>
-
 
 </body>
 

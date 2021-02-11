@@ -27,6 +27,10 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(EnsureAdminIsLoggedIn::class)->group(function () {
 
     Route::get('/', function () {
+        return redirect('/dashboard');
+    });
+
+    Route::get('/dashboard', function () {
         return view('welcome');
     });
 

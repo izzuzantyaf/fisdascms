@@ -1,4 +1,4 @@
-<div class="preliminary-test-section flex flex-col justify-between gap-4">
+<div class="preliminary-test-section col-span-full sm:col-span-6 lg:col-span-4 flex flex-col justify-between gap-4">
     <div class="preliminary-test-info flex flex-grow items-center gap-4">
         <div class="icon flex flex-shrink-0 justify-center items-center w-16">
             <i class="<?= $icon ?> text-3xl"></i>

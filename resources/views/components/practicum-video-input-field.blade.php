@@ -1,4 +1,4 @@
-<div class="practicum-video-section flex flex-col justify-between gap-4">
+<div class="practicum-video-section col-span-full sm:col-span-6 lg:col-span-4 flex flex-col justify-between gap-4">
 
     <iframe src="https://www.youtube.com/embed/<?= $video_id ?>" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 

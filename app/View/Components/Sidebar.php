@@ -10,7 +10,7 @@ class Sidebar extends Component
         [
             'name' => 'Dashboard',
             'icon' => 'fas fa-pager',
-            'route' => '/',
+            'route' => '/dashboard',
         ],
         [
             'name' => 'Tata tertib',
@@ -59,14 +59,16 @@ class Sidebar extends Component
         ],
     ];
 
+    public $current_route;
+
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($currentRoute = 'dashboard')
     {
-        //
+        $this->current_route = $currentRoute;
     }
 
     /**
