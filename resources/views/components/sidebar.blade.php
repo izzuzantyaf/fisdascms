@@ -12,16 +12,17 @@
                 'route' => $route,
                 'icon' => $icon,
                 'name' => $name,
-            ]) { ?>
+            ]) {
+                $is_route_matches = $current_route === trim($route, '/') ?>
                 <a href="<?= $route ?>">
-                    <div class="relative px-6 py-3 rounded-r-md inline-flex items-center w-full text-sm <?= $current_route === trim($route, '/') ? 'bg-blue-100 text-blue-700 hover:text-blue-700' : 'text-gray-500' ?> transition-colors duration-150 hover:text-blue-500 dark:hover:text-gray-200 dark:text-gray-100">
-                        <?php if ($current_route === trim($route, '/')) { ?>
+                    <div class="relative px-6 py-3 rounded-r-md inline-flex items-center w-full text-sm <?= $is_route_matches ? 'bg-blue-100 text-blue-700 hover:text-blue-700' : 'text-gray-500' ?> transition-colors duration-150 hover:text-blue-500 dark:hover:text-gray-200 dark:text-gray-100">
+                        <?php if ($is_route_matches) { ?>
                             <span class="absolute inset-y-0 left-0 w-1 bg-blue-700 rounded-tr-lg rounded-br-lg" aria-hidden="true"></span>
                         <?php } ?>
                         <div class="menu-icon w-12">
                             <i class="<?= $icon ?> text-2xl"></i>
                         </div>
-                        <span class="ml-4 <?= $current_route === trim($route, '/') ? 'font-bold' : 'font-medium' ?>"><?= $name ?></span>
+                        <span class="ml-4 <?= $is_route_matches ? 'font-bold' : 'font-medium' ?>"><?= $name ?></span>
                     </div>
                 </a>
             <?php } ?>

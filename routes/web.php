@@ -167,6 +167,12 @@ Route::middleware(EnsureAdminIsLoggedIn::class)->group(function () {
         ScheduleController::update_schedule($request);
         return redirect('/schedule');
     });
+
+    Route::get('/admin-profile', function () {
+        return view('profile', [
+            'logged_admin' => session('admin_logged_in'),
+        ]);
+    });
 });
 
 Route::get('/login', function (Request $request) {

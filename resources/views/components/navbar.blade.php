@@ -22,18 +22,26 @@
                 <?php
                 $array_name = explode(' ', $logged_admin->name);
                 $first_name = $array_name[0];
-                if (isset($array_name[1])) echo $first_name[0] . $array_name[1][0];
+                if (count($array_name) > 1) echo $first_name[0] . $array_name[1][0];
                 else echo $first_name[0];
                 ?>
             </div>
 
-            <div class="profile-dropdown origin-top-right absolute right-4 mt-40 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 transition ease-in-out duration-200 transform scale-0" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
-                <a href="/admin-profile" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-100" role="menuitem">Profil</a>
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-100" role="menuitem">Settings</a>
-                <a href="/logout" class="block px-4 py-2 text-sm text-red-500 hover:bg-blue-100" role="menuitem">Keluar</a>
+            <div class="profile-dropdown origin-top-right absolute right-4 mt-48 w-48 p-2 rounded-md shadow-md bg-white ring-1 ring-black ring-opacity-5 transition ease-in-out duration-200 transform scale-0" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
+                <a href="/admin-profile" class="flex gap-2 items-center rounded-md px-4 py-2 text-gray-700 hover:bg-blue-100" role="menuitem">
+                    <i class="fas fa-user-circle"></i>
+                    <span>Profil</span>
+                </a>
+                <a href="#" class="flex gap-2 items-center rounded-md px-4 py-2 text-gray-700 hover:bg-blue-100" role="menuitem">
+                    <i class="fas fa-cog"></i>
+                    <span>Pengaturan</span>
+                </a>
+                <a href="/logout" class="flex gap-2 items-center rounded-md px-4 py-2 text-red-500 hover:bg-red-100" role="menuitem">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Keluar</span>
+                </a>
             </div>
         </div>
-
 
     </div>
 </nav>
