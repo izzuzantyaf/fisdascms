@@ -6081,8 +6081,6 @@ __webpack_require__(/*! ./navbar */ "./resources/js/navbar.js");
 
 __webpack_require__(/*! ./practicum-handouts */ "./resources/js/practicum-handouts.js");
 
-__webpack_require__(/*! ./code-of-conduct */ "./resources/js/code-of-conduct.js");
-
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
@@ -6113,34 +6111,6 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
-
-/***/ }),
-
-/***/ "./resources/js/code-of-conduct.js":
-/*!*****************************************!*\
-  !*** ./resources/js/code-of-conduct.js ***!
-  \*****************************************/
-/***/ (() => {
-
-var codeOfConductCards = Array.from(document.querySelectorAll('.code-of-conduct-card'));
-var plusBtn = document.querySelector('.add-code-of-conduct');
-plusBtn.addEventListener('click', function (e) {
-  // create new card
-  var newCodeOfConductCard = new DOMParser().parseFromString("\n  <div class=\"code-of-conduct-card md:col-span-4 xl:col-span-3 grid grid-rows-6 grid-cols-6 border border-gray-300 rounded-md h-96 overflow-hidden\">\n        <img src=\"\" alt=\"safsafaf\" class=\"col-span-full row-span-full\">\n        <div class=\"page col-span-5 flex justify-center items-center bg-gray-100\">\n          Halaman ".concat(codeOfConductCards.length + 1, "\n        </div>\n        <div class=\"text-center text-white py-2 bg-red-500\">\n          <i class=\"fas fa-trash-alt\"></i>\n        </div>\n      </div>\n  "), 'text/html').body.firstChild;
-  console.log(newCodeOfConductCard);
-  codeOfConductCards.push(newCodeOfConductCard);
-  e.target.before(newCodeOfConductCard); // const codeOfConductList = document.querySelector('.code-of-conduct-list')
-  // codeOfConductCards.map(card => {
-  //   // codeOfConductList.appendChild(card)
-  // })
-});
-var deleteBtns = Array.from(document.querySelectorAll('.delete-btn'));
-deleteBtns.map(function (deleteBtn, index) {
-  deleteBtn.addEventListener('click', function () {
-    deleteBtn.parentElement.remove();
-    codeOfConductCards.splice(index, 1);
-  });
-});
 
 /***/ }),
 

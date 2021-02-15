@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AssistantController;
+use App\Http\Controllers\CodeOfConductController;
 use App\Http\Controllers\JournalCoverController;
 use App\Http\Controllers\OrganigramController;
 use App\Http\Controllers\PracticumHandoutController;
@@ -35,10 +36,24 @@ Route::middleware(EnsureAdminIsLoggedIn::class)->group(function () {
     });
 
     Route::get('/code-of-conduct', function () {
-        return view('code-of-conduct');
+
+        $code_of_conducts = CodeOfConductController::get_all_code_of_conducts();
+        $signature = hash('sha256', 'cloud_name='
+            . env('CLOUDINARY_USERNAME')
+            . '&timestamp=' . time() + 300 . '&username='
+            . env('CLOUDINARY_USERNAME')
+            . env('CLOUDINARY_SECRET_API'));
+
+        return view('code-of-conduct', [
+            'code_of_conducts' => $code_of_conducts,
+            'signature' => $signature,
+        ]);
     });
 
     Route::post('/code-of-conduct', function (Request $request) {
+
+        CodeOfConductController::update_code_of_conduct($request);
+        return redirect('/code-of-conduct');
     });
 
     Route::get('/practicum-handouts', function () {

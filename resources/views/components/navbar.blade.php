@@ -14,16 +14,15 @@
 
         <div class="flex gap-8 items-center justify-self-end">
             <div class="text-right hidden lg:inline-block text-blue-700">
-                <div class="capitalize font-bold"><?= $logged_admin->name ?></div>
-                <div><?= $logged_admin->username ?></div>
+                <div class="capitalize font-bold"><?= $logged_admin['name'] ?></div>
+                <div><?= $logged_admin['username'] ?></div>
             </div>
 
             <div class="avatar bg-blue-800 flex items-center justify-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-blue-800 focus:ring-white h-10 w-10 text-white uppercase font-semibold cursor-pointer">
                 <?php
-                $array_name = explode(' ', $logged_admin->name);
+                $array_name = explode(' ', $logged_admin['name']);
                 $first_name = $array_name[0];
-                if (count($array_name) > 1) echo $first_name[0] . $array_name[1][0];
-                else echo $first_name[0];
+                echo count($array_name) > 1 ? $first_name[0] . $array_name[1][0] :  $first_name[0];
                 ?>
             </div>
 

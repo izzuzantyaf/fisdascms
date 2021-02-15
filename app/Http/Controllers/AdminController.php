@@ -50,7 +50,7 @@ class AdminController extends Controller
         if ($admin_from_db) {
             // check admin's password
             if (md5($admin_password) === $admin_from_db['password'])
-                session(['admin_logged_in' => (object) [
+                session(['admin_logged_in' => [
                     'username' => $admin_from_db['username'],
                     'email' => $admin_from_db['email'],
                     'email_verified_at' => $admin_from_db['email_verified_at'],

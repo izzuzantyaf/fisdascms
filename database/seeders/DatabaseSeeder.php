@@ -23,5 +23,6 @@ class DatabaseSeeder extends Seeder
         OrganigramSeeder::run();
         ModuleScheduleSeeder::run();
         ClassScheduleSeeder::run();
+        CodeOfConductSeeder::run();
     }
 }

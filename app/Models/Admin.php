@@ -14,7 +14,14 @@ class Admin extends Model
             'email' => 'izzuzantyaf@gmail.com',
             'password' => '0945fc9611f55fd0e183fb8b044f1afe',
             'remember_token' => 'klsdjfloaisduf',
-        ]
+        ],
+        [
+            'username' => 'faradisyaheris',
+            'name' => 'faradisyaheris',
+            'email' => 'faradisyaheris@gmail.com',
+            'password' => '86552c77a2fdfe954df76d3db4d70301',
+            'remember_token' => '60250ab7810ad',
+        ],
     ];
     use HasFactory;
 }
