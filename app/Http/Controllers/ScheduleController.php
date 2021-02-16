@@ -19,6 +19,14 @@ class ScheduleController extends Controller
         return ModuleSchedule::all();
     }
 
+    public static function get_all_schedule()
+    {
+        return [
+            'class_schedule' => ClassSchedule::all()[0],
+            'module_schedule' => ModuleSchedule::all(),
+        ];
+    }
+
     public static function update_schedule(Request $request)
     {
         $request_input = $request->input();

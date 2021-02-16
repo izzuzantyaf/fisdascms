@@ -18,6 +18,7 @@ class JournalCoverController extends Controller
     public static function get_visible_journal_covers()
     {
         return PracticumModule::select('id', 'name', 'acronym', 'reactjs_icon', 'journal_cover_link')
+            ->where('lang', 'id')
             ->where('journal_cover_visibility', 1)
             ->orderBy('id', 'asc')
             ->get();

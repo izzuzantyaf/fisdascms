@@ -18,6 +18,7 @@ class PracticumSimulatorController extends Controller
     public static function get_visible_practicum_simulators()
     {
         return PracticumModule::select('id', 'name', 'acronym', 'reactjs_icon', 'simulator_link')
+            ->where('lang', 'id')
             ->where('simulator_visibility', 1)
             ->orderBy('id', 'asc')
             ->get();
