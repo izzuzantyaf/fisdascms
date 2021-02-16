@@ -9,14 +9,14 @@ class PracticumVideoController extends Controller
 {
     public static function get_practicum_videos()
     {
-        return PracticumModule::select('id', 'name', 'acronym', 'icon', 'video_id', 'video_visibility')
+        return PracticumModule::select('id', 'name', 'lang', 'acronym', 'icon', 'video_id', 'video_visibility')
             ->orderBy('id', 'asc')
             ->get();
     }
 
     public static function get_visible_practicum_videos()
     {
-        return PracticumModule::select('id', 'name', 'acronym', 'reactjs_icon', 'video_id')
+        return PracticumModule::select('id', 'name', 'lang', 'acronym', 'reactjs_icon', 'video_id')
             ->where('video_visibility', 1)
             ->orderBy('id', 'asc')
             ->get();
