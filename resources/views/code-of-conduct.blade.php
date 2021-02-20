@@ -25,6 +25,7 @@
           </div>
         </div>
       <?php } ?>
+      <x-media-library-credentials classes="col-span-full sm:justify-self-end" />
       <div class="col-span-full flex flex-col sm:flex-row-reverse md:justify-self-end gap-4">
         <button type="submit" name="code_of_conduct_submit" value="true" class="flex flex-grow justify-center py-2 px-8 border border-transparent font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
           Simpan

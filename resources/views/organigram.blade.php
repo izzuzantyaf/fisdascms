@@ -17,7 +17,7 @@
 
         <label for="organigram_url">Image URL</label>
         <div class="organigram-link-input flex border rounded-md">
-          <input type="url" name="organigram_url" id="organigram_url" class="p-2 focus:ring-indigo-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 flex-grow rounded-l-md" placeholder="File url" value="{{ $organigram_url }}" disabled>
+          <input type="url" name="organigram_url" id="organigram_url" class="p-2 focus:ring-indigo-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 flex-grow rounded-l-md" placeholder="Image URL" value="{{ $organigram_url }}" disabled>
           <div id="organigram_url" class="edit-icon rounded-r-md p-2 flex justify-center items-center bg-gray-50 hover:bg-gray-100 cursor-pointer">
             <i class="fas fa-pen text-gray-500"></i>
           </div>

@@ -34,7 +34,7 @@ class Sidebar extends Component
         ],
         [
             'name' => 'Simulator praktikum',
-            'icon' => 'fas fa-cogs',
+            'icon' => 'fas fa-gamepad',
             'route' => '/practicum-simulator',
         ],
         [

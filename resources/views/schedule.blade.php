@@ -12,7 +12,7 @@
         <h3 class="text-2xl">Jadwal kelas</h3>
         <img src="{{ $class_schedule->image_url }}" alt="Jadwal praktikum" class="rounded-md flex-grow">
         <div class="flex border rounded-md">
-          <input type="url" name="class_schedules-image_url-{{ $class_schedule->id }}" id="class_schedules-image_url-{{ $class_schedule->id }}" class="p-2 focus:ring-indigo-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 flex-grow rounded-l-md" placeholder="File url" value="{{ $class_schedule->image_url }}" disabled />
+          <input type="url" name="class_schedules-image_url-{{ $class_schedule->id }}" id="class_schedules-image_url-{{ $class_schedule->id }}" class="p-2 focus:ring-indigo-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 flex-grow rounded-l-md" placeholder="File URL" value="{{ $class_schedule->image_url }}" disabled />
           <div id="class_schedules-image_url-{{ $class_schedule->id }}" class="edit-icon rounded-r-md p-2 flex justify-center items-center bg-gray-50 hover:bg-gray-100 cursor-pointer">
             <i class="fas fa-pen text-gray-500"></i>
           </div>
@@ -28,7 +28,7 @@
           <h3 class="text-2xl col-span-full">Jadwal modul <span class="uppercase"><?= $faculty ?></span></h3>
           <img src="<?= $image_url ?>" alt="Jadwal modul" class="rounded-md flex-grow">
           <div class="flex border rounded-md">
-            <input type="url" name="module_schedules-image_url-<?= $id ?>" id="module_schedules-image_url-<?= $id ?>" class="p-2 focus:ring-indigo-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 flex-grow rounded-l-md" placeholder="File url" value="{{ $image_url }}" disabled />
+            <input type="url" name="module_schedules-image_url-<?= $id ?>" id="module_schedules-image_url-<?= $id ?>" class="p-2 focus:ring-indigo-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 flex-grow rounded-l-md" placeholder="File URL" value="{{ $image_url }}" disabled />
             <div id="module_schedules-image_url-<?= $id ?>" class="edit-icon rounded-r-md p-2 flex justify-center items-center bg-gray-50 hover:bg-gray-100 cursor-pointer">
               <i class="fas fa-pen text-gray-500"></i>
             </div>

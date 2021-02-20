@@ -21,7 +21,7 @@
       </div>
       <form class="mt-8 space-y-6" action="/register" method="POST">
         @csrf
-        <div class="shadow-sm flex flex-col gap-2">
+        <div class="flex flex-col gap-2">
           <div>
             <label for="username" class="sr-only">Username</label>
             <input id="username" name="username" type="text" autocomplete="on" required class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Username" value="{{ old('username') }}">

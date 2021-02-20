@@ -32,7 +32,7 @@ Route::middleware(EnsureAdminIsLoggedIn::class)->group(function () {
     });
 
     Route::get('/dashboard', function () {
-        return view('welcome');
+        return view('dashboard');
     });
 
     Route::get('/code-of-conduct', function () {

@@ -81,6 +81,7 @@ class PracticumModule extends Model
             'icon' => 'fas fa-wave-square',
             'reactjs_icon' => 'wave-square',
             'video_id' => 'U-uN9gMiF7U',
+            'simulator_link' => 'https://academo.org/demos/virtual-oscilloscope/',
         ],
         [
             'name' => 'Superposition Of Harmonic Vibration',
@@ -89,6 +90,7 @@ class PracticumModule extends Model
             'icon' => 'fas fa-wave-square',
             'reactjs_icon' => 'wave-square',
             'video_id' => 'KMWu69PPwnI',
+            'simulator_link' => 'https://academo.org/demos/virtual-oscilloscope/',
         ],
         [
             'name' => 'Pengukuran Besaran Listrik',
@@ -97,6 +99,7 @@ class PracticumModule extends Model
             'icon' => 'fas fa-calculator',
             'reactjs_icon' => 'calculator',
             'video_id' => '7rJ5rVlCTME',
+            'simulator_link' => 'http://amrita.olabs.edu.in/?sub=1&brch=4&sim=99&cnt=4',
         ],
         [
             'name' => 'Measurement Of Electrical Quantities',
@@ -105,6 +108,7 @@ class PracticumModule extends Model
             'icon' => 'fas fa-calculator',
             'reactjs_icon' => 'calculator',
             'video_id' => 'ONLbrO0oEUY',
+            'simulator_link' => 'http://amrita.olabs.edu.in/?sub=1&brch=4&sim=99&cnt=4',
         ],
         [
             'name' => 'GLBB, GLB, dan Momen Inersia',
@@ -112,6 +116,7 @@ class PracticumModule extends Model
             'lang' => 'id',
             'icon' => 'fas fa-grip-lines-vertical',
             'reactjs_icon' => 'grip-lines-vertical',
+            'simulator_link' => 'http://amrita.olabs.edu.in/?sub=1&brch=1&sim=44&cnt=4',
             'video_id' => '1j6FxITNOHE',
         ],
         [
@@ -121,6 +126,7 @@ class PracticumModule extends Model
             'icon' => 'fas fa-grip-lines-vertical',
             'reactjs_icon' => 'grip-lines-vertical',
             'video_id' => 'bnsX7_u82WA',
+            'simulator_link' => 'http://amrita.olabs.edu.in/?sub=1&brch=1&sim=44&cnt=4',
         ],
         [
             'name' => 'Resonansi Gelombang Bunyi',
@@ -129,6 +135,7 @@ class PracticumModule extends Model
             'icon' => 'fas fa-satellite-dish',
             'reactjs_icon' => 'satellite-dish',
             'video_id' => 'l7Z_9Rp30m4',
+            'simulator_link' => 'http://amrita.olabs.edu.in/?sub=1&brch=5&sim=36&cnt=4',
         ],
         [
             'name' => 'Resonance of Sound Waves',
@@ -137,6 +144,7 @@ class PracticumModule extends Model
             'icon' => 'fas fa-satellite-dish',
             'reactjs_icon' => 'satellite-dish',
             'video_id' => 'i01m1jeWbW0',
+            'simulator_link' => 'http://amrita.olabs.edu.in/?sub=1&brch=5&sim=36&cnt=4',
         ],
         [
             'name' => 'Induksi Magnetik',
@@ -145,6 +153,7 @@ class PracticumModule extends Model
             'icon' => 'fas fa-magnet',
             'reactjs_icon' => 'magnet',
             'video_id' => 'ffVD-vI2hzc',
+            'simulator_link' => 'http://cdac.olabs.edu.in/?sub=74&brch=9&sim=242&cnt=4',
         ],
         [
             'name' => 'Magnetic Induction',
@@ -153,6 +162,7 @@ class PracticumModule extends Model
             'icon' => 'fas fa-magnet',
             'reactjs_icon' => 'magnet',
             'video_id' => 'IhblFR5Z00k',
+            'simulator_link' => 'http://cdac.olabs.edu.in/?sub=74&brch=9&sim=242&cnt=4',
         ],
         [
             'name' => 'Pengisian dan Pengosongan Kapasitor',
