@@ -29,7 +29,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/code-of-conduct', function () {
-    return CodeOfConductController::get_all_visible_code_of_conducts();
+    return CodeOfConductController::get_code_of_conduct()[0];
 });
 
 Route::get('/practicum-handout', function () {

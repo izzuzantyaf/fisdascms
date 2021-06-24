@@ -37,16 +37,10 @@ Route::middleware(EnsureAdminIsLoggedIn::class)->group(function () {
 
     Route::get('/code-of-conduct', function () {
 
-        $code_of_conducts = CodeOfConductController::get_all_code_of_conducts();
-        $signature = hash('sha256', 'cloud_name='
-            . env('CLOUDINARY_USERNAME')
-            . '&timestamp=' . time() + 300 . '&username='
-            . env('CLOUDINARY_USERNAME')
-            . env('CLOUDINARY_SECRET_API'));
+        $code_of_conduct = CodeOfConductController::get_code_of_conduct();
 
         return view('code-of-conduct', [
-            'code_of_conducts' => $code_of_conducts,
-            'signature' => $signature,
+            'code_of_conduct' => $code_of_conduct[0],
         ]);
     });
 

@@ -15,8 +15,7 @@ class CreateCodeOfConductsTable extends Migration
     {
         Schema::create('code_of_conducts', function (Blueprint $table) {
             $table->id();
-            $table->text('image_url')->nullable();
-            $table->integer('order');
+            $table->text('file_url')->nullable();
             $table->timestamps();
         });
     }

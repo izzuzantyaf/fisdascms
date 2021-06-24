@@ -7,17 +7,9 @@ use Illuminate\Http\Request;
 
 class CodeOfConductController extends Controller
 {
-    public static function get_all_code_of_conducts()
+    public static function get_code_of_conduct()
     {
-        return CodeOfConduct::select()->orderBy('order', 'asc')->get();
-    }
-
-    public static function get_all_visible_code_of_conducts()
-    {
-        return CodeOfConduct::select()
-            ->where('image_url', '!=', null)
-            ->orderBy('order', 'asc')
-            ->get();
+        return CodeOfConduct::select()->get();
     }
 
     public static function update_code_of_conduct(Request $request)

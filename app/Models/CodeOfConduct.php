@@ -11,22 +11,7 @@ class CodeOfConduct extends Model
 
     public static $initial_data = [
         [
-            'order' => '1',
-        ],
-        [
-            'order' => '2',
-        ],
-        [
-            'order' => '3',
-        ],
-        [
-            'order' => '4',
-        ],
-        [
-            'order' => '5',
-        ],
-        [
-            'order' => '6',
+            'file_url' => '',
         ],
     ];
 }
