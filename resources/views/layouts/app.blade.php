@@ -15,7 +15,7 @@
   <?php $logged_admin = session()->has('admin_logged_in') ? session('admin_logged_in') : null; ?>
   <x-navbar :logged-admin="$logged_admin" />
   <div class="lg:container mx-auto">
-    <div class="flex min-h-screen">
+    <div class="flex gap-4 min-h-screen">
       <?php $current_route = explode('/', url()->current())[3] ?>
       <x-sidebar :current-route="$current_route" />
       @yield('content')

@@ -2,7 +2,7 @@
 @section('title','Modul')
 
 @section('content')
-<div class="handouts flex-grow p-8">
+<div class="handouts flex-grow p-4 pt-8">
   <h1 class="text-4xl font-bold">Modul praktikum</h1>
 
   <form action="/practicum-handouts" method="post">

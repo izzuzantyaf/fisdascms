@@ -2,7 +2,7 @@
 @section('title','Organigram')
 
 @section('content')
-<div class="organigram flex-grow p-8">
+<div class="organigram flex-grow p-4 pt-8">
   <h1 class="text-4xl font-bold">Organigram</h1>
   <form action="/organigram" method="post" enctype="multipart/form-data">
     @csrf

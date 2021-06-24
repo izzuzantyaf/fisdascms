@@ -2,7 +2,7 @@
 @section('title','Asisten')
 
 @section('content')
-<div class="assistants overflow-x-auto flex-grow p-8">
+<div class="assistants overflow-x-auto flex-grow p-4 pt-8">
   <h1 class="text-4xl font-bold">Asisten</h1>
   <div class="w-full mt-8 overflow-scroll max-h-screen shadow border border-gray-200 rounded-lg">
     <table class="divide-y divide-gray-200">

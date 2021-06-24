@@ -2,7 +2,7 @@
 @section('title','Video Praktikum')
 
 @section('content')
-<div class="practicum-video flex-grow p-8">
+<div class="practicum-video flex-grow p-4 pt-8">
   <h1 class="text-4xl font-bold">Video praktikum</h1>
 
   <form action="/practicum-video" method="post">

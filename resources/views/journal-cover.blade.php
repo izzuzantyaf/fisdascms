@@ -2,7 +2,7 @@
 @section('title','Cover Jurnal')
 
 @section('content')
-<div class="journal-cover flex-grow p-8">
+<div class="journal-cover flex-grow p-4 pt-8">
   <h1 class="text-4xl font-bold ">Cover Jurnal</h1>
 
   <form action="/journal-cover" method="post">

@@ -2,7 +2,7 @@
 @section('title','Jadwal Praktikum')
 
 @section('content')
-<div class="schedule flex-grow p-8">
+<div class="schedule flex-grow p-4 pt-8">
   <h1 class="text-4xl font-bold">Jadwal praktikum</h1>
   <form action="/schedule" method="post">
     @csrf

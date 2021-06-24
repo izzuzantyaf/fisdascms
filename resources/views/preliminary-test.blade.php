@@ -2,7 +2,7 @@
 @section('title','Tugas Pendahuluan')
 
 @section('content')
-<div class="preliminary-test flex-grow p-8">
+<div class="preliminary-test flex-grow p-4 pt-8">
   <h1 class="text-4xl font-bold ">Tugas pendahuluan</h1>
 
   <form action="/preliminary-test" method="post">
