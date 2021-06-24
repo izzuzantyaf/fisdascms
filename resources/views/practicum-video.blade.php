@@ -13,10 +13,10 @@
         'name' => $name,
         'acronym' => $acronym,
         'icon' => $icon,
-        'video_id' => $video_id,
+        'video_link' => $video_link,
         'video_visibility' => $visibility,
       ]) { ?>
-        <x-practicum-video-input-field :id="$id" :name="$name" :acronym="$acronym" :icon="$icon" :videoId="$video_id" :visibility="$visibility" />
+        <x-practicum-video-input-field :id="$id" :name="$name" :acronym="$acronym" :icon="$icon" :videoLink="$video_link" :visibility="$visibility" />
       <?php } ?>
       <button type="submit" name="btn_practicum_video_submit" value="true" class="col-span-full sm:justify-self-end justify-center py-2 px-8 border border-transparent font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
         Simpan

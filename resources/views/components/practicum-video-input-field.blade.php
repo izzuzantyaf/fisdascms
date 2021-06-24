@@ -1,6 +1,6 @@
 <div class="practicum-video-section col-span-full sm:col-span-6 lg:col-span-4 flex flex-col justify-between gap-4">
 
-    <iframe src="https://www.youtube.com/embed/<?= $video_id ?>" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <iframe src="https://www.youtube.com/embed/<?= $video_link ? explode('/', $video_link)[3] : '' ?>" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
     <div class="practicum-video-info flex flex-grow items-center gap-4">
         <div class="icon flex flex-shrink-0 justify-center items-center w-16">
@@ -17,8 +17,8 @@
     </div>
 
     <div class="practicum-video-link-input flex border rounded-md">
-        <input type="text" name="<?= 'video_id-' . $id ?>" id="<?= 'video_id-' . $id ?>" class="p-2 focus:ring-indigo-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 flex-grow rounded-l-md" placeholder="Video ID" value="<?= $video_id ?>" disabled>
-        <div id="<?= 'video_id-' . $id ?>" class="edit-icon rounded-r-md p-2 flex justify-center items-center bg-gray-50 hover:bg-gray-100 cursor-pointer">
+        <input type="text" name="<?= 'video_link-' . $id ?>" id="<?= 'video_link-' . $id ?>" class="p-2 focus:ring-indigo-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 flex-grow rounded-l-md" placeholder="Link video" value="<?= $video_link ?>" disabled>
+        <div id="<?= 'video_link-' . $id ?>" class="edit-icon rounded-r-md p-2 flex justify-center items-center bg-gray-50 hover:bg-gray-100 cursor-pointer">
             <i class="fas fa-pen text-gray-500"></i>
         </div>
     </div>

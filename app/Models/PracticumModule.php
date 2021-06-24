@@ -16,7 +16,6 @@ class PracticumModule extends Model
             'lang' => 'id',
             'icon' => 'fas fa-sort-numeric-up-alt',
             'reactjs_icon' => 'sort-numeric-up-alt',
-            'video_id' => 'zpuMpagyBZA',
         ],
         [
             'name' => 'Measurement and Significant Figures',
@@ -24,7 +23,6 @@ class PracticumModule extends Model
             'lang' => 'en',
             'icon' => 'fas fa-sort-numeric-up-alt',
             'reactjs_icon' => 'sort-numeric-up-alt',
-            'video_id' => 'OILNU_cEpPg',
         ],
         [
             'name' => 'Gerak Melingkar Beraturan I dan Gerak Melingkar Beraturan II',
@@ -32,7 +30,6 @@ class PracticumModule extends Model
             'lang' => 'id',
             'icon' => 'fas fa-circle-notch',
             'reactjs_icon' => 'circle-notch',
-            'video_id' => 'C0lmsWzGBqY',
         ],
         [
             'name' => 'Uniform Circular Motion I and Uniform Circular Motion II',
@@ -40,7 +37,6 @@ class PracticumModule extends Model
             'lang' => 'en',
             'icon' => 'fas fa-circle-notch',
             'reactjs_icon' => 'circle-notch',
-            'video_id' => 'L6kn35kZU3w',
         ],
         [
             'name' => 'Gerak Osilasi dan Gerak Jatuh Bebas',
@@ -48,7 +44,6 @@ class PracticumModule extends Model
             'lang' => 'id',
             'icon' => 'fas fa-parachute-box',
             'reactjs_icon' => 'parachute-box',
-            'video_id' => '_d7rTW_MJLk',
         ],
         [
             'name' => 'Oscillatory Motion and Free Fall Motion',
@@ -56,7 +51,6 @@ class PracticumModule extends Model
             'lang' => 'en',
             'icon' => 'fas fa-parachute-box',
             'reactjs_icon' => 'parachute-box',
-            'video_id' => 'V5wuEmfOY6Y',
         ],
         [
             'name' => 'Pendahuluan Listrik',
@@ -64,7 +58,6 @@ class PracticumModule extends Model
             'lang' => 'id',
             'icon' => 'fas fa-bolt',
             'reactjs_icon' => 'bolt',
-            'video_id' => '',
         ],
         [
             'name' => 'Introduction to Electricity',
@@ -72,7 +65,6 @@ class PracticumModule extends Model
             'lang' => 'en',
             'icon' => 'fas fa-bolt',
             'reactjs_icon' => 'bolt',
-            'video_id' => '',
         ],
         [
             'name' => 'Superposisi Getaran Harmonik',
@@ -80,7 +72,6 @@ class PracticumModule extends Model
             'lang' => 'id',
             'icon' => 'fas fa-wave-square',
             'reactjs_icon' => 'wave-square',
-            'video_id' => 'U-uN9gMiF7U',
             'simulator_link' => 'https://academo.org/demos/virtual-oscilloscope/',
         ],
         [
@@ -89,7 +80,6 @@ class PracticumModule extends Model
             'lang' => 'en',
             'icon' => 'fas fa-wave-square',
             'reactjs_icon' => 'wave-square',
-            'video_id' => 'KMWu69PPwnI',
             'simulator_link' => 'https://academo.org/demos/virtual-oscilloscope/',
         ],
         [
@@ -98,7 +88,6 @@ class PracticumModule extends Model
             'lang' => 'id',
             'icon' => 'fas fa-calculator',
             'reactjs_icon' => 'calculator',
-            'video_id' => '7rJ5rVlCTME',
             'simulator_link' => 'http://amrita.olabs.edu.in/?sub=1&brch=4&sim=99&cnt=4',
         ],
         [
@@ -107,7 +96,6 @@ class PracticumModule extends Model
             'lang' => 'en',
             'icon' => 'fas fa-calculator',
             'reactjs_icon' => 'calculator',
-            'video_id' => 'ONLbrO0oEUY',
             'simulator_link' => 'http://amrita.olabs.edu.in/?sub=1&brch=4&sim=99&cnt=4',
         ],
         [
@@ -117,7 +105,6 @@ class PracticumModule extends Model
             'icon' => 'fas fa-grip-lines-vertical',
             'reactjs_icon' => 'grip-lines-vertical',
             'simulator_link' => 'http://amrita.olabs.edu.in/?sub=1&brch=1&sim=44&cnt=4',
-            'video_id' => '1j6FxITNOHE',
         ],
         [
             'name' => 'Uniform Accelerated Linear Motion, Uniform Linear Motion, and Pulley Inertia Moment',
@@ -125,7 +112,6 @@ class PracticumModule extends Model
             'lang' => 'en',
             'icon' => 'fas fa-grip-lines-vertical',
             'reactjs_icon' => 'grip-lines-vertical',
-            'video_id' => 'bnsX7_u82WA',
             'simulator_link' => 'http://amrita.olabs.edu.in/?sub=1&brch=1&sim=44&cnt=4',
         ],
         [
@@ -134,7 +120,6 @@ class PracticumModule extends Model
             'lang' => 'id',
             'icon' => 'fas fa-satellite-dish',
             'reactjs_icon' => 'satellite-dish',
-            'video_id' => 'l7Z_9Rp30m4',
             'simulator_link' => 'http://amrita.olabs.edu.in/?sub=1&brch=5&sim=36&cnt=4',
         ],
         [
@@ -143,7 +128,6 @@ class PracticumModule extends Model
             'lang' => 'en',
             'icon' => 'fas fa-satellite-dish',
             'reactjs_icon' => 'satellite-dish',
-            'video_id' => 'i01m1jeWbW0',
             'simulator_link' => 'http://amrita.olabs.edu.in/?sub=1&brch=5&sim=36&cnt=4',
         ],
         [
@@ -152,7 +136,6 @@ class PracticumModule extends Model
             'lang' => 'id',
             'icon' => 'fas fa-magnet',
             'reactjs_icon' => 'magnet',
-            'video_id' => 'ffVD-vI2hzc',
             'simulator_link' => 'http://cdac.olabs.edu.in/?sub=74&brch=9&sim=242&cnt=4',
         ],
         [
@@ -161,7 +144,6 @@ class PracticumModule extends Model
             'lang' => 'en',
             'icon' => 'fas fa-magnet',
             'reactjs_icon' => 'magnet',
-            'video_id' => 'IhblFR5Z00k',
             'simulator_link' => 'http://cdac.olabs.edu.in/?sub=74&brch=9&sim=242&cnt=4',
         ],
         [

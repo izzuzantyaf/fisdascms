@@ -10,20 +10,20 @@ class PracticumVideoInputField extends Component
     public $name;
     public $acronym;
     public $icon;
-    public $video_id;
+    public $video_link;
     public $visibility;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($id, $name, $acronym, $icon, $videoId, $visibility)
+    public function __construct($id, $name, $acronym, $icon, $videoLink, $visibility)
     {
         $this->id = $id;
         $this->name = $name;
         $this->acronym = $acronym;
         $this->icon = $icon;
-        $this->video_id = $videoId;
+        $this->video_link = $videoLink;
         $this->visibility = $visibility;
     }
 
