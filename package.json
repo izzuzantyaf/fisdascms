@@ -14,8 +14,8 @@
         "@tailwindcss/postcss7-compat": "^2.0.2",
         "autoprefixer": "^10.2.6",
         "axios": "^0.21",
-        "laravel-mix": "^6.0.6",
-        "lodash": "^4.17.19",
+        "laravel-mix": "^6.0.25",
+        "lodash": "^4.17.21",
         "postcss": "^8.3.5",
         "tailwindcss": "^2.2.4"
     },
