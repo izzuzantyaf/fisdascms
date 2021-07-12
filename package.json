@@ -10,6 +10,7 @@
         "production": "mix --production"
     },
     "devDependencies": {
+        "@fortawesome/fontawesome-free": "^5.15.3",
         "@tailwindcss/aspect-ratio": "^0.2.1",
         "@tailwindcss/postcss7-compat": "^2.0.2",
         "autoprefixer": "^10.2.6",
@@ -19,7 +20,5 @@
         "postcss": "^8.3.5",
         "tailwindcss": "^2.2.4"
     },
-    "dependencies": {
-        "@fortawesome/fontawesome-free": "^5.15.2"
-    }
+    "dependencies": {}
 }
