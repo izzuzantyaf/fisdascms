@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\WebConfig;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class WebConfigSeeder extends Seeder
 {
@@ -15,8 +14,9 @@ class WebConfigSeeder extends Seeder
      */
     public static function run()
     {
-        array_walk(WebConfig::$initial_data, function ($web_config) {
-            DB::table('web_configs')->insert($web_config);
-        });
+        WebConfig::factory()->createOne([
+            'active_semester' => 1,
+            'active_year' => '2021/2022',
+        ]);
     }
 }

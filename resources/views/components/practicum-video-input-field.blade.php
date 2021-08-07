@@ -1,6 +1,6 @@
 <div class="practicum-video-section col-span-full sm:col-span-6 lg:col-span-4 flex flex-col justify-between gap-4">
 
-    <iframe src="https://www.youtube.com/embed/<?= $video_link ? explode('/', $video_link)[3] : '' ?>" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <iframe src="https://www.youtube.com/embed/<?= $video_link ? explode('/', $video_link)[3] : '' ?>" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
 
     <div class="practicum-video-info flex flex-grow items-center gap-4">
         <div class="icon flex flex-shrink-0 justify-center items-center w-16">

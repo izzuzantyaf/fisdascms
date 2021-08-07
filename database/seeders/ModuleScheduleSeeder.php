@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\ModuleSchedule;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class ModuleScheduleSeeder extends Seeder
 {
@@ -15,8 +14,13 @@ class ModuleScheduleSeeder extends Seeder
      */
     public static function run()
     {
-        array_walk(ModuleSchedule::$initial_data, function ($module_schedule) {
-            DB::table('module_schedules')->insert($module_schedule);
-        });
+        ModuleSchedule::factory()->createMany([
+            [
+                'faculty' => 'FTE',
+            ],
+            [
+                'faculty' => 'FRI',
+            ],
+        ]);
     }
 }

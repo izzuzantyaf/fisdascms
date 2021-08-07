@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\PracticumHandout;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class PracticumHandoutSeeder extends Seeder
 {
@@ -15,8 +14,23 @@ class PracticumHandoutSeeder extends Seeder
      */
     public static function run()
     {
-        array_walk(PracticumHandout::$initial_data, function ($handout) {
-            DB::table('practicum_handouts')->insert($handout);
-        });
+        PracticumHandout::factory()->createMany([
+            [
+                'faculty' => 'FTE',
+                'lang' => 'id',
+            ],
+            [
+                'faculty' => 'FTE',
+                'lang' => 'en',
+            ],
+            [
+                'faculty' => 'FRI',
+                'lang' => 'id',
+            ],
+            [
+                'faculty' => 'FRI',
+                'lang' => 'en',
+            ],
+        ]);
     }
 }

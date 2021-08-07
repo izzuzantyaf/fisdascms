@@ -16,9 +16,9 @@ class CreateAssistantsTable extends Migration
         Schema::create('assistants', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('code', 3);
-            $table->string('gender');
-            $table->string('standing');
+            $table->string('code');
+            $table->string('phone_number')->nullable();
+            $table->string('line_id')->nullable();
             $table->text('feedback_link')->nullable();
             $table->timestamps();
         });

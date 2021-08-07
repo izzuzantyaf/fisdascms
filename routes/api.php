@@ -48,6 +48,9 @@ Route::get('/assistant', function () {
     return AssistantController::get_all_assistants();
 });
 
+Route::delete('/assistant/{id}', function (Request $request) {
+});
+
 Route::get('/practicum-simulator', function () {
     return PracticumSimulatorController::get_visible_practicum_simulators();
 });

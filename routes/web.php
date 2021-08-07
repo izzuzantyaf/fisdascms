@@ -36,45 +36,56 @@ Route::middleware(EnsureAdminIsLoggedIn::class)->group(function () {
     });
 
     Route::get('/code-of-conduct', function () {
-
         $code_of_conduct = CodeOfConductController::get_code_of_conduct();
-
         return view('code-of-conduct', [
             'code_of_conduct' => $code_of_conduct[0],
         ]);
     });
 
     Route::post('/code-of-conduct', function (Request $request) {
-
         CodeOfConductController::update_code_of_conduct($request);
         return redirect('/code-of-conduct');
     });
 
     Route::get('/practicum-handouts', function () {
-
         $practicum_handouts = PracticumHandoutController::get_handouts();
-
         return view('practicum-handouts', [
             'practicum_handouts' => $practicum_handouts,
         ]);
     });
 
     Route::post('/practicum-handouts', function (Request $request) {
-
         PracticumHandoutController::update_handouts($request);
         return redirect('practicum-handouts');
     });
 
     Route::get('/assistants', function () {
-
         $assistants = AssistantController::get_all_assistants();
         return view('assistants', ['assistants' => $assistants]);
     });
 
+    Route::post('/assistants', function (Request $request) {
+        $result = AssistantController::add_assistant($request);
+        return back()->with('result_message', $result ? 'Asisten berhasil ditambahkan' : null);
+    });
+
+    Route::put('/assistants/{id}', function (Request $request, $id) {
+        $result = AssistantController::update_assistant($request, $id);
+        return back()->with('result_message', $result ? 'Asisten berhasil diubah' : null);
+    });
+
+    Route::delete('/assistants/{id}', function ($id) {
+        $result = AssistantController::delete_assistant($id);
+        return back()->with('result_message', $result ? 'Asisten berhasil dihapus' : null);
+    });
+
+    Route::post('/assistants/delete-multiple', function (Request $request) {
+        $result = AssistantController::delete_multiple_assistants($request);
+        return back()->with('result_message', "Berhasil menghapus $result asisten");
+    });
+
     Route::get('/preliminary-test', function () {
-
         $preliminary_tests = PreliminaryTestController::get_preliminary_tests();
-
         return view('preliminary-test', [
             'preliminary_tests' => $preliminary_tests,
         ]);
@@ -112,7 +123,6 @@ Route::middleware(EnsureAdminIsLoggedIn::class)->group(function () {
     });
 
     Route::get('/journal-cover', function () {
-
         $journal_covers = JournalCoverController::get_journal_covers();
         return view('journal-cover', [
             'journal_covers' => $journal_covers,
@@ -125,14 +135,12 @@ Route::middleware(EnsureAdminIsLoggedIn::class)->group(function () {
     });
 
     Route::get('/organigram', function () {
-
         $organigram_url = OrganigramController::get_all_organigram()[0]->image_url;
         $signature = hash('sha256', 'cloud_name='
             . env('CLOUDINARY_USERNAME')
             . '&timestamp=' . time() + 300 . '&username='
             . env('CLOUDINARY_USERNAME')
             . env('CLOUDINARY_SECRET_API'));
-
         return view('organigram', [
             'organigram_url' => $organigram_url,
             'signature' => $signature,
@@ -145,17 +153,14 @@ Route::middleware(EnsureAdminIsLoggedIn::class)->group(function () {
             OrganigramController::update_organigram($organigram_url);
             return redirect('/organigram')
                 ->with('upload_status', 'Organigram berhasil diupdate')
-                ->with('theme', 'bg-green-200 text-green-600
-            border border-green-300');
+                ->with('theme', 'bg-green-400 text-white');
         }
         return redirect('/organigram')
             ->with('upload_status', 'Organigram gagal diupdate')
-            ->with('theme', 'bg-red-200 text-red-600
-            border border-red-300');
+            ->with('theme', 'bg-red-400 text-white');
     });
 
     Route::get('/schedule', function () {
-
         $class_schedule = ScheduleController::get_class_schedule();
         $module_schedules = ScheduleController::get_module_schedule();
         $signature = hash('sha256', 'cloud_name='
@@ -163,7 +168,6 @@ Route::middleware(EnsureAdminIsLoggedIn::class)->group(function () {
             . '&timestamp=' . time() + 300 . '&username='
             . env('CLOUDINARY_USERNAME')
             . env('CLOUDINARY_SECRET_API'));
-
         return view('schedule', [
             'class_schedule' => $class_schedule,
             'module_schedules' => $module_schedules,
@@ -185,13 +189,11 @@ Route::middleware(EnsureAdminIsLoggedIn::class)->group(function () {
 });
 
 Route::get('/login', function (Request $request) {
-
     if ($request->session()->has('admin_logged_in')) return redirect('/');
     return view('login');
 })->name('login');
 
 Route::post('/login', function (Request $request) {
-
     $admin_controller = new AdminController;
     $login_status = $admin_controller->login($request);
     if ($login_status) return redirect('/');
@@ -199,7 +201,6 @@ Route::post('/login', function (Request $request) {
 });
 
 Route::get('/logout', function (Request $request) {
-
     AdminController::logout($request);
     return redirect('login');
 });
@@ -211,7 +212,6 @@ Route::get('/register', function () {
 Route::post('/register', function (Request $request) {
     $admin_controller = new AdminController;
     $register_status = $admin_controller->register($request);
-
     if ($register_status === true)
         return redirect('login')->with('registration_message', 'Registrasi berhasil, kamu sekarang admin.');
     else

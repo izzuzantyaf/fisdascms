@@ -9,7 +9,7 @@ class OrganigramController extends Controller
 {
     public static function update_organigram($image_url)
     {
-        Organigram::where('id', 1)->update(['image_url' => $image_url]);
+        return Organigram::where('id', 1)->update(['image_url' => $image_url]);
     }
 
     public static function store_organigram(Request $request)

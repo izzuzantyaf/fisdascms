@@ -10,7 +10,7 @@
   <script defer type="text/javascript" src="/js/app.js"></script>
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-gray-100 text-sm">
 
   <?php $logged_admin = session()->has('admin_logged_in') ? session('admin_logged_in') : null; ?>
   <x-navbar :logged-admin="$logged_admin" />

@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Organigram;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class OrganigramSeeder extends Seeder
 {
@@ -15,8 +14,8 @@ class OrganigramSeeder extends Seeder
      */
     public static function run()
     {
-        array_walk(Organigram::$initial_data, function ($organigram) {
-            DB::table('organigrams')->insert($organigram);
-        });
+        Organigram::factory()->createOne([
+            'image_url' => null,
+        ]);
     }
 }

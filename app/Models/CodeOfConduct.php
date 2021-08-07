@@ -8,10 +8,4 @@ use Illuminate\Database\Eloquent\Model;
 class CodeOfConduct extends Model
 {
     use HasFactory;
-
-    public static $initial_data = [
-        [
-            'file_url' => '',
-        ],
-    ];
 }

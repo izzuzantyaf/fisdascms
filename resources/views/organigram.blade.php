@@ -6,9 +6,9 @@
   <h1 class="text-4xl font-bold">Organigram</h1>
   <form action="/organigram" method="post" enctype="multipart/form-data">
     @csrf
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-8 bg-white rounded-md p-4 shadow-md">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8 bg-white rounded-md p-4 shadow-md">
       @if(session('upload_status'))
-      <div class="flash col-span-full lg:justify-self-start {{ session('theme') }} inline-block px-4 py-2 rounded-md">{{ session('upload_status') }}</div>
+      <div class="flash col-span-full {{ session('theme') }} inline-block px-4 py-2 rounded-md">{{ session('upload_status') }}</div>
       @endif
       <iframe class="col-span-full sm:col-span-1 w-full h-screen rounded-md flex-grow bg-gray-100" src="<?= $organigram_url ? 'https://drive.google.com/file/d/' . explode('/', $organigram_url)[5] . '/preview' : '' ?>"></iframe>
       <div class="flex flex-col gap-4">

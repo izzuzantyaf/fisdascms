@@ -7,10 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Organigram extends Model
 {
-    public static $initial_data = [
-        [
-            'image_url' => null,
-        ],
-    ];
     use HasFactory;
 }
