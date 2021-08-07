@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Admin;
 use Illuminate\Database\Seeder;
+use Faker\Factory;
 
 class AdminSeeder extends Seeder
 {
