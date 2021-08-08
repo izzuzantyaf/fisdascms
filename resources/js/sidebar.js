@@ -1,13 +1,28 @@
 const sidebar = {
+  self: document.querySelector('aside'),
+  overlay: document.querySelector('.sidebar-overlay'),
   hamburgerMenu: document.querySelector('.hamburger-menu'),
   backBtn: document.querySelector('.back-btn'),
-  self: document.querySelector('.sidebar'),
+  show() {
+    this.overlay.classList.remove('-translate-x-72')
+    this.overlay.classList.remove('w-0')
+    this.overlay.classList.replace('bg-opacity-0', 'bg-opacity-10')
+  },
+  hide() {
+    this.overlay.classList.add('-translate-x-72')
+    this.overlay.classList.add('w-0')
+    this.overlay.classList.replace('bg-opacity-10', 'bg-opacity-0')
+  },
   handleShowHide() {
     this.hamburgerMenu.addEventListener('click', () => {
-      this.self.classList.remove('-translate-x-72')
+      this.show()
     })
     this.backBtn.addEventListener('click', () => {
-      this.self.classList.add('-translate-x-72')
+      this.hide()
+    })
+    this.overlay.addEventListener('click', (e) => {
+      if (e.target != this.self)
+        this.hide()
     })
   }
 }

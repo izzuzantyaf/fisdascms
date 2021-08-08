@@ -3,7 +3,7 @@
 
         <!-- Mobile menu button-->
         <div class="flex items-center">
-            <button class="hamburger-menu lg:hidden inline-flex items-center justify-center p-2 rounded-md text-blue-700 hover:text-white hover:bg-blue-700 text-2xl" aria-expanded="false">
+            <button class="hamburger-menu lg:hidden inline-flex items-center justify-center p-2 rounded-md transition-colors duration-300 ease-in-out text-blue-700 hover:bg-blue-100 text-2xl" aria-expanded="false">
                 <i class="fas fa-bars"></i>
             </button>
 
