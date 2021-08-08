@@ -18,7 +18,10 @@ class CreateSocialMediasTable extends Migration
             $table->string('name');
             $table->string('icon')->nullable();
             $table->string('reactjs_icon')->nullable();
-            $table->text('link');
+            $table->string('color')->nullable();
+            $table->string('bg_color')->nullable();
+            $table->integer('visibility')->default(0);
+            $table->text('link')->nullable();
             $table->timestamps();
         });
     }

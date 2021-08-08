@@ -6,12 +6,12 @@ const sidebar = {
   show() {
     this.overlay.classList.remove('-translate-x-72')
     this.overlay.classList.remove('w-0')
-    this.overlay.classList.replace('bg-opacity-0', 'bg-opacity-10')
+    this.overlay.classList.replace('bg-opacity-0', 'bg-opacity-30')
   },
   hide() {
     this.overlay.classList.add('-translate-x-72')
     this.overlay.classList.add('w-0')
-    this.overlay.classList.replace('bg-opacity-10', 'bg-opacity-0')
+    this.overlay.classList.replace('bg-opacity-30', 'bg-opacity-0')
   },
   handleShowHide() {
     this.hamburgerMenu.addEventListener('click', () => {

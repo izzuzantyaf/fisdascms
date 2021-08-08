@@ -35,7 +35,7 @@
                     <i class="fas fa-cog"></i>
                     <span>Pengaturan</span>
                 </a>
-                <a href="/logout" class="flex gap-3 ite-er rounded-md px-2 py-2 text-red-500 hover:bg-red-100" role="menuitem">
+                <a href="/logout" class="flex gap-3 items-center rounded-md px-2 py-2 text-red-500 hover:bg-red-100" role="menuitem">
                     <i class="fas fa-sign-out-alt"></i>
                     <span>Keluar</span>
                 </a>

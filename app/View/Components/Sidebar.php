@@ -57,6 +57,11 @@ class Sidebar extends Component
             'icon' => 'fas fa-sitemap',
             'route' => '/organigram',
         ],
+        [
+            'name' => 'Social media',
+            'icon' => 'fas fa-thumbs-up',
+            'route' => '/social-media',
+        ],
     ];
 
     public $current_route;

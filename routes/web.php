@@ -10,6 +10,7 @@ use App\Http\Controllers\PracticumSimulatorController;
 use App\Http\Controllers\PracticumVideoController;
 use App\Http\Controllers\PreliminaryTestController;
 use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\SocialMediaController;
 use App\Http\Middleware\EnsureAdminIsLoggedIn;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -179,6 +180,11 @@ Route::middleware(EnsureAdminIsLoggedIn::class)->group(function () {
     Route::post('/schedule', function (Request $request) {
         ScheduleController::update_schedule($request);
         return redirect('/schedule');
+    });
+
+    Route::get('/social-media', function () {
+        $social_medias = SocialMediaController::get_all();
+        return view('social-media', ['social_medias' => $social_medias]);
     });
 
     Route::get('/admin-profile', function () {

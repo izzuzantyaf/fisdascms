@@ -1,6 +1,6 @@
 require('./bootstrap')
 require('@fortawesome/fontawesome-free/js/solid')
-// require('@fortawesome/fontawesome-free/js/brands')
+require('@fortawesome/fontawesome-free/js/brands')
 require('@fortawesome/fontawesome-free/js/fontawesome')
 
 const sidebar = require('./sidebar')
