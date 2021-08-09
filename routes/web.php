@@ -12,6 +12,7 @@ use App\Http\Controllers\PreliminaryTestController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\SocialMediaController;
 use App\Http\Middleware\EnsureAdminIsLoggedIn;
+use App\Models\SocialMedia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -185,6 +186,16 @@ Route::middleware(EnsureAdminIsLoggedIn::class)->group(function () {
     Route::get('/social-media', function () {
         $social_medias = SocialMediaController::get_all();
         return view('social-media', ['social_medias' => $social_medias]);
+    });
+
+    Route::put('/social-media/{id}/visibility', function (Request $request, $id) {
+        $result = SocialMediaController::update_visibility($request, $id);
+        return back()->with('result_message', $result ? $result->name . ($result->visibility ? ' dimunculkan' : ' disembunyikan') . ' pada website utama' : null);
+    });
+
+    Route::put('social-media/{id}/link', function (Request $request, $id) {
+        $result = SocialMediaController::update_link($request, $id);
+        return back()->with('result_message', $result ? "Link $result->name berhasil diubah" : null);
     });
 
     Route::get('/admin-profile', function () {

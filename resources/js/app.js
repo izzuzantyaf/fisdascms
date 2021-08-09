@@ -1,7 +1,9 @@
 require('./bootstrap')
-require('@fortawesome/fontawesome-free/js/solid')
-require('@fortawesome/fontawesome-free/js/brands')
-require('@fortawesome/fontawesome-free/js/fontawesome')
+require('@fortawesome/fontawesome-free/js/solid.min.js')
+require('@fortawesome/fontawesome-free/js/brands.min.js')
+require('@fortawesome/fontawesome-free/js/fontawesome.min.js')
+
+const { pathname } = window.location
 
 const sidebar = require('./sidebar')
 sidebar.handleShowHide()
@@ -15,8 +17,15 @@ visibilityToggler.handleOnOff()
 const inputField = require('./input-field')
 inputField.handleActiveInactive()
 
-const assistantModal = require('./assistant-modal')
-assistantModal.handleAddNewAssistant()
-assistantModal.handleClose()
-assistantModal.handleEditAssistant()
-assistantModal.handleDeleteAssistant()
+if (pathname == '/assistants') {
+  const assistantModal = require('./assistant-modal')
+  assistantModal.handleAddNewAssistant()
+  assistantModal.handleClose()
+  assistantModal.handleEditAssistant()
+  assistantModal.handleDeleteAssistant()
+}
+
+if (pathname == '/social-media') {
+  const socialMediaCard = require('./social-media-card')
+  socialMediaCard.handleEditLink()
+}
