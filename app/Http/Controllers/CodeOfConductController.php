@@ -20,7 +20,7 @@ class CodeOfConductController extends Controller
         foreach ($request_input as $key => $value) {
             [$column, $id] = explode('-', $key);
             CodeOfConduct::where('id', $id)
-                ->update([$column => 'https://drive.google.com/file/d/' . explode('/', $value[5]) . '/preview']);
+                ->update([$column => 'https://drive.google.com/file/d/' . explode('/', $value)[5] . '/preview']);
         }
     }
 }
