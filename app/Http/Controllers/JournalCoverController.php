@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class JournalCoverController extends Controller
 {
-    public static function get_journal_covers()
+    public static function get_all()
     {
         return PracticumModule::select('id', 'name', 'acronym', 'icon', 'journal_cover_link', 'journal_cover_visibility')
             ->where('lang', 'id')
@@ -15,7 +15,7 @@ class JournalCoverController extends Controller
             ->get();
     }
 
-    public static function get_visible_journal_covers()
+    public static function get_visible()
     {
         return PracticumModule::select('id', 'name', 'acronym', 'reactjs_icon', 'journal_cover_link')
             ->where('lang', 'id')
@@ -24,15 +24,24 @@ class JournalCoverController extends Controller
             ->get();
     }
 
-    public static function update_journal_cover(Request $request)
+    public static function update(Request $request)
     {
-        $request_input = $request->input();
-        array_pop($request_input);
-        array_shift($request_input);
-        foreach ($request_input as $key => $value) {
-            [$column, $id] = explode('-', $key);
-            PracticumModule::where('id', $id)
-                ->update([$column => $value]);
+        $journal_covers = $request->input('journal_covers');
+        $updated_journal_covers = [];
+        foreach ($journal_covers as $key => $journal_cover) {
+            $existing_journal_cover = PracticumModule::find($key);
+            if ($existing_journal_cover->journal_cover_link != $journal_cover['link'])
+                $existing_journal_cover->journal_cover_link = $journal_cover['link'];
+            else if ($existing_journal_cover->journal_cover_visibility != $journal_cover['visibility'])
+                $existing_journal_cover->journal_cover_visibility = $journal_cover['visibility'];
+            else
+                continue;
+            $is_update_success = $existing_journal_cover->save();
+            if ($is_update_success) {
+                $updated_journal_cover = PracticumModule::find($key);
+                array_push($updated_journal_covers, $updated_journal_cover->acronym);
+            }
         }
+        return $updated_journal_covers;
     }
 }

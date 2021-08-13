@@ -1,4 +1,4 @@
-<nav class="bg-white">
+<nav class="bg-white shadow-md">
     <div class="container mx-auto relative grid grid-cols-2 px-4 h-16">
 
         <!-- Mobile menu button-->

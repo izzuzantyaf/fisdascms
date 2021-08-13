@@ -24,7 +24,8 @@ class CreatePracticumModulesTable extends Migration
             $table->integer('journal_cover_visibility')->default(0);
             $table->string('preliminary_test_link')->nullable();
             $table->integer('preliminary_test_visibility')->default(0);
-            $table->string('video_link')->nullable();
+            $table->string('video_url')->nullable();
+            $table->string('video_embed_url')->nullable();
             $table->integer('video_visibility')->default(0);
             $table->string('simulator_link')->nullable();
             $table->integer('simulator_visibility')->default(0);

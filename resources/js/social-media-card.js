@@ -1,7 +1,9 @@
-const socialMediaCard = {
-  self: Array.from(document.querySelectorAll('.social-media-card')),
-
-  handleEditLink() {
+class SocialMediaCard {
+  self = Array.from(document.querySelectorAll('.social-media-card'))
+  hydrate() {
+    this.#handleEditLink()
+  }
+  #handleEditLink() {
     this.self.forEach((socmedCard) => {
       const socmedLink = socmedCard.querySelector('.social-media-link')
       const linkInputField = socmedCard.querySelector('.social-media-link-input-field')
@@ -29,6 +31,6 @@ const socialMediaCard = {
         saveLinkBtn.classList.add('hidden')
       })
     })
-  },
+  }
 }
-module.exports = socialMediaCard
+module.exports = new SocialMediaCard

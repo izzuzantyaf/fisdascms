@@ -21,7 +21,7 @@ class AdminSeeder extends Seeder
                 "name" => "MSI Fisdas",
                 "email" => "msi.fisdas@gmail.com",
                 "password" => "862973f4332930096b613fca3f90bbe4",
-                "remember_token" => "610e6de2f37cb"
+                "remember_token" => "610e6de2f37cb",
             ],
             [
                 "username" => "izzuzantyaf",

@@ -12,7 +12,6 @@ use App\Http\Controllers\PreliminaryTestController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\SocialMediaController;
 use App\Http\Middleware\EnsureAdminIsLoggedIn;
-use App\Models\SocialMedia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -38,27 +37,31 @@ Route::middleware(EnsureAdminIsLoggedIn::class)->group(function () {
     });
 
     Route::get('/code-of-conduct', function () {
-        $code_of_conduct = CodeOfConductController::get_code_of_conduct();
+        $code_of_conduct = CodeOfConductController::get_all()[0];
         return view('code-of-conduct', [
-            'code_of_conduct' => $code_of_conduct[0],
+            'code_of_conduct' => $code_of_conduct,
         ]);
     });
 
-    Route::post('/code-of-conduct', function (Request $request) {
-        CodeOfConductController::update_code_of_conduct($request);
-        return redirect('/code-of-conduct');
+    Route::put('/code-of-conduct/{id}', function (Request $request, $id) {
+        $result = CodeOfConductController::update($request, $id);
+        return redirect('/code-of-conduct')->with([
+            'code_of_conduct_update_message' => $result ? 'Tata tertib berhasil diupdate' : null
+        ]);
     });
 
     Route::get('/practicum-handouts', function () {
-        $practicum_handouts = PracticumHandoutController::get_handouts();
+        $practicum_handouts = PracticumHandoutController::get_all();
         return view('practicum-handouts', [
             'practicum_handouts' => $practicum_handouts,
         ]);
     });
 
-    Route::post('/practicum-handouts', function (Request $request) {
-        PracticumHandoutController::update_handouts($request);
-        return redirect('practicum-handouts');
+    Route::put('/practicum-handouts', function (Request $request) {
+        $updated_handouts = PracticumHandoutController::update($request);
+        return redirect('practicum-handouts')->with([
+            'handout_update_message' => empty($updated_handouts) ? null : 'Modul ' . implode(', ', $updated_handouts) . ' berhasil diupdate'
+        ]);
     });
 
     Route::get('/assistants', function () {
@@ -87,100 +90,89 @@ Route::middleware(EnsureAdminIsLoggedIn::class)->group(function () {
     });
 
     Route::get('/preliminary-test', function () {
-        $preliminary_tests = PreliminaryTestController::get_preliminary_tests();
+        $preliminary_tests = PreliminaryTestController::get_all();
         return view('preliminary-test', [
             'preliminary_tests' => $preliminary_tests,
         ]);
     });
 
-    Route::post('/preliminary-test', function (Request $request) {
-        PreliminaryTestController::update_preliminary_test($request);
-        return redirect('preliminary-test');
+    Route::put('/preliminary-test', function (Request $request) {
+        $result = PreliminaryTestController::update($request);
+        return redirect('preliminary-test')->with([
+            'preliminary_test_update_message' => $result ? 'TP ' . implode(', ', $result) . ' berhasil diupdate' : null
+        ]);
     });
 
     Route::get('/practicum-video', function () {
-
-        $practicum_videos = PracticumVideoController::get_practicum_videos();
+        $practicum_videos = PracticumVideoController::get_all();
         return view('practicum-video', [
             'practicum_videos' => $practicum_videos,
         ]);
     });
 
-    Route::post('/practicum-video', function (Request $request) {
-        PracticumVideoController::update_practicum_video($request);
-        return redirect('/practicum-video');
+    Route::put('/practicum-video', function (Request $request) {
+        $result = PracticumVideoController::update($request);
+        return redirect('/practicum-video')->with([
+            'practicum_video_update_message' => !empty($result) ? 'Video ' . implode(', ', $result) . ' berhasil diupdate' : null
+        ]);
     });
 
     Route::get('/practicum-simulator', function () {
-
-        $practicum_simulators = PracticumSimulatorController::get_practicum_simulators();
+        $practicum_simulators = PracticumSimulatorController::get_all();
         return view('practicum-simulator', [
             'practicum_simulators' => $practicum_simulators,
         ]);
     });
 
-    Route::post('/practicum-simulator', function (Request $request) {
-        PracticumSimulatorController::update_practicum_simulator($request);
-        return redirect('/practicum-simulator');
+    Route::put('/practicum-simulator', function (Request $request) {
+        $result = PracticumSimulatorController::update($request);
+        return redirect('/practicum-simulator')->with([
+            'practicum_simulator_update_message' => !empty($result) ? 'Simulator ' . implode(', ', $result) . ' berhasil diupdate' : null
+        ]);
     });
 
     Route::get('/journal-cover', function () {
-        $journal_covers = JournalCoverController::get_journal_covers();
+        $journal_covers = JournalCoverController::get_all();
         return view('journal-cover', [
             'journal_covers' => $journal_covers,
         ]);
     });
 
-    Route::post('/journal-cover', function (Request $request) {
-        JournalCoverController::update_journal_cover($request);
-        return redirect('/journal-cover');
-    });
-
-    Route::get('/organigram', function () {
-        $organigram_url = OrganigramController::get_all_organigram()[0]->image_url;
-        $signature = hash('sha256', 'cloud_name='
-            . env('CLOUDINARY_USERNAME')
-            . '&timestamp=' . time() + 300 . '&username='
-            . env('CLOUDINARY_USERNAME')
-            . env('CLOUDINARY_SECRET_API'));
-        return view('organigram', [
-            'organigram_url' => $organigram_url,
-            'signature' => $signature,
+    Route::put('/journal-cover', function (Request $request) {
+        $result = JournalCoverController::update($request);
+        return redirect('/journal-cover')->with([
+            'journal_cover_update_message' => !empty($result) ? 'Cover jurnal ' . implode(', ', $result) . ' berhasil diupdate' : null
         ]);
     });
 
-    Route::post('/organigram', function (Request $request) {
-        $organigram_url = $request->input('organigram_url');
-        if ($organigram_url) {
-            OrganigramController::update_organigram($organigram_url);
-            return redirect('/organigram')
-                ->with('upload_status', 'Organigram berhasil diupdate')
-                ->with('theme', 'bg-green-400 text-white');
-        }
-        return redirect('/organigram')
-            ->with('upload_status', 'Organigram gagal diupdate')
-            ->with('theme', 'bg-red-400 text-white');
+    Route::get('/organigram', function () {
+        $organigram = OrganigramController::get_all()[0];
+        return view('organigram', [
+            'organigram' => $organigram,
+        ]);
+    });
+
+    Route::put('/organigram/{id}', function (Request $request, $id) {
+        $is_update_success = OrganigramController::update($request, $id);
+        return redirect('/organigram')->with([
+            'organigram_update_message' => $is_update_success ? 'Organigram berhasil diupdate' : null
+        ]);
     });
 
     Route::get('/schedule', function () {
         $class_schedule = ScheduleController::get_class_schedule();
         $module_schedules = ScheduleController::get_module_schedule();
-        $signature = hash('sha256', 'cloud_name='
-            . env('CLOUDINARY_USERNAME')
-            . '&timestamp=' . time() + 300 . '&username='
-            . env('CLOUDINARY_USERNAME')
-            . env('CLOUDINARY_SECRET_API'));
         return view('schedule', [
             'class_schedule' => $class_schedule,
             'module_schedules' => $module_schedules,
-            'signature' => $signature,
-            'time' => time() + 300,
         ]);
     });
 
-    Route::post('/schedule', function (Request $request) {
-        ScheduleController::update_schedule($request);
-        return redirect('/schedule');
+    Route::put('/schedule', function (Request $request) {
+        $result = ScheduleController::update($request);
+        return redirect('/schedule')->with([
+            'schedule_update_message' => $result ? ucfirst(implode(', ', $result) . ' berhasil diupdate') : null
+        ]);
     });
 
     Route::get('/social-media', function () {

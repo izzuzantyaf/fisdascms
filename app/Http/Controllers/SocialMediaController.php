@@ -15,6 +15,8 @@ class SocialMediaController extends Controller
     public static function update_link(Request $request, $id)
     {
         $social_media = SocialMedia::find($id);
+        if ($social_media->link == $request->input('social_media_link'))
+            return false;
         $social_media->link = $request->input('social_media_link');
         return $social_media->save() ? SocialMedia::find($id) : false;
     }

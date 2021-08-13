@@ -6,18 +6,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>@yield('title','Dashboard') | Fisdas CMS</title>
   <link rel="stylesheet" href="/css/app.css">
-  <script type="text/javascript" src="https://media-library.cloudinary.com/global/all.js"></script>
+  <!-- <script type="text/javascript" src="https://media-library.cloudinary.com/global/all.js"></script> -->
   <script defer type="text/javascript" src="/js/app.js"></script>
 </head>
 
-<body class="bg-gray-100 text-sm">
+<body class="bg-gray-50 text-sm">
 
   <?php $logged_admin = session()->has('admin_logged_in') ? session('admin_logged_in') : null; ?>
+  <!-- navbar -->
   <x-navbar :logged-admin="$logged_admin" />
   <div class="lg:container mx-auto">
     <div class="flex gap-4 min-h-screen">
       <?php $current_route = explode('/', url()->current())[3] ?>
+      <!-- sidebar -->
       <x-sidebar :current-route="$current_route" />
+      <!-- main content -->
       @yield('content')
     </div>
   </div>

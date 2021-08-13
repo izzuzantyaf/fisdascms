@@ -7,9 +7,14 @@ use Illuminate\Http\Request;
 
 class OrganigramController extends Controller
 {
-    public static function update_organigram($image_url)
+    public static function update(Request $request, $id)
     {
-        return Organigram::where('id', 1)->update(['image_url' => $image_url]);
+        $organigram = Organigram::find($id);
+        if ($organigram->original_url == $request->input('organigram_url'))
+            return false;
+        $organigram->original_url = $request->input('organigram_url');
+        $organigram->prepared_url = str_replace('view', 'preview', $request->input('organigram_url'));
+        return $organigram->save();
     }
 
     public static function store_organigram(Request $request)
@@ -22,8 +27,8 @@ class OrganigramController extends Controller
         return false;
     }
 
-    public static function get_all_organigram()
+    public static function get_all()
     {
-        return Organigram::firstWhere('id', 1)->get();
+        return Organigram::all();
     }
 }

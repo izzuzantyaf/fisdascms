@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class PreliminaryTestController extends Controller
 {
-    public static function get_preliminary_tests()
+    public static function get_all()
     {
         return PracticumModule::select('id', 'name', 'acronym', 'icon', 'preliminary_test_link', 'preliminary_test_visibility')
             ->where('lang', 'id')
@@ -15,7 +15,7 @@ class PreliminaryTestController extends Controller
             ->get();
     }
 
-    public static function get_visible_preliminary_tests()
+    public static function get_visible()
     {
         return PracticumModule::select('id', 'name', 'acronym', 'reactjs_icon', 'preliminary_test_link', 'preliminary_test_visibility')
             ->where('lang', 'id')
@@ -24,15 +24,23 @@ class PreliminaryTestController extends Controller
             ->get();
     }
 
-    public static function update_preliminary_test(Request $request)
+    public static function update(Request $request)
     {
-        $request_input = $request->input();
-        array_pop($request_input);
-        array_shift($request_input);
-        foreach ($request_input as $key => $value) {
-            [$column, $id] = explode('-', $key);
-            PracticumModule::where('id', $id)
-                ->update([$column => $value]);
+        $preliminary_tests = $request->input('preliminary_tests');
+        $updated_preliminary_tests = [];
+        foreach ($preliminary_tests as $key => $preliminary_test) {
+            $existing_preliminary_test = PracticumModule::find($key);
+            if ($existing_preliminary_test->preliminary_test_link != $preliminary_test['link'])
+                $existing_preliminary_test->preliminary_test_link = $preliminary_test['link'];
+            else if ($existing_preliminary_test->preliminary_test_visibility != $preliminary_test['visibility'])
+                $existing_preliminary_test->preliminary_test_visibility = $preliminary_test['visibility'];
+            else
+                continue;
+            $is_update_success = $existing_preliminary_test->save();
+            if ($is_update_success) {
+                array_push($updated_preliminary_tests, $existing_preliminary_test->acronym);
+            }
         }
+        return $updated_preliminary_tests;
     }
 }

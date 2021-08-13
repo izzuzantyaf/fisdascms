@@ -16,7 +16,8 @@ class CreateModuleSchedulesTable extends Migration
         Schema::create('module_schedules', function (Blueprint $table) {
             $table->id();
             $table->string('faculty');
-            $table->text('image_url')->nullable();
+            $table->text('original_url')->nullable()->default(null);
+            $table->text('prepared_url')->nullable()->default(null);
             $table->timestamps();
         });
     }

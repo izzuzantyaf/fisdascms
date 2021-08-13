@@ -16,6 +16,9 @@ module.exports = {
         cyan: colors.cyan,
         sky: colors.sky,
       },
+      transitionDelay: {
+        '5000': '5000ms',
+      },
     },
   },
   variants: {

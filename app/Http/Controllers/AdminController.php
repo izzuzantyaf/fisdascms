@@ -21,17 +21,17 @@ class AdminController extends Controller
         $password_confirm = $request->input('password_confirm');
         $admin->remember_token = uniqid();
 
-        $is_username_is_used = Admin::firstWhere('username', $admin->username) ? true : false;
-        $is_email_is_used = Admin::firstWhere('email', $admin->email) ? true : false;
+        $is_username_used = Admin::firstWhere('username', $admin->username) ? true : false;
+        $is_email_used = Admin::firstWhere('email', $admin->email) ? true : false;
 
-        if (!$is_username_is_used && !$is_email_is_used && ($admin->password === $password_confirm)) {
+        if (!$is_username_used && !$is_email_used && ($admin->password === $password_confirm)) {
             // encrypt the password
             $admin->password = md5($admin->password);
             // add new admin into database
             return $admin->save();
         } else return [
-            'register_username_error' => $is_username_is_used,
-            'register_email_error' => $is_email_is_used,
+            'register_username_error' => $is_username_used,
+            'register_email_error' => $is_email_used,
             'register_password_error' => !($admin->password === $password_confirm),
         ];
     }
@@ -57,7 +57,8 @@ class AdminController extends Controller
                     'name' => $admin_from_db['name'],
                 ]]);
             return true;
-        } else return false;
+        } else
+            return false;
     }
 
     public static function logout(Request $request)

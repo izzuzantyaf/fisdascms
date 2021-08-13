@@ -15,7 +15,8 @@ class CodeOfConductSeeder extends Seeder
     public static function run()
     {
         CodeOfConduct::factory()->createOne([
-            'file_url' => null,
+            'original_url' => null,
+            'prepared_url' => null,
         ]);
     }
 }

@@ -14,8 +14,6 @@ class ClassScheduleSeeder extends Seeder
      */
     public static function run()
     {
-        ClassSchedule::factory()->createOne([
-            'image_url' => null,
-        ]);
+        ClassSchedule::factory()->createOne();
     }
 }

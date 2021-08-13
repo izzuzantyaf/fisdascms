@@ -4,10 +4,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
   <title>Login | Fisdas CMS</title>
   <link rel="stylesheet" href="/css/app.css">
-
+  <script defer type="text/javascript" src="/js/app.js"></script>
 </head>
 
 <body>
@@ -16,7 +15,7 @@
   <x-banner />
   @endif
 
-  <div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-xs w-full">
 
       <img src="https://res.cloudinary.com/hxquybrtx/image/upload/v1613030969/logo/new_fisdas_logo_gipexs.png" alt="fisdas cms logo" class="w-32 mx-auto">
@@ -55,7 +54,6 @@
     </div>
   </div>
 
-  <script type="text/javascript" src="/js/app.js"></script>
 </body>
 
 </html>

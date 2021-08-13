@@ -18,14 +18,11 @@ const inputField = require('./input-field')
 inputField.handleActiveInactive()
 
 if (pathname == '/assistants') {
-  const assistantModal = require('./assistant-modal')
-  assistantModal.handleAddNewAssistant()
-  assistantModal.handleClose()
-  assistantModal.handleEditAssistant()
-  assistantModal.handleDeleteAssistant()
+  const assistant = require('./assistant')
+  assistant.hydrate()
 }
 
 if (pathname == '/social-media') {
   const socialMediaCard = require('./social-media-card')
-  socialMediaCard.handleEditLink()
+  socialMediaCard.hydrate()
 }

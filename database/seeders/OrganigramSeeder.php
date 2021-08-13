@@ -15,7 +15,8 @@ class OrganigramSeeder extends Seeder
     public static function run()
     {
         Organigram::factory()->createOne([
-            'image_url' => null,
+            'original_url' => null,
+            'prepared_url' => null,
         ]);
     }
 }

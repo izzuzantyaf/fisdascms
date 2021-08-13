@@ -7,20 +7,18 @@ use Illuminate\Http\Request;
 
 class CodeOfConductController extends Controller
 {
-    public static function get_code_of_conduct()
+    public static function get_all()
     {
-        return CodeOfConduct::select()->get();
+        return CodeOfConduct::all();
     }
 
-    public static function update_code_of_conduct(Request $request)
+    public static function update(Request $request, $id)
     {
-        $request_input = $request->input();
-        array_pop($request_input);
-        array_shift($request_input);
-        foreach ($request_input as $key => $value) {
-            [$column, $id] = explode('-', $key);
-            CodeOfConduct::where('id', $id)
-                ->update([$column => 'https://drive.google.com/file/d/' . explode('/', $value)[5] . '/preview']);
-        }
+        $code_of_conduct = CodeOfConduct::find($id);
+        if ($code_of_conduct->original_url == $request->input('file_url'))
+            return false;
+        $code_of_conduct->original_url = $request->input('file_url');
+        $code_of_conduct->prepared_url = str_replace('view', 'preview', $request->input('file_url'));
+        return $code_of_conduct->save();
     }
 }

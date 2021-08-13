@@ -7,30 +7,37 @@ use Illuminate\Http\Request;
 
 class PracticumHandoutController extends Controller
 {
-    public static function get_handouts()
+    public static function get_all()
     {
-        return PracticumHandout::orderBy('faculty', 'desc')
-            ->orderBy('lang', 'desc')
+        return PracticumHandout::orderBy('faculty', 'DESC')
+            ->orderBy('lang', 'DESC')
             ->get();
     }
 
     public static function get_visible_handouts()
     {
         return PracticumHandout::where('visibility', 1)
-            ->orderBy('faculty', 'desc')
-            ->orderBy('lang', 'desc')
+            ->orderBy('faculty', 'DESC')
+            ->orderBy('lang', 'DESC')
             ->get();
     }
 
-    public static function update_handouts(Request $request)
+    public static function update(Request $request)
     {
-        $request_input = $request->input();
-        array_pop($request_input);
-        array_shift($request_input);
-        foreach ($request_input as $key => $value) {
-            [$column, $id] = explode('-', $key);
-            PracticumHandout::where('id', $id)
-                ->update([$column => $value]);
+        $handouts = $request->input('handouts');
+        $updated_handouts = [];
+        foreach ($handouts as $key => $handout) {
+            $existing_handout = PracticumHandout::find($key);
+            if ($existing_handout->file_url != $handout['file_url'])
+                $existing_handout->file_url = $handout['file_url'];
+            else if ($existing_handout->visibility != $handout['visibility'])
+                $existing_handout->visibility = $handout['visibility'];
+            else
+                continue;
+            $is_update_success = $existing_handout->save();
+            if ($is_update_success)
+                array_push($updated_handouts, "$existing_handout->faculty ($existing_handout->lang)");
         }
+        return $updated_handouts;
     }
 }

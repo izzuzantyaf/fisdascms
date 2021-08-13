@@ -2,7 +2,7 @@
 @section('title','Profile')
 
 @section('content')
-<div class="admin-profile flex flex-col flex-grow gap-6 p-8">
+<div class="admin-profile flex flex-col flex-grow gap-6 pt-8 p-4">
 
   <a href="/" class="self-start">
     <div class="flex gap-4 items-center">

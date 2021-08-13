@@ -4,7 +4,6 @@ const visibilityToggler = {
     this.visibilityTogglers.forEach((toggler) => {
       const visibilityInput = toggler.querySelector('input#' + toggler.id)
       toggler.addEventListener('click', () => {
-        visibilityInput.toggleAttribute('disabled')
         if (parseInt(visibilityInput.value)) {
           visibilityInput.value = 0
           toggler.classList.replace('bg-green-500', 'bg-gray-300')

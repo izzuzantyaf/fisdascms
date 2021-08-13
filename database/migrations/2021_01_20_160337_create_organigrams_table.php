@@ -15,7 +15,8 @@ class CreateOrganigramsTable extends Migration
     {
         Schema::create('organigrams', function (Blueprint $table) {
             $table->id();
-            $table->text('image_url')->nullable();
+            $table->text('original_url')->nullable();
+            $table->text('prepared_url')->nullable();
             $table->timestamps();
         });
     }
