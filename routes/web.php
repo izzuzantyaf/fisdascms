@@ -65,28 +65,28 @@ Route::middleware(EnsureAdminIsLoggedIn::class)->group(function () {
     });
 
     Route::get('/assistants', function () {
-        $assistants = AssistantController::get_all_assistants();
+        $assistants = AssistantController::get_all();
         return view('assistants', ['assistants' => $assistants]);
     });
 
     Route::post('/assistants', function (Request $request) {
-        $result = AssistantController::add_assistant($request);
+        $result = AssistantController::insert($request);
         return back()->with('result_message', $result ? 'Asisten berhasil ditambahkan' : null);
     });
 
     Route::put('/assistants/{id}', function (Request $request, $id) {
-        $result = AssistantController::update_assistant($request, $id);
+        $result = AssistantController::update($request, $id);
         return back()->with('result_message', $result ? 'Asisten berhasil diubah' : null);
     });
 
     Route::delete('/assistants/{id}', function ($id) {
-        $result = AssistantController::delete_assistant($id);
+        $result = AssistantController::delete($id);
         return back()->with('result_message', $result ? 'Asisten berhasil dihapus' : null);
     });
 
     Route::post('/assistants/delete-multiple', function (Request $request) {
-        $result = AssistantController::delete_multiple_assistants($request);
-        return back()->with('result_message', "Berhasil menghapus $result asisten");
+        $result = AssistantController::delete_multiple($request);
+        return back()->with('result_message', $result ? "Berhasil menghapus $result asisten" : null);
     });
 
     Route::get('/preliminary-test', function () {

@@ -6,16 +6,14 @@
   <h1 class="text-4xl font-bold">Asisten</h1>
 
   @if(session('result_message'))
-  <div class="bg-green-400 text-white rounded-md py-2 px-4">
-    {{ session('result_message')}}
-  </div>
+  <x-success-banner message="{{ session('result_message')}}" />
   @endif
 
   <div class="flex gap-4 justify-between">
-    <button type="submit" form="assistant-table" class="transition-colors duration-300 ease-in-out bg-red-600 hover:bg-red-700 text-white rounded-md py-2 px-2">
+    <button type="submit" form="assistant-table" class="transition-colors duration-300 bg-red-600 hover:bg-red-700 text-white rounded-md py-2 px-2">
       <i class="fas fa-trash-alt"></i>
     </button>
-    <button class="add-assistant-btn transition-colors duration-300 ease-in-out bg-blue-600 hover:bg-blue-700 text-white rounded-md py-2 px-6">
+    <button class="add-assistant-btn transition-colors duration-300 bg-blue-600 hover:bg-blue-700 text-white rounded-md py-2 px-6">
       <i class="fas fa-plus"></i>
       Asisten baru
     </button>
@@ -48,17 +46,17 @@
             'feedback_link' => $feedback_link,
           ]) { ?>
             <tr class="text-xs">
-              <td class="px-4 py-2 font-medium text-gray-900"><input type="checkbox" name="assistant_selected[]" id="<?= $id ?>" value="<?= $id ?>"></td>
+              <td class="px-4 py-2 font-medium text-gray-900"><input type="checkbox" class="cursor-pointer" name="assistant_selected[]" id="<?= $id ?>" value="<?= $id ?>"></td>
               <input type="hidden" name="assistant_id" value="<?= $id ?>">
-              <td class="px-4 py-2 text-right font-medium">
-                <div class="edit-assistant-icon cursor-pointer">
-                  <i class="fas fa-pencil-alt text-indigo-600 hover:text-indigo-900"></i>
-                </div>
+              <td class="px-4 py-2 font-medium">
+                <button type="button" class="edit-assistant-icon hover:bg-indigo-100 cursor-pointer min-w-full rounded-md p-2">
+                  <i class="fas fa-pencil-alt text-indigo-600"></i>
+                </button>
               </td>
-              <td class="px-4 py-2 text-right font-medium">
-                <div class="delete-assistant-icon cursor-pointer">
-                  <i class="fas fa-trash-alt text-red-600 hover:text-red-900 cursor-pointer"></i>
-                </div>
+              <td class="px-4 py-2 font-medium">
+                <button type="button" class="delete-assistant-icon hover:bg-red-100 cursor-pointer min-w-full rounded-md p-2">
+                  <i class="fas fa-trash-alt text-red-600"></i>
+                </button>
               </td>
               <td class="assistant-name px-4 py-2 font-medium text-gray-900 capitalize"><?= $name ?></td>
               <td class="assistant-code px-4 py-2 text-gray-900 uppercase"><?= $code ?></td>
