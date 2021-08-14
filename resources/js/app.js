@@ -14,8 +14,8 @@ avatar.showHideProfileDropdown()
 const visibilityToggler = require('./visibility-toggler')
 visibilityToggler.handleOnOff()
 
-const inputField = require('./input-field')
-inputField.handleActiveInactive()
+const successBanner = require('./success-banner')
+successBanner.hydrate()
 
 if (pathname == '/assistants') {
   const assistant = require('./assistant')

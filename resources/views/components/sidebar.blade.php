@@ -2,7 +2,7 @@
     <aside class="py-4 pr-4 w-64 h-full lg:h-auto text-gray-500 bg-white lg:shadow-xl rounded-lg overflow-y-auto">
         <div class="sidebar-header flex flex-col pl-6">
             <div class="back-btn cursor-pointer lg:hidden self-end text-xl"><i class="fas fa-arrow-left"></i></div>
-            <div class="text-2xl font-bold text-gray-800 dark:text-gray-200">
+            <div class="text-2xl font-bold text-gray-800">
                 Fisdas CMS
             </div>
         </div>
