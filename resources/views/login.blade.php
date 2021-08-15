@@ -1,59 +1,34 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+@extends('layouts.html')
+@section('title', 'Login')
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Login | Fisdas CMS</title>
-  <link rel="stylesheet" href="/css/app.css">
-  <script defer type="text/javascript" src="/js/app.js"></script>
-</head>
-
-<body>
-
-  @if(session('registration_message'))
-  <x-banner />
-  @endif
-
-  <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-xs w-full">
-
-      <img src="https://res.cloudinary.com/hxquybrtx/image/upload/v1613030969/logo/new_fisdas_logo_gipexs.png" alt="fisdas cms logo" class="w-32 mx-auto">
-
-      <form action="/login" method="POST">
-        @csrf
-        <input type="hidden" name="remember" value="true">
-        <div class="flex flex-col gap-4 mt-8">
-
-          <h2 class="text-3xl font-extrabold text-gray-900 self-center">
-            Log in dulu
-          </h2>
-
-          <input id="username" name="username" type="text" autocomplete="on" required class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Username" value="{{ old('username') }}">
-
-          <input id="password" name="password" type="password" autocomplete="off" required class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Password" value="{{ old('password') }}">
-
-          @if(session('login_error'))
-          <div class="text-red-600 text-xs">Username atau password kamu salah</div>
-          @endif
-
-          <div class="text-sm py-2 self-end">
-            <a href="#" class="font-medium text-blue-600 hover:text-blue-500">
-              Aduh, lupa password?
-            </a>
-          </div>
-
-          <button type="submit" name="btn_login" value="true" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-            Masuk
-          </button>
-
-          <p class="self-center text-xs">Belum punya akun?, <a href="/register" class="text-blue-500">Daftar disini</a></p>
-        </div>
-
-      </form>
-    </div>
+@section('main')
+@if(session('registration_message'))
+<x-banner />
+@endif
+<div class="min-h-screen flex items-center justify-center p-4 sm:p-6 lg:p-8">
+  <div class="flex flex-col w-full max-w-xs items-stretch gap-4">
+    <img src="https://res.cloudinary.com/hxquybrtx/image/upload/v1613030969/logo/new_fisdas_logo_gipexs.png" alt="fisdas cms logo" class="w-32 mx-auto">
+    <h2 class="text-3xl font-extrabold self-center">
+      Log in dulu
+    </h2>
+    <form action="/login" method="POST" class="flex flex-col gap-4">
+      @csrf
+      <input type="hidden" name="remember" value="true">
+      <input id="username" name="username" type="text" autocomplete="on" required class="rounded-md w-full px-3 py-2 border border-gray-300 placeholder-gray-500 focus:outline-none focus:border-indigo-500" placeholder="Username" value="{{ old('username') }}">
+      <input id="password" name="password" type="password" autocomplete="off" required class="rounded-md w-full px-3 py-2 border border-gray-300 placeholder-gray-500 focus:outline-none focus:border-indigo-500" placeholder="Password" value="{{ old('password') }}">
+      @error('login_error')
+      <div class="text-red-600 text-xs">{{ $message }}</div>
+      @enderror
+      <div class="text-sm py-2 self-end">
+        <a href="#" class="font-medium text-blue-600 hover:text-blue-500">
+          Aduh, lupa password?
+        </a>
+      </div>
+      <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+        Masuk
+      </button>
+    </form>
+    <p class="self-center text-xs">Belum punya akun?, <a href="/register" class="text-blue-500">Daftar disini</a></p>
   </div>
-
-</body>
-
-</html>
+</div>
+@endsection

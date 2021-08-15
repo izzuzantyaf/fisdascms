@@ -4,15 +4,19 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AssistantController;
 use App\Http\Controllers\CodeOfConductController;
 use App\Http\Controllers\JournalCoverController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\OrganigramController;
 use App\Http\Controllers\PracticumHandoutController;
 use App\Http\Controllers\PracticumSimulatorController;
 use App\Http\Controllers\PracticumVideoController;
 use App\Http\Controllers\PreliminaryTestController;
+use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\SocialMediaController;
 use App\Http\Middleware\EnsureAdminIsLoggedIn;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -197,21 +201,25 @@ Route::middleware(EnsureAdminIsLoggedIn::class)->group(function () {
     });
 });
 
-Route::get('/login', function (Request $request) {
-    if ($request->session()->has('admin_logged_in')) return redirect('/');
+Route::get('/login', function () {
+    if (Auth::check())
+        return redirect('/');
     return view('login');
 })->name('login');
 
 Route::post('/login', function (Request $request) {
-    $admin_controller = new AdminController;
-    $login_status = $admin_controller->login($request);
-    if ($login_status) return redirect('/');
-    return back()->withInput()->with('login_error', true);
+    $is_authenticated = LoginController::authenticate($request);
+    if ($is_authenticated)
+        return redirect('/');
+    else
+        return back()->withErrors([
+            'login_error' => 'Username atau password kamu mungkin salah'
+        ]);
 });
 
 Route::get('/logout', function (Request $request) {
-    AdminController::logout($request);
-    return redirect('login');
+    LogoutController::logout($request);
+    return redirect('/login');
 });
 
 Route::get('/register', function () {
@@ -219,13 +227,7 @@ Route::get('/register', function () {
 });
 
 Route::post('/register', function (Request $request) {
-    $admin_controller = new AdminController;
-    $register_status = $admin_controller->register($request);
-    if ($register_status === true)
-        return redirect('login')->with('registration_message', 'Registrasi berhasil, kamu sekarang admin.');
-    else
-        return back()->withInput()
-            ->with('register_username_error', $register_status['register_username_error'])
-            ->with('register_email_error', $register_status['register_email_error'])
-            ->with('register_password_error', $register_status['register_password_error']);
+    $is_register_successfull = RegisterController::register($request);
+    if ($is_register_successfull)
+        return redirect('/login')->with('registration_message', 'Registrasi berhasil, kamu sekarang admin.');
 });

@@ -1,66 +1,41 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+@extends('layouts.html')
+@section('title', 'Register')
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Login | Fisdas CMS</title>
-  <link rel="stylesheet" href="/css/app.css">
-  <script type="text/javascript" src="/js/app.js"></script>
-</head>
-
-<body>
-  <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-xs w-full space-y-8">
-      <div>
-        <img src="https://res.cloudinary.com/hxquybrtx/image/upload/v1613030969/logo/new_fisdas_logo_gipexs.png" alt="fisdas cms logo" class="w-32 mx-auto">
-        <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
-          Buat akun
-        </h2>
-      </div>
-      <form class="mt-8 space-y-6" action="/register" method="POST">
-        @csrf
-        <div class="flex flex-col gap-2">
-          <div>
-            <label for="username" class="sr-only">Username</label>
-            <input id="username" name="username" type="text" autocomplete="on" required class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Username" value="{{ old('username') }}">
-          </div>
-          @if(session('register_username_error'))
-          <div class="text-red-600 text-xs">Username sudah dipakai</div>
-          @endif
-          <div>
-            <label for="email" class="sr-only">Email</label>
-            <input id="email" name="email" type="email" autocomplete="on" required class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Email" value="{{ old('email') }}">
-          </div>
-          @if(session('register_email_error'))
-          <div class="text-red-600 text-xs">Email sudah dipakai</div>
-          @endif
-          <div>
-            <label for="name" class="sr-only">Nama lengkap</label>
-            <input id="name" name="name" type="text" autocomplete="on" required class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Nama lengkap" value="{{ old('name') }}">
-          </div>
-          <div>
-            <label for="password" class="sr-only">Password</label>
-            <input id="password" name="password" type="password" autocomplete="off" required class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Password" value="{{ old('password') }}">
-          </div>
-          <div>
-            <label for="password_confirm" class="sr-only">Password Confirm</label>
-            <input id="password_confirm" name="password_confirm" type="password" autocomplete="off" required class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Tulis ulang password" value="{{ old('password_confirm') }}">
-          </div>
-          @if(session('register_password_error'))
-          <div class="text-red-600 text-xs">Password tidak cocok</div>
-          @endif
-        </div>
-
-        <div>
-          <button type="submit" name="btn_register" value="true" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-            Register
-          </button>
-        </div>
-      </form>
-    </div>
+@section('main')
+<div class="min-h-screen flex flex-col justify-center items-center p-4 sm:p-6 lg:p-8">
+  <div class="flex flex-col w-full max-w-xs items-stretch gap-4">
+    <img src="https://res.cloudinary.com/hxquybrtx/image/upload/v1613030969/logo/new_fisdas_logo_gipexs.png" alt="fisdas cms logo" class="w-32 mx-auto">
+    <h2 class="text-center text-3xl font-extrabold text-gray-900">
+      Buat akun
+    </h2>
+    <form class="flex flex-col gap-4" action="/register" method="POST">
+      @csrf
+      <!-- username -->
+      <input id="username" name="username" type="text" minlength="3" maxlength="255" autocomplete="on" required class="rounded-md px-3 py-2 border @error('username') border-red-600 @else border-gray-300 @enderror placeholder-gray-500 text-gray-900 focus:outline-none focus:border-indigo-500" placeholder="Username" value="{{ old('username') }}">
+      @error('username')
+      <div class="text-red-600 text-xs">{{ $message }}</div>
+      @enderror
+      <!-- email -->
+      <input id="email" name="email" type="email" autocomplete="on" required class="rounded-md px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:border-indigo-500" placeholder="Email" value="{{ old('email') }}">
+      @error('email')
+      <div class="text-red-600 text-xs">{{ $message }}</div>
+      @enderror
+      <!-- name -->
+      <input id="name" name="name" type="text" autocomplete="on" maxlength="255" required class="rounded-md px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:border-indigo-500" placeholder="Nama" value="{{ old('name') }}">
+      @error('name')
+      <div class="text-red-600 text-xs">{{ $message }}</div>
+      @enderror
+      <!-- password -->
+      <input id="password" name="password" type="password" minlength="8" maxlength="255" autocomplete="off" required class="rounded-md px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:border-indigo-500" placeholder="Password">
+      @error('password')
+      <div class="text-red-600 text-xs">{{ $message }}</div>
+      @enderror
+      <!-- submit button -->
+      <button type="submit" class="group flex justify-center py-2 px-4 border border-transparent font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+        Register
+      </button>
+    </form>
+    <p class="self-center text-xs">Sudah punya akun?, <a href="/login" class="text-blue-500">Login disini</a></p>
   </div>
-
-</body>
-
-</html>
+</div>
+@endsection
