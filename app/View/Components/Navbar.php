@@ -15,7 +15,7 @@ class Navbar extends Component
      */
     public function __construct()
     {
-        $this->logged_admin = Auth::user();
+        $this->logged_admin = session('logged_admin');
     }
 
     /**

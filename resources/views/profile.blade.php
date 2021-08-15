@@ -20,18 +20,13 @@
       <span>Edit</span>
     </div>
 
-    <?php [
-      'username' => $username,
-      'email' => $email,
-      'name' => $name,
-    ] = $logged_admin; ?>
     <div class="justify-self-start">Nama</div>
-    <div class="justify-self-end text-right"><?= $name ?></div>
+    <div class="justify-self-end text-right">{{ $logged_admin->name }}</div>
     <div class="justify-self-start">Username</div>
-    <div class="justify-self-end text-right"><?= $username ?></div>
+    <div class="justify-self-end text-right">{{ $logged_admin->username }}</div>
     <div class="justify-self-start">Email</div>
-    <div class="justify-self-end text-right"><?= $email ?></div>
-    <button type="submit" name="btn_delete_admin" value="true" class="col-span-full justify-self-end justify-center py-2 px-8 border border-red-600 font-medium rounded-md text-red-600 hover:bg-red-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+    <div class="justify-self-end text-right">{{ $logged_admin->email }}</div>
+    <button type="submit" class="col-span-full justify-self-end justify-center py-2 px-8 border border-red-600 font-medium rounded-md text-red-600 hover:bg-red-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
       Hapus akun
     </button>
   </div>

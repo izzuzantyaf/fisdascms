@@ -194,15 +194,15 @@ Route::middleware(EnsureAdminIsLoggedIn::class)->group(function () {
         return back()->with('result_message', $result ? "Link $result->name berhasil diubah" : null);
     });
 
-    Route::get('/admin-profile', function () {
+    Route::get('/admin-profile', function (Request $request) {
         return view('profile', [
-            'logged_admin' => session('admin_logged_in'),
+            'logged_admin' => $request->session()->get('logged_admin'),
         ]);
     });
 });
 
-Route::get('/login', function () {
-    if (Auth::check())
+Route::get('/login', function (Request $request) {
+    if ($request->session()->has('logged_admin'))
         return redirect('/');
     return view('login');
 })->name('login');

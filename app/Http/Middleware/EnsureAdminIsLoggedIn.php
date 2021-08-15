@@ -17,7 +17,7 @@ class EnsureAdminIsLoggedIn
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!Auth::check())
+        if (!$request->session()->has('logged_admin'))
             return redirect('/login');
         return $next($request);
     }

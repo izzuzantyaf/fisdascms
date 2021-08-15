@@ -24,8 +24,7 @@ class LoginController extends Controller
         if (!Hash::check($validatedCredentials['password'], $existing_admin->password))
             return false;
 
-        Auth::attempt($validatedCredentials);
-        $request->session()->regenerate();
+        $request->session()->put('logged_admin', $existing_admin);
         return true;
     }
 }

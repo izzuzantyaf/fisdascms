@@ -9,8 +9,7 @@ class LogoutController extends Controller
 {
     public static function logout(Request $request)
     {
-        Auth::logout();
-        $request->session()->invalidate();
+        $request->session()->forget('logged_admin');
         return true;
     }
 }
