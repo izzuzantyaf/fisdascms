@@ -16,17 +16,17 @@
       <div class="text-red-600 text-xs">{{ $message }}</div>
       @enderror
       <!-- email -->
-      <input id="email" name="email" type="email" autocomplete="on" required class="rounded-md px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:border-indigo-500" placeholder="Email" value="{{ old('email') }}">
+      <input id="email" name="email" type="email" autocomplete="on" required class="rounded-md px-3 py-2 border @error('email') border-red-600 @else border-gray-300 @enderror placeholder-gray-500 text-gray-900 focus:outline-none focus:border-indigo-500" placeholder="Email" value="{{ old('email') }}">
       @error('email')
       <div class="text-red-600 text-xs">{{ $message }}</div>
       @enderror
       <!-- name -->
-      <input id="name" name="name" type="text" autocomplete="on" maxlength="255" required class="rounded-md px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:border-indigo-500" placeholder="Nama" value="{{ old('name') }}">
+      <input id="name" name="name" type="text" autocomplete="on" maxlength="255" required class="rounded-md px-3 py-2 border @error('name') border-red-600 @else border-gray-300 @enderror placeholder-gray-500 text-gray-900 focus:outline-none focus:border-indigo-500" placeholder="Nama" value="{{ old('name') }}">
       @error('name')
       <div class="text-red-600 text-xs">{{ $message }}</div>
       @enderror
       <!-- password -->
-      <input id="password" name="password" type="password" minlength="8" maxlength="255" autocomplete="off" required class="rounded-md px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:border-indigo-500" placeholder="Password">
+      <input id="password" name="password" type="password" minlength="8" maxlength="255" autocomplete="off" required class="rounded-md px-3 py-2 border @error('password') border-red-600 @else border-gray-300 @enderror placeholder-gray-500 text-gray-900 focus:outline-none focus:border-indigo-500" placeholder="Password">
       @error('password')
       <div class="text-red-600 text-xs">{{ $message }}</div>
       @enderror

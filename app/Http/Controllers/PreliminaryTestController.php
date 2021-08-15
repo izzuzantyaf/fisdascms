@@ -24,6 +24,13 @@ class PreliminaryTestController extends Controller
             ->get();
     }
 
+    public static function index()
+    {
+        return view('preliminary-test', [
+            'preliminary_tests' => self::get_all(),
+        ]);
+    }
+
     public static function update(Request $request)
     {
         $preliminary_tests = $request->input('preliminary_tests');
@@ -41,6 +48,10 @@ class PreliminaryTestController extends Controller
                 array_push($updated_preliminary_tests, $existing_preliminary_test->acronym);
             }
         }
-        return $updated_preliminary_tests;
+        return back()->with([
+            'preliminary_test_update_message' => $updated_preliminary_tests
+                ? 'TP ' . implode(', ', $updated_preliminary_tests) . ' berhasil diupdate'
+                : null
+        ]);
     }
 }

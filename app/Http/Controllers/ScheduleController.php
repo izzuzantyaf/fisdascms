@@ -22,8 +22,13 @@ class ScheduleController extends Controller
     {
         return [
             'class_schedule' => ClassSchedule::all()[0],
-            'module_schedule' => ModuleSchedule::all(),
+            'module_schedules' => ModuleSchedule::all(),
         ];
+    }
+
+    public static function index()
+    {
+        return view('schedule', self::get_all_schedule());
     }
 
     public static function update_class_schedule($class_schedule)
@@ -58,9 +63,12 @@ class ScheduleController extends Controller
     {
         $class_schedule_update_result = self::update_class_schedule($request->input('class_schedule'));
         $module_schedule_update_result = self::update_module_schedule($request->input('module_schedules'));
-        return array_merge(
+        $result =  array_merge(
             is_array($class_schedule_update_result) ? $class_schedule_update_result : [],
             $module_schedule_update_result
         );
+        return back()->with([
+            'schedule_update_message' => $result ? ucfirst(implode(', ', $result) . ' berhasil diupdate') : null
+        ]);
     }
 }

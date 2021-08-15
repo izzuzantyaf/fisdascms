@@ -15,8 +15,6 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\SocialMediaController;
 use App\Http\Middleware\EnsureAdminIsLoggedIn;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,194 +38,69 @@ Route::middleware(EnsureAdminIsLoggedIn::class)->group(function () {
         return view('dashboard');
     });
 
-    Route::get('/code-of-conduct', function () {
-        $code_of_conduct = CodeOfConductController::get_all()[0];
-        return view('code-of-conduct', [
-            'code_of_conduct' => $code_of_conduct,
-        ]);
+    Route::prefix('/code-of-conduct')->group(function () {
+        Route::get('', [CodeOfConductController::class, 'index']);
+        Route::put('/{id}', [CodeOfConductController::class, 'update']);
     });
 
-    Route::put('/code-of-conduct/{id}', function (Request $request, $id) {
-        $result = CodeOfConductController::update($request, $id);
-        return redirect('/code-of-conduct')->with([
-            'code_of_conduct_update_message' => $result ? 'Tata tertib berhasil diupdate' : null
-        ]);
+    Route::prefix('/practicum-handouts')->group(function () {
+        Route::get('', [PracticumHandoutController::class, 'index']);
+        Route::put('', [PracticumHandoutController::class, 'update']);
     });
 
-    Route::get('/practicum-handouts', function () {
-        $practicum_handouts = PracticumHandoutController::get_all();
-        return view('practicum-handouts', [
-            'practicum_handouts' => $practicum_handouts,
-        ]);
+    Route::prefix('/assistants')->group(function () {
+        Route::get('', [AssistantController::class, 'index']);
+        Route::post('', [AssistantController::class, 'insert']);
+        Route::put('/{id}', [AssistantController::class, 'update']);
+        Route::delete('/{id}', [AssistantController::class, 'delete']);
+        Route::post('/delete-multiple', [AssistantController::class, 'delete_multiple']);
     });
 
-    Route::put('/practicum-handouts', function (Request $request) {
-        $updated_handouts = PracticumHandoutController::update($request);
-        return redirect('practicum-handouts')->with([
-            'handout_update_message' => empty($updated_handouts) ? null : 'Modul ' . implode(', ', $updated_handouts) . ' berhasil diupdate'
-        ]);
+    Route::prefix('/preliminary-test')->group(function () {
+        Route::get('', [PreliminaryTestController::class, 'index']);
+        Route::put('', [PreliminaryTestController::class, 'update']);
     });
 
-    Route::get('/assistants', function () {
-        $assistants = AssistantController::get_all();
-        return view('assistants', ['assistants' => $assistants]);
+    Route::prefix('/practicum-video')->group(function () {
+        Route::get('', [PracticumVideoController::class, 'index']);
+        Route::put('', [PracticumVideoController::class, 'update']);
     });
 
-    Route::post('/assistants', function (Request $request) {
-        $result = AssistantController::insert($request);
-        return back()->with('result_message', $result ? 'Asisten berhasil ditambahkan' : null);
+    Route::prefix('/practicum-simulator')->group(function () {
+        Route::get('', [PracticumSimulatorController::class, 'index']);
+        Route::put('', [PracticumSimulatorController::class, 'update']);
     });
 
-    Route::put('/assistants/{id}', function (Request $request, $id) {
-        $result = AssistantController::update($request, $id);
-        return back()->with('result_message', $result ? 'Asisten berhasil diubah' : null);
+    Route::prefix('/journal-cover')->group(function () {
+        Route::get('', [JournalCoverController::class, 'index']);
+        Route::put('', [JournalCoverController::class, 'update']);
     });
 
-    Route::delete('/assistants/{id}', function ($id) {
-        $result = AssistantController::delete($id);
-        return back()->with('result_message', $result ? 'Asisten berhasil dihapus' : null);
+    Route::prefix('/organigram')->group(function () {
+        Route::get('', [OrganigramController::class, 'index']);
+        Route::put('/{id}', [OrganigramController::class, 'update']);
     });
 
-    Route::post('/assistants/delete-multiple', function (Request $request) {
-        $result = AssistantController::delete_multiple($request);
-        return back()->with('result_message', $result ? "Berhasil menghapus $result asisten" : null);
+    Route::prefix('/schedule')->group(function () {
+        Route::get('', [ScheduleController::class, 'index']);
+        Route::put('', [ScheduleController::class, 'update']);
     });
 
-    Route::get('/preliminary-test', function () {
-        $preliminary_tests = PreliminaryTestController::get_all();
-        return view('preliminary-test', [
-            'preliminary_tests' => $preliminary_tests,
-        ]);
+    Route::prefix('/social-media')->group(function () {
+        Route::get('', [SocialMediaController::class, 'index']);
+        Route::put('/{id}/visibility', [SocialMediaController::class, 'update_visibility']);
+        Route::put('/{id}/link', [SocialMediaController::class, 'update_link']);
     });
 
-    Route::put('/preliminary-test', function (Request $request) {
-        $result = PreliminaryTestController::update($request);
-        return redirect('preliminary-test')->with([
-            'preliminary_test_update_message' => $result ? 'TP ' . implode(', ', $result) . ' berhasil diupdate' : null
-        ]);
-    });
-
-    Route::get('/practicum-video', function () {
-        $practicum_videos = PracticumVideoController::get_all();
-        return view('practicum-video', [
-            'practicum_videos' => $practicum_videos,
-        ]);
-    });
-
-    Route::put('/practicum-video', function (Request $request) {
-        $result = PracticumVideoController::update($request);
-        return redirect('/practicum-video')->with([
-            'practicum_video_update_message' => !empty($result) ? 'Video ' . implode(', ', $result) . ' berhasil diupdate' : null
-        ]);
-    });
-
-    Route::get('/practicum-simulator', function () {
-        $practicum_simulators = PracticumSimulatorController::get_all();
-        return view('practicum-simulator', [
-            'practicum_simulators' => $practicum_simulators,
-        ]);
-    });
-
-    Route::put('/practicum-simulator', function (Request $request) {
-        $result = PracticumSimulatorController::update($request);
-        return redirect('/practicum-simulator')->with([
-            'practicum_simulator_update_message' => !empty($result) ? 'Simulator ' . implode(', ', $result) . ' berhasil diupdate' : null
-        ]);
-    });
-
-    Route::get('/journal-cover', function () {
-        $journal_covers = JournalCoverController::get_all();
-        return view('journal-cover', [
-            'journal_covers' => $journal_covers,
-        ]);
-    });
-
-    Route::put('/journal-cover', function (Request $request) {
-        $result = JournalCoverController::update($request);
-        return redirect('/journal-cover')->with([
-            'journal_cover_update_message' => !empty($result) ? 'Cover jurnal ' . implode(', ', $result) . ' berhasil diupdate' : null
-        ]);
-    });
-
-    Route::get('/organigram', function () {
-        $organigram = OrganigramController::get_all()[0];
-        return view('organigram', [
-            'organigram' => $organigram,
-        ]);
-    });
-
-    Route::put('/organigram/{id}', function (Request $request, $id) {
-        $is_update_success = OrganigramController::update($request, $id);
-        return redirect('/organigram')->with([
-            'organigram_update_message' => $is_update_success ? 'Organigram berhasil diupdate' : null
-        ]);
-    });
-
-    Route::get('/schedule', function () {
-        $class_schedule = ScheduleController::get_class_schedule();
-        $module_schedules = ScheduleController::get_module_schedule();
-        return view('schedule', [
-            'class_schedule' => $class_schedule,
-            'module_schedules' => $module_schedules,
-        ]);
-    });
-
-    Route::put('/schedule', function (Request $request) {
-        $result = ScheduleController::update($request);
-        return redirect('/schedule')->with([
-            'schedule_update_message' => $result ? ucfirst(implode(', ', $result) . ' berhasil diupdate') : null
-        ]);
-    });
-
-    Route::get('/social-media', function () {
-        $social_medias = SocialMediaController::get_all();
-        return view('social-media', ['social_medias' => $social_medias]);
-    });
-
-    Route::put('/social-media/{id}/visibility', function (Request $request, $id) {
-        $result = SocialMediaController::update_visibility($request, $id);
-        return back()->with('result_message', $result ? $result->name . ($result->visibility ? ' dimunculkan' : ' disembunyikan') . ' pada website utama' : null);
-    });
-
-    Route::put('social-media/{id}/link', function (Request $request, $id) {
-        $result = SocialMediaController::update_link($request, $id);
-        return back()->with('result_message', $result ? "Link $result->name berhasil diubah" : null);
-    });
-
-    Route::get('/admin-profile', function (Request $request) {
-        return view('profile', [
-            'logged_admin' => $request->session()->get('logged_admin'),
-        ]);
-    });
+    Route::get('/admin-profile', [AdminController::class, 'index']);
 });
 
-Route::get('/login', function (Request $request) {
-    if ($request->session()->has('logged_admin'))
-        return redirect('/');
-    return view('login');
-})->name('login');
+Route::get('/login', [LoginController::class, 'index'])->name('login');
 
-Route::post('/login', function (Request $request) {
-    $is_authenticated = LoginController::authenticate($request);
-    if ($is_authenticated)
-        return redirect('/');
-    else
-        return back()->withErrors([
-            'login_error' => 'Username atau password kamu mungkin salah'
-        ]);
-});
+Route::post('/login', [LoginController::class, 'authenticate']);
 
-Route::get('/logout', function (Request $request) {
-    LogoutController::logout($request);
-    return redirect('/login');
-});
+Route::get('/logout', [LogoutController::class, 'logout']);
 
-Route::get('/register', function () {
-    return view('register');
-});
+Route::view('/register', 'register');
 
-Route::post('/register', function (Request $request) {
-    $is_register_successfull = RegisterController::register($request);
-    if ($is_register_successfull)
-        return redirect('/login')->with('registration_message', 'Registrasi berhasil, kamu sekarang admin.');
-});
+Route::post('/register', [RegisterController::class, 'register']);

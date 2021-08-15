@@ -14,9 +14,12 @@
     <form action="/login" method="POST" class="flex flex-col gap-4">
       @csrf
       <input type="hidden" name="remember" value="true">
-      <input id="username" name="username" type="text" autocomplete="on" required class="rounded-md w-full px-3 py-2 border border-gray-300 placeholder-gray-500 focus:outline-none focus:border-indigo-500" placeholder="Username" value="{{ old('username') }}">
-      <input id="password" name="password" type="password" autocomplete="off" required class="rounded-md w-full px-3 py-2 border border-gray-300 placeholder-gray-500 focus:outline-none focus:border-indigo-500" placeholder="Password" value="{{ old('password') }}">
-      @error('login_error')
+      <input id="username" name="username" type="text" autocomplete="on" required class="rounded-md w-full px-3 py-2 border @error('username') border-red-600 @else border-gray-300 @enderror placeholder-gray-500 focus:outline-none focus:border-indigo-500" placeholder="Username" value="{{ old('username') }}">
+      @error('username')
+      <div class="text-red-600 text-xs">{{ $message }}</div>
+      @enderror
+      <input id="password" name="password" type="password" autocomplete="off" required class="rounded-md w-full px-3 py-2 border @error('password') border-red-600 @else border-gray-300 @enderror placeholder-gray-500 focus:outline-none focus:border-indigo-500" placeholder="Password" value="{{ old('password') }}">
+      @error('password')
       <div class="text-red-600 text-xs">{{ $message }}</div>
       @enderror
       <div class="text-sm py-2 self-end">

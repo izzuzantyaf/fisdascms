@@ -22,6 +22,13 @@ class PracticumHandoutController extends Controller
             ->get();
     }
 
+    public static function index()
+    {
+        return view('practicum-handouts', [
+            'practicum_handouts' => self::get_all(),
+        ]);
+    }
+
     public static function update(Request $request)
     {
         $handouts = $request->input('handouts');
@@ -38,6 +45,10 @@ class PracticumHandoutController extends Controller
             if ($is_update_success)
                 array_push($updated_handouts, "$existing_handout->faculty ($existing_handout->lang)");
         }
-        return $updated_handouts;
+        return back()->with([
+            'handout_update_message' => !empty($updated_handouts)
+                ? 'Modul ' . implode(', ', $updated_handouts) . ' berhasil diupdate'
+                : null
+        ]);
     }
 }

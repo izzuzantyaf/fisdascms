@@ -12,7 +12,7 @@ class RegisterController extends Controller
     {
         $validatedCredentials = $request->validate([
             'username' => 'required|max:255|unique:admins',
-            'email' => 'required|email|max:255|unique:admins',
+            'email' => 'required|email:rfc,dns|max:255|unique:admins',
             'name' => 'required|max:255',
             'password' => 'required|min:8',
         ]);
@@ -22,7 +22,8 @@ class RegisterController extends Controller
         $newAdmin->email = $validatedCredentials['email'];
         $newAdmin->name = $validatedCredentials['name'];
         $newAdmin->password = Hash::make($validatedCredentials['password']);
+        $newAdmin->save();
 
-        return $newAdmin->save();
+        return redirect('/login')->with('registration_message', 'Registrasi berhasil, kamu sekarang admin.');
     }
 }

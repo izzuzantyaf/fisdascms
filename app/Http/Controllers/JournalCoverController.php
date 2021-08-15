@@ -24,6 +24,13 @@ class JournalCoverController extends Controller
             ->get();
     }
 
+    public static function index()
+    {
+        return view('journal-cover', [
+            'journal_covers' => self::get_all(),
+        ]);
+    }
+
     public static function update(Request $request)
     {
         $journal_covers = $request->input('journal_covers');
@@ -42,6 +49,10 @@ class JournalCoverController extends Controller
                 array_push($updated_journal_covers, $updated_journal_cover->acronym);
             }
         }
-        return $updated_journal_covers;
+        return back()->with([
+            'journal_cover_update_message' => !empty($updated_journal_covers)
+                ? 'Cover jurnal ' . implode(', ', $updated_journal_covers) . ' berhasil diupdate'
+                : null
+        ]);
     }
 }

@@ -22,6 +22,13 @@ class PracticumVideoController extends Controller
             ->get();
     }
 
+    public static function index()
+    {
+        return view('practicum-video', [
+            'practicum_videos' => self::get_all(),
+        ]);
+    }
+
     public static function update(Request $request)
     {
         $practicum_videos = $request->input('practicum_videos');
@@ -42,6 +49,10 @@ class PracticumVideoController extends Controller
                     array_push($updated_videos, $practicum_module->acronym);
             }
         }
-        return $updated_videos;
+        return back()->with([
+            'practicum_video_update_message' => !empty($updated_videos)
+                ? 'Video ' . implode(', ', $updated_videos) . ' berhasil diupdate'
+                : null
+        ]);
     }
 }

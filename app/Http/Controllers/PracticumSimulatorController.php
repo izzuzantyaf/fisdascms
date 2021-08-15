@@ -24,6 +24,13 @@ class PracticumSimulatorController extends Controller
             ->get();
     }
 
+    public static function index()
+    {
+        return view('practicum-simulator', [
+            'practicum_simulators' => self::get_all(),
+        ]);
+    }
+
     public static function update(Request $request)
     {
         $simulators = $request->input('practicum_simulators');
@@ -42,6 +49,10 @@ class PracticumSimulatorController extends Controller
                 array_push($updated_simulators, $updated_simulator->acronym);
             }
         }
-        return $updated_simulators;
+        return back()->with([
+            'practicum_simulator_update_message' => !empty($updated_simulators)
+                ? 'Simulator ' . implode(', ', $updated_simulators) . ' berhasil diupdate'
+                : null
+        ]);
     }
 }
