@@ -11,7 +11,7 @@
 
   <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8 bg-white rounded-md p-4 shadow-md">
     <iframe class="col-span-full sm:col-span-1 w-full h-screen rounded-md bg-gray-100" src="{{ $organigram->prepared_url }}"></iframe>
-    <form action="/organigram/{{ $organigram->id }}" method="POST" class="col-span-full sm:col-span-1 flex flex-col gap-4">
+    <form action="{{ route('organigram', ['id' => $organigram->id]) }}" method="POST" class="col-span-full sm:col-span-1 flex flex-col gap-4">
       @method('PUT')
       @csrf
       <label for="organigram_url">Link Google Drive organigram</label>

@@ -9,11 +9,11 @@
   <x-success-banner message="{{ session('handout_update_message') }}" />
   @endif
 
-  <form action="/practicum-handouts" method="POST">
+  <form action="{{ route('handout.update') }}" method="POST">
     @method('PUT')
     @csrf
     <div class="handout-form-list mt-4 grid grid-cols-12 gap-8 p-4 bg-white shadow-md rounded-lg">
-      <?php foreach ($practicum_handouts as [
+      <?php foreach ($handouts as [
         'id' => $id,
         'faculty' => $faculty,
         'lang' => $lang,

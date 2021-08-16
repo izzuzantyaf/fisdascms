@@ -10,6 +10,6 @@ class LogoutController extends Controller
     public static function logout(Request $request)
     {
         $request->session()->forget('logged_admin');
-        return redirect('/login');
+        return redirect()->route('login');
     }
 }

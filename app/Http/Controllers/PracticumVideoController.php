@@ -24,9 +24,7 @@ class PracticumVideoController extends Controller
 
     public static function index()
     {
-        return view('practicum-video', [
-            'practicum_videos' => self::get_all(),
-        ]);
+        return view('practicum-video', ['practicum_videos' => self::get_all()]);
     }
 
     public static function update(Request $request)

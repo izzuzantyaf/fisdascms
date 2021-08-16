@@ -27,7 +27,7 @@
           <!-- link -->
           <a href="<?= $link ?>" class="social-media-link underline cursor-pointer"><?= $link ?></a>
           <!-- link input field -->
-          <form action="/social-media/<?= $id ?>/link" method="POST" id="social_media_link_<?= $id ?>" class="w-full">
+          <form action="{{ route('social-media.update-link', ['id' => $id]) }}" method="POST" id="social_media_link_<?= $id ?>" class="w-full">
             @method('PUT')
             @csrf
             <input type="url" name="social_media_link" value="<?= $link ?>" class="social-media-link-input-field hidden text-black w-full p-2 rounded-md <?= $visibility ? '' : 'border' ?>">
@@ -39,7 +39,7 @@
         </div>
 
         <div class="action col-span-full lg:col-span-2 flex gap-4 items-center justify-end">
-          <form action="/social-media/<?= $id ?>/visibility" method="POST">
+          <form action="{{ route('social-media.update-visibility', ['id' => $id]) }}" method="POST">
             @method('PUT')
             @csrf
             <input type="hidden" name="social_media_visibility" value="<?= $visibility ?>">

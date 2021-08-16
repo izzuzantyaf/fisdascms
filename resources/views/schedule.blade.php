@@ -9,7 +9,7 @@
   <x-success-banner message="{{ session('schedule_update_message') }}" />
   @endif
 
-  <form action="/schedule" method="POST">
+  <form action="{{ route('schedule.update') }}" method="POST">
     @method('PUT')
     @csrf
     <div class="mt-8 p-4 grid grid-cols-12 gap-8 bg-white shadow-md rounded-lg">

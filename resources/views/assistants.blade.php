@@ -34,7 +34,8 @@
           <th class="px-4 py-2 w-72">Link feedback</th>
         </tr>
       </thead>
-      <form action="/assistants/delete-multiple" method="POST" id="assistant-table">
+      <form action="{{ route('assistant.delete-multiple') }}" method="POST" id="assistant-table">
+        @method('DELETE')
         @csrf
         <tbody class="bg-white divide-y divide-gray-200">
           <?php foreach ($assistants as [
@@ -47,7 +48,7 @@
           ]) { ?>
             <tr class="text-xs">
               <td class="px-4 py-2 font-medium text-gray-900"><input type="checkbox" class="cursor-pointer" name="assistant_selected[]" id="<?= $id ?>" value="<?= $id ?>"></td>
-              <input type="hidden" name="assistant_id" value="<?= $id ?>">
+              <input type="hidden" name="id" value="<?= $id ?>">
               <td class="px-4 py-2 font-medium">
                 <button type="button" class="edit-assistant-icon hover:bg-indigo-100 cursor-pointer min-w-full rounded-md p-2">
                   <i class="fas fa-pencil-alt text-indigo-600"></i>
@@ -58,11 +59,11 @@
                   <i class="fas fa-trash-alt text-red-600"></i>
                 </button>
               </td>
-              <td class="assistant-name px-4 py-2 font-medium text-gray-900 capitalize"><?= $name ?></td>
-              <td class="assistant-code px-4 py-2 text-gray-900 uppercase"><?= $code ?></td>
-              <td class="assistant-phone px-4 py-2 text-gray-500"><?= $phone_number ?></td>
-              <td class="assistant-line-id px-4 py-2 text-gray-500"><?= $line_id ?></td>
-              <td class="assistant-feedback-link px-4 py-2 text-gray-500 truncate"><a class="underline" href="<?= $feedback_link ?>"><?= $feedback_link ?></a></td>
+              <td class="name px-4 py-2 font-medium text-gray-900 capitalize"><?= $name ?></td>
+              <td class="code px-4 py-2 text-gray-900 uppercase"><?= $code ?></td>
+              <td class="phone px-4 py-2 text-gray-500"><?= $phone_number ?></td>
+              <td class="line-id px-4 py-2 text-gray-500"><?= $line_id ?></td>
+              <td class="feedback-link px-4 py-2 text-gray-500 truncate"><a class="underline" href="<?= $feedback_link ?>"><?= $feedback_link ?></a></td>
             </tr>
           <?php } ?>
         </tbody>
@@ -72,15 +73,15 @@
 
   <div class="assistant-modal-overlay z-20 fixed inset-0 bg-black bg-opacity-25 hidden justify-center items-center p-4">
     <div class="assistant-modal bg-white p-4 rounded-md flex-grow max-w-prose">
-      <form action="/assistants" method="post" class="flex flex-col gap-4">
+      <form action="{{ route('assistant.create') }}" method="POST" class="flex flex-col gap-4">
         <input type="hidden" name="_method" value="POST">
         @csrf
         <div class="title font-bold text-2xl">Tambah asisten</div>
-        <input type="text" name="assistant_name" required placeholder="Nama" class="py-2 px-4 rounded-md border">
-        <input type="text" name="assistant_code" required placeholder="Kode" class="py-2 px-4 rounded-md border">
-        <input type="tel" pattern="^[0-9]*$" name="assistant_phone" placeholder="No Hp (optional)" class="py-2 px-4 rounded-md border">
-        <input type="text" name="assistant_line_id" placeholder="Id Line (optional)" class="py-2 px-4 rounded-md border">
-        <input type="text" name="assistant_feedback_link" placeholder="Link feedback (optional)" class="py-2 px-4 rounded-md border">
+        <input type="text" name="name" required placeholder="Nama" class="py-2 px-4 rounded-md border">
+        <input type="text" name="code" required placeholder="Kode" class="py-2 px-4 rounded-md border">
+        <input type="tel" pattern="^[0-9]*$" name="phone_number" placeholder="No Hp (optional)" class="py-2 px-4 rounded-md border">
+        <input type="text" name="line_id" placeholder="Id Line (optional)" class="py-2 px-4 rounded-md border">
+        <input type="text" name="feedback_link" placeholder="Link feedback (optional)" class="py-2 px-4 rounded-md border">
         <div class="flex gap-4 justify-end">
           <div class="close-assistant-modal py-2 px-6 rounded-md text-gray-600  text-center cursor-pointer transition-colors duration-300 ease-in-out bg-gray-200 hover:bg-gray-300 w-1/2 sm:w-auto">Batal</div>
           <button type="submit" class="transition-colors duration-300 ease-in-out bg-blue-600 hover:bg-blue-700 py-2 px-6 text-white rounded-md w-1/2 sm:w-auto">Simpan</button>

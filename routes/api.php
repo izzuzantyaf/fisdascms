@@ -29,7 +29,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/code-of-conduct', function () {
-    return CodeOfConductController::get_all()[0];
+    return CodeOfConductController::get_all();
 });
 
 Route::get('/practicum-handout', function () {
@@ -45,7 +45,7 @@ Route::get('/practicum-video', function () {
 });
 
 Route::get('/assistant', function () {
-    return AssistantController::get_all_assistants();
+    return AssistantController::get_all();
 });
 
 Route::get('/practicum-simulator', function () {
@@ -61,7 +61,7 @@ Route::get('/schedule', function () {
 });
 
 Route::get('/organigram', function () {
-    return OrganigramController::get_all()[0];
+    return OrganigramController::get_all();
 });
 
 Route::get('/social-media', function () {

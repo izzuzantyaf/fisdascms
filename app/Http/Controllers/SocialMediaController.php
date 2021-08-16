@@ -14,15 +14,14 @@ class SocialMediaController extends Controller
 
     public static function index()
     {
-        $social_medias = self::get_all();
-        return view('social-media', ['social_medias' => $social_medias]);
+        return view('social-media', ['social_medias' => self::get_all()]);
     }
 
     public static function update_link(Request $request, $id)
     {
         $social_media = SocialMedia::find($id);
         if ($social_media->link == $request->input('social_media_link'))
-            return false;
+            return back();
         $social_media->link = $request->input('social_media_link');
         $social_media->save();
         return back()->with('result_message', $social_media ? "Link $social_media->name berhasil diubah" : null);

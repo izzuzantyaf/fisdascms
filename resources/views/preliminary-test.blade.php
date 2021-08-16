@@ -9,7 +9,7 @@
   <x-success-banner message="{{ session('preliminary_test_update_message') }}" />
   @endif
 
-  <form action="/preliminary-test" method="POST">
+  <form action="{{ route('preliminary-test.update') }}" method="POST">
     <div class="preliminary-test-form-list mt-8 p-4 rounded-lg grid grid-cols-12 gap-8 bg-white shadow-md">
       @method('PUT')
       @csrf

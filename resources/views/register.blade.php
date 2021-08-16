@@ -2,13 +2,13 @@
 @section('title', 'Register')
 
 @section('main')
-<div class="min-h-screen flex flex-col justify-center items-center p-4 sm:p-6 lg:p-8">
+<div class="min-h-screen bg-white flex flex-col justify-center items-center p-4 sm:p-6 lg:p-8">
   <div class="flex flex-col w-full max-w-xs items-stretch gap-4">
     <img src="https://res.cloudinary.com/hxquybrtx/image/upload/v1613030969/logo/new_fisdas_logo_gipexs.png" alt="fisdas cms logo" class="w-32 mx-auto">
     <h2 class="text-center text-3xl font-extrabold text-gray-900">
       Buat akun
     </h2>
-    <form class="flex flex-col gap-4" action="/register" method="POST">
+    <form class="flex flex-col gap-4" action="{{ route('register.create') }}" method="POST">
       @csrf
       <!-- username -->
       <input id="username" name="username" type="text" minlength="3" maxlength="255" autocomplete="on" required class="rounded-md px-3 py-2 border @error('username') border-red-600 @else border-gray-300 @enderror placeholder-gray-500 text-gray-900 focus:outline-none focus:border-indigo-500" placeholder="Username" value="{{ old('username') }}">
@@ -35,7 +35,7 @@
         Register
       </button>
     </form>
-    <p class="self-center text-xs">Sudah punya akun?, <a href="/login" class="text-blue-500">Login disini</a></p>
+    <p class="self-center text-xs">Sudah punya akun?, <a href="{{ route('login') }}" class="text-blue-500">Login disini</a></p>
   </div>
 </div>
 @endsection

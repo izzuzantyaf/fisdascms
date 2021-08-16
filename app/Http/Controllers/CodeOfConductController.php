@@ -14,9 +14,7 @@ class CodeOfConductController extends Controller
 
     public static function index()
     {
-        return view('code-of-conduct', [
-            'code_of_conduct' => self::get_all(),
-        ]);
+        return view('code-of-conduct', ['code_of_conduct' => self::get_all()]);
     }
 
     public static function update(Request $request, $id)
@@ -28,7 +26,9 @@ class CodeOfConductController extends Controller
         $code_of_conduct->prepared_url = str_replace('view', 'preview', $request->input('file_url'));
         $is_update_successfully =  $code_of_conduct->save();
         return back()->with([
-            'code_of_conduct_update_message' => $is_update_successfully ? 'Tata tertib berhasil diupdate' : null
+            'code_of_conduct_update_message' => $is_update_successfully
+                ? 'Tata tertib berhasil diupdate'
+                : null
         ]);
     }
 }

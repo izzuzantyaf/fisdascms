@@ -24,9 +24,7 @@ class PracticumHandoutController extends Controller
 
     public static function index()
     {
-        return view('practicum-handouts', [
-            'practicum_handouts' => self::get_all(),
-        ]);
+        return view('handout', ['handouts' => self::get_all()]);
     }
 
     public static function update(Request $request)

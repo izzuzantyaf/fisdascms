@@ -12,7 +12,7 @@ class LoginController extends Controller
     public static function index(Request $request)
     {
         if ($request->session()->has('logged_admin'))
-            return redirect('/');
+            return redirect()->route('home');
         return view('login');
     }
 
@@ -37,6 +37,6 @@ class LoginController extends Controller
 
         $request->session()->put('logged_admin', $existing_admin);
 
-        return redirect('/');
+        return redirect()->route('home');
     }
 }

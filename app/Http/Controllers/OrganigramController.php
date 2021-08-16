@@ -14,9 +14,7 @@ class OrganigramController extends Controller
 
     public static function index()
     {
-        return view('organigram', [
-            'organigram' => self::get_all(),
-        ]);
+        return view('organigram', ['organigram' => self::get_all()]);
     }
 
     public static function update(Request $request, $id)

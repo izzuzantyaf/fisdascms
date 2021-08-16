@@ -18,7 +18,8 @@ class AssistantModal {
     })
   }
   fillData(method = 'POST', assistant = null) {
-    this.#self.querySelector('form').action = `/assistants${method == 'PUT' || method == 'DELETE' ? `/${assistant.id}` : ''}`
+    const id = method == 'PUT' || method == 'DELETE' ? `/${assistant.id}` : ''
+    this.#self.querySelector('form').action += id
     this.#self.querySelector('input[name="_method"]').value = method
     if (method == 'PUT')
       this.#self.querySelector('.title').innerHTML = 'Edit Asisten'
@@ -26,11 +27,11 @@ class AssistantModal {
       this.#self.querySelector('.title').innerHTML = 'Hapus Asisten'
     else
       this.#self.querySelector('.title').innerHTML = 'Tambah Asisten'
-    this.#self.querySelector('input[name=assistant_name]').value = method == 'PUT' || method == 'DELETE' ? assistant.name : null
-    this.#self.querySelector('input[name=assistant_code]').value = method == 'PUT' || method == 'DELETE' ? assistant.code : null
-    this.#self.querySelector('input[name=assistant_phone]').value = method == 'PUT' || method == 'DELETE' ? assistant.phone : null
-    this.#self.querySelector('input[name=assistant_line_id]').value = method == 'PUT' || method == 'DELETE' ? assistant.lineId : null
-    this.#self.querySelector('input[name=assistant_feedback_link]').value = method == 'PUT' || method == 'DELETE' ? assistant.feedbackLink : null
+    this.#self.querySelector('input[name=name]').value = method == 'PUT' || method == 'DELETE' ? assistant.name : null
+    this.#self.querySelector('input[name=code]').value = method == 'PUT' || method == 'DELETE' ? assistant.code : null
+    this.#self.querySelector('input[name=phone_number]').value = method == 'PUT' || method == 'DELETE' ? assistant.phone : null
+    this.#self.querySelector('input[name=line_id]').value = method == 'PUT' || method == 'DELETE' ? assistant.lineId : null
+    this.#self.querySelector('input[name=feedback_link]').value = method == 'PUT' || method == 'DELETE' ? assistant.feedbackLink : null
   }
   adjustTheme(operation = 'default') {
     if (operation == 'red') {
@@ -47,17 +48,17 @@ class AssistantModal {
   }
   enableInputField(enabled = true) {
     if (enabled) {
-      this.#self.querySelector('input[name=assistant_name]').removeAttribute('disabled')
-      this.#self.querySelector('input[name=assistant_code]').removeAttribute('disabled')
-      this.#self.querySelector('input[name=assistant_phone]').removeAttribute('disabled')
-      this.#self.querySelector('input[name=assistant_line_id]').removeAttribute('disabled')
-      this.#self.querySelector('input[name=assistant_feedback_link]').removeAttribute('disabled')
+      this.#self.querySelector('input[name=name]').removeAttribute('disabled')
+      this.#self.querySelector('input[name=code]').removeAttribute('disabled')
+      this.#self.querySelector('input[name=phone_number]').removeAttribute('disabled')
+      this.#self.querySelector('input[name=line_id]').removeAttribute('disabled')
+      this.#self.querySelector('input[name=feedback_link]').removeAttribute('disabled')
     } else {
-      this.#self.querySelector('input[name=assistant_name]').setAttribute('disabled', 'true')
-      this.#self.querySelector('input[name=assistant_code]').setAttribute('disabled', 'true')
-      this.#self.querySelector('input[name=assistant_phone]').setAttribute('disabled', 'true')
-      this.#self.querySelector('input[name=assistant_line_id]').setAttribute('disabled', 'true')
-      this.#self.querySelector('input[name=assistant_feedback_link]').setAttribute('disabled', 'true')
+      this.#self.querySelector('input[name=name]').setAttribute('disabled', 'true')
+      this.#self.querySelector('input[name=code]').setAttribute('disabled', 'true')
+      this.#self.querySelector('input[name=phone_number]').setAttribute('disabled', 'true')
+      this.#self.querySelector('input[name=line_id]').setAttribute('disabled', 'true')
+      this.#self.querySelector('input[name=feedback_link]').setAttribute('disabled', 'true')
     }
   }
 }
@@ -73,12 +74,12 @@ class Assistant {
       const editBtn = this.#editAssistantBtns[i]
       const deleteBtn = this.#deleteAssistantBtns[i]
       // grab assistant data
-      const id = editBtn.parentElement.parentElement.querySelector('input[name=assistant_id]').value
-      const name = editBtn.parentElement.parentElement.querySelector('.assistant-name').innerText
-      const code = editBtn.parentElement.parentElement.querySelector('.assistant-code').innerText
-      const phone = editBtn.parentElement.parentElement.querySelector('.assistant-phone').innerText
-      const lineId = editBtn.parentElement.parentElement.querySelector('.assistant-line-id').innerText
-      const feedbackLink = editBtn.parentElement.parentElement.querySelector('.assistant-feedback-link').innerText
+      const id = editBtn.parentElement.parentElement.querySelector('input[name=id]').value
+      const name = editBtn.parentElement.parentElement.querySelector('.name').innerText
+      const code = editBtn.parentElement.parentElement.querySelector('.code').innerText
+      const phone = editBtn.parentElement.parentElement.querySelector('.phone').innerText
+      const lineId = editBtn.parentElement.parentElement.querySelector('.line-id').innerText
+      const feedbackLink = editBtn.parentElement.parentElement.querySelector('.feedback-link').innerText
       // add listener to edit and delete button
       this.#handleEditAssistant(editBtn, { id, name, code, phone, lineId, feedbackLink })
       this.#handleDeleteAssistant(deleteBtn, { id, name, code, phone, lineId, feedbackLink })

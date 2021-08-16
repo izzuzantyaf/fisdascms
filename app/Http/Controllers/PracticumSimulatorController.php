@@ -26,9 +26,7 @@ class PracticumSimulatorController extends Controller
 
     public static function index()
     {
-        return view('practicum-simulator', [
-            'practicum_simulators' => self::get_all(),
-        ]);
+        return view('simulator', ['simulators' => self::get_all()]);
     }
 
     public static function update(Request $request)

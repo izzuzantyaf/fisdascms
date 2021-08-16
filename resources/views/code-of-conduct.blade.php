@@ -9,7 +9,7 @@
   <x-success-banner message="{{ session('code_of_conduct_update_message') }}" />
   @endif
 
-  <form action="/code-of-conduct/<?= $code_of_conduct['id'] ?>" method="POST">
+  <form action="{{ route('code-of-conduct.update', ['id' => $code_of_conduct['id']]) }}" method="POST">
     @method('PUT')
     @csrf
     <div class="mt-8 grid grid-cols-12 gap-4 bg-white rounded-lg shadow-lg p-4 items-start">

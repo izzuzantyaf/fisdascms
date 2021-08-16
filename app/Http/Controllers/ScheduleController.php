@@ -64,11 +64,15 @@ class ScheduleController extends Controller
         $class_schedule_update_result = self::update_class_schedule($request->input('class_schedule'));
         $module_schedule_update_result = self::update_module_schedule($request->input('module_schedules'));
         $result =  array_merge(
-            is_array($class_schedule_update_result) ? $class_schedule_update_result : [],
+            is_array($class_schedule_update_result)
+                ? $class_schedule_update_result
+                : [],
             $module_schedule_update_result
         );
         return back()->with([
-            'schedule_update_message' => $result ? ucfirst(implode(', ', $result) . ' berhasil diupdate') : null
+            'schedule_update_message' => $result
+                ? ucfirst(implode(', ', $result) . ' berhasil diupdate')
+                : null
         ]);
     }
 }

@@ -9,7 +9,7 @@
   <x-success-banner message="{{ session('journal_cover_update_message') }}" />
   @endif
 
-  <form action="/journal-cover" method="POST">
+  <form action="{{ route('journal-cover.update') }}" method="POST">
     <div class="journal-cover-form-list mt-8 p-4 bg-white rounded-lg shadow-md grid grid-cols-12 gap-8">
       @method('PUT')
       @csrf

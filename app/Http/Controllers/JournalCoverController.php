@@ -26,9 +26,7 @@ class JournalCoverController extends Controller
 
     public static function index()
     {
-        return view('journal-cover', [
-            'journal_covers' => self::get_all(),
-        ]);
+        return view('journal-cover', ['journal_covers' => self::get_all()]);
     }
 
     public static function update(Request $request)

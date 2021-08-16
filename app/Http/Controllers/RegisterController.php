@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
 {
-    public static function register(Request $request)
+    public static function create(Request $request)
     {
         $validatedCredentials = $request->validate([
             'username' => 'required|max:255|unique:admins',
@@ -24,6 +24,8 @@ class RegisterController extends Controller
         $newAdmin->password = Hash::make($validatedCredentials['password']);
         $newAdmin->save();
 
-        return redirect('/login')->with('registration_message', 'Registrasi berhasil, kamu sekarang admin.');
+        return redirect()
+            ->route('login')
+            ->with('registration_message', 'Registrasi berhasil, kamu sekarang admin.');
     }
 }

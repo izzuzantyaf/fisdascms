@@ -9,7 +9,7 @@
   <x-success-banner message="{{ session('practicum_video_update_message') }}" />
   @endif
 
-  <form action="/practicum-video" method="POST">
+  <form action="{{ route('practicum-video.update') }}" method="POST">
     <div class="practicum-video-form-list mt-8 p-4 rounded-lg grid grid-cols-12 gap-8 bg-white shadow-md">
       @method('PUT')
       @csrf

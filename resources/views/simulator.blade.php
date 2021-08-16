@@ -3,17 +3,17 @@
 
 @section('content')
 <div class="practicum-simulator flex-grow p-4 pt-8">
-  <h1 class="text-4xl font-bold ">Simulator Praktikum</h1>
+  <h1 class="text-4xl font-bold">Simulator Praktikum</h1>
 
   @if(session('practicum_simulator_update_message'))
   <x-success-banner message="{{ session('practicum_simulator_update_message') }}" />
   @endif
 
-  <form action="/practicum-simulator" method="POST">
+  <form action="{{ route('simulator.update') }}" method="POST">
     <div class="practicum-simulator-form-list mt-8 p-4 bg-white rounded-lg shadow-md grid grid-cols-12 gap-8">
       @method('PUT')
       @csrf
-      <?php foreach ($practicum_simulators as [
+      <?php foreach ($simulators as [
         'id' => $id,
         'name' => $name,
         'acronym' => $acronym,

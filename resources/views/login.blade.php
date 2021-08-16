@@ -5,13 +5,13 @@
 @if(session('registration_message'))
 <x-banner />
 @endif
-<div class="min-h-screen flex items-center justify-center p-4 sm:p-6 lg:p-8">
+<div class="min-h-screen bg-white flex items-center justify-center p-4 sm:p-6 lg:p-8">
   <div class="flex flex-col w-full max-w-xs items-stretch gap-4">
     <img src="https://res.cloudinary.com/hxquybrtx/image/upload/v1613030969/logo/new_fisdas_logo_gipexs.png" alt="fisdas cms logo" class="w-32 mx-auto">
     <h2 class="text-3xl font-extrabold self-center">
       Log in dulu
     </h2>
-    <form action="/login" method="POST" class="flex flex-col gap-4">
+    <form action="{{ route('login.auth') }}" method="POST" class="flex flex-col gap-4">
       @csrf
       <input type="hidden" name="remember" value="true">
       <input id="username" name="username" type="text" autocomplete="on" required class="rounded-md w-full px-3 py-2 border @error('username') border-red-600 @else border-gray-300 @enderror placeholder-gray-500 focus:outline-none focus:border-indigo-500" placeholder="Username" value="{{ old('username') }}">
