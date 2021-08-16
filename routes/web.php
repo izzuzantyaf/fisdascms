@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AssistantController;
 use App\Http\Controllers\CodeOfConductController;
+use App\Http\Controllers\EmailVerificationController;
 use App\Http\Controllers\JournalCoverController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
@@ -97,6 +98,13 @@ Route::middleware('auth')->group(function () {
 
 Route::view('/register', 'register')->name('register');
 Route::post('/register', [RegisterController::class, 'create'])->name('register.create');
+
+Route::get('/email/verify', [EmailVerificationController::class, 'notice'])
+    ->middleware('auth')->name('verification.notice');
+Route::get('/email/verify/{id}/{hash}', [EmailVerificationController::class, 'verify'])
+    ->middleware(['auth', 'signed'])->name('verification.verify');
+Route::post('/email/verification-notification', [EmailVerificationController::class, 'send'])
+    ->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'authenticate'])->name('login.auth');

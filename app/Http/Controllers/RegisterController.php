@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -23,6 +24,8 @@ class RegisterController extends Controller
         $newAdmin->name = $validatedCredentials['name'];
         $newAdmin->password = Hash::make($validatedCredentials['password']);
         $newAdmin->save();
+
+        event(new Registered($newAdmin));
 
         return redirect()
             ->route('login')

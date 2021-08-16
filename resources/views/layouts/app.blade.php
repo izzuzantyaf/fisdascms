@@ -4,10 +4,12 @@
 <!-- navbar -->
 <x-navbar />
 <div class="lg:container mx-auto">
+  @if(auth()->user()->email_verified_at == null)
+  <x-email-verification-warning />
+  @endif
   <div class="flex gap-4 min-h-screen">
-    <?php $current_route = explode('/', url()->current())[3] ?>
     <!-- sidebar -->
-    <x-sidebar :current-route="$current_route" />
+    <x-sidebar />
     <!-- main content -->
     @yield('content')
   </div>
