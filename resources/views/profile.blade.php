@@ -21,11 +21,11 @@
     </div>
 
     <div class="justify-self-start">Nama</div>
-    <div class="justify-self-end text-right">{{ $logged_admin->name }}</div>
+    <div class="justify-self-end text-right">{{ auth()->user()->name }}</div>
     <div class="justify-self-start">Username</div>
-    <div class="justify-self-end text-right">{{ $logged_admin->username }}</div>
+    <div class="justify-self-end text-right">{{ auth()->user()->username }}</div>
     <div class="justify-self-start">Email</div>
-    <div class="justify-self-end text-right">{{ $logged_admin->email }}</div>
+    <div class="justify-self-end text-right">{{ auth()->user()->email }}</div>
     <button type="submit" class="col-span-full justify-self-end justify-center py-2 px-8 border border-red-600 font-medium rounded-md text-red-600 hover:bg-red-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
       Hapus akun
     </button>

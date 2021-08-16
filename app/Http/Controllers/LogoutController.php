@@ -9,7 +9,9 @@ class LogoutController extends Controller
 {
     public static function logout(Request $request)
     {
-        $request->session()->forget('logged_admin');
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
         return redirect()->route('login');
     }
 }

@@ -28,7 +28,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware(EnsureAdminIsLoggedIn::class)->group(function () {
+Route::middleware('auth')->group(function () {
 
     Route::get('/', function () {
         return redirect()->route('dashboard');
@@ -95,12 +95,10 @@ Route::middleware(EnsureAdminIsLoggedIn::class)->group(function () {
     Route::get('/admin-profile', [AdminController::class, 'index'])->name('admin');
 });
 
-Route::get('/login', [LoginController::class, 'index'])->name('login');
+Route::view('/register', 'register')->name('register');
+Route::post('/register', [RegisterController::class, 'create'])->name('register.create');
 
+Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'authenticate'])->name('login.auth');
 
 Route::get('/logout', [LogoutController::class, 'logout'])->name('logout');
-
-Route::view('/register', 'register')->name('register');
-
-Route::post('/register', [RegisterController::class, 'create'])->name('register.create');

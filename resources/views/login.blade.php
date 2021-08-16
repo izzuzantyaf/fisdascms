@@ -14,12 +14,9 @@
     <form action="{{ route('login.auth') }}" method="POST" class="flex flex-col gap-4">
       @csrf
       <input type="hidden" name="remember" value="true">
-      <input id="username" name="username" type="text" autocomplete="on" required class="rounded-md w-full px-3 py-2 border @error('username') border-red-600 @else border-gray-300 @enderror placeholder-gray-500 focus:outline-none focus:border-indigo-500" placeholder="Username" value="{{ old('username') }}">
-      @error('username')
-      <div class="text-red-600 text-xs">{{ $message }}</div>
-      @enderror
+      <input id="email" name="email" type="text" autocomplete="on" autofocus required class="rounded-md w-full px-3 py-2 border @error('email') border-red-600 @else border-gray-300 @enderror placeholder-gray-500 focus:outline-none focus:border-indigo-500" placeholder="Email" value="{{ old('email') }}">
       <input id="password" name="password" type="password" autocomplete="off" required class="rounded-md w-full px-3 py-2 border @error('password') border-red-600 @else border-gray-300 @enderror placeholder-gray-500 focus:outline-none focus:border-indigo-500" placeholder="Password" value="{{ old('password') }}">
-      @error('password')
+      @error('login_error')
       <div class="text-red-600 text-xs">{{ $message }}</div>
       @enderror
       <div class="text-sm py-2 self-end">
@@ -31,7 +28,7 @@
         Masuk
       </button>
     </form>
-    <p class="self-center text-xs">Belum punya akun?, <a href="/register" class="text-blue-500">Daftar disini</a></p>
+    <p class="self-center text-xs">Belum punya akun?, <a href="{{ route('register') }}" class="text-blue-500">Daftar disini</a></p>
   </div>
 </div>
 @endsection

@@ -2,7 +2,6 @@
 
 namespace App\View\Components;
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Component;
 
 class Navbar extends Component
@@ -15,7 +14,7 @@ class Navbar extends Component
      */
     public function __construct()
     {
-        $this->logged_admin = session('logged_admin');
+        $this->logged_admin = auth()->user();
     }
 
     /**
