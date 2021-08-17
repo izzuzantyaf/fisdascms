@@ -11,10 +11,10 @@
     <form class="flex flex-col gap-4" action="{{ route('register.create') }}" method="POST">
       @csrf
       <!-- username -->
-      <input id="username" name="username" type="text" minlength="3" maxlength="255" autocomplete="on" required class="rounded-md px-3 py-2 border @error('username') border-red-600 @else border-gray-300 @enderror placeholder-gray-500 text-gray-900 focus:outline-none focus:border-indigo-500" placeholder="Username" value="{{ old('username') }}">
+      <!-- <input id="username" name="username" type="text" minlength="3" maxlength="255" autocomplete="on" required class="rounded-md px-3 py-2 border @error('username') border-red-600 @else border-gray-300 @enderror placeholder-gray-500 text-gray-900 focus:outline-none focus:border-indigo-500" placeholder="Username" value="{{ old('username') }}">
       @error('username')
       <div class="text-red-600 text-xs">{{ $message }}</div>
-      @enderror
+      @enderror -->
       <!-- email -->
       <input id="email" name="email" type="email" autocomplete="on" required class="rounded-md px-3 py-2 border @error('email') border-red-600 @else border-gray-300 @enderror placeholder-gray-500 text-gray-900 focus:outline-none focus:border-indigo-500" placeholder="Email" value="{{ old('email') }}">
       @error('email')

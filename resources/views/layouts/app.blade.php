@@ -4,9 +4,9 @@
 <!-- navbar -->
 <x-navbar />
 <div class="lg:container mx-auto">
-  @if(auth()->user()->email_verified_at == null)
+  <!-- @if(auth()->user()->email_verified_at == null)
   <x-email-verification-warning />
-  @endif
+  @endif -->
   <div class="flex gap-4 min-h-screen">
     <!-- sidebar -->
     <x-sidebar />

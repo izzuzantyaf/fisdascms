@@ -26,7 +26,7 @@
                 ?>
             </div>
 
-            <div class="profile-dropdown origin-top-right absolute right-4 mt-48 w-48 p-2 rounded-md shadow-md bg-white ring-1 ring-black ring-opacity-5 transition ease-in-out duration-200 transform scale-0" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
+            <div class="profile-dropdown origin-top-right absolute right-4 mt-36 w-48 p-2 rounded-md shadow-md bg-white ring-1 ring-black ring-opacity-5 transition ease-in-out duration-200 transform scale-0" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
                 <a href="{{ route('admin') }}" class="flex gap-3 items-center rounded-md p-2 text-gray-700 hover:text-blue-700 hover:bg-blue-100" role="menuitem">
                     <i class="fas fa-user-circle"></i>
                     <span>Profil</span>

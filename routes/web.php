@@ -15,7 +15,6 @@ use App\Http\Controllers\PreliminaryTestController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\SocialMediaController;
-use App\Http\Middleware\EnsureAdminIsLoggedIn;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,7 +28,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth')->group(function () {
+Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/', function () {
         return redirect()->route('dashboard');
@@ -94,10 +93,21 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::get('/admin-profile', [AdminController::class, 'index'])->name('admin');
+
+    Route::get('/logout', [LogoutController::class, 'logout'])->name('logout');
 });
 
-Route::view('/register', 'register')->name('register');
-Route::post('/register', [RegisterController::class, 'create'])->name('register.create');
+Route::group(['middleware' => 'guest'], function () {
+    Route::prefix('/register')->group(function () {
+        Route::view('', 'register')->name('register');
+        Route::post('', [RegisterController::class, 'create'])->name('register.create');
+    });
+
+    Route::prefix('/login')->group(function () {
+        Route::get('', [LoginController::class, 'index'])->name('login');
+        Route::post('', [LoginController::class, 'authenticate'])->name('login.auth');
+    });
+});
 
 Route::get('/email/verify', [EmailVerificationController::class, 'notice'])
     ->middleware('auth')->name('verification.notice');
@@ -105,8 +115,3 @@ Route::get('/email/verify/{id}/{hash}', [EmailVerificationController::class, 've
     ->middleware(['auth', 'signed'])->name('verification.verify');
 Route::post('/email/verification-notification', [EmailVerificationController::class, 'send'])
     ->middleware(['auth', 'throttle:6,1'])->name('verification.send');
-
-Route::get('/login', [LoginController::class, 'index'])->name('login');
-Route::post('/login', [LoginController::class, 'authenticate'])->name('login.auth');
-
-Route::get('/logout', [LogoutController::class, 'logout'])->name('logout');
