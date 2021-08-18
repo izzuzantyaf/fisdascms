@@ -1,6 +1,11 @@
 const avatar = {
   self: document.querySelector('.avatar'),
   profileDropdown: document.querySelector('.profile-dropdown'),
+  hydrate() {
+    if (this.profileDropdown != null) {
+      this.showHideProfileDropdown()
+    }
+  },
   showHideProfileDropdown() {
     this.self.addEventListener('click', () => {
       if (this.profileDropdown.classList.contains('scale-0'))

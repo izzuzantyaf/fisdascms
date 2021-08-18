@@ -5,6 +5,9 @@
 @if(session('registration_message'))
 <x-banner />
 @endif
+@if(session('password_reset_message'))
+<x-success-banner message="{{ session('password_reset_message') }}" />
+@endif
 <div class="min-h-screen bg-white flex items-center justify-center p-4 sm:p-6 lg:p-8">
   <div class="flex flex-col w-full max-w-xs items-stretch gap-4">
     <img src="https://res.cloudinary.com/hxquybrtx/image/upload/v1613030969/logo/new_fisdas_logo_gipexs.png" alt="fisdas cms logo" class="w-32 mx-auto">
@@ -20,7 +23,7 @@
       <div class="text-red-600 text-xs">{{ $message }}</div>
       @enderror
       <div class="text-sm py-2 self-end">
-        <a href="#" class="font-medium text-blue-600 hover:text-blue-500">
+        <a href="{{ route('password-reset') }}" class="font-medium text-blue-600 hover:text-blue-500">
           Aduh, lupa password?
         </a>
       </div>

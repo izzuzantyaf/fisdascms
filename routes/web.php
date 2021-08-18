@@ -8,6 +8,7 @@ use App\Http\Controllers\JournalCoverController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\OrganigramController;
+use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\PracticumHandoutController;
 use App\Http\Controllers\PracticumSimulatorController;
 use App\Http\Controllers\PracticumVideoController;
@@ -106,6 +107,13 @@ Route::group(['middleware' => 'guest'], function () {
     Route::prefix('/login')->group(function () {
         Route::get('', [LoginController::class, 'index'])->name('login');
         Route::post('', [LoginController::class, 'authenticate'])->name('login.auth');
+    });
+
+    Route::prefix('/password-reset')->group(function () {
+        Route::view('', 'auth.password-reset.email')->name('password-reset');
+        Route::post('/request', [PasswordResetController::class, 'request'])->name('password-reset.request');
+        Route::view('/new', 'auth.password-reset.new-password')->name('password-reset.new');
+        Route::put('/reset/{id}', [PasswordResetController::class, 'reset'])->name('password-reset.reset');
     });
 });
 

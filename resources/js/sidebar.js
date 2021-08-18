@@ -3,6 +3,11 @@ const sidebar = {
   overlay: document.querySelector('.sidebar-overlay'),
   hamburgerMenu: document.querySelector('.hamburger-menu'),
   backBtn: document.querySelector('.back-btn'),
+  hydrate() {
+    if (this.overlay != null) {
+      this.handleShowHide()
+    }
+  },
   show() {
     this.overlay.classList.remove('-translate-x-72')
     this.overlay.classList.remove('w-0')

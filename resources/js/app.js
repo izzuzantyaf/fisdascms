@@ -6,10 +6,10 @@ require('@fortawesome/fontawesome-free/js/fontawesome.min.js')
 const { pathname } = window.location
 
 const sidebar = require('./sidebar')
-sidebar.handleShowHide()
+sidebar.hydrate()
 
 const avatar = require('./avatar')
-avatar.showHideProfileDropdown()
+avatar.hydrate()
 
 const visibilityToggler = require('./visibility-toggler')
 visibilityToggler.handleOnOff()
