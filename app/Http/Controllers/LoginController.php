@@ -7,13 +7,6 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
-    public static function index(Request $request)
-    {
-        if ($request->session()->has('logged_admin'))
-            return redirect()->route('home');
-        return view('login');
-    }
-
     public static function authenticate(Request $request)
     {
         $validatedCredentials = $request->validate([

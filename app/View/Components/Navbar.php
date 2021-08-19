@@ -6,7 +6,6 @@ use Illuminate\View\Component;
 
 class Navbar extends Component
 {
-    public $logged_admin;
     /**
      * Create a new component instance.
      *
@@ -14,7 +13,6 @@ class Navbar extends Component
      */
     public function __construct()
     {
-        $this->logged_admin = auth()->user();
     }
 
     /**

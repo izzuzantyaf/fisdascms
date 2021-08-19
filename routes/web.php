@@ -93,19 +93,25 @@ Route::group(['middleware' => 'auth'], function () {
         Route::put('/{id}/link', [SocialMediaController::class, 'update_link'])->name('social-media.update-link');
     });
 
-    Route::get('/admin-profile', [AdminController::class, 'index'])->name('admin');
+    Route::prefix('/admin')->group(function () {
+        Route::view('', 'admin.profile')->name('admin');
+        Route::put('/{id}/update', [AdminController::class, 'update'])->name('admin.update');
+        Route::delete('/{id}/delete', [AdminController::class, 'delete'])->name('admin.delete');
+        Route::view('/change-password', 'admin.change-password')->name('admin.change-password');
+        Route::put('/{id}/change-password/update', [AdminController::class, 'change_password'])->name('admin.change-password.update');
+    });
 
     Route::get('/logout', [LogoutController::class, 'logout'])->name('logout');
 });
 
 Route::group(['middleware' => 'guest'], function () {
     Route::prefix('/register')->group(function () {
-        Route::view('', 'register')->name('register');
+        Route::view('', 'auth.register')->name('register');
         Route::post('', [RegisterController::class, 'create'])->name('register.create');
     });
 
     Route::prefix('/login')->group(function () {
-        Route::get('', [LoginController::class, 'index'])->name('login');
+        Route::view('', 'auth.login')->name('login');
         Route::post('', [LoginController::class, 'authenticate'])->name('login.auth');
     });
 

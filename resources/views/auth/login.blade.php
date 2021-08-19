@@ -17,8 +17,8 @@
     <form action="{{ route('login.auth') }}" method="POST" class="flex flex-col gap-4">
       @csrf
       <input type="hidden" name="remember" value="true">
-      <input id="email" name="email" type="text" autocomplete="on" autofocus required class="rounded-md w-full px-3 py-2 border @error('email') border-red-600 @else border-gray-300 @enderror placeholder-gray-500 focus:outline-none focus:border-indigo-500" placeholder="Email" value="{{ old('email') }}">
-      <input id="password" name="password" type="password" autocomplete="off" required class="rounded-md w-full px-3 py-2 border @error('password') border-red-600 @else border-gray-300 @enderror placeholder-gray-500 focus:outline-none focus:border-indigo-500" placeholder="Password" value="{{ old('password') }}">
+      <input id="email" name="email" type="text" autocomplete="on" autofocus required class="rounded-md w-full px-3 py-2 border placeholder-gray-500 focus:outline-none focus:border-indigo-500" placeholder="Email" value="{{ old('email') }}">
+      <input id="password" name="password" type="password" autocomplete="off" required class="rounded-md w-full px-3 py-2 border placeholder-gray-500 focus:outline-none focus:border-indigo-500" placeholder="Password" value="{{ old('password') }}">
       @error('login_error')
       <div class="text-red-600 text-xs">{{ $message }}</div>
       @enderror

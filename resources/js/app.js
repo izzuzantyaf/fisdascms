@@ -17,6 +17,9 @@ visibilityToggler.handleOnOff()
 const successBanner = require('./success-banner')
 successBanner.hydrate()
 
+const adminProfilePage = require('./admin-profile')
+adminProfilePage.hydrate()
+
 if (pathname == '/assistant') {
   const assistant = require('./assistant')
   assistant.hydrate()
