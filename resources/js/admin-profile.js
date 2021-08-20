@@ -1,9 +1,9 @@
 class AdminProfilePage {
   #page = document.querySelector('.admin-profile')
-  #editBtn = this.#page.querySelector('.edit-btn')
-  #deleteBtn = this.#page.querySelector('.delete-btn')
-  #deleteModal = this.#page.querySelector('.delete-modal-overlay')
-  #cancelBtn = this.#deleteModal.querySelector('.cancel-btn')
+  #editBtn = this.#page?.querySelector('.edit-btn')
+  #deleteBtn = this.#page?.querySelector('.delete-btn')
+  #deleteModal = this.#page?.querySelector('.delete-modal-overlay')
+  #cancelBtn = this.#deleteModal?.querySelector('.cancel-btn')
   hydrate() {
     if (this.#page != null) {
       this.#handleEdit()

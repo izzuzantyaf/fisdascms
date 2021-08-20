@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AssistantController;
 use App\Http\Controllers\CodeOfConductController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmailVerificationController;
 use App\Http\Controllers\JournalCoverController;
 use App\Http\Controllers\LoginController;
@@ -36,7 +37,11 @@ Route::group(['middleware' => 'auth'], function () {
     })->name('home');
 
     Route::get('/dashboard', function () {
-        return view('dashboard');
+        return view('dashboard', [
+            'total_faculty' => DashboardController::get_total_faculty(),
+            'total_modules' => DashboardController::get_total_modules(),
+            'total_assistants' => DashboardController::get_total_assistants(),
+        ]);
     })->name('dashboard');
 
     Route::prefix('/code-of-conduct')->group(function () {

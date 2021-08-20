@@ -1,7 +1,10 @@
-const visibilityToggler = {
-  visibilityTogglers: Array.from(document.querySelectorAll('.visibility-toggler')),
-  handleOnOff() {
-    this.visibilityTogglers.forEach((toggler) => {
+class VisibilityToggler {
+  #visibilityTogglers = Array.from(document.querySelectorAll('.visibility-toggler'))
+  hydrate() {
+    this.#handleOnOff()
+  }
+  #handleOnOff() {
+    this.#visibilityTogglers.forEach((toggler) => {
       const visibilityInput = toggler.querySelector('input#' + toggler.id)
       toggler.addEventListener('click', () => {
         if (parseInt(visibilityInput.value)) {
@@ -18,4 +21,4 @@ const visibilityToggler = {
     })
   }
 }
-module.exports = visibilityToggler
+module.exports = new VisibilityToggler

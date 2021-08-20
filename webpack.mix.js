@@ -1,4 +1,3 @@
-const browserSync = require('browser-sync');
 const mix = require('laravel-mix');
 
 /*
