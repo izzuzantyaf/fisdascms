@@ -6,10 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Tel-U Physics Laboratory CMS website">
   <title>@yield('title','Dashboard') | Fisdas CMS</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/app.css">
+  <link rel="preload" href="/css/app.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet" href="/css/app.css">
+  </noscript>
   <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
   <!-- <script type="text/javascript" src="https://media-library.cloudinary.com/global/all.js"></script> -->
   <script defer type="text/javascript" src="/js/global.js"></script>
