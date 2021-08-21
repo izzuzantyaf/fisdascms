@@ -1,6 +1,11 @@
 @extends('layouts.app')
 @section('title','Video Praktikum')
 
+@section('components-js')
+<script defer type="text/javascript" src="/js/success-banner.js"></script>
+<script defer type="text/javascript" src="/js/visibility-toggler.js"></script>
+@endsection
+
 @section('content')
 <div class="practicum-video flex-grow p-4 pt-8">
   <h1 class="text-4xl font-bold">Video praktikum</h1>

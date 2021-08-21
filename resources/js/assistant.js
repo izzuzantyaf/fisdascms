@@ -114,4 +114,4 @@ class Assistant {
   }
 }
 
-module.exports = new Assistant
+(new Assistant).hydrate()

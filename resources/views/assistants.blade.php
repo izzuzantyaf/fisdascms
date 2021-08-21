@@ -1,6 +1,14 @@
 @extends('layouts.app')
 @section('title','Asisten')
 
+@section('functionality-js')
+<script defer type="text/javascript" src="/js/assistant.js"></script>
+@endsection
+
+@section('components-js')
+<script defer type="text/javascript" src="/js/success-banner.js"></script>
+@endsection
+
 @section('content')
 <div class="assistants max-w-full overflow-x-auto flex-grow flex flex-col gap-4 p-4 pt-8">
   <h1 class="text-4xl font-bold">Asisten</h1>

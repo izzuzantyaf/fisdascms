@@ -1,9 +1,9 @@
 class AdminProfilePage {
   #page = document.querySelector('.admin-profile')
-  #editBtn = this.#page?.querySelector('.edit-btn')
-  #deleteBtn = this.#page?.querySelector('.delete-btn')
-  #deleteModal = this.#page?.querySelector('.delete-modal-overlay')
-  #cancelBtn = this.#deleteModal?.querySelector('.cancel-btn')
+  #editBtn = document.querySelector('.edit-btn')
+  #deleteBtn = document.querySelector('.delete-btn')
+  #deleteModal = document.querySelector('.delete-modal-overlay')
+  #cancelBtn = document.querySelector('.cancel-btn')
   hydrate() {
     if (this.#page != null) {
       this.#handleEdit()
@@ -34,4 +34,4 @@ class AdminProfilePage {
     })
   }
 }
-module.exports = new AdminProfilePage
+(new AdminProfilePage).hydrate()

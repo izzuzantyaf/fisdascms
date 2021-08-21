@@ -1,6 +1,10 @@
 @extends('layouts.app')
 @section('title','Tata Tertib')
 
+@section('components-js')
+<script defer type="text/javascript" src="/js/success-banner.js"></script>
+@endsection
+
 @section('content')
 <div class="code-of-conduct flex-grow p-4 pt-8">
   <h1 class="text-4xl font-bold">Tata tertib</h1>

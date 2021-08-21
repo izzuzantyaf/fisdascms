@@ -1,5 +1,11 @@
 @extends('layouts.html')
 
+@section('app-page-js')
+<script defer type="text/javascript" src="/js/sidebar.js"></script>
+<script defer type="text/javascript" src="/js/avatar.js"></script>
+@yield('functionality-js')
+@endsection
+
 @section('main')
 <!-- navbar -->
 <x-navbar />

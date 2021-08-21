@@ -1,4 +1,4 @@
-class SocialMediaCard {
+class SocialMedia {
   self = Array.from(document.querySelectorAll('.social-media-card'))
   hydrate() {
     this.#handleEditLink()
@@ -33,4 +33,4 @@ class SocialMediaCard {
     })
   }
 }
-module.exports = new SocialMediaCard
+(new SocialMedia).hydrate()

@@ -31,4 +31,4 @@ const sidebar = {
     })
   }
 }
-module.exports = sidebar
+sidebar.hydrate()

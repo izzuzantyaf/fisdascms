@@ -1,6 +1,10 @@
 @extends('layouts.app')
 @section('title','Jadwal Praktikum')
 
+@section('components-js')
+<script defer type="text/javascript" src="/js/success-banner.js"></script>
+@endsection
+
 @section('content')
 <div class="schedule flex-grow p-4 pt-8">
   <h1 class="text-4xl font-bold">Jadwal praktikum</h1>

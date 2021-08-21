@@ -8,4 +8,4 @@ class SuccessBanner {
     this.self.classList.add('translate-y-24')
   }
 }
-module.exports = new SuccessBanner
+(new SuccessBanner).hydrate()

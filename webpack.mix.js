@@ -12,8 +12,15 @@ const mix = require('laravel-mix');
  */
 
 mix
-    .browserSync('127.0.0.1:8000')
-    .js('resources/js/app.js', 'public/js')
+    .browserSync('fisdascms.test')
+    .js('resources/js/global.js', 'public/js/global.js')
+    .js('resources/js/assistant.js', 'public/js/assistant.js')
+    .js('resources/js/avatar.js', 'public/js/avatar.js')
+    .js('resources/js/sidebar.js', 'public/js/sidebar.js')
+    .js('resources/js/visibility-toggler.js', 'public/js/visibility-toggler.js')
+    .js('resources/js/success-banner.js', 'public/js/success-banner.js')
+    .js('resources/js/admin-profile.js', 'public/js/admin-profile.js')
+    .js('resources/js/social-media.js', 'public/js/social-media.js')
     .postCss('resources/css/app.css', 'public/css', [
         require('tailwindcss'),
     ]);

@@ -1,6 +1,10 @@
 @extends('layouts.html')
 @section('title', 'Login')
 
+@section('components-js')
+<script defer type="text/javascript" src="/js/success-banner.js"></script>
+@endsection
+
 @section('main')
 @if(session('registration_message'))
 <x-banner />

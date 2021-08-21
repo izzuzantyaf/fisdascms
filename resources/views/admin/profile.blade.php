@@ -1,6 +1,10 @@
 @extends('layouts.app')
 @section('title','Profil')
 
+@section('functionality-js')
+<script defer type="text/javascript" src="/js/admin-profile.js"></script>
+@endsection
+
 @section('content')
 <div class="admin-profile flex flex-col flex-grow gap-6 pt-8 p-6">
 

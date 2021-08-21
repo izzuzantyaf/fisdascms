@@ -15,4 +15,4 @@ const avatar = {
     })
   }
 }
-module.exports = avatar
+avatar.hydrate()

@@ -21,4 +21,4 @@ class VisibilityToggler {
     })
   }
 }
-module.exports = new VisibilityToggler
+(new VisibilityToggler).hydrate()

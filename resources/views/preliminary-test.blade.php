@@ -1,6 +1,11 @@
 @extends('layouts.app')
 @section('title','Tugas Pendahuluan')
 
+@section('components-js')
+<script defer type="text/javascript" src="/js/success-banner.js"></script>
+<script defer type="text/javascript" src="/js/visibility-toggler.js"></script>
+@endsection
+
 @section('content')
 <div class="preliminary-test flex-grow p-4 pt-8">
   <h1 class="text-4xl font-bold ">Tugas pendahuluan</h1>
