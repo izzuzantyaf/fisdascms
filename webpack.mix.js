@@ -12,7 +12,7 @@ const mix = require('laravel-mix');
  */
 
 mix
-    .browserSync('fisdascms.test')
+    .browserSync('localhost:8000')
     .js('resources/js/global.js', 'public/js/global.js')
     .js('resources/js/assistant.js', 'public/js/assistant.js')
     .js('resources/js/avatar.js', 'public/js/avatar.js')
