@@ -9,7 +9,7 @@ use App\Http\Controllers\PracticumSimulatorController;
 use App\Http\Controllers\PracticumVideoController;
 use App\Http\Controllers\PreliminaryTestController;
 use App\Http\Controllers\ScheduleController;
-use App\Models\SocialMedia;
+use App\Http\Controllers\SocialMediaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -65,5 +65,5 @@ Route::get('/organigram', function () {
 });
 
 Route::get('/social-media', function () {
-    return SocialMedia::all();
+    return SocialMediaController::get_visible();
 });

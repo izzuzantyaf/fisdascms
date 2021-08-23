@@ -12,6 +12,11 @@ class SocialMediaController extends Controller
         return SocialMedia::select('*')->orderBy('visibility', 'DESC')->orderBy('name')->get();
     }
 
+    public static function get_visible()
+    {
+        return SocialMedia::where('visibility', 1)->get();
+    }
+
     public static function index()
     {
         return view('social-media', ['social_medias' => self::get_all()]);

@@ -41,6 +41,7 @@ Route::group(['middleware' => 'auth'], function () {
             'total_faculty' => DashboardController::get_total_faculty(),
             'total_modules' => DashboardController::get_total_modules(),
             'total_assistants' => DashboardController::get_total_assistants(),
+            'modules' => DashboardController::get_modules(),
         ]);
     })->name('dashboard');
 
