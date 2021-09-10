@@ -1,4 +1,11 @@
 {
-    "/js/app.js": "/js/app.js",
+    "/js/global.js": "/js/global.js",
+    "/js/assistant.js": "/js/assistant.js",
+    "/js/avatar.js": "/js/avatar.js",
+    "/js/sidebar.js": "/js/sidebar.js",
+    "/js/visibility-toggler.js": "/js/visibility-toggler.js",
+    "/js/success-banner.js": "/js/success-banner.js",
+    "/js/admin-profile.js": "/js/admin-profile.js",
+    "/js/social-media.js": "/js/social-media.js",
     "/css/app.css": "/css/app.css"
 }

@@ -17,8 +17,9 @@ class CreatePracticumHandoutsTable extends Migration
             $table->id();
             $table->string('faculty');
             $table->string('lang');
-            $table->text('file_url');
-            $table->integer('semester');
+            $table->text('file_url')->nullable();
+            $table->integer('visibility')->default(0);
+            $table->timestamps();
         });
     }
 

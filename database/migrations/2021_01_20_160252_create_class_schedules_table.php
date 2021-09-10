@@ -15,8 +15,8 @@ class CreateClassSchedulesTable extends Migration
     {
         Schema::create('class_schedules', function (Blueprint $table) {
             $table->id();
-            $table->integer('semester');
-            $table->text('image_url');
+            $table->text('original_url')->nullable()->default(null);
+            $table->text('prepared_url')->nullable()->default(null);
             $table->timestamps();
         });
     }

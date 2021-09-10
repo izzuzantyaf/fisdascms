@@ -5,64 +5,56 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class AdminController extends Controller
 {
-
-    function __construct()
-    {
-        $this->admin = new Admin;
+  public static function update(Request $request, $id)
+  {
+    // validate the data
+    $validatedCredentials = $request->validate([
+      'name' => 'required|max:255',
+      'email' => [
+        'required',
+        'email:rfc,dns',
+        Rule::unique('admins')->ignore($id),
+        'max:255'
+      ],
+    ]);
+    // do the update
+    $is_update_successful = Admin::where('id', $id)->update($validatedCredentials);
+    if ($is_update_successful) {
+      // update the admin data in the session
+      $admin = Admin::find($id);
+      auth()->setUser($admin);
+      return back()->with(['admin_update_message' => 'Data kamu berhasil diupdate']);
     }
+    return back();
+  }
 
-    public function register(Request $request)
-    {
-        $admin = new Admin;
+  public static function delete($id)
+  {
+    $is_delete_successful = Admin::where('id', $id)->delete();
+    return $is_delete_successful
+      ? redirect()->route('logout')
+      : back();
+  }
 
-        // collect new admin datas from the form
-        $admin->username = $request->input('username');
-        $admin->email = $request->input('email');
-        $admin->name = $request->input('name');
-        $admin->password = $request->input('password');
-        $password_confirm = $request->input('password_confirm');
-        $admin->remember_token = uniqid();
+  public static function change_password(Request $request, $id)
+  {
+    // validate
+    $validatedCredentials = $request->validate([
+      'old_password' => 'required|password',
+      'new_password' => 'required|min:8|max:255|confirmed'
+    ]);
+    // hash the password
+    Admin::where('id', $id)->update(['password' => bcrypt($validatedCredentials['new_password'])]);
+    // log out the user
+    Auth::logout();
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
 
-        $is_username_is_used = Admin::firstWhere('username', $admin->username) ? true : false;
-        $is_email_is_used = Admin::firstWhere('email', $admin->email) ? true : false;
-
-        if (!$is_username_is_used && !$is_email_is_used && ($admin->password === $password_confirm)) {
-            // encrypt the password
-            $admin->password = md5($admin->password);
-            // add new admin into database
-            return $admin->save();
-        } else return [
-            'register_username_error' => $is_username_is_used,
-            'register_email_error' => $is_email_is_used,
-            'register_password_error' => !($admin->password === $password_confirm),
-        ];
-    }
-
-    public function login(Request $request)
-    {
-        $admin = new Admin;
-
-        // collect admin's username and password
-        $admin_username = $request->input('username');
-        $admin_password = $request->input('password');
-
-        // search admin in database
-        $admin_from_db = $admin->firstWhere('username', $admin_username);
-
-        if ($admin_from_db) {
-            // check admin's password
-            if (md5($admin_password) === $admin_from_db['password'])
-                session(['admin_logged_in' => $admin_from_db['remember_token']]);
-            return true;
-        } else return false;
-    }
-
-    public static function logout(Request $request)
-    {
-        $request->session()->forget('admin_logged_in');
-        return true;
-    }
+    return redirect()->route('login')->with('password_reset_message', 'Password kamu berhasil diubah, silakan login kembali');
+  }
 }
