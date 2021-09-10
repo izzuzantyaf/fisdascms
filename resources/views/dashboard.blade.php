@@ -48,6 +48,15 @@
         </div>
       @endforeach
     </div>
+    {{-- admin list --}}
+    <div class="admin-list col-span-full sm:col-span-4 flex flex-col gap-2">
+      <div class="title text-2xl font-bold">Admin</div>
+      <div class="card bg-white shadow-md rounded-xl p-4 flex flex-col gap-2">
+        @foreach($admins as ['name' => $name])
+        <div>{{ $name }}</div>
+        @endforeach
+      </div>
+    </div>
   </div>
 </div>
 @endsection
