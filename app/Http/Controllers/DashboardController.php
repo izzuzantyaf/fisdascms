@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Admin;
 use App\Models\Assistant;
 use App\Models\ClassSchedule;
 use App\Models\CodeOfConduct;
@@ -43,5 +44,10 @@ class DashboardController extends Controller
         $class_shcedule = ClassSchedule::select('prepared_link')->first();
         $module_shcedules = ModuleSchedule::select(['faculty', 'prepared_link'])->get();
         $organigram = Organigram::select('prepared_link')->first();
+    }
+
+    public static function get_admin()
+    {
+        return Admin::select(['name'])->orderBy('name', 'ASC')->get();
     }
 }
