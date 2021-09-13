@@ -94,7 +94,7 @@
     {{-- admin list --}}
     <div class="admin-list col-span-full sm:col-span-6 lg:col-span-4 flex flex-col gap-2">
       <div class="title text-2xl">Admin</div>
-      <div class="card bg-blue-500 text-white rounded-xl p-4 flex flex-col gap-2">
+      <div class="card bg-blue-500 text-white rounded-xl p-4 flex flex-col gap-4">
         @foreach($admins as ['name' => $name])
         <div>{{ $name }}</div>
         @endforeach
