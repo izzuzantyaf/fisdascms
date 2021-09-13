@@ -8,7 +8,7 @@
 
 @section('content')
 <div class="preliminary-test flex-grow p-4 pt-8">
-  <h1 class="text-4xl font-bold ">Tugas pendahuluan</h1>
+  <h1 class="text-4xl font-bold">Tugas pendahuluan</h1>
 
   @if(session('preliminary_test_update_message'))
   <x-success-banner message="{{ session('preliminary_test_update_message') }}" />
