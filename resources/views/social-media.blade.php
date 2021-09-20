@@ -16,14 +16,14 @@
     <x-success-banner message="{{ session('result_message') }}" />
   @endif
   <div class="mt-4 p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4 bg-white shadow-md rounded-lg">
-    <?php foreach ($social_medias as [
+    @foreach($social_medias as [
       'id' => $id,
       'name' => $name,
       'icon' => $icon,
       'link' => $link,
       'bg_color' => $bg_color,
       'visibility' => $visibility,
-    ]) { ?>
+    ])
       <div class="social-media-card grid grid-cols-12 gap-4 items-center 
       @if($visibility) {{ "$bg_color text-white" }} @else {{ "text-gray-300 bg-gray-100" }} @endif
        rounded-md p-4">
@@ -67,7 +67,7 @@
           </button>
         </div>
       </div>
-    <?php } ?>
+    @endforeach
   </div>
 </div>
 @endsection
