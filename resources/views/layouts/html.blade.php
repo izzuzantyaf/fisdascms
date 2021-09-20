@@ -19,6 +19,9 @@
 </head>
 
 <body class="bg-gray-50 text-sm">
+  @if (env('APP_ENV') !== 'production')
+    <div class="bg-yellow-100 text-yellow-500 text-center py-2">Fisdas CMS (Beta)</div>
+  @endif
   @yield('main')
 </body>
 
