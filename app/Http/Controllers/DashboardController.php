@@ -94,15 +94,17 @@ class DashboardController extends Controller
 
     public static function get_social_media_overview()
     {
-        $social_media = SocialMedia::select('name', 'icon', 'icon_color', 'visibility')
+        // get social media data
+        $social_media = SocialMedia::select('name', 'icon', 'color', 'visibility')
             ->orderBy('name', 'ASC')
             ->get();
 
+        // return social media data with adjusted properties name
         return array_map(function ($socmed) {
             return [
                 'name' => $socmed['name'],
                 'icon' => $socmed['icon'],
-                'color' => $socmed['icon_color'],
+                'color' => $socmed['color'],
                 'status' => $socmed['visibility'],
             ];
         }, $social_media->toArray());
