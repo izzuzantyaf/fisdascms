@@ -1,32 +1,26 @@
 {
-    "private": true,
-    "scripts": {
-        "dev": "npm run development",
-        "development": "mix",
-        "watch": "mix watch",
-        "watch-poll": "mix watch -- --watch-options-poll=1000",
-        "hot": "mix watch --hot",
-        "prod": "npm run production",
-        "production": "mix --production"
-    },
-    "devDependencies": {
-        "@fortawesome/fontawesome-free": "^5.15.4",
-        "@fortawesome/fontawesome-svg-core": "^1.2.36",
-        "@fortawesome/free-brands-svg-icons": "^5.15.4",
-        "@fortawesome/free-solid-svg-icons": "^5.15.4",
-        "@tailwindcss/aspect-ratio": "^0.2.1",
-        "@tailwindcss/postcss7-compat": "^2.2.14",
-        "autoprefixer": "^10.3.4",
-        "axios": "^0.21",
-        "browser-sync": "^2.27.5",
-        "browser-sync-webpack-plugin": "^2.3.0",
-        "laravel-mix": "^6.0.31",
-        "lodash": "^4.17.21",
-        "postcss": "^8.3.6",
-        "resolve-url-loader": "^4.0.0",
-        "sass": "^1.41.1",
-        "sass-loader": "^12.1.0",
-        "tailwindcss": "^2.2.15"
-    },
-    "dependencies": {}
+  "name": "fisdascms",
+  "version": "0.1.0",
+  "author": "Izzu Zantya Fawwas",
+  "private": true,
+  "license": "UNLICENSED",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev --parallel",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+  },
+  "devDependencies": {
+    "prettier": "^2.5.1",
+    "turbo": "latest"
+  },
+  "engines": {
+    "npm": ">=7.0.0",
+    "node": ">=14.0.0"
+  },
+  "packageManager": "yarn@1.22.17"
 }
