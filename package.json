@@ -10,6 +10,10 @@
   ],
   "scripts": {
     "build": "turbo run build",
+    "build:server": "turbo run build --scope=*fisdascms-server*",
+    "build:client": "turbo run build --scope=*fisdascms-client*",
+    "dev:server": "turbo run dev --scope=*fisdascms-server*",
+    "dev:client": "turbo run dev --scope=*fisdascms-client*",
     "dev": "turbo run dev --parallel",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
