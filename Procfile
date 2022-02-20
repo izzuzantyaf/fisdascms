@@ -1,1 +1,1 @@
-web: cd apps/fisdascms-server && npm run start:prod
+web: cd apps/fisdascms-server && yarn run start:prod
