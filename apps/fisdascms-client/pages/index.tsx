@@ -1,20 +1,19 @@
-import type { GetServerSideProps, GetServerSidePropsResult, NextPage } from 'next'
+import type { GetServerSideProps, GetServerSidePropsResult, InferGetServerSidePropsType, NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 
-// export const getServerSideProps : GetServerSideProps = async () => {
-//   const res = await fetch('https://fisdascms-redev.herokuapp.com/api/admin')
-//   const admins : GetServerSidePropsResult<object[]> = await res.json()
-//   const data = {
-//     props:{admins}
-//   }
-//   return data
-// }
+export const getServerSideProps : GetServerSideProps = async () => {
+  const res = await fetch('https://fisdascms-redev.herokuapp.com/api/admin')
+  const admins : [] = await res.json()
+  return {
+    props: { admins }
+  }
+}
 
-const Home: NextPage = () => {
-  // console.log('admins list : ')
-  // console.log(admins)
+const Home: NextPage = ({admins}:InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  console.log('admins list : ')
+  console.log(admins)
   return (
     <div className={styles.container}>
       <Head>
