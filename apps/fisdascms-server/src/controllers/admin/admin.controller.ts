@@ -6,9 +6,11 @@ import {
   HttpStatus,
   Param,
   Post,
+  UseGuards,
 } from '@nestjs/common';
-import { ErrorResponse, SuccessfulResponse } from 'src/core/dtos/response.dto';
+import { SuccessfulResponse } from 'src/core/dtos/response.dto';
 import { AdminService } from 'src/services/use-cases/admin/admin.service';
+import { JwtAuthGuard } from 'src/services/use-cases/auth/jwt-auth.guard';
 
 @Controller('api/admin')
 export class AdminController {
@@ -16,7 +18,6 @@ export class AdminController {
 
   @Post()
   async create(@Body() createAdminDto: object) {
-    console.log('Data masuk : ', createAdminDto);
     const storedAdmin = await this.adminService.create(createAdminDto);
     throw new SuccessfulResponse('Registrasi berhasil', HttpStatus.CREATED, {
       storedAdmin,

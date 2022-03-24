@@ -9,5 +9,7 @@ export abstract class IGenericRepository<T> {
 
   abstract update(id: string, newItem: T): Promise<T>;
 
-  abstract delete(id: string): Promise<T>;
+  abstract deleteById(id: string): Promise<T>;
+
+  abstract deleteByEmail(email: string): Promise<T>;
 }

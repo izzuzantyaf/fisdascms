@@ -11,28 +11,42 @@ export class AdminService {
   ) {}
 
   async create(createAdminDto: object) {
+    console.log('Incoming data :', createAdminDto);
     const newAdmin = this.adminFactoryService.create(createAdminDto);
     newAdmin.validateProps();
-    const isAdminExists = await this.dataServices.admins.getByEmail(
-      newAdmin.email,
-    );
-    if (isAdminExists)
+    const admin = await this.dataServices.admins.getByEmail(newAdmin.email);
+    console.log('Existing admin :', admin);
+    if (admin)
       throw new ErrorResponse('Email sudah terdaftar', HttpStatus.CONFLICT);
     await newAdmin.hashPassword();
     const storedAdmin = await this.dataServices.admins.create(newAdmin);
-    console.log('storedAdmin : ', storedAdmin);
-    return storedAdmin;
+    console.log('Stored admin :', storedAdmin);
+    return this.adminFactoryService.create(storedAdmin);
   }
 
   async getAll() {
-    return await this.dataServices.admins.getAll();
+    const admins = this.adminFactoryService.createMany(
+      await this.dataServices.admins.getAll(),
+    );
+    return admins;
   }
 
   async delete(id: string) {
-    const deletedAdmin = await this.dataServices.admins.delete(id);
-    if (deletedAdmin) return deletedAdmin;
-    const errorResponse = new ErrorResponse('Akun gagal dihapus');
-    console.log('Response : ', errorResponse.getResponse());
-    throw errorResponse;
+    const deletedAdmin = await this.dataServices.admins.deleteById(id);
+    console.log('deletedAdmin :', deletedAdmin);
+    if (!deletedAdmin) throw new ErrorResponse('Akun gagal dihapus');
+    return this.adminFactoryService.create(deletedAdmin);
+  }
+
+  async validateAdmin(email: string, password: string) {
+    console.log('Incoming credentials :', { email, password });
+    const adminFromDb = await this.dataServices.admins.getByEmail(email);
+    console.log('Admin from database :', adminFromDb);
+    if (!adminFromDb) throw new ErrorResponse('Login gagal');
+    const admin = this.adminFactoryService.create(adminFromDb);
+    const isPasswordMatch = await admin.verifyPassword(password);
+    console.log('Is password match :', isPasswordMatch);
+    if (!isPasswordMatch) throw new ErrorResponse('Login gagal');
+    return admin;
   }
 }
