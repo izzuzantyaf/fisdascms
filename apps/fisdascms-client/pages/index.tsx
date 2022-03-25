@@ -1,30 +1,37 @@
-import type { GetServerSideProps, GetServerSidePropsResult, InferGetServerSidePropsType, NextPage } from 'next'
+import type { NextPage } from 'next'
 import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import Link from 'next/link'
 
-export const getServerSideProps : GetServerSideProps = async () => {
-  const res = await fetch('https://fisdascms-redev.herokuapp.com/api/admin')
-  const admins : [] = await res.json()
+export const getServerSideProps = async ({req,res}:{req:any,res:any}) => {
+  if(!req.cookies.jwt)
+    return {
+      redirect:{
+        destination:'/auth/signin'
+      }
+    }
   return {
-    props: { admins }
+    props:{
+      data:{}
+    }
   }
 }
 
-const Home: NextPage = ({admins}:InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  console.log('admins list : ')
-  console.log(admins)
-  return (<>
+const Home: NextPage = () => {
+  return <>
       <Head>
         <title>Fisdas CMS</title>
         <meta name="description" content="Website CMS Lab Fisika Dasar Tel-U" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-<div>
-  Fisdas CMS
-</div>
+      <div>
+        <p>Fisdas CMS</p>
+        <Link href='/auth/signin'>to login</Link>
+        <button onClick={e => {
+          document.cookie="jwt=; path=/"
+          window.location.reload()
+        }}>Keluar</button>
+      </div>
   </>
-  )
 }
 
 export default Home
