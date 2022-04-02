@@ -1,21 +1,27 @@
-import { HttpException } from '@nestjs/common';
+interface AppResponse {
+  isSuccess: boolean;
+  message: string;
+  data: object | null;
+}
 
-export class SuccessfulResponse extends HttpException {
-  constructor(
-    message: string,
-    statusCode: number = 200,
-    additionalData?: object,
-  ) {
-    super({ isSuccess: true, message, ...additionalData }, statusCode);
+export class SuccessfulResponse implements AppResponse {
+  isSuccess = true;
+  message: string;
+  data = null;
+
+  constructor(message: string = 'Sukses', data?: object) {
+    this.message = message;
+    this.data = { ...data };
   }
 }
 
-export class ErrorResponse extends HttpException {
-  constructor(
-    message: string,
-    statusCode: number = 400,
-    additionalData?: object,
-  ) {
-    super({ isSuccess: false, message, ...additionalData }, statusCode);
+export class ErrorResponse implements AppResponse {
+  isSuccess = false;
+  message: string;
+  data = null;
+
+  constructor(message: string = 'Gagal', data?: object) {
+    this.message = message;
+    this.data = { ...data };
   }
 }

@@ -1,6 +1,5 @@
-import { Admin } from '../entities/admin.entity';
-import { IGenericRepository } from './generic-repository.abstract';
+import { IAdminGenericRepository } from './admin-repo.abstract';
 
 export abstract class IDataServices {
-  abstract admins: IGenericRepository<Admin>;
+  abstract admins: IAdminGenericRepository;
 }

@@ -5,7 +5,7 @@ import {
   IsString,
   MinLength,
 } from 'class-validator';
-import { AdminRole } from '../entities/admin.entity';
+import { AdminRole } from '../constants/constants';
 
 export class CreateAdminDto {
   @IsNotEmpty()

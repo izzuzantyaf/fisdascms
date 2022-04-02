@@ -1,15 +1,9 @@
 import * as bcrypt from 'bcrypt';
 import { Exclude } from 'class-transformer';
-import { ErrorResponse } from '../dtos/response.dto';
-import { HttpStatus } from '@nestjs/common';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { AdminRole } from '../constants/constants';
 
 export type AdminDocument = Admin & Document;
-
-export enum AdminRole {
-  Owner = 'owner',
-  Admin = 'admin',
-}
 
 @Schema({ timestamps: true })
 export class Admin {
@@ -61,7 +55,7 @@ export class Admin {
   }
 
   protected validateRole() {
-    if (this.role !== AdminRole.Owner && this.role !== AdminRole.Admin)
+    if (this.role !== AdminRole.OWNER && this.role !== AdminRole.ADMIN)
       return { role: 'Role tidak valid' };
     return true;
   }
@@ -79,11 +73,9 @@ export class Admin {
       {},
     );
     console.log('Validation errors :', errors);
-    if (!(Object.keys(errors).length === 0 && errors.constructor === Object))
-      throw new ErrorResponse('Data tidak valid', HttpStatus.BAD_REQUEST, {
-        errors,
-      });
-    return errors;
+    return !(Object.keys(errors).length === 0 && errors.constructor === Object)
+      ? errors
+      : null;
   }
 
   async hashPassword() {

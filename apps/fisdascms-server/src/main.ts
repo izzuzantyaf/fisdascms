@@ -6,7 +6,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
   app.useGlobalPipes(
     new ValidationPipe({
-      enableDebugMessages: true, // menampilkan pesan error pada console
+      enableDebugMessages: true, // menampilkan pesan pada console jika terjadi error,
     }),
   );
   await app.listen(process.env.PORT ?? 8080);

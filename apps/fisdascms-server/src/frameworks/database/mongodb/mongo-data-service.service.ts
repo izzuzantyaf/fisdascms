@@ -2,21 +2,20 @@ import { Injectable, OnApplicationBootstrap } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { IDataServices } from 'src/core/abstracts/data-services.abstract';
-import { MongoGenericRepository } from './mongo-generic-repo';
 import { Admin, AdminDocument } from 'src/core/entities/admin.entity';
+import { AdminMongoRepository } from './admin-mongo-repo';
 
 @Injectable()
 export class MongoDataServices
   implements IDataServices, OnApplicationBootstrap
 {
-  admins: MongoGenericRepository<Admin>;
+  admins: AdminMongoRepository;
 
   constructor(
-    @InjectModel(Admin.name)
-    private AdminRepository: Model<AdminDocument>,
+    @InjectModel(Admin.name) private adminModel: Model<AdminDocument>,
   ) {}
 
   onApplicationBootstrap() {
-    this.admins = new MongoGenericRepository<Admin>(this.AdminRepository);
+    this.admins = new AdminMongoRepository(this.adminModel);
   }
 }
