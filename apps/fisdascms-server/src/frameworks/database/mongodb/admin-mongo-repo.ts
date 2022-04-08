@@ -1,5 +1,5 @@
-import { IAdminGenericRepository } from 'src/core/abstracts/admin-repo.abstract';
-import { Admin, AdminDocument } from 'src/core/entities/admin.entity';
+import { IAdminGenericRepository } from 'src/entities/abstracts/admin-repo.interface';
+import { Admin, AdminDocument } from 'src/entities/models/admin.entity';
 import { MongoGenericRepository } from './mongo-generic-repo';
 import { Model } from 'mongoose';
 
@@ -11,11 +11,18 @@ export class AdminMongoRepository
     super(repository);
   }
 
-  getByEmail(email: string): Promise<Admin> {
+  createOrUpdate(admin: Admin) {
+    return this._repository.findOneAndUpdate({ email: admin.email }, admin, {
+      new: true,
+      upsert: true,
+    });
+  }
+
+  getByEmail(email: string) {
     return this._repository.findOne({ email: email }).exec();
   }
 
-  deleteByEmail(email: string): Promise<Admin> {
+  deleteByEmail(email: string) {
     return this._repository.findOneAndDelete({ email: email }).exec();
   }
 }

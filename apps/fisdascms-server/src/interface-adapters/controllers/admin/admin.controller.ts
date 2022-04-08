@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
-import { SuccessfulResponse } from 'src/core/dtos/response.dto';
-import { AdminService } from 'src/services/use-cases/admin/admin.service';
+import { SuccessfulResponse } from 'src/entities/dtos/response.dto';
+import { AdminService } from 'src/use-cases/admin/admin.service';
 
 @Controller('api/admin')
 export class AdminController {

@@ -1,5 +1,5 @@
 import { Model } from 'mongoose';
-import { IGenericRepository } from 'src/core/abstracts/generic-repo.abstract';
+import { IGenericRepository } from 'src/entities/abstracts/generic-repo.interface';
 
 export class MongoGenericRepository<T> implements IGenericRepository<T> {
   protected _repository: Model<T>;

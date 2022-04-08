@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
-import { AdminModule } from './services/use-cases/admin/admin.module';
-import { AuthModule } from './services/use-cases/auth/auth.module';
+import { AdminModule } from './use-cases/admin/admin.module';
+import { AuthModule } from './use-cases/auth/auth.module';
 
 @Module({
   imports: [

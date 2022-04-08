@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { AdminController } from 'src/interface-adapters/controllers/admin/admin.controller';
 import { AdminService } from './admin.service';
-import { DataServicesModule } from 'src/services/data-services/data-services.module';
+import { DataServicesModule } from 'src/use-cases/data-services/data-services.module';
 import { AdminFactoryService } from './admin-factory.service';
 
 @Module({

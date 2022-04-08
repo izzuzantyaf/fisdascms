@@ -14,10 +14,11 @@ export class AuthService {
   }
 
   async signin(admin: any) {
-    const payload = {
-      username: admin.email,
-      password: admin.password,
+    const payload = { ...admin };
+    return {
+      access_token: this.jwtService.sign(payload, {
+        secret: process.env.JWT_SECRET,
+      }),
     };
-    return { ...admin, access_token: this.jwtService.sign(payload) };
   }
 }

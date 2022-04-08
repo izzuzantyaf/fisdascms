@@ -1,5 +1,5 @@
-import { Admin } from '../entities/admin.entity';
-import { IGenericRepository } from './generic-repo.abstract';
+import { Admin } from '../models/admin.entity';
+import { IGenericRepository } from './generic-repo.interface';
 
 export interface IAdminGenericRepository extends IGenericRepository<Admin> {
   getByEmail(email: string): Promise<Admin>;

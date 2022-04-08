@@ -2,6 +2,15 @@ import * as bcrypt from 'bcrypt';
 import { Exclude } from 'class-transformer';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { AdminRole } from '../constants/constants';
+import {
+  isEmail,
+  isEmpty,
+  isEnum,
+  isNotEmptyObject,
+  isObject,
+  maxLength,
+  minLength,
+} from 'class-validator';
 
 export type AdminDocument = Admin & Document;
 
@@ -34,29 +43,30 @@ export class Admin {
   }
 
   protected validateName() {
-    if (!this.name) return { name: 'Nama harus diisi' };
+    const maxNameLength = 100;
+    if (isEmpty(this.name)) return { name: 'Nama harus diisi' };
+    if (!maxLength(this.name, maxNameLength))
+      return { name: `Nama maksimal ${maxNameLength} karakter` };
     return true;
   }
 
   protected validateEmail() {
-    const isEmailValid =
-      /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/.test(
-        this.email,
-      );
-    if (!isEmailValid) return { email: 'Email tidak valid' };
+    if (isEmpty(this.email)) return { email: 'Email harus diisi' };
+    if (!isEmail(this.email)) return { email: 'Email tidak valid' };
     return true;
   }
 
   protected validatePassword() {
-    const minChar = 6;
-    if (!(this.password.length >= minChar))
-      return { password: `Password minimal ${minChar} karakter` };
+    const minPasswordLength = 6;
+    if (isEmpty(this.password)) return { password: 'Password harus diisi' };
+    if (!minLength(this.password, minPasswordLength))
+      return { password: `Password minimal ${minPasswordLength} karakter` };
     return true;
   }
 
   protected validateRole() {
-    if (this.role !== AdminRole.OWNER && this.role !== AdminRole.ADMIN)
-      return { role: 'Role tidak valid' };
+    if (isEmpty(this.role)) return { role: 'Role harus diisi' };
+    if (!isEnum(this.role, AdminRole)) return { role: 'Role tidak valid' };
     return true;
   }
 
@@ -68,14 +78,11 @@ export class Admin {
       this.validateRole(),
     ];
     const errors = validationResults.reduce(
-      (error, result) =>
-        typeof result !== 'boolean' ? { ...error, ...result } : error,
+      (error, result) => (isObject(result) ? { ...error, ...result } : error),
       {},
     );
     console.log('Validation errors :', errors);
-    return !(Object.keys(errors).length === 0 && errors.constructor === Object)
-      ? errors
-      : null;
+    return isNotEmptyObject(errors) ? errors : null;
   }
 
   async hashPassword() {

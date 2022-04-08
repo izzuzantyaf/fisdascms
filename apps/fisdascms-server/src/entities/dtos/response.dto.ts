@@ -1,3 +1,5 @@
+import { isObject } from 'class-validator';
+
 interface AppResponse {
   isSuccess: boolean;
   message: string;
@@ -11,7 +13,7 @@ export class SuccessfulResponse implements AppResponse {
 
   constructor(message: string = 'Sukses', data?: object) {
     this.message = message;
-    this.data = { ...data };
+    this.data = isObject(data) ? { ...data } : null;
   }
 }
 
@@ -22,6 +24,6 @@ export class ErrorResponse implements AppResponse {
 
   constructor(message: string = 'Gagal', data?: object) {
     this.message = message;
-    this.data = { ...data };
+    this.data = isObject(data) ? { ...data } : null;
   }
 }

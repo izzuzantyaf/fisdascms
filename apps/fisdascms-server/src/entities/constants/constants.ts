@@ -12,3 +12,7 @@ export enum Language {
   ID = 'id',
   EN = 'en',
 }
+
+export enum Auth {
+  JWT_SECRET = 'fisdasverysecretkey',
+}
