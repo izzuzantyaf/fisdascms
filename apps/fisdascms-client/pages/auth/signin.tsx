@@ -8,7 +8,7 @@ export const getServerSideProps = async ({req, res}:{req:any,res:any}) => {
   if(req.cookies.jwt)
     return {
       redirect:{
-        destination:Route.HOME
+        destination: Route.HOME
       }
     }
   return {
@@ -39,13 +39,6 @@ const SignInPage = () => {
         <button onClick={async (e) => {
           e.preventDefault()
           const data = await signIn(email,password)
-          if(data.isSuccess){
-            const {access_token} = data.authenticatedAdmin
-            const decodedJwt:any = jwt.decode(access_token)
-            document.cookie = `jwt=${access_token}; expires=${new Date(decodedJwt?.exp*1000).toUTCString()}; path=/`
-            setAdmin(data.authenticatedAdmin)
-            window.location.reload()
-          }
         }}>Masuk</button>
       </form>
     </>
@@ -63,6 +56,11 @@ const signIn = async (email:string, password:string) => {
   })
   const data = await res.json()
   console.log(data)
+  if(!data.isSuccess) return;
+  const {access_token} = data.authenticatedAdmin
+  const decodedJwt:any = jwt.decode(access_token)
+  document.cookie = `jwt=${access_token}; expires=${new Date(decodedJwt?.exp*1000).toUTCString()}; path=/`
+  window.location.reload()
   return data
 }
 

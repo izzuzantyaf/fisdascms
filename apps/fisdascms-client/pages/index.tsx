@@ -1,6 +1,7 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
+import { Route } from '../lib/constants'
 
 export const getServerSideProps = async ({req,res}:{req:any,res:any}) => {
   if(!req.cookies.jwt)
@@ -25,7 +26,7 @@ const Home: NextPage = () => {
       </Head>
       <div>
         <p>Fisdas CMS</p>
-        <Link href='/auth/signin'>to login</Link>
+        <Link href={Route.SIGN_IN}>to login</Link>
         <button onClick={e => {
           document.cookie="jwt=; path=/"
           window.location.reload()
