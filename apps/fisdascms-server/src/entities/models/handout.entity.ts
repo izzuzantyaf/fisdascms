@@ -11,6 +11,8 @@ export class Handout {
   faculty: Faculty;
   @Prop({ required: true })
   language: Language;
+  @Prop({ required: true })
+  isActive: boolean;
   @Prop()
   url: string;
 
@@ -18,12 +20,14 @@ export class Handout {
     _id: string | number;
     faculty: Faculty;
     language: Language;
+    isActive: boolean;
     url: string;
   }) {
-    const { _id, faculty, language, url } = initialProps;
+    const { _id, faculty, language, isActive, url } = initialProps;
     this._id = _id;
     this.faculty = faculty;
     this.language = language;
+    this.isActive = isActive;
     this.url = url;
   }
 }
