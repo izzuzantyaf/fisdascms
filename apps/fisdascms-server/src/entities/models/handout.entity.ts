@@ -17,11 +17,11 @@ export class Handout {
   url: string;
 
   constructor(initialProps?: {
-    _id: string | number;
-    faculty: Faculty;
-    language: Language;
-    isActive: boolean;
-    url: string;
+    _id?: string | number;
+    faculty?: Faculty;
+    language?: Language;
+    isActive?: boolean;
+    url?: string;
   }) {
     const { _id, faculty, language, isActive, url } = initialProps;
     this._id = _id;

@@ -10,4 +10,16 @@ export class HandoutMongoRepository
   constructor(repository: Model<HandoutDocument>) {
     super(repository);
   }
+
+  createManyOrUpdate(handouts: Handout[]) {
+    handouts.forEach((handout) => {
+      this._repository
+        .findOneAndUpdate(
+          { faculty: handout.faculty, language: handout.language },
+          handouts,
+          { upsert: true },
+        )
+        .exec();
+    });
+  }
 }
