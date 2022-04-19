@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Faculty, Language } from '../constants/constants';
 import { Document } from 'mongoose';
+import { isMongoId } from 'class-validator';
 
 export type HandoutDocument = Handout & Document;
 

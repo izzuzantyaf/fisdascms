@@ -16,7 +16,7 @@ export class HandoutMongoRepository
       this._repository
         .findOneAndUpdate(
           { faculty: handout.faculty, language: handout.language },
-          handouts,
+          handout,
           { upsert: true },
         )
         .exec();

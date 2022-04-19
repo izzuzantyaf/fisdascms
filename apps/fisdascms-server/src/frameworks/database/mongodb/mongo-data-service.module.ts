@@ -3,10 +3,14 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { IDataServices } from 'src/entities/abstracts/data-services.abstract';
 import { MongoDataServices } from './mongo-data-service.service';
 import { Admin, AdminSchema } from 'src/entities/models/admin.entity';
+import { Handout, HandoutSchema } from 'src/entities/models/handout.entity';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: Admin.name, schema: AdminSchema }]),
+    MongooseModule.forFeature([
+      { name: Admin.name, schema: AdminSchema },
+      { name: Handout.name, schema: HandoutSchema },
+    ]),
     MongooseModule.forRoot(process.env.MONGO_URI),
   ],
   providers: [

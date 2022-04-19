@@ -12,10 +12,12 @@ export class AdminMongoRepository
   }
 
   createOrUpdate(admin: Admin) {
-    return this._repository.findOneAndUpdate({ email: admin.email }, admin, {
-      new: true,
-      upsert: true,
-    });
+    return this._repository
+      .findOneAndUpdate({ email: admin.email }, admin, {
+        new: true,
+        upsert: true,
+      })
+      .exec();
   }
 
   getByEmail(email: string) {
