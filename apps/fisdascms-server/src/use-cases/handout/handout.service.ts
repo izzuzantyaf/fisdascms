@@ -10,7 +10,9 @@ export class HandoutService {
   ) {}
 
   async getAll() {
-    return await this.dataService.handouts.getAll();
+    return this.handoutFactory.createMany(
+      await this.dataService.handouts.getAll(),
+    );
   }
 
   async update(updateHandoutDto: object) {
