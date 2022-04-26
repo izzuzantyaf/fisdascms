@@ -1,23 +1,23 @@
-import { IAdminGenericRepository } from 'src/entities/abstracts/admin-repo.interface';
+import { IAdminRepository } from 'src/entities/abstracts/repo/admin-repo.interface';
 import { Admin, AdminDocument } from 'src/entities/models/admin.entity';
 import { MongoGenericRepository } from './mongo-generic-repo';
 import { Model } from 'mongoose';
+import { isEmpty } from 'class-validator';
 
 export class AdminMongoRepository
   extends MongoGenericRepository<Admin>
-  implements IAdminGenericRepository
+  implements IAdminRepository
 {
   constructor(repository: Model<AdminDocument>) {
     super(repository);
   }
 
-  createOrUpdate(admin: Admin) {
-    return this._repository
-      .findOneAndUpdate({ email: admin.email }, admin, {
-        new: true,
-        upsert: true,
-      })
-      .exec();
+  async seed(admin: Admin) {
+    const adminCollection = await this._repository.findOne().exec();
+    if (isEmpty(adminCollection)) {
+      this._repository.create(admin);
+      console.log('Admin collection seeded successfuly');
+    }
   }
 
   getByEmail(email: string) {

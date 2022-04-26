@@ -4,7 +4,8 @@ import { ConfigModule } from '@nestjs/config';
 import { AdminModule } from './use-cases/admin/admin.module';
 import { AuthModule } from './use-cases/auth/auth.module';
 import { HandoutModule } from './use-cases/handout/handout.module';
-import { HandoutController } from './controllers/handout/handout.controller';
+import { CodeOfConductModule } from './use-cases/code-of-conduct/code-of-conduct.module';
+import { OrganigramModule } from './use-cases/organigram/organigram.module';
 
 @Module({
   imports: [
@@ -13,8 +14,9 @@ import { HandoutController } from './controllers/handout/handout.controller';
     AdminModule,
     AuthModule,
     HandoutModule,
+    CodeOfConductModule,
+    OrganigramModule,
   ],
-  controllers: [HandoutController],
   providers: [],
 })
 export class AppModule {}

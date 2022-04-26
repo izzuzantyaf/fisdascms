@@ -1,7 +1,11 @@
-import { IAdminGenericRepository } from './admin-repo.interface';
-import { IHandoutGenericRepository } from './handout-repo.interface';
+import { IAdminRepository } from './repo/admin-repo.interface';
+import { ICodeOfConductRepository } from './repo/code-of-conduct-repo.interface';
+import { IHandoutRepository } from './repo/handout-repo.interface';
+import { IOrganigramRepository } from './repo/organigram-repo.interface';
 
 export abstract class IDataServices {
-  abstract admins: IAdminGenericRepository;
-  abstract handouts: IHandoutGenericRepository;
+  abstract admins: IAdminRepository;
+  abstract handouts: IHandoutRepository;
+  abstract codeOfConducts: ICodeOfConductRepository;
+  abstract organigrams: IOrganigramRepository;
 }

@@ -1,5 +1,5 @@
 import { Model } from 'mongoose';
-import { IGenericRepository } from 'src/entities/abstracts/generic-repo.interface';
+import { IGenericRepository } from 'src/entities/abstracts/repo/generic-repo.interface';
 
 export class MongoGenericRepository<T> implements IGenericRepository<T> {
   protected _repository: Model<T>;
@@ -16,6 +16,10 @@ export class MongoGenericRepository<T> implements IGenericRepository<T> {
 
   getAll(): Promise<T[]> {
     return this._repository.find().exec();
+  }
+
+  getFirst(): Promise<T> {
+    return this._repository.findOne().exec();
   }
 
   getById(id: any): Promise<T> {

@@ -13,8 +13,8 @@ export class HandoutController {
   }
 
   @Put()
-  async update(@Body() updateHandoutDto: object) {
-    const updatedHandout = await this.handoutService.update(updateHandoutDto);
+  async update(@Body() updateData: object) {
+    const updatedHandout = await this.handoutService.update(updateData);
     return new SuccessfulResponse('Modul berhasil diupdate', {
       updatedHandout,
     });

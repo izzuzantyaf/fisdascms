@@ -1,6 +1,7 @@
 import * as bcrypt from 'bcrypt';
 import { Exclude } from 'class-transformer';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Document } from 'mongoose';
 import { AdminRole } from '../constants/constants';
 import {
   isEmail,
@@ -27,14 +28,14 @@ export class Admin {
   @Prop({ required: true })
   role: AdminRole;
 
-  constructor(initialProps?: {
+  constructor(props?: {
     _id?: string | number;
     name?: string;
     email?: string;
     password?: string;
     role?: AdminRole;
   }) {
-    const { _id, name, email, password, role } = initialProps;
+    const { _id, name, email, password, role } = props;
     this._id = _id;
     this.name = name;
     this.email = email;
