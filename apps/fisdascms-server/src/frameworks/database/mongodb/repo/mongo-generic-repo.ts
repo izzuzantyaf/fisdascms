@@ -32,6 +32,10 @@ export class MongoGenericRepository<T> implements IGenericRepository<T> {
       .exec();
   }
 
+  updateMany(items: T[]): Promise<T[]> {
+    throw new Error('Method not implemented.');
+  }
+
   deleteById(id: string): Promise<T> {
     return this._repository.findByIdAndDelete(id).exec();
   }

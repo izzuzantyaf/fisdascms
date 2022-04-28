@@ -6,6 +6,7 @@ import { AuthModule } from './use-cases/auth/auth.module';
 import { HandoutModule } from './use-cases/handout/handout.module';
 import { CodeOfConductModule } from './use-cases/code-of-conduct/code-of-conduct.module';
 import { OrganigramModule } from './use-cases/organigram/organigram.module';
+import { ScheduleModule } from './use-cases/schedule/schedule.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { OrganigramModule } from './use-cases/organigram/organigram.module';
     HandoutModule,
     CodeOfConductModule,
     OrganigramModule,
+    ScheduleModule,
   ],
   providers: [],
 })

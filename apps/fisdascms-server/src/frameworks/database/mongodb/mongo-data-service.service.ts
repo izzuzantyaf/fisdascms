@@ -13,14 +13,20 @@ import {
   Organigram,
   OrganigramDocument,
 } from 'src/entities/models/organigram.entity';
+import {
+  Schedule,
+  ScheduleDocument,
+} from 'src/entities/models/schedule.entity';
 import { adminSeeder } from 'src/entities/seeders/admin.seeder';
 import { codeOfConductSeeder } from 'src/entities/seeders/code-of-conduct.seeder';
 import { handoutSeeder } from 'src/entities/seeders/handout.seeder';
 import { organigramSeeder } from 'src/entities/seeders/organigram.seeder';
+import { scheduleSeeder } from 'src/entities/seeders/schedule.seeder';
 import { AdminMongoRepository } from './repo/admin-mongo-repo';
 import { CodeOfConductMongoRepository } from './repo/code-of-conduct-mongo-repo';
 import { HandoutMongoRepository } from './repo/handout-mongo-repo';
 import { OrganigramMongoRepository } from './repo/organigram-mongo-repo';
+import { ScheduleMongoRepository } from './repo/schedule-mongo-repo';
 
 @Injectable()
 export class MongoDataServices
@@ -30,6 +36,7 @@ export class MongoDataServices
   handouts: HandoutMongoRepository;
   codeOfConducts: CodeOfConductMongoRepository;
   organigrams: OrganigramMongoRepository;
+  schedules: ScheduleMongoRepository;
 
   constructor(
     @InjectModel(Admin.name) private adminModel: Model<AdminDocument>,
@@ -38,6 +45,8 @@ export class MongoDataServices
     private codeOfConductModel: Model<CodeOfConductDocument>,
     @InjectModel(Organigram.name)
     private organigramModel: Model<OrganigramDocument>,
+    @InjectModel(Schedule.name)
+    private scheduleModel: Model<ScheduleDocument>,
   ) {}
 
   onApplicationBootstrap() {
@@ -47,10 +56,12 @@ export class MongoDataServices
       this.codeOfConductModel,
     );
     this.organigrams = new OrganigramMongoRepository(this.organigramModel);
+    this.schedules = new ScheduleMongoRepository(this.scheduleModel);
     this.seedAdmin();
     this.seedHandout();
     this.seedCodeOfConduct();
     this.seedOrganigram();
+    this.seedSchedule();
   }
 
   async seedAdmin() {
@@ -59,20 +70,25 @@ export class MongoDataServices
     this.admins.seed(admin);
   }
 
-  async seedHandout() {
+  seedHandout() {
     const handouts = handoutSeeder.map(
       (handoutSeed) => new Handout(handoutSeed),
     );
     this.handouts.seed(handouts);
   }
 
-  async seedCodeOfConduct() {
+  seedCodeOfConduct() {
     const codeOfConduct = new CodeOfConduct(codeOfConductSeeder);
     this.codeOfConducts.seed(codeOfConduct);
   }
 
-  async seedOrganigram() {
+  seedOrganigram() {
     const organigram = new Organigram(organigramSeeder);
     this.organigrams.seed(organigram);
+  }
+
+  seedSchedule() {
+    const schedules = scheduleSeeder.map((schedule) => new Schedule(schedule));
+    this.schedules.seed(schedules);
   }
 }

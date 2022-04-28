@@ -3,4 +3,5 @@ export interface IDatabaseSeeder {
   seedHandout(): void;
   seedCodeOfConduct(): void;
   seedOrganigram(): void;
+  seedSchedule(): void;
 }
