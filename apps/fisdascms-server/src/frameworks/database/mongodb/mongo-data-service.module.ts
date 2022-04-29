@@ -13,6 +13,10 @@ import {
   OrganigramSchema,
 } from 'src/entities/models/organigram.entity';
 import { Schedule, ScheduleSchema } from 'src/entities/models/schedule.entity';
+import {
+  Assistant,
+  AssistantSchema,
+} from 'src/entities/models/assistant.entity';
 
 @Module({
   imports: [
@@ -22,6 +26,7 @@ import { Schedule, ScheduleSchema } from 'src/entities/models/schedule.entity';
       { name: CodeOfConduct.name, schema: CodeOfConductSchema },
       { name: Organigram.name, schema: OrganigramSchema },
       { name: Schedule.name, schema: ScheduleSchema },
+      { name: Assistant.name, schema: AssistantSchema },
     ]),
     MongooseModule.forRoot(process.env.MONGO_URI),
   ],

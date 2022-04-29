@@ -5,6 +5,10 @@ import { IDataServices } from 'src/entities/abstracts/data-services.abstract';
 import { IDatabaseSeeder } from 'src/entities/abstracts/database-seeder.interface';
 import { Admin, AdminDocument } from 'src/entities/models/admin.entity';
 import {
+  Assistant,
+  AssistantDocument,
+} from 'src/entities/models/assistant.entity';
+import {
   CodeOfConduct,
   CodeOfConductDocument,
 } from 'src/entities/models/code-of-conduct.entity';
@@ -18,11 +22,13 @@ import {
   ScheduleDocument,
 } from 'src/entities/models/schedule.entity';
 import { adminSeeder } from 'src/entities/seeders/admin.seeder';
+import { assistantSeeder } from 'src/entities/seeders/assistant.seeder';
 import { codeOfConductSeeder } from 'src/entities/seeders/code-of-conduct.seeder';
 import { handoutSeeder } from 'src/entities/seeders/handout.seeder';
 import { organigramSeeder } from 'src/entities/seeders/organigram.seeder';
 import { scheduleSeeder } from 'src/entities/seeders/schedule.seeder';
 import { AdminMongoRepository } from './repo/admin-mongo-repo';
+import { AssistantMongoRepository } from './repo/assistant-mongo-repo';
 import { CodeOfConductMongoRepository } from './repo/code-of-conduct-mongo-repo';
 import { HandoutMongoRepository } from './repo/handout-mongo-repo';
 import { OrganigramMongoRepository } from './repo/organigram-mongo-repo';
@@ -37,6 +43,7 @@ export class MongoDataServices
   codeOfConducts: CodeOfConductMongoRepository;
   organigrams: OrganigramMongoRepository;
   schedules: ScheduleMongoRepository;
+  assistants: AssistantMongoRepository;
 
   constructor(
     @InjectModel(Admin.name) private adminModel: Model<AdminDocument>,
@@ -47,6 +54,8 @@ export class MongoDataServices
     private organigramModel: Model<OrganigramDocument>,
     @InjectModel(Schedule.name)
     private scheduleModel: Model<ScheduleDocument>,
+    @InjectModel(Assistant.name)
+    private assistantModel: Model<AssistantDocument>,
   ) {}
 
   onApplicationBootstrap() {
@@ -57,11 +66,13 @@ export class MongoDataServices
     );
     this.organigrams = new OrganigramMongoRepository(this.organigramModel);
     this.schedules = new ScheduleMongoRepository(this.scheduleModel);
+    this.assistants = new AssistantMongoRepository(this.assistantModel);
     this.seedAdmin();
     this.seedHandout();
     this.seedCodeOfConduct();
     this.seedOrganigram();
     this.seedSchedule();
+    this.seedAssistant();
   }
 
   async seedAdmin() {
@@ -90,5 +101,12 @@ export class MongoDataServices
   seedSchedule() {
     const schedules = scheduleSeeder.map((schedule) => new Schedule(schedule));
     this.schedules.seed(schedules);
+  }
+
+  seedAssistant() {
+    const assistants = assistantSeeder.map(
+      (assistant) => new Assistant(assistant),
+    );
+    this.assistants.seed(assistants);
   }
 }

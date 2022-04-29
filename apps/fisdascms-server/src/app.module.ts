@@ -7,6 +7,7 @@ import { HandoutModule } from './use-cases/handout/handout.module';
 import { CodeOfConductModule } from './use-cases/code-of-conduct/code-of-conduct.module';
 import { OrganigramModule } from './use-cases/organigram/organigram.module';
 import { ScheduleModule } from './use-cases/schedule/schedule.module';
+import { AssistantModule } from './use-cases/assistant/assistant.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { ScheduleModule } from './use-cases/schedule/schedule.module';
     CodeOfConductModule,
     OrganigramModule,
     ScheduleModule,
+    AssistantModule,
   ],
   providers: [],
 })
