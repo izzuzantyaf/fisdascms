@@ -57,7 +57,7 @@ const signIn = async (email:string, password:string) => {
   const resJson = await res.json()
   console.log(resJson)
   if(!resJson.isSuccess) return;
-  const {access_token} = resJson
+  const {access_token} = resJson.data
   const decodedJwt:any = jwt.decode(access_token)
   document.cookie = `jwt=${access_token}; expires=${new Date(decodedJwt?.exp*1000).toUTCString()}; path=/`
   window.location.reload()
