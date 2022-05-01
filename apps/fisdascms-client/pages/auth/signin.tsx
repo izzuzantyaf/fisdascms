@@ -54,14 +54,14 @@ const signIn = async (email:string, password:string) => {
     },
     body:JSON.stringify({username: email, password})
   })
-  const data = await res.json()
-  console.log(data)
-  if(!data.isSuccess) return;
-  const {access_token} = data.authenticatedAdmin
+  const resJson = await res.json()
+  console.log(resJson)
+  if(!resJson.isSuccess) return;
+  const {access_token} = resJson
   const decodedJwt:any = jwt.decode(access_token)
   document.cookie = `jwt=${access_token}; expires=${new Date(decodedJwt?.exp*1000).toUTCString()}; path=/`
   window.location.reload()
-  return data
+  return resJson
 }
 
 const getCookie = (key: string) => {
