@@ -25,27 +25,15 @@ export class Assistant {
   profilePictureUrl: string;
 
   constructor(props) {
-    const {
-      _id,
-      name,
-      code,
-      phoneNumber,
-      lineId,
-      gender,
-      level,
-      feedbackUrl,
-      profilePictureUrl,
-    } = props;
-
-    this._id = _id;
-    this.name = name;
-    this.code = code;
-    this.phoneNumber = phoneNumber;
-    this.lineId = lineId;
-    this.gender = gender;
-    this.level = level;
-    this.feedbackUrl = feedbackUrl;
-    this.profilePictureUrl = profilePictureUrl;
+    this._id = props._id;
+    this.name = props.name;
+    this.code = props.code;
+    this.phoneNumber = props.phoneNumber;
+    this.lineId = props.lineId;
+    this.gender = props.gender;
+    this.level = props.level;
+    this.feedbackUrl = props.feedbackUrl;
+    this.profilePictureUrl = props.profilePictureUrl;
   }
 }
 

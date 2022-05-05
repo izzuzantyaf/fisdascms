@@ -3,6 +3,7 @@ import { IAssistantRepository } from './repo/assistant-repo.interface';
 import { ICodeOfConductRepository } from './repo/code-of-conduct-repo.interface';
 import { IHandoutRepository } from './repo/handout-repo.interface';
 import { IOrganigramRepository } from './repo/organigram-repo.interface';
+import { IPracticumModuleRepository } from './repo/practicum-module-repo.interface';
 import { IScheduleRepository } from './repo/schedule-repo.interface';
 
 export abstract class IDataServices {
@@ -12,4 +13,5 @@ export abstract class IDataServices {
   abstract organigrams: IOrganigramRepository;
   abstract schedules: IScheduleRepository;
   abstract assistants: IAssistantRepository;
+  abstract practicumModules: IPracticumModuleRepository;
 }
