@@ -5,4 +5,5 @@ export interface IDatabaseSeeder {
   seedOrganigram(): void;
   seedSchedule(): void;
   seedAssistant(): void;
+  seedPracticumModule(): void;
 }

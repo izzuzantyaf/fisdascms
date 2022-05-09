@@ -17,6 +17,10 @@ import {
   Assistant,
   AssistantSchema,
 } from 'src/entities/models/assistant.entity';
+import {
+  PracticumModule,
+  PracticumModuleSchema,
+} from 'src/entities/models/practicum-module.entity';
 
 @Module({
   imports: [
@@ -27,6 +31,7 @@ import {
       { name: Organigram.name, schema: OrganigramSchema },
       { name: Schedule.name, schema: ScheduleSchema },
       { name: Assistant.name, schema: AssistantSchema },
+      { name: PracticumModule.name, schema: PracticumModuleSchema },
     ]),
     MongooseModule.forRoot(process.env.MONGO_URI),
   ],
