@@ -1,27 +1,62 @@
-import Head from "next/head";
-import { useState } from "react";
-import * as jwt from 'jsonwebtoken'
-import Link from "next/link";
-import { Route } from "../../lib/constants";
+import Head from "next/head"
+import { useState } from "react"
+import * as jwt from "jsonwebtoken"
+import Link from "next/link"
+import { Route } from "../../lib/constants"
+import { GetServerSideProps } from "next"
+import {
+  Button,
+  Center,
+  Container,
+  Heading,
+  Input,
+  useToast,
+  VStack,
+} from "@chakra-ui/react"
 
-export const getServerSideProps = async ({req, res}:{req:any,res:any}) => {
-  if(req.cookies.jwt)
+export const getServerSideProps: GetServerSideProps = (context) => {
+  if (context.req.cookies.jwt)
     return {
-      redirect:{
-        destination: Route.HOME
-      }
+      redirect: {
+        destination: Route.HOME,
+      },
     }
   return {
-    props:{
-      data:{}
-    }
+    props: {},
   }
 }
 
 const SignInPage = () => {
-   const [email, setEmail] = useState("");
-   const [password, setPassword] = useState("");
-   const [admin, setAdmin] = useState<any>()
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [admin, setAdmin] = useState<any>()
+  const [isSignInLoading, setIsSignInLoading] = useState(false)
+  const [isAbleToSubmit, setIsAbleToSubmit] = useState(
+    email && password ? true : false
+  )
+
+  const toast = useToast()
+
+  const updateSubmitButtonState = () => {
+    setIsAbleToSubmit(email && password ? true : false)
+  }
+
+  const handleSignIn = async (email: string, password: string) => {
+    setIsSignInLoading(true)
+    const signInResponse = await signIn(email, password)
+    setIsSignInLoading(false)
+    if (!signInResponse.isSuccess) {
+      toast({ title: signInResponse.message, status: "error" })
+      return
+    }
+    const { access_token } = signInResponse.data
+    const decodedJwt: any = jwt.decode(access_token)
+    document.cookie = `jwt=${access_token}; expires=${new Date(
+      decodedJwt?.exp * 1000
+    ).toUTCString()}; path=/`
+    location.href = location.origin
+    return
+  }
 
   return (
     <>
@@ -30,48 +65,96 @@ const SignInPage = () => {
         <meta name="description" content="Website CMS Lab Fisika Dasar Tel-U" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Link href="/">to home</Link>
-      <form>
-        <label htmlFor="email">Email</label>
-        <input type="email" name="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-        <label htmlFor="password">Password</label>
-        <input type="password" name="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
-        <button onClick={async (e) => {
-          e.preventDefault()
-          const data = await signIn(email,password)
-        }}>Masuk</button>
-      </form>
-    </>
-  );
-};
-export default SignInPage;
 
-const signIn = async (email:string, password:string) => {
-  const res = await fetch('https://fisdascms-redev.herokuapp.com/auth/signin',{
-    method:'POST',
-    headers:{
-      'Content-Type':'application/json'
+      <Center h="100vh">
+        <Container maxW="xs">
+          <Heading size="lg" marginBottom={4}>
+            Fisdas CMS
+          </Heading>
+          <form>
+            <VStack spacing={4}>
+              <Input
+                placeholder="Email"
+                type="email"
+                id="email"
+                name="email"
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value)
+                  updateSubmitButtonState()
+                }}
+              />
+              {/* <input
+            type="email"
+            name="email"
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          /> */}
+              <Input
+                placeholder="Password"
+                type="password"
+                id="password"
+                name="password"
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value)
+                  updateSubmitButtonState()
+                }}
+              />
+              {/* <input
+            type="password"
+            name="password"
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          /> */}
+              <Button
+                type="submit"
+                isLoading={isSignInLoading}
+                isDisabled={!isAbleToSubmit}
+                colorScheme="blue"
+                w="100%"
+                onClick={async (e) => {
+                  e.preventDefault()
+                  handleSignIn(email, password)
+                }}
+              >
+                Masuk
+              </Button>
+            </VStack>
+          </form>
+          {/* <button>Masuk</button> */}
+        </Container>
+      </Center>
+    </>
+  )
+}
+export default SignInPage
+
+const signIn = async (email: string, password: string) => {
+  const res = await fetch("https://fisdascms-redev.herokuapp.com/auth/signin", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
     },
-    body:JSON.stringify({username: email, password})
+    body: JSON.stringify({ username: email, password }),
   })
-  const resJson = await res.json()
-  console.log(resJson)
-  if(!resJson.isSuccess) return;
-  const {access_token} = resJson.data
-  const decodedJwt:any = jwt.decode(access_token)
-  document.cookie = `jwt=${access_token}; expires=${new Date(decodedJwt?.exp*1000).toUTCString()}; path=/`
-  window.location.reload()
-  return resJson
+  const signInResponse = await res.json()
+  console.log(signInResponse)
+  return signInResponse
 }
 
 const getCookie = (key: string) => {
   const currentCookieString = document.cookie
-  const currentCookie = currentCookieString.split('; ').reduce((cookieObj:any, cur) => {
-    if(cur){
-      const [k,v] = cur.split('=')
-      cookieObj[k] = v
-    }
-    return cookieObj
-  },{})
+  const currentCookie = currentCookieString
+    .split(" ")
+    .reduce((cookieObj: any, cur) => {
+      if (cur) {
+        const [k, v] = cur.split("=")
+        cookieObj[k] = v
+      }
+      return cookieObj
+    }, {})
   return currentCookie[key]
 }
