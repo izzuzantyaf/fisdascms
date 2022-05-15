@@ -1,5 +1,6 @@
 import type {
   GetServerSideProps,
+  GetServerSidePropsContext,
   InferGetServerSidePropsType,
   NextPage,
 } from "next"
@@ -8,8 +9,9 @@ import Link from "next/link"
 import { Route } from "../lib/constants"
 import * as jwt from "jsonwebtoken"
 import { Button, Container, Heading, Text } from "@chakra-ui/react"
+import { constants } from "buffer"
 
-export const getServerSideProps: GetServerSideProps = (context) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   const { req } = context
   let admin = undefined
   try {
@@ -29,7 +31,7 @@ export const getServerSideProps: GetServerSideProps = (context) => {
   }
 }
 
-const Home: NextPage = ({
+const Home = ({
   admin,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const handleSignOut = () => {

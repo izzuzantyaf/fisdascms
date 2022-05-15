@@ -3,7 +3,7 @@ import { useState } from "react"
 import * as jwt from "jsonwebtoken"
 import Link from "next/link"
 import { Route } from "../../lib/constants"
-import { GetServerSideProps } from "next"
+import { GetServerSideProps, GetServerSidePropsResult } from "next"
 import {
   Button,
   Center,
@@ -14,7 +14,7 @@ import {
   VStack,
 } from "@chakra-ui/react"
 
-export const getServerSideProps: GetServerSideProps = (context) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   if (context.req.cookies.jwt)
     return {
       redirect: {
@@ -31,15 +31,10 @@ const SignInPage = () => {
   const [password, setPassword] = useState("")
   const [admin, setAdmin] = useState<any>()
   const [isSignInLoading, setIsSignInLoading] = useState(false)
-  const [isAbleToSubmit, setIsAbleToSubmit] = useState(
-    email && password ? true : false
-  )
 
   const toast = useToast()
 
-  const updateSubmitButtonState = () => {
-    setIsAbleToSubmit(email && password ? true : false)
-  }
+  const isAbleToSubmit = () => (email && password ? true : false)
 
   const handleSignIn = async (email: string, password: string) => {
     setIsSignInLoading(true)
@@ -81,16 +76,8 @@ const SignInPage = () => {
                 value={email}
                 onChange={(e) => {
                   setEmail(e.target.value)
-                  updateSubmitButtonState()
                 }}
               />
-              {/* <input
-            type="email"
-            name="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          /> */}
               <Input
                 placeholder="Password"
                 type="password"
@@ -99,20 +86,12 @@ const SignInPage = () => {
                 value={password}
                 onChange={(e) => {
                   setPassword(e.target.value)
-                  updateSubmitButtonState()
                 }}
               />
-              {/* <input
-            type="password"
-            name="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          /> */}
               <Button
                 type="submit"
                 isLoading={isSignInLoading}
-                isDisabled={!isAbleToSubmit}
+                isDisabled={!isAbleToSubmit()}
                 colorScheme="blue"
                 w="100%"
                 onClick={async (e) => {
@@ -124,7 +103,6 @@ const SignInPage = () => {
               </Button>
             </VStack>
           </form>
-          {/* <button>Masuk</button> */}
         </Container>
       </Center>
     </>
@@ -143,18 +121,4 @@ const signIn = async (email: string, password: string) => {
   const signInResponse = await res.json()
   console.log(signInResponse)
   return signInResponse
-}
-
-const getCookie = (key: string) => {
-  const currentCookieString = document.cookie
-  const currentCookie = currentCookieString
-    .split(" ")
-    .reduce((cookieObj: any, cur) => {
-      if (cur) {
-        const [k, v] = cur.split("=")
-        cookieObj[k] = v
-      }
-      return cookieObj
-    }, {})
-  return currentCookie[key]
 }
