@@ -2,20 +2,19 @@ import type { GetServerSideProps, InferGetServerSidePropsType } from "next"
 import Head from "next/head"
 import { Route } from "../lib/constants"
 import * as jwt from "jsonwebtoken"
-import { Button, Container, Heading, Text } from "@chakra-ui/react"
+import { Button, Container, Heading, Text, VStack } from "@chakra-ui/react"
+import Link from "next/link"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { req } = context
-  let admin = undefined
-  try {
-    admin = jwt.verify(req.cookies.jwt, process.env.NEXT_PUBLIC_JWT_SECRET)
-  } catch (error) {
+  const admin = jwt.decode(req.cookies.jwt)
+  console.log("Admin :", admin)
+  if (!admin)
     return {
       redirect: {
         destination: Route.SIGN_IN,
       },
     }
-  }
   console.log("Admin :", admin)
   return {
     props: {
@@ -41,9 +40,12 @@ const Home = ({
       </Head>
       <Container maxWidth="container.xl">
         <Heading>Dashboard</Heading>
-        <Text>{admin.name}</Text>
+        <Text marginTop={4}>{admin.name}</Text>
         <Text>{admin.email}</Text>
         <Text>{admin.role}</Text>
+        <VStack>
+          <Link href={Route.CODE_OF_CONDUCT}>Tata Tertib</Link>
+        </VStack>
         <Button onClick={handleSignOut} colorScheme="red">
           Keluar
         </Button>

@@ -16,7 +16,7 @@ import {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   //* mengecek apakah user berstatus login atau tidak
   //* dengan cara cek apakah ada access token di cookies
-  if (context.req.cookies.jwt)
+  if (jwt.decode(context.req.cookies.jwt))
     return {
       redirect: {
         destination: Route.HOME, //* jika status user sedang login, langsung arahin aja ke halaman home
@@ -30,7 +30,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 const SignInPage = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const [admin, setAdmin] = useState<any>()
   const [isSignInLoading, setIsSignInLoading] = useState(false)
 
   const toast = useToast()
