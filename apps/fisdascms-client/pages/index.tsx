@@ -4,10 +4,10 @@ import { Route } from "../lib/constants"
 import * as jwt from "jsonwebtoken"
 import { Button, Container, Heading, Text, VStack } from "@chakra-ui/react"
 import Link from "next/link"
+import { authService } from "../services/auth"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { req } = context
-  const admin = jwt.decode(req.cookies.jwt)
+  const admin = jwt.decode(context.req.cookies.jwt)
   console.log("Admin :", admin)
   if (!admin)
     return {
@@ -15,7 +15,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         destination: Route.SIGN_IN,
       },
     }
-  console.log("Admin :", admin)
   return {
     props: {
       admin,
@@ -23,11 +22,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 }
 
-const Home = ({
+export default function Home({
   admin,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const handleSignOut = () => {
-    document.cookie = "jwt=; path=/"
+    authService.signOut()
     location.reload()
   }
 
@@ -53,5 +52,3 @@ const Home = ({
     </>
   )
 }
-
-export default Home

@@ -1,7 +1,7 @@
 import Head from "next/head"
 import { useState } from "react"
 import * as jwt from "jsonwebtoken"
-import { ApiRoute, Route } from "../../lib/constants"
+import { Route } from "../../lib/constants"
 import { GetServerSideProps } from "next"
 import {
   Button,
@@ -12,6 +12,8 @@ import {
   useToast,
   VStack,
 } from "@chakra-ui/react"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { authService } from "../../services/auth"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   //* mengecek apakah user berstatus login atau tidak
@@ -27,7 +29,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 }
 
-const SignInPage = () => {
+export default function SignInPage() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [isSignInLoading, setIsSignInLoading] = useState(false)
@@ -36,9 +38,9 @@ const SignInPage = () => {
 
   const isAbleToSubmit = () => (email && password ? true : false)
 
-  const handleSignIn = async (email: string, password: string) => {
+  const handleSignIn = async () => {
     setIsSignInLoading(true)
-    const signInResponse = await signIn(email, password)
+    const signInResponse = await authService.signIn(email, password)
     setIsSignInLoading(false)
     if (!signInResponse.isSuccess) {
       toast({ title: signInResponse.message, status: "error" })
@@ -56,13 +58,14 @@ const SignInPage = () => {
   return (
     <>
       <Head>
-        <title>Fisdas CMS</title>
+        <title>Fisdas CMS | Masuk</title>
         <meta name="description" content="Website CMS Lab Fisika Dasar Tel-U" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <Center h="100vh">
         <Container maxW="xs">
+          <FontAwesomeIcon icon="user-secret" />
           <Heading size="lg" marginBottom={4}>
             Fisdas CMS
           </Heading>
@@ -96,7 +99,7 @@ const SignInPage = () => {
                 w="100%"
                 onClick={async (e) => {
                   e.preventDefault()
-                  handleSignIn(email, password)
+                  handleSignIn()
                 }}
               >
                 Masuk
@@ -107,21 +110,4 @@ const SignInPage = () => {
       </Center>
     </>
   )
-}
-export default SignInPage
-
-const signIn = async (email: string, password: string) => {
-  const res = await fetch(
-    process.env.NEXT_PUBLIC_SERVER_APP_BASEURL + ApiRoute.SIGN_IN,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ username: email, password }),
-    }
-  )
-  const signInResponse = await res.json()
-  console.log(signInResponse)
-  return signInResponse
 }

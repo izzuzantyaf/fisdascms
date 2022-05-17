@@ -1,14 +1,14 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from "next"
 import Head from "next/head"
-import { ApiRoute, Route } from "../../lib/constants"
+import { Route } from "../../lib/constants"
 import * as jwt from "jsonwebtoken"
 import Link from "next/link"
 import { Button, Input, useToast } from "@chakra-ui/react"
 import { useState } from "react"
+import { codeOfConductService } from "../../services/code-of-conduct"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { req } = context
-  const admin = jwt.decode(req.cookies.jwt)
+  const admin = jwt.decode(context.req.cookies.jwt)
   console.log("Admin :", admin)
   if (!admin)
     return {
@@ -16,12 +16,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         destination: Route.SIGN_IN,
       },
     }
-  const res = await fetch(
-    process.env.NEXT_PUBLIC_SERVER_APP_BASEURL + ApiRoute.CODE_OF_CONDUCT
-  )
-  const data = await res.json()
-  console.log("Code of conduct API response :", data)
-  const { codeOfConduct } = data.data
+  const codeOfConduct = await codeOfConductService.getAll()
   return {
     props: {
       admin,
@@ -44,8 +39,7 @@ export default function CodeOfCoductPage({
       url: codeOfConductState.url,
     }
     setIsCodeOfConductUpdating(true)
-    const updateResponse = await updateCodeOfConduct(newCodeOfConduct)
-    console.log(updateResponse)
+    const updateResponse = await codeOfConductService.update(newCodeOfConduct)
     setIsCodeOfConductUpdating(false)
     if (!updateResponse.isSuccess) {
       toast({
@@ -97,18 +91,4 @@ export default function CodeOfCoductPage({
       </form>
     </>
   )
-}
-
-const updateCodeOfConduct = async (newCodeOfConduct: object) => {
-  const res = await fetch(
-    process.env.NEXT_PUBLIC_SERVER_APP_BASEURL + ApiRoute.CODE_OF_CONDUCT,
-    {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newCodeOfConduct),
-    }
-  )
-  return await res.json()
 }
