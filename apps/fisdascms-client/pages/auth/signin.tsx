@@ -1,9 +1,8 @@
 import Head from "next/head"
 import { useState } from "react"
 import * as jwt from "jsonwebtoken"
-import Link from "next/link"
-import { Route } from "../../lib/constants"
-import { GetServerSideProps, GetServerSidePropsResult } from "next"
+import { ApiRoute, Route } from "../../lib/constants"
+import { GetServerSideProps } from "next"
 import {
   Button,
   Center,
@@ -15,10 +14,12 @@ import {
 } from "@chakra-ui/react"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  //* mengecek apakah user berstatus login atau tidak
+  //* dengan cara cek apakah ada access token di cookies
   if (context.req.cookies.jwt)
     return {
       redirect: {
-        destination: Route.HOME,
+        destination: Route.HOME, //* jika status user sedang login, langsung arahin aja ke halaman home
       },
     }
   return {
@@ -111,13 +112,16 @@ const SignInPage = () => {
 export default SignInPage
 
 const signIn = async (email: string, password: string) => {
-  const res = await fetch("https://fisdascms-redev.herokuapp.com/auth/signin", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ username: email, password }),
-  })
+  const res = await fetch(
+    process.env.NEXT_PUBLIC_SERVER_APP_BASEURL + ApiRoute.SIGN_IN,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username: email, password }),
+    }
+  )
   const signInResponse = await res.json()
   console.log(signInResponse)
   return signInResponse

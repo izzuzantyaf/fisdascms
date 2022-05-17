@@ -1,21 +1,14 @@
-import type {
-  GetServerSideProps,
-  GetServerSidePropsContext,
-  InferGetServerSidePropsType,
-  NextPage,
-} from "next"
+import type { GetServerSideProps, InferGetServerSidePropsType } from "next"
 import Head from "next/head"
-import Link from "next/link"
 import { Route } from "../lib/constants"
 import * as jwt from "jsonwebtoken"
 import { Button, Container, Heading, Text } from "@chakra-ui/react"
-import { constants } from "buffer"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { req } = context
   let admin = undefined
   try {
-    admin = jwt.verify(req.cookies.jwt, "fisdasverysecretkey")
+    admin = jwt.verify(req.cookies.jwt, process.env.NEXT_PUBLIC_JWT_SECRET)
   } catch (error) {
     return {
       redirect: {
