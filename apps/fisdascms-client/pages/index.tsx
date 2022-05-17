@@ -2,9 +2,10 @@ import type { GetServerSideProps, InferGetServerSidePropsType } from "next"
 import Head from "next/head"
 import { Route } from "../lib/constants"
 import * as jwt from "jsonwebtoken"
-import { Button, Container, Heading, Text, VStack } from "@chakra-ui/react"
+import { Container, Heading, Text, VStack } from "@chakra-ui/react"
 import Link from "next/link"
 import { authService } from "../services/auth"
+import Navbar from "../components/navbar"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const admin = jwt.decode(context.req.cookies.jwt)
@@ -37,6 +38,7 @@ export default function Home({
         <meta name="description" content="Website CMS Lab Fisika Dasar Tel-U" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <Navbar></Navbar>
       <Container maxWidth="container.xl">
         <Heading>Dashboard</Heading>
         <Text marginTop={4}>{admin.name}</Text>
@@ -45,9 +47,6 @@ export default function Home({
         <VStack>
           <Link href={Route.CODE_OF_CONDUCT}>Tata Tertib</Link>
         </VStack>
-        <Button onClick={handleSignOut} colorScheme="red">
-          Keluar
-        </Button>
       </Container>
     </>
   )
