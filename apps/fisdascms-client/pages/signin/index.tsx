@@ -12,7 +12,6 @@ import {
   useToast,
   VStack,
 } from "@chakra-ui/react"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { authService } from "../../services/auth"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -59,13 +58,12 @@ export default function SignInPage() {
     <>
       <Head>
         <title>Fisdas CMS | Masuk</title>
-        <meta name="description" content="Website CMS Lab Fisika Dasar Tel-U" />
-        <link rel="icon" href="/favicon.ico" />
+        {/* <meta name="description" content="Website CMS Lab Fisika Dasar Tel-U" /> */}
+        {/* <link rel="icon" href="/favicon.ico" /> */}
       </Head>
 
       <Center h="100vh">
         <Container maxW="xs">
-          <FontAwesomeIcon icon="user-secret" />
           <Heading size="lg" marginBottom={4}>
             Fisdas CMS
           </Heading>

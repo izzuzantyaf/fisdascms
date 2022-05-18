@@ -1,20 +1,53 @@
 import "../styles/globals.css"
 import type { AppProps } from "next/app"
-import { ChakraProvider } from "@chakra-ui/react"
+import { ChakraProvider, extendTheme } from "@chakra-ui/react"
 import { library } from "@fortawesome/fontawesome-svg-core"
 import {
   faArrowRightFromBracket,
+  faBalanceScale,
+  faBook,
+  faCalendarMinus,
+  faFile,
+  faGamepad,
+  faPager,
+  faPlay,
+  faSitemap,
+  faTasks,
+  faThumbsUp,
   faUser,
+  faUsers,
   faUserSecret,
 } from "@fortawesome/free-solid-svg-icons"
 import { config } from "@fortawesome/fontawesome-svg-core"
 import "@fortawesome/fontawesome-svg-core/styles.css"
 config.autoAddCss = false
-library.add(faUserSecret, faUser, faArrowRightFromBracket)
+library.add(
+  faUserSecret,
+  faUser,
+  faArrowRightFromBracket,
+  faPager,
+  faBalanceScale,
+  faBook,
+  faTasks,
+  faPlay,
+  faGamepad,
+  faFile,
+  faUsers,
+  faCalendarMinus,
+  faSitemap,
+  faThumbsUp
+)
+
+const customizedTheme = extendTheme({
+  fonts: {
+    body: "Inter, Heebo, system-ui, sans-serif",
+    heading: "Inter, Heebo, system-ui, sans-serif",
+  },
+})
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ChakraProvider>
+    <ChakraProvider theme={customizedTheme}>
       <Component {...pageProps} />
     </ChakraProvider>
   )

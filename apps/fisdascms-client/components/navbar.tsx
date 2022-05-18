@@ -1,14 +1,13 @@
 import {
-  Box,
   Container,
   IconButton,
   Menu,
   MenuButton,
   MenuItem,
   MenuList,
-  Text,
   Flex,
   Spacer,
+  Heading,
 } from "@chakra-ui/react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Route } from "../lib/constants"
@@ -25,14 +24,18 @@ export default function Navbar() {
       <Container paddingY={4} maxWidth="container.lg">
         <Flex
           padding={2}
+          paddingX={4}
           boxShadow="md"
-          rounded="lg"
-          // border="1px"
-          // borderColor="gray.300"
-          // bgColor="gray.50"
+          rounded="xl"
+          bgColor="white"
           alignItems="center"
+          borderWidth="1px"
+          borderBottomWidth="0"
+          borderColor="gray.100"
         >
-          <Text fontWeight="bold">Fisdas CMS</Text>
+          <Heading size="md" color="blue.500">
+            Fisdas CMS
+          </Heading>
           <Spacer />
           <Menu autoSelect={false} direction="rtl">
             <MenuButton

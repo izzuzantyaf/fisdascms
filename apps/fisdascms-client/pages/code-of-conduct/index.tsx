@@ -59,8 +59,8 @@ export default function CodeOfCoductPage({
     <>
       <Head>
         <title>Fisdas CMS | Tata Tertib</title>
-        <meta name="description" content="Website CMS Lab Fisika Dasar Tel-U" />
-        <link rel="icon" href="/favicon.ico" />
+        {/* <meta name="description" content="Website CMS Lab Fisika Dasar Tel-U" /> */}
+        {/* <link rel="icon" href="/favicon.ico" /> */}
       </Head>
       <Link href={Route.HOME}>Dashboard</Link>
       <iframe src={codeOfConductState.previewUrl} width="100%"></iframe>
