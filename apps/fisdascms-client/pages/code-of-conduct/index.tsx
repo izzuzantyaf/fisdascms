@@ -1,10 +1,10 @@
-import { GetServerSideProps, InferGetServerSidePropsType } from "next"
+import { GetServerSideProps } from "next"
 import Head from "next/head"
 import { Route } from "../../lib/constants"
 import * as jwt from "jsonwebtoken"
 import Link from "next/link"
-import { Button, Input, useToast } from "@chakra-ui/react"
-import { useState } from "react"
+import { Button, Input, Skeleton, useToast } from "@chakra-ui/react"
+import { useEffect, useState } from "react"
 import { codeOfConductService } from "../../services/code-of-conduct"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -16,22 +16,25 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         destination: Route.SIGN_IN,
       },
     }
-  const codeOfConduct = await codeOfConductService.getAll()
   return {
     props: {
       admin,
-      codeOfConduct,
     },
   }
 }
 
-export default function CodeOfCoductPage({
-  codeOfConduct,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function CodeOfCoductPage() {
   const [isCodeOfConductUpdating, setIsCodeOfConductUpdating] = useState(false)
-  const [codeOfConductState, setCodeOfConductState] = useState(codeOfConduct)
-
+  const [codeOfConductState, setCodeOfConductState] = useState()
   const toast = useToast()
+
+  useEffect(() => {
+    const getCodeOfConduct = async () => {
+      const baba = await codeOfConductService.getAll()
+      setCodeOfConductState(baba)
+    }
+    getCodeOfConduct()
+  }, [])
 
   const handleUpdateCodeOfConduct = async () => {
     const newCodeOfConduct = {
@@ -63,20 +66,24 @@ export default function CodeOfCoductPage({
         {/* <link rel="icon" href="/favicon.ico" /> */}
       </Head>
       <Link href={Route.HOME}>Dashboard</Link>
-      <iframe src={codeOfConductState.previewUrl} width="100%"></iframe>
+      <Skeleton isLoaded={codeOfConductState}>
+        <iframe src={codeOfConductState?.previewUrl} width="100%"></iframe>
+      </Skeleton>
       <form action="#">
-        <Input
-          type="url"
-          placeholder="Link Google Drive dokumen tata tertib"
-          defaultValue={codeOfConductState.url}
-          onFocus={(e) => e.target.select()} //* select all ketika user klik input field
-          onChange={(e) =>
-            setCodeOfConductState({
-              ...codeOfConductState,
-              url: e.target.value,
-            })
-          }
-        ></Input>
+        <Skeleton isLoaded={codeOfConductState}>
+          <Input
+            type="url"
+            placeholder="Link Google Drive dokumen tata tertib"
+            defaultValue={codeOfConductState?.url}
+            onFocus={(e) => e.target.select()} //* select all ketika user klik input field
+            onChange={(e) =>
+              setCodeOfConductState({
+                ...codeOfConductState,
+                url: e.target.value,
+              })
+            }
+          />
+        </Skeleton>
         <Button
           type="submit"
           colorScheme="blue"
