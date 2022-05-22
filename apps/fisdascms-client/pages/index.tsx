@@ -13,6 +13,7 @@ import {
 import Link from "next/link"
 import Navbar from "../components/navbar"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import shadowedBoxStyle from "../chakra-style-props/shadowed-box"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const admin = jwt.decode(context.req.cookies.jwt)
@@ -45,15 +46,7 @@ export default function Home({
           {menu.map((menu, index) => (
             <Link href={menu.route} key={index}>
               <a>
-                <Box
-                  bgColor="white"
-                  borderWidth="1px"
-                  borderBottomWidth="0"
-                  borderColor="gray.100"
-                  boxShadow="md"
-                  padding={4}
-                  rounded="xl"
-                >
+                <Box padding="4" {...shadowedBoxStyle}>
                   <Square
                     fontSize="xl"
                     bgColor="blue.50"

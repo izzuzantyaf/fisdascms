@@ -10,6 +10,8 @@ import {
   Heading,
 } from "@chakra-ui/react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import Link from "next/link"
+import shadowedBoxStyle from "../chakra-style-props/shadowed-box"
 import { Route } from "../lib/constants"
 import { authService } from "../services/auth"
 
@@ -21,21 +23,20 @@ export default function Navbar() {
 
   return (
     <>
-      <Container paddingY={4} maxWidth="container.lg">
+      <Container paddingTop={4} maxWidth="container.lg">
         <Flex
           padding={2}
           paddingX={4}
-          boxShadow="md"
-          rounded="xl"
-          bgColor="white"
           alignItems="center"
-          borderWidth="1px"
-          borderBottomWidth="0"
-          borderColor="gray.100"
+          {...shadowedBoxStyle}
         >
-          <Heading size="md" color="blue.500">
-            Fisdas CMS
-          </Heading>
+          <Link href={Route.HOME}>
+            <a>
+              <Heading size="md" color="blue.500">
+                Fisdas CMS
+              </Heading>
+            </a>
+          </Link>
           <Spacer />
           <Menu autoSelect={false} direction="rtl">
             <MenuButton

@@ -2,10 +2,18 @@ import { GetServerSideProps } from "next"
 import Head from "next/head"
 import { Route } from "../../lib/constants"
 import * as jwt from "jsonwebtoken"
-import Link from "next/link"
-import { Button, Input, Skeleton, useToast } from "@chakra-ui/react"
+import {
+  Button,
+  Heading,
+  Input,
+  SimpleGrid,
+  Skeleton,
+  useToast,
+} from "@chakra-ui/react"
 import { useEffect, useState } from "react"
 import { codeOfConductService } from "../../services/code-of-conduct"
+import PageLayout from "../../layouts/page-layout"
+import shadowedBoxStyle from "../../chakra-style-props/shadowed-box"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const admin = jwt.decode(context.req.cookies.jwt)
@@ -62,40 +70,54 @@ export default function CodeOfCoductPage() {
     <>
       <Head>
         <title>Fisdas CMS | Tata Tertib</title>
-        {/* <meta name="description" content="Website CMS Lab Fisika Dasar Tel-U" /> */}
-        {/* <link rel="icon" href="/favicon.ico" /> */}
       </Head>
-      <Link href={Route.HOME}>Dashboard</Link>
-      <Skeleton isLoaded={codeOfConductState}>
-        <iframe src={codeOfConductState?.previewUrl} width="100%"></iframe>
-      </Skeleton>
-      <form action="#">
-        <Skeleton isLoaded={codeOfConductState}>
-          <Input
-            type="url"
-            placeholder="Link Google Drive dokumen tata tertib"
-            defaultValue={codeOfConductState?.url}
-            onFocus={(e) => e.target.select()} //* select all ketika user klik input field
-            onChange={(e) =>
-              setCodeOfConductState({
-                ...codeOfConductState,
-                url: e.target.value,
-              })
-            }
-          />
-        </Skeleton>
-        <Button
-          type="submit"
-          colorScheme="blue"
-          isLoading={isCodeOfConductUpdating}
-          onClick={(e) => {
-            e.preventDefault()
-            handleUpdateCodeOfConduct()
-          }}
+      <PageLayout>
+        <Heading marginTop="4">Tata tertib</Heading>
+        <SimpleGrid
+          columns={[1, 2]}
+          gap={4}
+          marginTop="4"
+          padding="4"
+          {...shadowedBoxStyle}
         >
-          Simpan
-        </Button>
-      </form>
+          <Skeleton isLoaded={codeOfConductState}>
+            <iframe
+              src={codeOfConductState?.previewUrl}
+              width="100%"
+              height="256px"
+            ></iframe>
+          </Skeleton>
+          <form action="#">
+            <Skeleton isLoaded={codeOfConductState}>
+              <Input
+                type="url"
+                placeholder="Link Google Drive dokumen tata tertib"
+                defaultValue={codeOfConductState?.url}
+                onFocus={(e) => e.target.select()} //* select all ketika user klik input field
+                onChange={(e) =>
+                  setCodeOfConductState({
+                    ...codeOfConductState,
+                    url: e.target.value,
+                  })
+                }
+              />
+            </Skeleton>
+            <Button
+              type="submit"
+              colorScheme="blue"
+              width="full"
+              marginTop={4}
+              isLoading={isCodeOfConductUpdating}
+              onClick={(e) => {
+                e.preventDefault()
+                handleUpdateCodeOfConduct()
+              }}
+            >
+              Simpan
+            </Button>
+          </form>
+        </SimpleGrid>
+      </PageLayout>
     </>
   )
 }

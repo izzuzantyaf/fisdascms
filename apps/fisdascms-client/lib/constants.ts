@@ -75,3 +75,10 @@ export const menu = [
     route: Route.SOCIAL_MEDIA,
   },
 ]
+
+export const breadcrumpStack = [
+  {
+    path: Route.CODE_OF_CONDUCT,
+    values: ["Tata tertib"],
+  },
+]
