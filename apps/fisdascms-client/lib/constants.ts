@@ -3,7 +3,7 @@ export enum Route {
   SIGN_IN = "/signin",
   CODE_OF_CONDUCT = "/code-of-conduct",
   HANDOUT = "/handout",
-  PRE_TASK = "/preliminary-test",
+  PRE_TASK = "/pretask",
   PRACTICUM_VIDEO = "/practicum-video",
   SIMULATOR = "/simulator",
   JOURNAL_COVER = "/journal-cover",
