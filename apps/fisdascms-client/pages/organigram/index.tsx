@@ -1,7 +1,3 @@
-import { GetServerSideProps } from "next"
-import Head from "next/head"
-import { Route } from "../../lib/constants"
-import * as jwt from "jsonwebtoken"
 import {
   Button,
   Heading,
@@ -10,10 +6,14 @@ import {
   Skeleton,
   useToast,
 } from "@chakra-ui/react"
-import { useEffect, useState } from "react"
-import { codeOfConductService } from "../../services/code-of-conduct"
-import PageLayout from "../../layouts/page-layout"
+import { GetServerSideProps } from "next"
+import Head from "next/head"
 import shadowedBoxStyle from "../../chakra-style-props/shadowed-box"
+import PageLayout from "../../layouts/page-layout"
+import { Route } from "../../lib/constants"
+import * as jwt from "jsonwebtoken"
+import { useState, useEffect } from "react"
+import { organigramService } from "../../services/organigram"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const admin = jwt.decode(context.req.cookies.jwt)
@@ -31,27 +31,27 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 }
 
-export default function CodeOfCoductPage() {
-  const [isCodeOfConductUpdating, setIsCodeOfConductUpdating] = useState(false)
-  const [codeOfConductState, setCodeOfConductState] = useState()
+export default function OrganigramPage() {
+  const [isOrganigramUpdating, setIsOrganigramUpdating] = useState(false)
+  const [organigramState, setOrganigramState] = useState()
   const toast = useToast()
 
   useEffect(() => {
-    const getCodeOfConduct = async () => {
-      const codeOfConduct = await codeOfConductService.getAll()
-      setCodeOfConductState(codeOfConduct)
+    const getOrganigram = async () => {
+      const organigram = await organigramService.getAll()
+      setOrganigramState(organigram)
     }
-    getCodeOfConduct()
+    getOrganigram()
   }, [])
 
-  const handleUpdateCodeOfConduct = async () => {
-    const newCodeOfConduct = {
-      _id: codeOfConductState._id,
-      url: codeOfConductState.url,
+  const handleUpdateOrganigram = async () => {
+    const newOrganigram = {
+      _id: organigramState._id,
+      url: organigramState.url,
     }
-    setIsCodeOfConductUpdating(true)
-    const updateResponse = await codeOfConductService.update(newCodeOfConduct)
-    setIsCodeOfConductUpdating(false)
+    setIsOrganigramUpdating(true)
+    const updateResponse = await organigramService.update(newOrganigram)
+    setIsOrganigramUpdating(false)
     if (!updateResponse.isSuccess) {
       toast({
         title: updateResponse.message,
@@ -59,7 +59,7 @@ export default function CodeOfCoductPage() {
       })
       return
     }
-    setCodeOfConductState(updateResponse?.data?.updatedCodeOfConduct)
+    setOrganigramState(updateResponse?.data?.updatedOrganigram)
     toast({
       title: updateResponse.message,
       status: "success",
@@ -69,10 +69,10 @@ export default function CodeOfCoductPage() {
   return (
     <>
       <Head>
-        <title>Tata Tertib | Fisdas CMS</title>
+        <title>Organigram | Fisdas CMS</title>
       </Head>
       <PageLayout>
-        <Heading marginTop="4">Tata tertib</Heading>
+        <Heading marginTop="4">Organigram</Heading>
         <SimpleGrid
           columns={[1, 2]}
           gap={4}
@@ -80,23 +80,23 @@ export default function CodeOfCoductPage() {
           padding="4"
           {...shadowedBoxStyle}
         >
-          <Skeleton isLoaded={codeOfConductState}>
+          <Skeleton isLoaded={organigramState}>
             <iframe
-              src={codeOfConductState?.previewUrl}
+              src={organigramState?.previewUrl}
               width="100%"
               height="256px"
             ></iframe>
           </Skeleton>
           <form action="#">
-            <Skeleton isLoaded={codeOfConductState}>
+            <Skeleton isLoaded={organigramState}>
               <Input
                 type="url"
-                placeholder="Link Google Drive dokumen tata tertib"
-                defaultValue={codeOfConductState?.url}
+                placeholder="Link Google Drive organigram"
+                defaultValue={organigramState?.url}
                 onFocus={(e) => e.target.select()} //* select all ketika user klik input field
                 onChange={(e) =>
-                  setCodeOfConductState({
-                    ...codeOfConductState,
+                  setOrganigramState({
+                    ...organigramState,
                     url: e.target.value,
                   })
                 }
@@ -107,10 +107,10 @@ export default function CodeOfCoductPage() {
               colorScheme="blue"
               width="full"
               marginTop={4}
-              isLoading={isCodeOfConductUpdating}
+              isLoading={isOrganigramUpdating}
               onClick={(e) => {
                 e.preventDefault()
-                handleUpdateCodeOfConduct()
+                handleUpdateOrganigram()
               }}
             >
               Simpan
