@@ -1,7 +1,5 @@
-import type { GetServerSideProps, InferGetServerSidePropsType } from "next"
 import Head from "next/head"
-import { menu, Route } from "../lib/constants"
-import * as jwt from "jsonwebtoken"
+import { menu } from "../lib/constants"
 import {
   Box,
   Container,
@@ -14,22 +12,6 @@ import Link from "next/link"
 import Navbar from "../components/navbar"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import shadowedBoxStyle from "../chakra-style-props/shadowed-box"
-
-// export const getServerSideProps: GetServerSideProps = async (context) => {
-//   const admin = jwt.decode(context.req.cookies.jwt)
-//   console.log("Admin :", admin)
-//   if (!admin)
-//     return {
-//       redirect: {
-//         destination: Route.SIGN_IN,
-//       },
-//     }
-//   return {
-//     props: {
-//       admin,
-//     },
-//   }
-// }
 
 export default function Home() {
   return (

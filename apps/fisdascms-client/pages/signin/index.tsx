@@ -1,8 +1,6 @@
 import Head from "next/head"
 import { useState } from "react"
 import * as jwt from "jsonwebtoken"
-import { Route } from "../../lib/constants"
-import { GetServerSideProps } from "next"
 import {
   Button,
   Center,
@@ -13,20 +11,6 @@ import {
   VStack,
 } from "@chakra-ui/react"
 import { authService } from "../../services/auth"
-
-// export const getServerSideProps: GetServerSideProps = async (context) => {
-//   //* mengecek apakah user berstatus login atau tidak
-//   //* dengan cara cek apakah ada access token di cookies
-//   if (jwt.decode(context.req.cookies.jwt))
-//     return {
-//       redirect: {
-//         destination: Route.HOME, //* jika status user sedang login, langsung arahin aja ke halaman home
-//       },
-//     }
-//   return {
-//     props: {},
-//   }
-// }
 
 export default function SignInPage() {
   const [email, setEmail] = useState("")
@@ -57,9 +41,7 @@ export default function SignInPage() {
   return (
     <>
       <Head>
-        <title>Fisdas CMS | Masuk</title>
-        {/* <meta name="description" content="Website CMS Lab Fisika Dasar Tel-U" /> */}
-        {/* <link rel="icon" href="/favicon.ico" /> */}
+        <title>Masuk | Fisdas CMS</title>
       </Head>
 
       <Center h="100vh">

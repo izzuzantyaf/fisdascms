@@ -1,7 +1,4 @@
-import { GetServerSideProps } from "next"
 import Head from "next/head"
-import { Route } from "../../lib/constants"
-import * as jwt from "jsonwebtoken"
 import {
   Box,
   Button,
@@ -15,22 +12,6 @@ import { useEffect, useState } from "react"
 import { codeOfConductService } from "../../services/code-of-conduct"
 import PageLayout from "../../layouts/page-layout"
 import shadowedBoxStyle from "../../chakra-style-props/shadowed-box"
-
-// export const getServerSideProps: GetServerSideProps = async (context) => {
-//   const admin = jwt.decode(context.req.cookies.jwt)
-//   console.log("Admin :", admin)
-//   if (!admin)
-//     return {
-//       redirect: {
-//         destination: Route.SIGN_IN,
-//       },
-//     }
-//   return {
-//     props: {
-//       admin,
-//     },
-//   }
-// }
 
 export default function CodeOfCoductPage() {
   const [isCodeOfConductUpdating, setIsCodeOfConductUpdating] = useState(false)

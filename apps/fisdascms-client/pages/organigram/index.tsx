@@ -10,26 +10,8 @@ import { GetServerSideProps } from "next"
 import Head from "next/head"
 import shadowedBoxStyle from "../../chakra-style-props/shadowed-box"
 import PageLayout from "../../layouts/page-layout"
-import { Route } from "../../lib/constants"
-import * as jwt from "jsonwebtoken"
 import { useState, useEffect } from "react"
 import { organigramService } from "../../services/organigram"
-
-// export const getServerSideProps: GetServerSideProps = async (context) => {
-//   const admin = jwt.decode(context.req.cookies.jwt)
-//   console.log("Admin :", admin)
-//   if (!admin)
-//     return {
-//       redirect: {
-//         destination: Route.SIGN_IN,
-//       },
-//     }
-//   return {
-//     props: {
-//       admin,
-//     },
-//   }
-// }
 
 export default function OrganigramPage() {
   const [isOrganigramUpdating, setIsOrganigramUpdating] = useState(false)
