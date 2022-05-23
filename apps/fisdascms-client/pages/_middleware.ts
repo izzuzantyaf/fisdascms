@@ -4,7 +4,8 @@ import { Route } from "../lib/constants"
 
 export function middleware(req: NextRequest, ev: NextFetchEvent) {
   const access_token = req.cookies.jwt
-  const admin = jose.decodeJwt(access_token)
+  console.log("Access token :", access_token)
+  const admin = jose.decodeJwt(access_token ?? "")
   console.log("Admin :", admin)
   console.log("Base URL :", process.env.VERCEL_URL)
   if (admin == null || typeof admin === "string")
