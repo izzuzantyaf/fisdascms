@@ -12,8 +12,10 @@ export function middleware(req: NextRequest, ev: NextFetchEvent) {
     console.error(error)
   }
   console.log("Admin :", admin)
-  console.log("Base URL :", process.env.VERCEL_URL)
-  if (admin == null || typeof admin === "string")
-    return NextResponse.redirect(process.env.VERCEL_URL + Route.SIGN_IN)
-  return NextResponse.next()
+  console.log(req.nextUrl)
+  if (req.nextUrl.pathname === Route.SIGN_IN && admin == null)
+    return NextResponse.next()
+  if (admin == null)
+    return NextResponse.redirect(req.nextUrl.origin + Route.SIGN_IN)
+  else return NextResponse.next()
 }
