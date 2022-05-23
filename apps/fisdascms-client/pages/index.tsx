@@ -15,31 +15,29 @@ import Navbar from "../components/navbar"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import shadowedBoxStyle from "../chakra-style-props/shadowed-box"
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const admin = jwt.decode(context.req.cookies.jwt)
-  console.log("Admin :", admin)
-  if (!admin)
-    return {
-      redirect: {
-        destination: Route.SIGN_IN,
-      },
-    }
-  return {
-    props: {
-      admin,
-    },
-  }
-}
+// export const getServerSideProps: GetServerSideProps = async (context) => {
+//   const admin = jwt.decode(context.req.cookies.jwt)
+//   console.log("Admin :", admin)
+//   if (!admin)
+//     return {
+//       redirect: {
+//         destination: Route.SIGN_IN,
+//       },
+//     }
+//   return {
+//     props: {
+//       admin,
+//     },
+//   }
+// }
 
-export default function Home({
-  admin,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function Home() {
   return (
     <>
       <Head>
         <title>Fisdas CMS</title>
       </Head>
-      <Navbar></Navbar>
+      <Navbar />
       <Container maxWidth="container.lg">
         <Heading marginTop={4}>Dashboard</Heading>
         <SimpleGrid columns={[2, 3, 4]} spacing={4} marginTop={4}>

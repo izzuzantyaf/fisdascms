@@ -15,21 +15,21 @@ import * as jwt from "jsonwebtoken"
 import { useState, useEffect } from "react"
 import { organigramService } from "../../services/organigram"
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const admin = jwt.decode(context.req.cookies.jwt)
-  console.log("Admin :", admin)
-  if (!admin)
-    return {
-      redirect: {
-        destination: Route.SIGN_IN,
-      },
-    }
-  return {
-    props: {
-      admin,
-    },
-  }
-}
+// export const getServerSideProps: GetServerSideProps = async (context) => {
+//   const admin = jwt.decode(context.req.cookies.jwt)
+//   console.log("Admin :", admin)
+//   if (!admin)
+//     return {
+//       redirect: {
+//         destination: Route.SIGN_IN,
+//       },
+//     }
+//   return {
+//     props: {
+//       admin,
+//     },
+//   }
+// }
 
 export default function OrganigramPage() {
   const [isOrganigramUpdating, setIsOrganigramUpdating] = useState(false)

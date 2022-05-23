@@ -12,7 +12,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Link from "next/link"
 import shadowedBoxStyle from "../chakra-style-props/shadowed-box"
-import { Route } from "../lib/constants"
+import { menu, Route } from "../lib/constants"
 import { authService } from "../services/auth"
 
 export default function Navbar() {
@@ -42,11 +42,19 @@ export default function Navbar() {
             <MenuButton
               as={IconButton}
               aria-label="Options"
-              icon={<FontAwesomeIcon icon="user" />}
-              // variant="outline"
-              borderRadius="full"
+              icon={<FontAwesomeIcon icon="bars" />}
+              variant="ghost"
             />
             <MenuList>
+              {/* {menu.map((menu) => (
+                <MenuItem
+                  icon={<FontAwesomeIcon icon={menu.faIconName} />}
+                  // color="red.500"
+                  // bgColor="red.50"
+                >
+                  {menu.name}
+                </MenuItem>
+              ))} */}
               <MenuItem
                 icon={<FontAwesomeIcon icon="arrow-right-from-bracket" />}
                 color="red.500"

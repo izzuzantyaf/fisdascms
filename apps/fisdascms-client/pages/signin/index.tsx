@@ -14,19 +14,19 @@ import {
 } from "@chakra-ui/react"
 import { authService } from "../../services/auth"
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  //* mengecek apakah user berstatus login atau tidak
-  //* dengan cara cek apakah ada access token di cookies
-  if (jwt.decode(context.req.cookies.jwt))
-    return {
-      redirect: {
-        destination: Route.HOME, //* jika status user sedang login, langsung arahin aja ke halaman home
-      },
-    }
-  return {
-    props: {},
-  }
-}
+// export const getServerSideProps: GetServerSideProps = async (context) => {
+//   //* mengecek apakah user berstatus login atau tidak
+//   //* dengan cara cek apakah ada access token di cookies
+//   if (jwt.decode(context.req.cookies.jwt))
+//     return {
+//       redirect: {
+//         destination: Route.HOME, //* jika status user sedang login, langsung arahin aja ke halaman home
+//       },
+//     }
+//   return {
+//     props: {},
+//   }
+// }
 
 export default function SignInPage() {
   const [email, setEmail] = useState("")
