@@ -1,4 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { HandoutModule } from './handout.module';
 import { HandoutService } from './handout.service';
 
 describe('HandoutService', () => {
@@ -6,10 +7,10 @@ describe('HandoutService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [HandoutService],
+      imports: [HandoutModule],
     }).compile();
 
-    service = module.get<HandoutService>(HandoutService);
+    service = module.get(HandoutService);
   });
 
   it('should be defined', () => {

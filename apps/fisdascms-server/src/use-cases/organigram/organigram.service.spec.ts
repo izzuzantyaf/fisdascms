@@ -1,4 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { OrganigramModule } from './organigram.module';
 import { OrganigramService } from './organigram.service';
 
 describe('OrganigramService', () => {
@@ -6,10 +7,10 @@ describe('OrganigramService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [OrganigramService],
+      imports: [OrganigramModule],
     }).compile();
 
-    service = module.get<OrganigramService>(OrganigramService);
+    service = module.get(OrganigramService);
   });
 
   it('should be defined', () => {

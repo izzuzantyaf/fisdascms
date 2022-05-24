@@ -1,9 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
-import { AppModule } from './../src/app.module';
+import { AppModule } from '../app.module';
+import { SuccessfulResponse } from 'src/lib/dtos/response.dto';
 
-describe('AppController (e2e)', () => {
+describe('AdminController (e2e)', () => {
   let app: INestApplication;
 
   beforeEach(async () => {
@@ -15,10 +16,8 @@ describe('AppController (e2e)', () => {
     await app.init();
   });
 
-  it('/ (GET)', () => {
-    return request(app.getHttpServer())
-      .get('/')
-      .expect(200)
-      .expect('Hello World!');
+  it('/api/admin (GET)', async () => {
+    const response = await request(app.getHttpServer()).get('/api/admin');
+    expect(response.statusCode).toBe(200);
   });
 });
