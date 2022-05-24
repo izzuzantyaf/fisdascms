@@ -12,7 +12,6 @@ export function middleware(req: NextRequest, ev: NextFetchEvent) {
     console.error(error)
   }
   console.log("Admin :", admin)
-  console.log(req.nextUrl)
   if (req.nextUrl.pathname === Route.SIGN_IN && admin == null)
     return NextResponse.next()
   if (req.nextUrl.pathname === Route.SIGN_IN && admin != null)

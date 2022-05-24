@@ -18,11 +18,12 @@ export default function CodeOfCoductPage() {
   const [codeOfConductState, setCodeOfConductState] = useState()
   const toast = useToast()
 
+  const getCodeOfConduct = async () => {
+    const codeOfConduct = await codeOfConductService.getAll()
+    setCodeOfConductState(codeOfConduct)
+  }
+
   useEffect(() => {
-    const getCodeOfConduct = async () => {
-      const codeOfConduct = await codeOfConductService.getAll()
-      setCodeOfConductState(codeOfConduct)
-    }
     getCodeOfConduct()
   }, [])
 
