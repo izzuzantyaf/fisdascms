@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Assistant } from 'src/entities/models/assistant.entity';
+import { Assistant } from 'src/frameworks/database/mongodb/entity/assistant.entity';
 
 @Injectable()
 export class AssistantFactoryService {

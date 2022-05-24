@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { Gender, AssistantLevel } from '../constants/constants';
+import { Gender, AssistantLevel } from 'src/entities/constants/constants';
 
 export type AssistantDocument = Assistant & Document;
 

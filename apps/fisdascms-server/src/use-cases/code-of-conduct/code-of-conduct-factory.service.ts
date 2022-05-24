@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CodeOfConduct } from 'src/entities/models/code-of-conduct.entity';
+import { CodeOfConduct } from 'src/frameworks/database/mongodb/entity/code-of-conduct.entity';
 
 @Injectable()
 export class CodeOfConductFactoryService {

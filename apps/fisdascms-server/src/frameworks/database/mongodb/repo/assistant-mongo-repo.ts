@@ -1,13 +1,10 @@
-import { IAssistantRepository } from 'src/entities/abstracts/repo/assistant-repo.interface';
-import { Assistant } from 'src/entities/models/assistant.entity';
+// import { IAssistantRepository } from 'src/entities/abstracts/repo/assistant-repo.interface';
+import { Assistant } from '../entity/assistant.entity';
 import { MongoGenericRepository } from './mongo-generic-repo';
 import { Model } from 'mongoose';
 import { isEmpty } from 'class-validator';
 
-export class AssistantMongoRepository
-  extends MongoGenericRepository<Assistant>
-  implements IAssistantRepository
-{
+export class AssistantMongoRepository extends MongoGenericRepository<Assistant> {
   constructor(repository: Model<Assistant>) {
     super(repository);
   }

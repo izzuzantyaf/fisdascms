@@ -1,12 +1,12 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Faculty, Language } from '../constants/constants';
+import { Faculty, Language } from 'src/entities/constants/constants';
 import { Document } from 'mongoose';
 
 export type HandoutDocument = Handout & Document;
 
 @Schema({ timestamps: true })
 export class Handout {
-  _id: string | number;
+  _id: string;
   @Prop({ required: true })
   faculty: Faculty;
   @Prop({ required: true })
@@ -17,7 +17,7 @@ export class Handout {
   url: string;
 
   constructor(initialProps?: {
-    _id?: string | number;
+    _id?: string;
     faculty?: Faculty;
     language?: Language;
     isActive?: boolean;

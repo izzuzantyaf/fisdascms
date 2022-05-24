@@ -1,26 +1,21 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
-import { IDataServices } from 'src/entities/abstracts/data-services.abstract';
+// import { IDataServices } from 'src/entities/abstracts/data-services.abstract';
 import { MongoDataServices } from './mongo-data-service.service';
-import { Admin, AdminSchema } from 'src/entities/models/admin.entity';
-import { Handout, HandoutSchema } from 'src/entities/models/handout.entity';
+import { Admin, AdminSchema } from './entity/admin.entity';
+import { Handout, HandoutSchema } from './entity/handout.entity';
 import {
   CodeOfConduct,
   CodeOfConductSchema,
-} from 'src/entities/models/code-of-conduct.entity';
-import {
-  Organigram,
-  OrganigramSchema,
-} from 'src/entities/models/organigram.entity';
-import { Schedule, ScheduleSchema } from 'src/entities/models/schedule.entity';
-import {
-  Assistant,
-  AssistantSchema,
-} from 'src/entities/models/assistant.entity';
+} from './entity/code-of-conduct.entity';
+import { Organigram, OrganigramSchema } from './entity/organigram.entity';
+import { Schedule, ScheduleSchema } from './entity/schedule.entity';
+import { Assistant, AssistantSchema } from './entity/assistant.entity';
 import {
   PracticumModule,
   PracticumModuleSchema,
-} from 'src/entities/models/practicum-module.entity';
+} from './entity/practicum-module.entity';
 
 @Module({
   imports: [
@@ -33,14 +28,16 @@ import {
       { name: Assistant.name, schema: AssistantSchema },
       { name: PracticumModule.name, schema: PracticumModuleSchema },
     ]),
+    ConfigModule.forRoot(),
     MongooseModule.forRoot(process.env.MONGO_URI),
   ],
   providers: [
-    {
-      provide: IDataServices,
-      useClass: MongoDataServices,
-    },
+    // {
+    //   provide: IDataServices,
+    //   useClass: MongoDataServices,
+    // },
+    MongoDataServices,
   ],
-  exports: [IDataServices],
+  exports: [MongoDataServices],
 })
 export class MongoDataServicesModule {}

@@ -11,8 +11,8 @@ import { AssistantModule } from './use-cases/assistant/assistant.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(), // agar bisa baca file .env
-    MongooseModule.forRoot(process.env.MONGO_URI), // agar terhubung ke database (MongoDB)
+    // ConfigModule.forRoot(), // agar bisa baca file .env
+    // MongooseModule.forRoot(process.env.MONGO_URI), // agar terhubung ke database (MongoDB)
     AdminModule,
     AuthModule,
     HandoutModule,

@@ -1,16 +1,10 @@
-import { IOrganigramRepository } from 'src/entities/abstracts/repo/organigram-repo.interface';
-import {
-  Organigram,
-  OrganigramDocument,
-} from 'src/entities/models/organigram.entity';
+// import { IOrganigramRepository } from 'src/entities/abstracts/repo/organigram-repo.interface';
+import { Organigram, OrganigramDocument } from '../entity/organigram.entity';
 import { MongoGenericRepository } from './mongo-generic-repo';
 import { Model } from 'mongoose';
 import { isEmpty } from 'class-validator';
 
-export class OrganigramMongoRepository
-  extends MongoGenericRepository<Organigram>
-  implements IOrganigramRepository
-{
+export class OrganigramMongoRepository extends MongoGenericRepository<Organigram> {
   constructor(repository: Model<OrganigramDocument>) {
     super(repository);
   }

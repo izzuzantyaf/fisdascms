@@ -1,13 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { isEmpty } from 'class-validator';
-import { IDataServices } from 'src/entities/abstracts/data-services.abstract';
-import { Schedule } from 'src/entities/models/schedule.entity';
+// import { IDataServices } from 'src/entities/abstracts/data-services.abstract';
+import { Schedule } from 'src/frameworks/database/mongodb/entity/schedule.entity';
+import { MongoDataServices } from 'src/frameworks/database/mongodb/mongo-data-service.service';
 import { ScheduleFactoryService } from './schedule-factory.service';
 
 @Injectable()
 export class ScheduleService {
   constructor(
-    private dataService: IDataServices,
+    private dataService: MongoDataServices,
     private scheduleFactory: ScheduleFactoryService,
   ) {}
 

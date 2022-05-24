@@ -1,13 +1,10 @@
-import { IHandoutRepository } from 'src/entities/abstracts/repo/handout-repo.interface';
-import { Handout, HandoutDocument } from 'src/entities/models/handout.entity';
+// import { IHandoutRepository } from 'src/entities/abstracts/repo/handout-repo.interface';
+import { Handout, HandoutDocument } from '../entity/handout.entity';
 import { MongoGenericRepository } from './mongo-generic-repo';
 import { Model } from 'mongoose';
 import { isEmpty } from 'class-validator';
 
-export class HandoutMongoRepository
-  extends MongoGenericRepository<Handout>
-  implements IHandoutRepository
-{
+export class HandoutMongoRepository extends MongoGenericRepository<Handout> {
   constructor(repository: Model<HandoutDocument>) {
     super(repository);
   }

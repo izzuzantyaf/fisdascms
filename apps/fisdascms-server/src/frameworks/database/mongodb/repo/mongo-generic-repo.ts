@@ -1,7 +1,7 @@
 import { Model } from 'mongoose';
-import { IGenericRepository } from 'src/entities/abstracts/repo/generic-repo.interface';
+// import { IGenericRepository } from 'src/entities/abstracts/repo/generic-repo.interface';
 
-export class MongoGenericRepository<T> implements IGenericRepository<T> {
+export class MongoGenericRepository<T> {
   protected _repository: Model<T>;
   protected _populateOnFind: string[];
 

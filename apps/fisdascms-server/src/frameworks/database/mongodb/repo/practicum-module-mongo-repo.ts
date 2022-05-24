@@ -1,16 +1,13 @@
-import { IPracticumModuleRepository } from 'src/entities/abstracts/repo/practicum-module-repo.interface';
+// import { IPracticumModuleRepository } from 'src/entities/abstracts/repo/practicum-module-repo.interface';
 import {
   PracticumModule,
   PracticumModuleDocument,
-} from 'src/entities/models/practicum-module.entity';
+} from '../entity/practicum-module.entity';
 import { MongoGenericRepository } from './mongo-generic-repo';
 import { Model } from 'mongoose';
 import { isEmpty } from 'class-validator';
 
-export class PracticumModuleMongoRepository
-  extends MongoGenericRepository<PracticumModule>
-  implements IPracticumModuleRepository
-{
+export class PracticumModuleMongoRepository extends MongoGenericRepository<PracticumModule> {
   constructor(repository: Model<PracticumModuleDocument>) {
     super(repository);
   }

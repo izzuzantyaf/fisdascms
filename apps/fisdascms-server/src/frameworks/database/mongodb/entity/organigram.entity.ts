@@ -5,12 +5,12 @@ export type OrganigramDocument = Organigram & Document;
 
 @Schema({ timestamps: true })
 export class Organigram {
-  _id: string | number;
+  _id: string;
   @Prop()
   url: string;
   previewUrl: string;
 
-  constructor(initialProps?: { _id?: string | number; url?: string }) {
+  constructor(initialProps?: { _id?: string; url?: string }) {
     const { _id, url } = initialProps;
     this._id = _id;
     this.url = url;

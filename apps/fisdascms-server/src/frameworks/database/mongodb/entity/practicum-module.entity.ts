@@ -1,6 +1,6 @@
 import { Prop, raw, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { Language } from '../constants/constants';
+import { Language } from 'src/entities/constants/constants';
 
 export type PracticumModuleDocument = PracticumModule & Document;
 

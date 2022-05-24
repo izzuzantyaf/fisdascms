@@ -4,14 +4,15 @@ import {
   Injectable,
 } from '@nestjs/common';
 import { isEmpty, isNotEmpty } from 'class-validator';
-import { IDataServices } from 'src/entities/abstracts/data-services.abstract';
+// import { IDataServices } from 'src/entities/abstracts/data-services.abstract';
 import { ErrorResponse } from 'src/entities/dtos/response.dto';
+import { MongoDataServices } from 'src/frameworks/database/mongodb/mongo-data-service.service';
 import { AdminFactoryService } from './admin-factory.service';
 
 @Injectable()
 export class AdminService {
   constructor(
-    private dataServices: IDataServices,
+    private dataServices: MongoDataServices,
     private adminFactoryService: AdminFactoryService,
   ) {}
 

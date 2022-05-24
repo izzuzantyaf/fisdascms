@@ -1,12 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { IDataServices } from 'src/entities/abstracts/data-services.abstract';
+// import { IDataServices } from 'src/entities/abstracts/data-services.abstract';
+import { MongoDataServices } from 'src/frameworks/database/mongodb/mongo-data-service.service';
 import { CodeOfConductFactoryService } from './code-of-conduct-factory.service';
 
 @Injectable()
 export class CodeOfConductService {
   constructor(
     private codeOfConductFactory: CodeOfConductFactoryService,
-    private dataService: IDataServices,
+    private dataService: MongoDataServices,
   ) {}
 
   async getOne() {

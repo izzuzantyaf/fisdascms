@@ -1,17 +1,11 @@
-import { IScheduleRepository } from 'src/entities/abstracts/repo/schedule-repo.interface';
-import {
-  Schedule,
-  ScheduleDocument,
-} from 'src/entities/models/schedule.entity';
+// import { IScheduleRepository } from 'src/entities/abstracts/repo/schedule-repo.interface';
+import { Schedule, ScheduleDocument } from '../entity/schedule.entity';
 import { MongoGenericRepository } from './mongo-generic-repo';
 import { Model } from 'mongoose';
 import { isEmpty } from 'class-validator';
 import { Faculty } from 'src/entities/constants/constants';
 
-export class ScheduleMongoRepository
-  extends MongoGenericRepository<Schedule>
-  implements IScheduleRepository
-{
+export class ScheduleMongoRepository extends MongoGenericRepository<Schedule> {
   constructor(repository: Model<ScheduleDocument>) {
     super(repository);
   }

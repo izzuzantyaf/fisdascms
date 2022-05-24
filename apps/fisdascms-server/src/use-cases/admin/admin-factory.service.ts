@@ -1,4 +1,4 @@
-import { Admin } from 'src/entities/models/admin.entity';
+import { Admin } from 'src/frameworks/database/mongodb/entity/admin.entity';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()

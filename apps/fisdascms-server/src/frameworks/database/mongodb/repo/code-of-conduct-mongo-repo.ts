@@ -1,16 +1,13 @@
-import { ICodeOfConductRepository } from 'src/entities/abstracts/repo/code-of-conduct-repo.interface';
+// import { ICodeOfConductRepository } from 'src/entities/abstracts/repo/code-of-conduct-repo.interface';
 import {
   CodeOfConduct,
   CodeOfConductDocument,
-} from 'src/entities/models/code-of-conduct.entity';
+} from '../entity/code-of-conduct.entity';
 import { MongoGenericRepository } from './mongo-generic-repo';
 import { Model } from 'mongoose';
 import { isEmpty } from 'class-validator';
 
-export class CodeOfConductMongoRepository
-  extends MongoGenericRepository<CodeOfConduct>
-  implements ICodeOfConductRepository
-{
+export class CodeOfConductMongoRepository extends MongoGenericRepository<CodeOfConduct> {
   constructor(repository: Model<CodeOfConductDocument>) {
     super(repository);
   }

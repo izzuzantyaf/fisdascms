@@ -1,13 +1,11 @@
-import { IAdminRepository } from 'src/entities/abstracts/repo/admin-repo.interface';
-import { Admin, AdminDocument } from 'src/entities/models/admin.entity';
+// import { IAdminRepository } from 'src/entities/abstracts/repo/admin-repo.interface';
+// import { Admin, AdminDocument } from 'src/entities/models/admin.entity';
+import { Admin, AdminDocument } from '../entity/admin.entity';
 import { MongoGenericRepository } from './mongo-generic-repo';
 import { Model } from 'mongoose';
 import { isEmpty } from 'class-validator';
 
-export class AdminMongoRepository
-  extends MongoGenericRepository<Admin>
-  implements IAdminRepository
-{
+export class AdminMongoRepository extends MongoGenericRepository<Admin> {
   constructor(repository: Model<AdminDocument>) {
     super(repository);
   }

@@ -1,30 +1,21 @@
-import { Injectable, OnApplicationBootstrap } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { IDataServices } from 'src/entities/abstracts/data-services.abstract';
-import { IDatabaseSeeder } from 'src/entities/abstracts/database-seeder.interface';
-import { Admin, AdminDocument } from 'src/entities/models/admin.entity';
-import {
-  Assistant,
-  AssistantDocument,
-} from 'src/entities/models/assistant.entity';
+// import { IDataServices } from 'src/entities/abstracts/data-services.abstract';
+// import { IDatabaseSeeder } from 'src/entities/abstracts/database-seeder.interface';
+import { Admin, AdminDocument } from './entity/admin.entity';
+import { Assistant, AssistantDocument } from './entity/assistant.entity';
 import {
   CodeOfConduct,
   CodeOfConductDocument,
-} from 'src/entities/models/code-of-conduct.entity';
-import { Handout, HandoutDocument } from 'src/entities/models/handout.entity';
-import {
-  Organigram,
-  OrganigramDocument,
-} from 'src/entities/models/organigram.entity';
+} from './entity/code-of-conduct.entity';
+import { Handout, HandoutDocument } from './entity/handout.entity';
+import { Organigram, OrganigramDocument } from './entity/organigram.entity';
 import {
   PracticumModule,
   PracticumModuleDocument,
-} from 'src/entities/models/practicum-module.entity';
-import {
-  Schedule,
-  ScheduleDocument,
-} from 'src/entities/models/schedule.entity';
+} from './entity/practicum-module.entity';
+import { Schedule, ScheduleDocument } from './entity/schedule.entity';
 import { adminSeeder } from 'src/entities/seeders/admin.seeder';
 import { assistantSeeder } from 'src/entities/seeders/assistant.seeder';
 import { codeOfConductSeeder } from 'src/entities/seeders/code-of-conduct.seeder';
@@ -41,9 +32,7 @@ import { PracticumModuleMongoRepository } from './repo/practicum-module-mongo-re
 import { ScheduleMongoRepository } from './repo/schedule-mongo-repo';
 
 @Injectable()
-export class MongoDataServices
-  implements IDataServices, OnApplicationBootstrap, IDatabaseSeeder
-{
+export class MongoDataServices {
   admins: AdminMongoRepository;
   handouts: HandoutMongoRepository;
   codeOfConducts: CodeOfConductMongoRepository;
@@ -65,9 +54,7 @@ export class MongoDataServices
     private assistantModel: Model<AssistantDocument>,
     @InjectModel(PracticumModule.name)
     private practicumModuleModel: Model<PracticumModuleDocument>,
-  ) {}
-
-  onApplicationBootstrap() {
+  ) {
     this.admins = new AdminMongoRepository(this.adminModel);
     this.handouts = new HandoutMongoRepository(this.handoutModel);
     this.codeOfConducts = new CodeOfConductMongoRepository(
@@ -88,42 +75,56 @@ export class MongoDataServices
     this.seedPracticumModule();
   }
 
-  async seedAdmin() {
+  // onApplicationBootstrap() {
+  //   this.admins = new AdminMongoRepository(this.adminModel);
+  //   this.handouts = new HandoutMongoRepository(this.handoutModel);
+  //   this.codeOfConducts = new CodeOfConductMongoRepository(
+  //     this.codeOfConductModel,
+  //   );
+  //   this.organigrams = new OrganigramMongoRepository(this.organigramModel);
+  //   this.schedules = new ScheduleMongoRepository(this.scheduleModel);
+  //   this.assistants = new AssistantMongoRepository(this.assistantModel);
+  //   this.practicumModules = new PracticumModuleMongoRepository(
+  //     this.practicumModuleModel,
+  //   );
+  // }
+
+  protected async seedAdmin() {
     const admin = new Admin(adminSeeder);
     await admin.hashPassword();
     this.admins.seed(admin);
   }
 
-  seedHandout() {
+  protected seedHandout() {
     const handouts = handoutSeeder.map(
       (handoutSeed) => new Handout(handoutSeed),
     );
     this.handouts.seed(handouts);
   }
 
-  seedCodeOfConduct() {
+  protected seedCodeOfConduct() {
     const codeOfConduct = new CodeOfConduct(codeOfConductSeeder);
     this.codeOfConducts.seed(codeOfConduct);
   }
 
-  seedOrganigram() {
+  protected seedOrganigram() {
     const organigram = new Organigram(organigramSeeder);
     this.organigrams.seed(organigram);
   }
 
-  seedSchedule() {
+  protected seedSchedule() {
     const schedules = scheduleSeeder.map((schedule) => new Schedule(schedule));
     this.schedules.seed(schedules);
   }
 
-  seedAssistant() {
+  protected seedAssistant() {
     const assistants = assistantSeeder.map(
       (assistant) => new Assistant(assistant),
     );
     this.assistants.seed(assistants);
   }
 
-  seedPracticumModule(): void {
+  protected seedPracticumModule(): void {
     const practicumModules = practicumModuleSeeder.map(
       (practicumModule) => new PracticumModule(practicumModule),
     );
