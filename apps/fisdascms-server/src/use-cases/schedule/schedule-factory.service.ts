@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Schedule } from 'src/frameworks/database/mongodb/entity/schedule.entity';
+import { Schedule } from 'src/database/entity/schedule.entity';
 
 @Injectable()
 export class ScheduleFactoryService {

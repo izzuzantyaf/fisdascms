@@ -4,15 +4,14 @@ import {
   Injectable,
 } from '@nestjs/common';
 import { isEmpty, isNotEmpty } from 'class-validator';
-// import { IDataServices } from 'src/entities/abstracts/data-services.abstract';
-import { ErrorResponse } from 'src/entities/dtos/response.dto';
-import { MongoDataServices } from 'src/frameworks/database/mongodb/mongo-data-service.service';
+import { ErrorResponse } from 'src/lib/dtos/response.dto';
+import { DataServiceService } from 'src/database/data-service.service';
 import { AdminFactoryService } from './admin-factory.service';
 
 @Injectable()
 export class AdminService {
   constructor(
-    private dataServices: MongoDataServices,
+    private dataService: DataServiceService,
     private adminFactoryService: AdminFactoryService,
   ) {}
 
@@ -24,26 +23,26 @@ export class AdminService {
       throw new BadRequestException(
         new ErrorResponse('Data tidak valid', { errors }),
       );
-    const admin = await this.dataServices.admins.getByEmail(newAdmin.email);
+    const admin = await this.dataService.admins.getByEmail(newAdmin.email);
     console.log('Existing admin :', admin);
     if (isNotEmpty(admin))
       throw new ConflictException(new ErrorResponse('Email sudah terdaftar'));
     await newAdmin.hashPassword();
-    const storedAdmin = await this.dataServices.admins.create(newAdmin);
+    const storedAdmin = await this.dataService.admins.create(newAdmin);
     console.log('Stored admin :', storedAdmin);
     return this.adminFactoryService.create(storedAdmin);
   }
 
   async getAll() {
     const admins = this.adminFactoryService.createMany(
-      await this.dataServices.admins.getAll(),
+      await this.dataService.admins.getAll(),
     );
     return admins;
   }
 
   async delete(id: string) {
     console.log('Admin id :', id);
-    const deletedAdmin = await this.dataServices.admins.deleteById(id);
+    const deletedAdmin = await this.dataService.admins.deleteById(id);
     console.log('Deleted admin :', deletedAdmin);
     if (isEmpty(deletedAdmin))
       throw new BadRequestException(new ErrorResponse('Akun gagal dihapus'));
@@ -52,7 +51,7 @@ export class AdminService {
 
   async validateAdmin(email: string, password: string) {
     console.log('Incoming credentials :', { email, password });
-    const adminFromDb = await this.dataServices.admins.getByEmail(email);
+    const adminFromDb = await this.dataService.admins.getByEmail(email);
     console.log('Admin from database :', adminFromDb);
     if (isEmpty(adminFromDb))
       throw new BadRequestException(new ErrorResponse('Login gagal'));

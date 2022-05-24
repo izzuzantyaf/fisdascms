@@ -10,7 +10,7 @@ describe('AdminService', () => {
       imports: [AdminModule],
     }).compile();
 
-    service = await module.resolve(AdminService);
+    service = module.get(AdminService);
   });
 
   it('should be defined', () => {
