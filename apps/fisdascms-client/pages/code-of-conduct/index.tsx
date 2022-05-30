@@ -54,55 +54,53 @@ export default function CodeOfCoductPage() {
       <Head>
         <title>Tata Tertib | Fisdas CMS</title>
       </Head>
-      <Box bgColor="gray.50" minHeight="100vh">
-        <PageLayout>
-          <Heading marginTop="4">Tata tertib</Heading>
-          <SimpleGrid
-            columns={[1, 2]}
-            gap={4}
-            marginTop="4"
-            padding="4"
-            {...shadowedBoxStyle}
-          >
+      <PageLayout>
+        <Heading marginTop="4">Tata tertib</Heading>
+        <SimpleGrid
+          columns={[1, 2]}
+          gap={4}
+          marginTop="4"
+          padding="4"
+          {...shadowedBoxStyle}
+        >
+          <Skeleton isLoaded={codeOfConductState}>
+            <iframe
+              src={codeOfConductState?.previewUrl}
+              width="100%"
+              height="256px"
+            ></iframe>
+          </Skeleton>
+          <form action="#">
             <Skeleton isLoaded={codeOfConductState}>
-              <iframe
-                src={codeOfConductState?.previewUrl}
-                width="100%"
-                height="256px"
-              ></iframe>
+              <Input
+                type="url"
+                placeholder="Link Google Drive dokumen tata tertib"
+                defaultValue={codeOfConductState?.url}
+                onFocus={(e) => e.target.select()} //* select all ketika user klik input field
+                onChange={(e) =>
+                  setCodeOfConductState({
+                    ...codeOfConductState,
+                    url: e.target.value,
+                  })
+                }
+              />
             </Skeleton>
-            <form action="#">
-              <Skeleton isLoaded={codeOfConductState}>
-                <Input
-                  type="url"
-                  placeholder="Link Google Drive dokumen tata tertib"
-                  defaultValue={codeOfConductState?.url}
-                  onFocus={(e) => e.target.select()} //* select all ketika user klik input field
-                  onChange={(e) =>
-                    setCodeOfConductState({
-                      ...codeOfConductState,
-                      url: e.target.value,
-                    })
-                  }
-                />
-              </Skeleton>
-              <Button
-                type="submit"
-                colorScheme="blue"
-                width="full"
-                marginTop={4}
-                isLoading={isCodeOfConductUpdating}
-                onClick={(e) => {
-                  e.preventDefault()
-                  handleUpdateCodeOfConduct()
-                }}
-              >
-                Simpan
-              </Button>
-            </form>
-          </SimpleGrid>
-        </PageLayout>
-      </Box>
+            <Button
+              type="submit"
+              colorScheme="blue"
+              width="full"
+              marginTop={4}
+              isLoading={isCodeOfConductUpdating}
+              onClick={(e) => {
+                e.preventDefault()
+                handleUpdateCodeOfConduct()
+              }}
+            >
+              Simpan
+            </Button>
+          </form>
+        </SimpleGrid>
+      </PageLayout>
     </>
   )
 }
