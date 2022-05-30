@@ -45,18 +45,22 @@ export default function HandoutPage() {
       isActive: onEditingHandout.isActive,
       url: onEditingHandout.url,
     })
+    setIsHandoutUpdating(false)
     if (!handoutUpdateResponse.isSuccess) {
+      //! munculkan pesan error
       toast({
         status: "error",
         title: handoutUpdateResponse.message,
       })
       return
     }
+    // munculkan pesan sukses
     toast({
       status: "success",
       title: handoutUpdateResponse.message,
     })
     getHandouts()
+    onClose()
   }
 
   useEffect(() => {
@@ -148,6 +152,7 @@ export default function HandoutPage() {
               <ModalFooter>
                 <Button
                   type="submit"
+                  isLoading={isHandoutUpdating}
                   colorScheme="blue"
                   onClick={(e) => {
                     e.preventDefault()
