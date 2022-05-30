@@ -23,6 +23,6 @@ export class HandoutService {
       newHandout,
     );
     console.log('Updated handout :', updatedHandout);
-    return updatedHandout;
+    return this.handoutFactory.create(updatedHandout);
   }
 }
