@@ -28,7 +28,9 @@ export default function Navbar() {
           padding={2}
           paddingX={4}
           alignItems="center"
-          {...shadowedBoxStyle}
+          // {...shadowedBoxStyle}
+          bgColor="gray.100"
+          rounded="xl"
         >
           <Link href={Route.HOME}>
             <a>
