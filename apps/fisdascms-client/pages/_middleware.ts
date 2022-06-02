@@ -4,14 +4,12 @@ import { Route } from "../lib/constants"
 
 export function middleware(req: NextRequest, ev: NextFetchEvent) {
   const access_token = req.cookies.jwt
-  console.log("Access token :", access_token)
   let admin = null
   try {
     admin = jose.decodeJwt(access_token)
   } catch (error) {
-    console.error(error)
+    console.error("Error :", error.message)
   }
-  console.log("Admin :", admin)
   if (req.nextUrl.pathname === Route.SIGN_IN && admin == null)
     return NextResponse.next()
   if (req.nextUrl.pathname === Route.SIGN_IN && admin != null)
