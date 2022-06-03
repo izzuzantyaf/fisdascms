@@ -18,4 +18,20 @@ export class PracticumModuleMongoRepository extends MongoGenericRepository<Pract
       console.log('Practicum module collection seeded successfully');
     }
   }
+
+  async getPreTasks() {
+    return await this._repository
+      .find(
+        {},
+        {
+          _id: true,
+          name: true,
+          code: true,
+          language: true,
+          faIconName: true,
+          preTask: true,
+        },
+      )
+      .exec();
+  }
 }
