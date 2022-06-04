@@ -1,4 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { Admin } from 'src/database/entity/admin.entity';
+import { adminSeeder } from 'src/database/seeds/admin.seed';
 import { AdminModule } from './admin.module';
 import { AdminService } from './admin.service';
 
@@ -17,7 +19,17 @@ describe('AdminService', () => {
     expect(service).toBeDefined();
   });
 
-  it('semua', async () => {
-    expect(await service.getAll()).toBeTruthy();
+  describe('getAll()', () => {
+    it('harus mengembalikan Admin[]', async () => {
+      expect(await service.getAll()).toBeTruthy();
+    });
+  });
+
+  describe('validateAdmin()', () => {
+    it('skenario email dan password benar', async () => {
+      expect(
+        await service.validateAdmin(adminSeeder.email, adminSeeder.password),
+      ).toBeInstanceOf(Admin);
+    });
   });
 });
