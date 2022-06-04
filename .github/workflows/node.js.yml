@@ -8,6 +8,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    environment: fisdascms-redev
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
