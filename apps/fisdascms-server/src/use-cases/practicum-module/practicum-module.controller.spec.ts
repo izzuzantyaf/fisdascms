@@ -10,9 +10,7 @@ describe('PracticumModuleController', () => {
       imports: [PracticumModuleModule],
     }).compile();
 
-    controller = module.get<PracticumModuleController>(
-      PracticumModuleController,
-    );
+    controller = module.get(PracticumModuleController);
   });
 
   it('should be defined', () => {
