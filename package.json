@@ -16,6 +16,7 @@
     "dev:server": "turbo run dev --scope=*fisdascms-server*",
     "dev:client": "turbo run dev --scope=*fisdascms-client*",
     "dev": "turbo run dev --parallel",
+    "test:server": "turbo run test --scope=*fisdascms-server*",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
