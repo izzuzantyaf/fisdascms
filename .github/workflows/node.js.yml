@@ -15,7 +15,7 @@ jobs:
         with:
           node-version: "16"
       - run: yarn install
-      - run: cd apps/fisdascms-server && yarn test
+      - run: yarn test:server
         env:
           MONGO_URI: ${{ secrets.MONGO_URI }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}

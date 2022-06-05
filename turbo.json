@@ -1,5 +1,6 @@
 {
   "pipeline": {
+    "test": {},
     "build": {
       "dependsOn": ["^build"],
       "outputs": ["dist/**", ".next/**"]
