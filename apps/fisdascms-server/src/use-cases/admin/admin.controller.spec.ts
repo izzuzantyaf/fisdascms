@@ -8,7 +8,7 @@ describe('AdminController', () => {
   let controller: AdminController;
   let service: AdminService;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [AdminModule],
     }).compile();
@@ -19,7 +19,7 @@ describe('AdminController', () => {
     expect(controller).toBeDefined();
   });
 
-  describe('getAll', () => {
+  describe('getAll()', () => {
     it('Harus return object bertipe SuccessfulResponse', async () => {
       expect(await controller.getAll()).toBeInstanceOf(SuccessfulResponse);
     });

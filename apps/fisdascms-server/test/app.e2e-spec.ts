@@ -1,8 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
-import { AppModule } from '../app.module';
-import { SuccessfulResponse } from 'src/lib/dtos/response.dto';
+import { AppModule } from '../src/app.module';
 
 describe('AdminController (e2e)', () => {
   let app: INestApplication;
@@ -19,5 +18,9 @@ describe('AdminController (e2e)', () => {
   it('/api/admin (GET)', async () => {
     const response = await request(app.getHttpServer()).get('/api/admin');
     expect(response.statusCode).toBe(200);
+  });
+
+  afterAll(() => {
+    app.close();
   });
 });

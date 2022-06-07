@@ -1,3 +1,4 @@
+import { BadRequestException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Admin } from 'src/database/entity/admin.entity';
 import { adminSeeder } from 'src/database/seeds/admin.seed';
@@ -7,7 +8,7 @@ import { AdminService } from './admin.service';
 describe('AdminService', () => {
   let service: AdminService;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [AdminModule],
     }).compile();
@@ -20,7 +21,7 @@ describe('AdminService', () => {
   });
 
   describe('getAll()', () => {
-    it('harus mengembalikan Admin[]', async () => {
+    it('harus mengembalikan array Admin', async () => {
       expect(await service.getAll()).toBeTruthy();
     });
   });
@@ -30,6 +31,16 @@ describe('AdminService', () => {
       expect(
         await service.validateAdmin(adminSeeder.email, adminSeeder.password),
       ).toBeInstanceOf(Admin);
+    });
+    it('skenario email salah', async () => {
+      await expect(
+        service.validateAdmin('salah', adminSeeder.password),
+      ).rejects.toThrow(BadRequestException);
+    });
+    it('skenario password salah', async () => {
+      await expect(
+        service.validateAdmin(adminSeeder.email, 'salah'),
+      ).rejects.toThrow(BadRequestException);
     });
   });
 });
