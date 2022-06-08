@@ -4,9 +4,10 @@ import { AssistantService } from './assistant.service';
 
 describe('AssistantService', () => {
   let service: AssistantService;
+  let module: TestingModule;
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
+  beforeAll(async () => {
+    module = await Test.createTestingModule({
       imports: [AssistantModule],
     }).compile();
 

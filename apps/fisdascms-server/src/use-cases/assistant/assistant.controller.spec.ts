@@ -5,7 +5,7 @@ import { AssistantModule } from './assistant.module';
 describe('AssistantController', () => {
   let controller: AssistantController;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [AssistantModule],
     }).compile();
