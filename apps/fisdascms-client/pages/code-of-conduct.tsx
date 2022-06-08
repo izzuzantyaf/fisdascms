@@ -9,9 +9,9 @@ import {
   useToast,
 } from "@chakra-ui/react"
 import { useEffect, useState } from "react"
-import { codeOfConductService } from "../../services/code-of-conduct"
-import PageLayout from "../../layouts/page-layout"
-import shadowedBoxStyle from "../../chakra-style-props/shadowed-box"
+import { codeOfConductService } from "../services/code-of-conduct"
+import PageLayout from "../layouts/page-layout"
+import shadowedBoxStyle from "../chakra-style-props/shadowed-box"
 
 export default function CodeOfCoductPage() {
   const [isCodeOfConductUpdating, setIsCodeOfConductUpdating] = useState(false)

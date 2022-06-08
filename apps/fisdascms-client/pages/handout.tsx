@@ -21,10 +21,10 @@ import {
 } from "@chakra-ui/react"
 import Head from "next/head"
 import { useEffect, useState } from "react"
-import shadowedBoxStyle from "../../chakra-style-props/shadowed-box"
-import PageLayout from "../../layouts/page-layout"
-import { languageCodeMapper } from "../../lib/language-code-mapper"
-import { handoutService } from "../../services/handout"
+import shadowedBoxStyle from "../chakra-style-props/shadowed-box"
+import PageLayout from "../layouts/page-layout"
+import { languageCodeMapper } from "../lib/language-code-mapper"
+import { handoutService } from "../services/handout"
 
 export default function HandoutPage() {
   const [handoutsState, setHandoutState] = useState<[] | undefined>()

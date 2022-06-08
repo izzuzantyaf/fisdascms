@@ -8,10 +8,10 @@ import {
 } from "@chakra-ui/react"
 import { GetServerSideProps } from "next"
 import Head from "next/head"
-import shadowedBoxStyle from "../../chakra-style-props/shadowed-box"
-import PageLayout from "../../layouts/page-layout"
+import shadowedBoxStyle from "../chakra-style-props/shadowed-box"
+import PageLayout from "../layouts/page-layout"
 import { useState, useEffect } from "react"
-import { organigramService } from "../../services/organigram"
+import { organigramService } from "../services/organigram"
 
 export default function OrganigramPage() {
   const [isOrganigramUpdating, setIsOrganigramUpdating] = useState(false)
