@@ -28,11 +28,7 @@ import {
       { name: PracticumModule.name, schema: PracticumModuleSchema },
     ]),
     ConfigModule.forRoot(),
-    MongooseModule.forRoot(
-      process.env.NODE_ENV === 'test'
-        ? process.env.MONGO_TEST_URI
-        : process.env.MONGO_URI,
-    ),
+    MongooseModule.forRoot(process.env.MONGO_URI),
   ],
   providers: [DataServiceService],
   exports: [DataServiceService],
