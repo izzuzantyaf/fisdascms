@@ -9,33 +9,33 @@ export class MongoGenericRepository<T> {
     this._populateOnFind = populateOnFind;
   }
 
-  create(item: T): Promise<T> {
+  create(item: T) {
     return this._repository.create(item);
   }
 
-  getAll(): Promise<T[]> {
+  getAll() {
     return this._repository.find().exec();
   }
 
-  getFirst(): Promise<T> {
+  getFirst() {
     return this._repository.findOne().exec();
   }
 
-  getById(id: any): Promise<T> {
+  getById(id: any) {
     return this._repository.findById(id).exec();
   }
 
-  updateById(id: string, newItem: T): Promise<T> {
+  updateById(id: string, newItem: T) {
     return this._repository
       .findByIdAndUpdate(id, newItem, { new: true })
       .exec();
   }
 
-  updateMany(items: T[]): Promise<T[]> {
+  updateMany(items: T[]) {
     throw new Error('Method not implemented.');
   }
 
-  deleteById(id: string): Promise<T> {
+  deleteById(id: string) {
     return this._repository.findByIdAndDelete(id).exec();
   }
 }

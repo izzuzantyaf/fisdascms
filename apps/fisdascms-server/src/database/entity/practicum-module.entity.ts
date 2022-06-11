@@ -4,9 +4,14 @@ import { Language } from 'src/lib/constants';
 
 export type PracticumModuleDocument = PracticumModule & Document;
 
+export type PreTask = {
+  url: string;
+  isActive: boolean;
+};
+
 @Schema({ timestamps: true, collection: 'practicum_modules' })
 export class PracticumModule {
-  _id: string | number;
+  _id: string;
   @Prop({ required: true })
   name: string;
   @Prop({ required: true })
@@ -21,7 +26,7 @@ export class PracticumModule {
       isActive: { type: Boolean },
     }),
   )
-  preTask: object;
+  preTask: PreTask;
   @Prop(
     raw({
       url: { type: String },

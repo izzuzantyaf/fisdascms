@@ -1,4 +1,5 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, Put } from '@nestjs/common';
+import { SuccessfulResponse } from 'src/lib/dtos/response.dto';
 import { PracticumModuleService } from './practicum-module.service';
 
 @Controller('api/practicum-module')
@@ -10,8 +11,13 @@ export class PracticumModuleController {
     return await this.practicumModuleService.getAll();
   }
 
-  @Get('pretask')
-  async getPreTasks() {
-    return await this.practicumModuleService.getPreTasks();
+  @Put()
+  async update(@Body() updatePracticumModuleDto: object) {
+    const updatedPracticumModule = await this.practicumModuleService.update(
+      updatePracticumModuleDto,
+    );
+    return new SuccessfulResponse('Konten praktikum berhasil diupdate', {
+      updatedPracticumModule,
+    });
   }
 }

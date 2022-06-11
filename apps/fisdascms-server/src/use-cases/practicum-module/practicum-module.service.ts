@@ -15,9 +15,18 @@ export class PracticumModuleService {
     );
   }
 
-  async getPreTasks() {
-    return this.practicumModuleFactory.createMany(
-      await this.dataService.practicumModules.getPreTasks(),
+  async update(updatePracticumModuleDto: object) {
+    console.log('Incoming data :', updatePracticumModuleDto);
+    const newPracticumModule = this.practicumModuleFactory.create(
+      updatePracticumModuleDto,
     );
+    const updatedPracticumModule = this.practicumModuleFactory.create(
+      await this.dataService.practicumModules.updateById(
+        newPracticumModule._id,
+        newPracticumModule,
+      ),
+    );
+    console.log('Updated practicum module :', updatedPracticumModule);
+    return updatedPracticumModule;
   }
 }
