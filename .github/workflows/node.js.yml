@@ -22,11 +22,15 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: test
+    environment: fisdascms-redev
     steps:
       - uses: actions/checkout@v3
       - uses: akhileshns/heroku-deploy@v3.12.12
         with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: "fisdascms-redev" #Must be unique in Heroku
           heroku_email: "izzuzantyaf@gmail.com"
           branch: "redev"
+          env:
+            HD_MONGO_URI: ${{ secrets.MONGO_URI }}
+            HD_JWT_SECRET: ${{ secrets.JWT_SECRET }}
