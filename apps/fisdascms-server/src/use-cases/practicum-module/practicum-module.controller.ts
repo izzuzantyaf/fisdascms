@@ -8,7 +8,8 @@ export class PracticumModuleController {
 
   @Get()
   async getAll() {
-    return await this.practicumModuleService.getAll();
+    const practicumModules = await this.practicumModuleService.getAll();
+    return new SuccessfulResponse('Sukses', { practicumModules });
   }
 
   @Put()
