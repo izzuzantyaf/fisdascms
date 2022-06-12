@@ -3,6 +3,7 @@ export enum Route {
   SIGN_IN = "/signin",
   CODE_OF_CONDUCT = "/code-of-conduct",
   HANDOUT = "/handout",
+  PRACTICUM_MATERIAL = "/practicum-material",
   PRE_TASK = "/pretask",
   PRACTICUM_VIDEO = "/practicum-video",
   SIMULATOR = "/simulator",
@@ -18,6 +19,7 @@ export enum ApiRoute {
   CODE_OF_CONDUCT = "/api/code-of-conduct",
   ORGANIGRAM = "/api/organigram",
   HANDOUT = "/api/handout",
+  PRACTICUM_MATERIAL = "/api/practicum-module",
 }
 
 export const menu = [
@@ -35,6 +37,11 @@ export const menu = [
     name: "Modul",
     faIconName: "book",
     route: Route.HANDOUT,
+  },
+  {
+    name: "Konten praktikum",
+    faIconName: "folder-open",
+    route: Route.PRACTICUM_MATERIAL,
   },
   {
     name: "Soal TP",
