@@ -25,6 +25,7 @@ import { useEffect, useState } from "react"
 import shadowedBoxStyle from "../chakra-style-props/shadowed-box"
 import PageLayout from "../layouts/page-layout"
 import { languageCodeMapper } from "../lib/language-code-mapper"
+import { renderSkeleton } from "../lib/render-skeleton"
 import { practicumMaterialService } from "../services/practicum-material.service"
 
 export default function PracticumMaterialPage() {
@@ -408,12 +409,4 @@ export default function PracticumMaterialPage() {
       </PageLayout>
     </>
   )
-}
-
-const renderSkeleton = (SkeletonElement, amount = 1) => {
-  const skeletonArray = []
-  for (let i = 0; i < amount; i++) {
-    skeletonArray.push(SkeletonElement)
-  }
-  return skeletonArray
 }
