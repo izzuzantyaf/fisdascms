@@ -24,12 +24,13 @@ import { useEffect, useState } from "react"
 import shadowedBoxStyle from "../chakra-style-props/shadowed-box"
 import PageLayout from "../layouts/page-layout"
 import { languageCodeMapper } from "../lib/language-code-mapper"
+import { renderSkeleton } from "../lib/render-skeleton"
 import { handoutService } from "../services/handout.service"
 
 export default function HandoutPage() {
-  const [handoutsState, setHandoutState] = useState<[] | undefined>()
+  const [handoutsState, setHandoutState] = useState<object[]>()
   const { onOpen, isOpen, onClose } = useDisclosure()
-  const [onEditingHandout, setOnEditingHandout] = useState<object | undefined>()
+  const [onEditingHandout, setOnEditingHandout] = useState<object>()
   const toast = useToast()
   const [isHandoutUpdating, setIsHandoutUpdating] = useState(false)
 
@@ -64,6 +65,7 @@ export default function HandoutPage() {
   }
 
   useEffect(() => {
+    console.log(handoutsState)
     getHandouts()
   }, [])
 
@@ -76,28 +78,34 @@ export default function HandoutPage() {
         <Heading marginTop="4">Modul</Heading>
         <SimpleGrid columns={[1, 2, 2, 4]} gap="4" marginTop="4">
           {handoutsState?.map((handout) => (
-            <Skeleton isLoaded={handoutsState ? true : false} key={handout._id}>
-              <Box padding="4" {...shadowedBoxStyle}>
-                <Heading size="md">{handout.faculty.toUpperCase()}</Heading>
-                <Text>{languageCodeMapper(handout.language)}</Text>
-                <Button
-                  width="full"
-                  marginTop="4"
-                  onClick={() => {
-                    setOnEditingHandout(
-                      handoutsState.find(
-                        (handoutState) => handoutState._id === handout._id
-                      )
+            <Box padding="4" {...shadowedBoxStyle} key={handout._id}>
+              <Heading size="md">{handout.faculty.toUpperCase()}</Heading>
+              <Text>{languageCodeMapper(handout.language)}</Text>
+              <Button
+                width="full"
+                marginTop="4"
+                onClick={() => {
+                  setOnEditingHandout(
+                    handoutsState.find(
+                      (handoutState) => handoutState._id === handout._id
                     )
-                    onOpen()
-                  }}
-                  colorScheme="blue"
-                >
-                  Edit modul
-                </Button>
-              </Box>
-            </Skeleton>
-          ))}
+                  )
+                  onOpen()
+                }}
+                colorScheme="blue"
+              >
+                Edit modul
+              </Button>
+            </Box>
+          )) ??
+            renderSkeleton(
+              <Skeleton
+                isLoaded={handoutsState ? true : false}
+                rounded="xl"
+                height="100px"
+              />,
+              4
+            )}
         </SimpleGrid>
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
