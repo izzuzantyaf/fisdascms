@@ -1,5 +1,5 @@
-import { ApiRoute } from "../../lib/constants"
-import { getFetch, putFetch } from "../../lib/fetcher"
+import { ApiRoute } from "../lib/constants"
+import { getFetch, putFetch } from "../lib/fetcher"
 
 export const organigramService = {
   getAll: async () => {

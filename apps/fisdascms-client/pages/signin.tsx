@@ -10,7 +10,7 @@ import {
   useToast,
   VStack,
 } from "@chakra-ui/react"
-import { authService } from "../services/auth"
+import { authService } from "../services/auth.service"
 
 export default function SignInPage() {
   const [email, setEmail] = useState("")

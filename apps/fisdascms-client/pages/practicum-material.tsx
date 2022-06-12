@@ -25,7 +25,7 @@ import { useEffect, useState } from "react"
 import shadowedBoxStyle from "../chakra-style-props/shadowed-box"
 import PageLayout from "../layouts/page-layout"
 import { languageCodeMapper } from "../lib/language-code-mapper"
-import { practicumMaterialService } from "../services/practicum-material"
+import { practicumMaterialService } from "../services/practicum-material.service"
 
 export default function PracticumMaterialPage() {
   const [practicumMaterialState, setPracticumMaterialState] =

@@ -9,7 +9,7 @@ import {
   useToast,
 } from "@chakra-ui/react"
 import { useEffect, useState } from "react"
-import { codeOfConductService } from "../services/code-of-conduct"
+import { codeOfConductService } from "../services/code-of-conduct.service"
 import PageLayout from "../layouts/page-layout"
 import shadowedBoxStyle from "../chakra-style-props/shadowed-box"
 
