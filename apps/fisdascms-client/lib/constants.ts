@@ -43,26 +43,26 @@ export const menu = [
     faIconName: "folder-open",
     route: Route.PRACTICUM_MATERIAL,
   },
-  {
-    name: "Soal TP",
-    faIconName: "tasks",
-    route: Route.PRE_TASK,
-  },
-  {
-    name: "Video praktikum",
-    faIconName: "play",
-    route: Route.PRACTICUM_VIDEO,
-  },
-  {
-    name: "Simulator",
-    faIconName: "gamepad",
-    route: Route.SIMULATOR,
-  },
-  {
-    name: "Cover jurnal",
-    faIconName: "file",
-    route: Route.JOURNAL_COVER,
-  },
+  // {
+  //   name: "Soal TP",
+  //   faIconName: "tasks",
+  //   route: Route.PRE_TASK,
+  // },
+  // {
+  //   name: "Video praktikum",
+  //   faIconName: "play",
+  //   route: Route.PRACTICUM_VIDEO,
+  // },
+  // {
+  //   name: "Simulator",
+  //   faIconName: "gamepad",
+  //   route: Route.SIMULATOR,
+  // },
+  // {
+  //   name: "Cover jurnal",
+  //   faIconName: "file",
+  //   route: Route.JOURNAL_COVER,
+  // },
   {
     name: "Asisten",
     faIconName: "users",
