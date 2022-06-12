@@ -1,12 +1,10 @@
-import { Box, Button, Container, IconButton } from "@chakra-ui/react"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import Breadcrump from "../components/breadcrump"
+import { Box, Container } from "@chakra-ui/react"
 import Navbar from "../components/navbar"
 
 export default function PageLayout({ children }) {
   return (
     <>
-      <Box bgColor="gray.50" minHeight="100vh">
+      <Box bgColor="gray.50" minHeight="100vh" minWidth="256px">
         <Navbar />
         <Container maxWidth="container.lg" paddingBottom="4">
           {/* <Breadcrump /> */}
