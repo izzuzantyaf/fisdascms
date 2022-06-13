@@ -5,6 +5,11 @@
   "author": "Izzu Zantya Fawwas",
   "private": true,
   "license": "UNLICENSED",
+  "engine": {
+    "yarn": "1.x.x",
+    "node": ">=16.0.0"
+  },
+  "packageManager": "yarn@1.22.19",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
@@ -66,7 +71,6 @@
     "tsconfig-paths": "^3.10.1",
     "typescript": "^4.3.5"
   },
-  "packageManager": "yarn@1.22.19",
   "jest": {
     "moduleFileExtensions": [
       "js",

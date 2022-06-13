@@ -4,25 +4,21 @@
   "author": "Izzu Zantya Fawwas",
   "private": true,
   "license": "UNLICENSED",
-  "scripts": {
-    "build": "turbo run build",
-    "build:server": "turbo run build --scope=*fisdascms-server*",
-    "build:client": "turbo run build --scope=*fisdascms-client*",
-    "heroku-postbuild": "yarn run build:server",
-    "dev": "turbo run dev --parallel",
-    "dev:server": "turbo run dev --scope=*fisdascms-server*",
-    "dev:client": "turbo run dev --scope=*fisdascms-client*",
-    "test:server": "turbo run test --scope=*fisdascms-server*",
-    "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
-  },
-  "devDependencies": {
-    "prettier": "^2.5.1",
-    "turbo": "latest"
-  },
   "engines": {
-    "npm": ">=8.0.0",
+    "yarn": "1.x.x",
     "node": ">=16.0.0"
   },
-  "packageManager": "yarn@1.22.17"
+  "packageManager": "yarn@1.22.19",
+  "scripts": {
+    "install": "yarn install:server && yarn install:client",
+    "install:server": "cd apps/fisdascms-server && yarn install",
+    "install:client": "cd apps/fisdascms-client && yarn install",
+    "build": "yarn build:server && yarn build:client",
+    "build:server": "cd apps/fisdascms-server && yarn build",
+    "build:client": "cd apps/fisdascms-client && yarn build",
+    "heroku-postbuild": "yarn run build:server",
+    "dev:server": "cd apps/fisdascms-server && yarn dev",
+    "dev:client": "cd apps/fisdascms-client && yarn dev",
+    "test:server": "cd apps/fisdascms-server && yarn test"
+  }
 }
