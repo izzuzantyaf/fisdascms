@@ -6,16 +6,21 @@ import {
   Center,
   Container,
   Heading,
+  Icon,
   Input,
+  InputGroup,
+  InputRightElement,
   useToast,
   VStack,
 } from "@chakra-ui/react"
 import { authService } from "../services/auth.service"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 export default function SignInPage() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [isSignInLoading, setIsSignInLoading] = useState(false)
+  const [isPasswordShowed, setIsPasswordShowed] = useState(false)
 
   const toast = useToast()
 
@@ -61,16 +66,30 @@ export default function SignInPage() {
                   setEmail(e.target.value)
                 }}
               />
-              <Input
-                placeholder="Password"
-                type="password"
-                id="password"
-                name="password"
-                value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value)
-                }}
-              />
+              <InputGroup size="md">
+                <Input
+                  placeholder="Password"
+                  type={isPasswordShowed ? "text" : "password"}
+                  id="password"
+                  name="password"
+                  value={password}
+                  onChange={(e) => {
+                    setPassword(e.target.value)
+                  }}
+                />
+                <InputRightElement>
+                  <Icon
+                    cursor="pointer"
+                    color={isPasswordShowed ? "black" : "gray.500"}
+                    onClick={() => setIsPasswordShowed(!isPasswordShowed)}
+                  >
+                    <FontAwesomeIcon
+                      icon={isPasswordShowed ? "eye" : "eye-slash"}
+                    />
+                  </Icon>
+                </InputRightElement>
+              </InputGroup>
+
               <Button
                 type="submit"
                 isLoading={isSignInLoading}
