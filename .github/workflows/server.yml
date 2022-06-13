@@ -31,7 +31,6 @@ jobs:
           heroku_app_name: "fisdascms-redev" #Must be unique in Heroku
           heroku_email: "izzuzantyaf@gmail.com"
           branch: "redev"
-          appdir: "apps/fisdascms-server"
         env:
           HD_MONGO_URI: ${{ secrets.MONGO_URI }}
           HD_JWT_SECRET: ${{ secrets.JWT_SECRET }}
