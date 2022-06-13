@@ -4,10 +4,6 @@
   "author": "Izzu Zantya Fawwas",
   "private": true,
   "license": "UNLICENSED",
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
   "scripts": {
     "build": "turbo run build",
     "build:server": "turbo run build --scope=*fisdascms-server*",
