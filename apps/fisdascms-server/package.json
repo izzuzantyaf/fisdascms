@@ -5,7 +5,7 @@
   "author": "Izzu Zantya Fawwas",
   "private": true,
   "license": "UNLICENSED",
-  "engine": {
+  "engines": {
     "yarn": "1.x.x",
     "node": ">=16.0.0"
   },
