@@ -102,7 +102,7 @@ export default function HandoutPage() {
               <Skeleton
                 isLoaded={handoutsState ? true : false}
                 rounded="xl"
-                height="100px"
+                height="125px"
               />,
               4
             )}
