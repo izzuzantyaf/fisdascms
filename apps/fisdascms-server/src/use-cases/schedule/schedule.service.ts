@@ -15,9 +15,7 @@ export class ScheduleService {
     const schedules = this.scheduleFactory.createMany(
       await this.dataService.schedules.getAll(),
     );
-    const classSchedule = this.getClassSchedule(schedules);
-    const facultySchedules = this.getFacultySchedules(schedules);
-    return { classSchedule, facultySchedules };
+    return schedules;
   }
 
   protected getClassSchedule(schedules: Schedule[]) {
@@ -26,6 +24,16 @@ export class ScheduleService {
 
   protected getFacultySchedules(schedules: Schedule[]) {
     return schedules.filter((schedule) => !isEmpty(schedule.faculty));
+  }
+
+  async update(updateData: object) {
+    console.log('Incoming data :', updateData);
+    const newSchedule = this.scheduleFactory.create(updateData);
+    const updatedSchedule = this.scheduleFactory.create(
+      await this.dataService.schedules.updateById(newSchedule._id, newSchedule),
+    );
+    console.log('Updated schedules :', updatedSchedule);
+    return updatedSchedule;
   }
 
   async updateMany(updateData: object[]) {

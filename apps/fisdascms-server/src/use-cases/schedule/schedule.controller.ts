@@ -9,14 +9,14 @@ export class ScheduleController {
   @Get()
   async getAll() {
     const schedules = await this.scheduleService.getAll();
-    return new SuccessfulResponse('Sukses', { ...schedules });
+    return new SuccessfulResponse('Sukses', { schedules });
   }
 
   @Put()
-  async update(@Body() updateData: object[]) {
-    const updatedSchedules = await this.scheduleService.updateMany(updateData);
+  async update(@Body() updateData: object) {
+    const updatedSchedule = await this.scheduleService.update(updateData);
     return new SuccessfulResponse('Jadwal berhasil diupdate', {
-      ...updatedSchedules,
+      updatedSchedule,
     });
   }
 }

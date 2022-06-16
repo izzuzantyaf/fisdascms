@@ -20,6 +20,7 @@ export enum ApiRoute {
   ORGANIGRAM = "/api/organigram",
   HANDOUT = "/api/handout",
   PRACTICUM_MATERIAL = "/api/practicum-module",
+  SCHEDULE = "/api/schedule",
 }
 
 export const menu = [
@@ -91,3 +92,8 @@ export const breadcrumpStack = [
     values: ["Tata tertib"],
   },
 ]
+
+export enum Faculty {
+  FTE = "fte",
+  FRI = "fri",
+}
