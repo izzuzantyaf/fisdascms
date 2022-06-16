@@ -18,7 +18,10 @@ import {
   Flex,
   Spacer,
   useToast,
+  Square,
+  Link,
 } from "@chakra-ui/react"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Head from "next/head"
 import { useEffect, useState } from "react"
 import shadowedBoxStyle from "../chakra-style-props/shadowed-box"
@@ -46,7 +49,6 @@ export default function HandoutPage() {
       isActive: onEditingHandout.isActive,
       url: onEditingHandout.url,
     })
-    setIsHandoutUpdating(false)
     if (!handoutUpdateResponse.isSuccess) {
       //! munculkan pesan error
       toast({
@@ -60,12 +62,12 @@ export default function HandoutPage() {
       status: "success",
       title: handoutUpdateResponse.message,
     })
+    setIsHandoutUpdating(false)
     getHandouts()
     onClose()
   }
 
   useEffect(() => {
-    console.log(handoutsState)
     getHandouts()
   }, [])
 
@@ -79,8 +81,45 @@ export default function HandoutPage() {
         <SimpleGrid columns={[1, 2, 2, 4]} gap="4" marginTop="4">
           {handoutsState?.map((handout) => (
             <Box padding="4" {...shadowedBoxStyle} key={handout._id}>
-              <Heading size="md">{handout.faculty.toUpperCase()}</Heading>
-              <Text>{languageCodeMapper(handout.language)}</Text>
+              <Flex alignItems="center">
+                <Square
+                  fontSize="xl"
+                  bgColor="blue.50"
+                  color="blue.500"
+                  size="40px"
+                  borderRadius="full"
+                  marginRight="4"
+                >
+                  <FontAwesomeIcon icon="book" />
+                </Square>
+                <Box>
+                  <Heading size="md">{handout?.faculty?.toUpperCase()}</Heading>
+                  <Text>{languageCodeMapper(handout.language)}</Text>
+                </Box>
+              </Flex>
+
+              <Flex direction="column" marginTop="4" gap="2">
+                <Flex justifyContent="space-between" alignItems="center">
+                  <Text>File</Text>
+                  <Link href={handout.url} isExternal={true} fontSize="xs">
+                    Buka <FontAwesomeIcon icon="arrow-up-right-from-square" />
+                  </Link>
+                </Flex>
+                <Flex justifyContent="space-between" alignItems="center">
+                  <Text>Perlihatkan</Text>
+                  <Box
+                    bgColor={handout.isActive ? "green.100" : "gray.100"}
+                    color={handout.isActive ? "green.500" : "gray.500"}
+                    borderRadius="full"
+                    paddingX="2"
+                    fontWeight="semibold"
+                    fontSize="xs"
+                  >
+                    {handout.isActive ? "Aktif" : "Nonaktif"}
+                  </Box>
+                </Flex>
+              </Flex>
+
               <Button
                 width="full"
                 marginTop="4"
@@ -102,7 +141,7 @@ export default function HandoutPage() {
               <Skeleton
                 isLoaded={handoutsState ? true : false}
                 rounded="xl"
-                height="125px"
+                height="200px"
               />,
               4
             )}
@@ -114,32 +153,27 @@ export default function HandoutPage() {
               <ModalHeader>Edit Modul</ModalHeader>
               <ModalCloseButton />
               <ModalBody>
-                <Heading size="sm">Fakultas</Heading>
-                <Text>{onEditingHandout?.faculty.toUpperCase()}</Text>
-                <Heading size="sm" marginTop="4">
-                  Bahasa
-                </Heading>
-                <Text>{languageCodeMapper(onEditingHandout?.language)}</Text>
-                <Flex alignItems="center" marginTop="4">
+                <Flex alignItems="center">
+                  <Square
+                    fontSize="xl"
+                    bgColor="blue.50"
+                    color="blue.500"
+                    size="40px"
+                    borderRadius="full"
+                    marginRight="4"
+                  >
+                    <FontAwesomeIcon icon="book" />
+                  </Square>
                   <Box>
-                    <Heading size="sm">Status</Heading>
+                    <Heading size="md">
+                      {onEditingHandout?.faculty?.toUpperCase()}
+                    </Heading>
                     <Text>
-                      {onEditingHandout?.isActive ? "Aktif" : "Nonaktif"}
+                      {languageCodeMapper(onEditingHandout?.language)}
                     </Text>
                   </Box>
-                  <Spacer />
-                  <Switch
-                    defaultChecked={onEditingHandout?.isActive}
-                    colorScheme="green"
-                    onChange={(e) => {
-                      setOnEditingHandout({
-                        ...onEditingHandout,
-                        isActive: !onEditingHandout?.isActive,
-                      })
-                    }}
-                  />
                 </Flex>
-                <Heading size="sm" marginTop="4">
+                <Heading size="sm" marginTop="6">
                   Link dokumen
                 </Heading>
                 <Input
@@ -156,12 +190,32 @@ export default function HandoutPage() {
                     })
                   }}
                 />
+                <Flex alignItems="center" marginTop="4">
+                  <Box>
+                    <Heading size="sm">Perlihatkan</Heading>
+                    <Text fontSize="sm">
+                      Tampilkan modul agar dapat diakses oleh praktikan
+                    </Text>
+                  </Box>
+                  <Spacer />
+                  <Switch
+                    defaultChecked={onEditingHandout?.isActive}
+                    colorScheme="green"
+                    onChange={(e) => {
+                      setOnEditingHandout({
+                        ...onEditingHandout,
+                        isActive: !onEditingHandout?.isActive,
+                      })
+                    }}
+                  />
+                </Flex>
               </ModalBody>
               <ModalFooter>
                 <Button
                   type="submit"
                   isLoading={isHandoutUpdating}
                   colorScheme="blue"
+                  width="full"
                   onClick={(e) => {
                     e.preventDefault()
                     handleHandoutUpdate()
