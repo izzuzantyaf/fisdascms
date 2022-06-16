@@ -14,7 +14,7 @@ export class MongoGenericRepository<T> {
   }
 
   getAll() {
-    return this._repository.find().exec();
+    return this._repository.find().sort({ _id: 'asc' }).exec();
   }
 
   getFirst() {
