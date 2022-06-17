@@ -2,6 +2,8 @@ import Head from "next/head"
 import {
   Box,
   Button,
+  FormControl,
+  FormHelperText,
   Heading,
   Input,
   SimpleGrid,
@@ -17,15 +19,23 @@ export default function CodeOfCoductPage() {
   const [isCodeOfConductUpdating, setIsCodeOfConductUpdating] = useState(false)
   const [codeOfConductState, setCodeOfConductState] = useState()
   const toast = useToast()
+  const [isError, setIsError] = useState(false)
+  const [canSubmit, setCanSubmit] = useState(false)
 
   const getCodeOfConduct = async () => {
     const codeOfConduct = await codeOfConductService.getAll()
     setCodeOfConductState(codeOfConduct)
   }
 
-  useEffect(() => {
-    getCodeOfConduct()
-  }, [])
+  const validateUrl = () => {
+    if (codeOfConductState?.url)
+      try {
+        new URL(codeOfConductState?.url)
+        setIsError(false)
+      } catch (e) {
+        // setIsError(true)
+      }
+  }
 
   const handleUpdateCodeOfConduct = async () => {
     const newCodeOfConduct = {
@@ -36,6 +46,7 @@ export default function CodeOfCoductPage() {
     const updateResponse = await codeOfConductService.update(newCodeOfConduct)
     setIsCodeOfConductUpdating(false)
     if (!updateResponse.isSuccess) {
+      setIsError(true)
       toast({
         title: updateResponse.message,
         status: "error",
@@ -47,7 +58,16 @@ export default function CodeOfCoductPage() {
       title: updateResponse.message,
       status: "success",
     })
+    setCanSubmit(false)
   }
+
+  useEffect(() => {
+    getCodeOfConduct()
+  }, [])
+
+  useEffect(() => {
+    validateUrl()
+  }, [codeOfConductState])
 
   return (
     <>
@@ -72,24 +92,33 @@ export default function CodeOfCoductPage() {
           </Skeleton>
           <form action="#">
             <Skeleton isLoaded={codeOfConductState}>
-              <Input
-                type="url"
-                placeholder="Link Google Drive dokumen tata tertib"
-                defaultValue={codeOfConductState?.url}
-                onFocus={(e) => e.target.select()} //* select all ketika user klik input field
-                onChange={(e) =>
-                  setCodeOfConductState({
-                    ...codeOfConductState,
-                    url: e.target.value,
-                  })
-                }
-              />
+              <FormControl isInvalid={isError}>
+                <Input
+                  type="url"
+                  placeholder="Link Google Drive file tata tertib"
+                  defaultValue={codeOfConductState?.url}
+                  onFocus={(e) => e.target.select()} //* select all ketika user klik input field
+                  onChange={(e) => {
+                    setCodeOfConductState({
+                      ...codeOfConductState,
+                      url: e.target.value,
+                    })
+                    setCanSubmit(true)
+                  }}
+                />
+                {isError ? (
+                  <FormHelperText color="red.500">
+                    Link tidak valid
+                  </FormHelperText>
+                ) : null}
+              </FormControl>
             </Skeleton>
             <Button
               type="submit"
               colorScheme="blue"
               width="full"
               marginTop={4}
+              isDisabled={!canSubmit}
               isLoading={isCodeOfConductUpdating}
               onClick={(e) => {
                 e.preventDefault()
