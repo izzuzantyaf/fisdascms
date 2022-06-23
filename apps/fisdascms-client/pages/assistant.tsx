@@ -179,9 +179,7 @@ export default function Assistant() {
               <ModalBody>
                 <Flex direction="column" gap="2">
                   <Box>
-                    <Text fontWeight="semibold" fontWeight="semibold">
-                      Nama
-                    </Text>
+                    <Text fontWeight="semibold">Nama</Text>
                     <Input
                       id="name"
                       name="name"
