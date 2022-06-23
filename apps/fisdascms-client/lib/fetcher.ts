@@ -1,9 +1,11 @@
 import { ApiRoute } from "./constants"
 
-export const getFetch = async (path: ApiRoute) => {
-  const response = await fetch(
-    process.env.NEXT_PUBLIC_SERVER_APP_BASEURL + path
-  )
+export const getFetch = async (path: ApiRoute, query: string = "") => {
+  const url =
+    process.env.NEXT_PUBLIC_SERVER_APP_BASEURL +
+    path +
+    (query ? `?${query}` : "")
+  const response = await fetch(url)
   return await response.json()
 }
 
@@ -21,7 +23,7 @@ export const postFetch = async (path: ApiRoute, body: object | [] = {}) => {
   return await response.json()
 }
 
-export const putFetch = async (path: ApiRoute, body: object | [] = {}) => {
+export const putFetch = async (path: ApiRoute, body: object = {}) => {
   const response = await fetch(
     process.env.NEXT_PUBLIC_SERVER_APP_BASEURL + path,
     {

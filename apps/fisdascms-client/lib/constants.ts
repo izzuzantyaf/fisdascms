@@ -21,6 +21,7 @@ export enum ApiRoute {
   HANDOUT = "/api/handout",
   PRACTICUM_MATERIAL = "/api/practicum-module",
   SCHEDULE = "/api/schedule",
+  ASSISTANT = "/api/assistant",
 }
 
 export const menu = [
@@ -96,4 +97,14 @@ export const breadcrumpStack = [
 export enum Faculty {
   FTE = "fte",
   FRI = "fri",
+}
+
+export enum Gender {
+  MALE = "male",
+  FEMALE = "female",
+}
+
+export enum AssistantLevel {
+  JUNIOR = "junior",
+  SENIOR = "senior",
 }

@@ -15,4 +15,18 @@ export class AssistantMongoRepository extends MongoGenericRepository<Assistant> 
       console.log('Assistant collection seeded successfully');
     }
   }
+
+  async getAll() {
+    return this._repository.find().sort({ name: 'asc' }).exec();
+  }
+
+  async search(keyword: string) {
+    const searchRegex = new RegExp(keyword, 'i'); //* return regex /keyword/i
+    const searchResult = await this._repository
+      .find({
+        $or: [{ name: searchRegex }, { code: searchRegex }], //* search berdasarkan nama atau kode asisten
+      })
+      .exec();
+    return searchResult;
+  }
 }
