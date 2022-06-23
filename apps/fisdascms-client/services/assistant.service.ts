@@ -1,7 +1,12 @@
-import { ApiRoute, Faculty } from "../lib/constants"
-import { getFetch, putFetch } from "../lib/fetcher"
+import { ApiRoute } from "../lib/constants"
+import { getFetch, postFetch, putFetch } from "../lib/fetcher"
 
 export const assistantService = {
+  create: async (newAssistant: any) => {
+    const response = await postFetch(ApiRoute.ASSISTANT, newAssistant)
+    console.log("Create assistant API response :", response)
+    return await response
+  },
   getAll: async () => {
     const response = await getFetch(ApiRoute.ASSISTANT)
     console.log("Get assistants API response :", response)

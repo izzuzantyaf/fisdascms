@@ -8,6 +8,7 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
+  Link,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -42,10 +43,15 @@ import { AssistantLevel, Gender } from "../lib/constants"
 export default function Assistant() {
   const [assistantsState, setAssistantsState] = useState<object[]>()
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const {
+    isOpen: isCreateModalOpen,
+    onOpen: onCreateModalOpen,
+    onClose: onCreateModalClose,
+  } = useDisclosure()
   const onEditingAssistantRef = useRef<object>()
+  const [isCreating, setIsCreating] = useState(false)
   const [isUpdating, setIsUpdating] = useState(false)
   const toast = useToast()
-  const keyword = useRef("")
 
   const getAssistants = async () => {
     setAssistantsState(await assistantService.getAll())
@@ -53,6 +59,25 @@ export default function Assistant() {
 
   const searchAssistants = async (keyword: string) => {
     setAssistantsState(await assistantService.search(keyword))
+  }
+
+  const handleCreateAssistant = async (newAssistant) => {
+    setIsCreating(true)
+    const response = await assistantService.create(newAssistant)
+    if (!response?.isSuccess) {
+      toast({
+        title: response.message,
+        status: "error",
+      })
+    } else {
+      toast({
+        title: response.message,
+        status: "success",
+      })
+      onCreateModalClose()
+      getAssistants()
+    }
+    setIsCreating(false)
   }
 
   const handleUpdateAssistant = async () => {
@@ -92,6 +117,13 @@ export default function Assistant() {
       </Head>
       <PageLayout>
         <Heading marginTop="4">Asisten</Heading>
+        <Button
+          colorScheme="blue"
+          leftIcon={<FontAwesomeIcon icon="plus" />}
+          onClick={onCreateModalOpen}
+        >
+          Tambah asisten
+        </Button>
         <InputGroup marginTop="4">
           <InputLeftElement>
             <Icon color="gray.400">
@@ -104,8 +136,7 @@ export default function Assistant() {
             placeholder="Cari nama atau kode"
             variant="filled"
             onChange={(e) => {
-              keyword.current = e.target.value
-              searchAssistants(keyword.current)
+              searchAssistants(e.target.value)
             }}
           />
         </InputGroup>
@@ -163,14 +194,36 @@ export default function Assistant() {
                   </Td>
                   <Td>{assistantState?.phoneNumber}</Td>
                   <Td>{assistantState?.lineId}</Td>
-                  <Td>{assistantState?.feedbackUrl}</Td>
+                  <Td>
+                    {assistantState?.feedbackUrl ? (
+                      <Link
+                        href={assistantState?.feedbackUrl}
+                        isExternal={true}
+                      >
+                        Open{" "}
+                        <FontAwesomeIcon icon="arrow-up-right-from-square" />
+                      </Link>
+                    ) : null}
+                  </Td>
                 </Tr>
               ))}
             </Tbody>
           </Table>
         </TableContainer>
 
-        <Modal isOpen={isOpen} onClose={onClose} isCentered={true}>
+        <CreateAssistantModal
+          isCreateModalOpen={isCreateModalOpen}
+          onCreateModalClose={onCreateModalClose}
+          isCreating={isCreating}
+          handleCreateAssistant={handleCreateAssistant}
+        />
+
+        <Modal
+          isOpen={isOpen}
+          onClose={onClose}
+          isCentered={true}
+          closeOnOverlayClick={false}
+        >
           <ModalOverlay />
           <ModalContent marginX="4" rounded="xl">
             <form>
@@ -318,5 +371,159 @@ export default function Assistant() {
         </Modal>
       </PageLayout>
     </>
+  )
+}
+
+const CreateAssistantModal = ({
+  isCreateModalOpen,
+  onCreateModalClose,
+  isCreating,
+  handleCreateAssistant,
+}) => {
+  const newAssistantRef = useRef({})
+
+  return (
+    <Modal
+      isOpen={isCreateModalOpen}
+      onClose={onCreateModalClose}
+      isCentered={true}
+      closeOnOverlayClick={false}
+    >
+      <ModalOverlay />
+      <ModalContent marginX="4" rounded="xl">
+        <form>
+          <ModalHeader>Tambah asisten</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Flex direction="column" gap="2">
+              <Box>
+                <Text fontWeight="semibold">Nama</Text>
+                <Input
+                  id="name"
+                  name="name"
+                  type="text"
+                  placeholder="Nama"
+                  onChange={(e) => {
+                    newAssistantRef.current.name = e.target.value
+                  }}
+                />
+              </Box>
+              <Box>
+                <Text fontWeight="semibold">Kode</Text>
+                <Input
+                  id="code"
+                  name="code"
+                  type="text"
+                  placeholder="Kode asisten"
+                  onChange={(e) => {
+                    newAssistantRef.current.code = e.target.value
+                  }}
+                />
+              </Box>
+              <Box>
+                <Text fontWeight="semibold">Nomor HP</Text>
+                <Input
+                  id="phoneNumber"
+                  name="phoneNumber"
+                  type="tel"
+                  placeholder="Nomor HP"
+                  onChange={(e) => {
+                    newAssistantRef.current.phoneNumber = e.target.value
+                  }}
+                />
+              </Box>
+              <Box>
+                <Text fontWeight="semibold">ID Line</Text>
+                <Input
+                  id="lineId"
+                  name="lineId"
+                  type="text"
+                  placeholder="ID Line"
+                  onChange={(e) => {
+                    newAssistantRef.current.lineId = e.target.value
+                  }}
+                />
+              </Box>
+              <Box>
+                <Text fontWeight="semibold">Level</Text>
+                <Select
+                  id="level"
+                  name="level"
+                  placeholder="Pilih level"
+                  textTransform="capitalize"
+                  onChange={(e) => {
+                    newAssistantRef.current.level = e.target.value
+                  }}
+                >
+                  <option
+                    style={{ textTransform: "capitalize" }}
+                    value={AssistantLevel.JUNIOR}
+                  >
+                    {AssistantLevel.JUNIOR}
+                  </option>
+                  <option
+                    style={{ textTransform: "capitalize" }}
+                    value={AssistantLevel.SENIOR}
+                  >
+                    {AssistantLevel.SENIOR}
+                  </option>
+                </Select>
+              </Box>
+              <Box>
+                <Text fontWeight="semibold">Gender</Text>
+                <Select
+                  id="gender"
+                  name="gender"
+                  placeholder="Pilih gender"
+                  textTransform="capitalize"
+                  onChange={(e) => {
+                    newAssistantRef.current.gender = e.target.value
+                  }}
+                >
+                  <option
+                    style={{ textTransform: "capitalize" }}
+                    value={Gender.MALE}
+                  >
+                    {Gender.MALE}
+                  </option>
+                  <option
+                    style={{ textTransform: "capitalize" }}
+                    value={Gender.FEMALE}
+                  >
+                    {Gender.FEMALE}
+                  </option>
+                </Select>
+              </Box>
+              <Box>
+                <Text fontWeight="semibold">Link Feedback</Text>
+                <Input
+                  id="feedbackUrl"
+                  name="feedbackUrl"
+                  type="url"
+                  placeholder="Link feedback"
+                  onChange={(e) => {
+                    newAssistantRef.current.feedbackUrl = e.target.value
+                  }}
+                />
+              </Box>
+            </Flex>
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              type="submit"
+              isLoading={isCreating}
+              colorScheme="blue"
+              width="full"
+              onClick={(e) => {
+                e.preventDefault()
+                handleCreateAssistant(newAssistantRef.current)
+              }}
+            >
+              Simpan
+            </Button>
+          </ModalFooter>
+        </form>
+      </ModalContent>
+    </Modal>
   )
 }
