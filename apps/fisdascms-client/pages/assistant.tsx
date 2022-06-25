@@ -1,4 +1,10 @@
 import {
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogOverlay,
   Box,
   Button,
   Flex,
@@ -48,16 +54,23 @@ export default function Assistant() {
     onOpen: onCreateModalOpen,
     onClose: onCreateModalClose,
   } = useDisclosure()
+  const {
+    isOpen: isDeleteModalOpen,
+    onOpen: onDeleteModalOpen,
+    onClose: onDeleteModalClose,
+  } = useDisclosure()
   const onEditingAssistantRef = useRef<object>()
+  const onDeletingAssistantIdRef = useRef()
   const [isCreating, setIsCreating] = useState(false)
   const [isUpdating, setIsUpdating] = useState(false)
+  const [isDeleting, setIsDeleting] = useState(false)
   const toast = useToast()
 
-  const getAssistants = async () => {
+  const handleGetAssistants = async () => {
     setAssistantsState(await assistantService.getAll())
   }
 
-  const searchAssistants = async (keyword: string) => {
+  const handleSearchAssistants = async (keyword: string) => {
     setAssistantsState(await assistantService.search(keyword))
   }
 
@@ -75,7 +88,7 @@ export default function Assistant() {
         status: "success",
       })
       onCreateModalClose()
-      getAssistants()
+      handleGetAssistants()
     }
     setIsCreating(false)
   }
@@ -106,8 +119,32 @@ export default function Assistant() {
     setIsUpdating(false)
   }
 
+  const handleDeleteAssistant = async () => {
+    setIsDeleting(true)
+    const response = await assistantService.delete(
+      onDeletingAssistantIdRef.current
+    )
+    if (!response?.isSuccess) {
+      toast({
+        title: response.message,
+        status: "error",
+      })
+    } else {
+      const { deletedAssistant } = response.data
+      setAssistantsState((prevState) =>
+        prevState?.filter((prev) => prev._id !== deletedAssistant._id)
+      )
+      toast({
+        title: response.message,
+        status: "success",
+      })
+      onDeleteModalClose()
+    }
+    setIsDeleting(false)
+  }
+
   useEffect(() => {
-    getAssistants()
+    handleGetAssistants()
   }, [])
 
   return (
@@ -118,6 +155,7 @@ export default function Assistant() {
       <PageLayout>
         <Heading marginTop="4">Asisten</Heading>
         <Button
+          marginTop="4"
           colorScheme="blue"
           leftIcon={<FontAwesomeIcon icon="plus" />}
           onClick={onCreateModalOpen}
@@ -136,7 +174,7 @@ export default function Assistant() {
             placeholder="Cari nama atau kode"
             variant="filled"
             onChange={(e) => {
-              searchAssistants(e.target.value)
+              handleSearchAssistants(e.target.value)
             }}
           />
         </InputGroup>
@@ -160,12 +198,27 @@ export default function Assistant() {
                 <Tr key={index}>
                   <Td>
                     <IconButton
-                      aria-label="Search assistants"
-                      size="xs"
+                      aria-label="Edit asisten"
+                      size="sm"
                       icon={<FontAwesomeIcon icon="pen" />}
                       onClick={() => {
                         onEditingAssistantRef.current = { ...assistantState }
                         onOpen()
+                      }}
+                    />
+                    <IconButton
+                      aria-label="Hapus asisten"
+                      size="sm"
+                      icon={<FontAwesomeIcon icon="trash-can" />}
+                      marginLeft="2"
+                      bgColor="red.100"
+                      color="red.500"
+                      colorScheme="red"
+                      variant="unstyled"
+                      _hover={{ backgroundColor: "red.200" }}
+                      onClick={() => {
+                        onDeletingAssistantIdRef.current = assistantState._id
+                        onDeleteModalOpen()
                       }}
                     />
                   </Td>
@@ -369,6 +422,13 @@ export default function Assistant() {
             </form>
           </ModalContent>
         </Modal>
+
+        <DeleteAssistantModal
+          isDeleteModalOpen={isDeleteModalOpen}
+          onDeleteModalClose={onDeleteModalClose}
+          handleDeleteAssistant={handleDeleteAssistant}
+          isDeleting={isDeleting}
+        />
       </PageLayout>
     </>
   )
@@ -525,5 +585,47 @@ const CreateAssistantModal = ({
         </form>
       </ModalContent>
     </Modal>
+  )
+}
+
+const DeleteAssistantModal = ({
+  isDeleteModalOpen,
+  onDeleteModalClose,
+  handleDeleteAssistant,
+  isDeleting,
+}) => {
+  const cancelRef = useRef()
+
+  return (
+    <AlertDialog
+      isOpen={isDeleteModalOpen}
+      onClose={onDeleteModalClose}
+      leastDestructiveRef={cancelRef}
+      isCentered={true}
+    >
+      <AlertDialogOverlay>
+        <AlertDialogContent>
+          <AlertDialogHeader fontSize="lg" fontWeight="bold">
+            Hapus asisten
+          </AlertDialogHeader>
+
+          <AlertDialogBody>Yakin untuk menghapus?</AlertDialogBody>
+
+          <AlertDialogFooter>
+            <Button ref={cancelRef} onClick={onDeleteModalClose}>
+              Batal
+            </Button>
+            <Button
+              colorScheme="red"
+              onClick={handleDeleteAssistant}
+              marginLeft={3}
+              isLoading={isDeleting}
+            >
+              Hapus
+            </Button>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialogOverlay>
+    </AlertDialog>
   )
 }

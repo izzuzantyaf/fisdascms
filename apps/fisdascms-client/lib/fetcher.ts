@@ -36,3 +36,20 @@ export const putFetch = async (path: ApiRoute, body: object = {}) => {
   )
   return await response.json()
 }
+
+export const deleteFetch = async (
+  path: ApiRoute | string,
+  body: object = {}
+) => {
+  const response = await fetch(
+    process.env.NEXT_PUBLIC_SERVER_APP_BASEURL + path,
+    {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    }
+  )
+  return await response.json()
+}
