@@ -60,9 +60,10 @@ export class Assistant {
 
   protected validatePhoneNumber() {
     const validationRegex = /^(\+62|62|0)8[1-9][0-9]{6,9}$/;
-    return validationRegex.test(this.phoneNumber)
-      ? true
-      : { phoneNumber: 'Nomor telepon tidak valid' };
+    if (isNotEmpty(this.phoneNumber))
+      if (!validationRegex.test(this.phoneNumber))
+        return { phoneNumber: 'Nomor telepon tidak valid' };
+    return true;
   }
 
   protected validateGender() {
