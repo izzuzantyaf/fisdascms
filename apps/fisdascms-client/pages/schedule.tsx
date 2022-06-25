@@ -22,7 +22,7 @@ import {
 } from "@chakra-ui/react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Head from "next/head"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import shadowedBoxStyle from "../chakra-style-props/shadowed-box"
 import PageLayout from "../layouts/page-layout"
 import { renderSkeleton } from "../lib/render-skeleton"
@@ -30,13 +30,40 @@ import { scheduleService } from "../services/schedule.service"
 
 export default function Schedule() {
   const [schedulesState, setSchedulesState] = useState<object[]>()
-  const [onEditingSchedule, setOnEditingSchedule] = useState<object>()
+  const onEditingScheduleRef = useRef()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [isUpdating, setIsUpdating] = useState(false)
   const toast = useToast()
+  const [canUpdate, setCanUpdate] = useState(false)
 
   const getSchedules = async () => {
     setSchedulesState(await scheduleService.getAll())
+  }
+
+  const handleScheduleUpdate = async () => {
+    setIsUpdating(true)
+    const response = await scheduleService.update(onEditingScheduleRef.current)
+    if (!response?.isSuccess) {
+      toast({
+        title: response.message,
+        status: "error",
+      })
+      return
+    }
+    const { updatedSchedule } = response.data
+    setSchedulesState(
+      schedulesState?.map((scheduleState) =>
+        scheduleState._id === updatedSchedule._id
+          ? updatedSchedule
+          : scheduleState
+      )
+    )
+    toast({
+      title: response.message,
+      status: "success",
+    })
+    setIsUpdating(false)
+    onClose()
   }
 
   useEffect(() => {
@@ -64,7 +91,7 @@ export default function Schedule() {
                   <FontAwesomeIcon icon="calendar-minus" />
                 </Square>
                 <Heading size="md">{`Jadwal ${
-                  schedule.faculty?.toUpperCase() ?? "kelas"
+                  schedule.faculty?.toUpperCase() ?? "Kelas"
                 }`}</Heading>
               </Flex>
 
@@ -94,11 +121,8 @@ export default function Schedule() {
                 width="full"
                 marginTop="4"
                 onClick={() => {
-                  setOnEditingSchedule(
-                    schedulesState.find(
-                      (targetSchedule) => targetSchedule._id === schedule._id
-                    )
-                  )
+                  onEditingScheduleRef.current = { ...schedule }
+                  setCanUpdate(false)
                   onOpen()
                 }}
                 colorScheme="blue"
@@ -120,7 +144,7 @@ export default function Schedule() {
           <ModalOverlay />
           <ModalContent marginX="4" rounded="xl">
             <form>
-              <ModalHeader>Edit jadwal</ModalHeader>
+              <ModalHeader>Edit Jadwal</ModalHeader>
               <ModalCloseButton />
               <ModalBody>
                 <Flex alignItems="center">
@@ -135,11 +159,12 @@ export default function Schedule() {
                     <FontAwesomeIcon icon="calendar-minus" />
                   </Square>
                   <Heading size="md">{`Jadwal ${
-                    onEditingSchedule?.faculty?.toUpperCase() ?? "kelas"
+                    onEditingScheduleRef.current?.faculty?.toUpperCase() ??
+                    "Kelas"
                   }`}</Heading>
                 </Flex>
                 <Flex direction="column" gap="1" marginTop="6">
-                  <Text>Link file jadwal</Text>
+                  <Heading size="sm">Link File</Heading>
                   <Flex
                     justifyContent="space-between"
                     gap="2"
@@ -148,25 +173,26 @@ export default function Schedule() {
                     <Input
                       type="url"
                       placeholder="Link file jadwal"
-                      defaultValue={onEditingSchedule?.url}
+                      defaultValue={onEditingScheduleRef.current?.url}
                       onFocus={(e) => {
                         e.target.select()
                       }}
                       onChange={(e) => {
-                        setOnEditingSchedule({
-                          ...onEditingSchedule,
-                          url: e.target.value,
-                        })
+                        setCanUpdate(true)
+                        onEditingScheduleRef.current.url = e.target.value
                       }}
                     />
                     <Switch
-                      defaultChecked={onEditingSchedule?.isActive}
+                      defaultChecked={onEditingScheduleRef.current?.isActive}
                       colorScheme="green"
                       onChange={() => {
-                        setOnEditingSchedule({
-                          ...onEditingSchedule,
-                          isActive: !onEditingSchedule?.isActive,
-                        })
+                        setCanUpdate(true)
+                        onEditingScheduleRef.current.isActive =
+                          !onEditingScheduleRef.current.isActive
+                        // setOnEditingSchedule((prevState) => ({
+                        //   ...prevState,
+                        //   isActive: !prevState?.isActive,
+                        // }))
                       }}
                     />
                   </Flex>
@@ -176,35 +202,12 @@ export default function Schedule() {
                 <Button
                   type="submit"
                   isLoading={isUpdating}
+                  isDisabled={!canUpdate}
                   colorScheme="blue"
                   width="full"
                   onClick={async (e) => {
                     e.preventDefault()
-                    setIsUpdating(true)
-                    const response = await scheduleService.update(
-                      onEditingSchedule
-                    )
-                    if (!response?.isSuccess) {
-                      toast({
-                        title: response.message,
-                        status: "error",
-                      })
-                      return
-                    }
-                    const { updatedSchedule } = response.data
-                    setSchedulesState(
-                      schedulesState?.map((scheduleState) =>
-                        scheduleState._id === updatedSchedule._id
-                          ? updatedSchedule
-                          : scheduleState
-                      )
-                    )
-                    toast({
-                      title: response.message,
-                      status: "success",
-                    })
-                    setIsUpdating(false)
-                    onClose()
+                    handleScheduleUpdate()
                   }}
                 >
                   Simpan

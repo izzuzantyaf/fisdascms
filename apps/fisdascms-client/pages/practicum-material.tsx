@@ -21,7 +21,7 @@ import {
 } from "@chakra-ui/react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Head from "next/head"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import shadowedBoxStyle from "../chakra-style-props/shadowed-box"
 import PageLayout from "../layouts/page-layout"
 import { languageCodeMapper } from "../lib/language-code-mapper"
@@ -34,10 +34,37 @@ export default function PracticumMaterialPage() {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [onEditingMaterial, setOnEditingMaterial] = useState<object>()
   const [isUpdating, setIsUpdating] = useState(false)
+  const [canUpdate, setCanUpdate] = useState(false)
   const toast = useToast()
 
   const getPracticumMaterials = async () => {
     setPracticumMaterialState(await practicumMaterialService.getAll())
+  }
+
+  const handlePracticumMaterialUpdate = async () => {
+    setIsUpdating(true)
+    const response = await practicumMaterialService.update(onEditingMaterial)
+    if (!response?.isSuccess) {
+      toast({
+        title: response.message,
+        status: "error",
+      })
+      return
+    }
+    const { updatedPracticumModule } = response.data
+    setPracticumMaterialState(
+      practicumMaterialState?.map((pmState) =>
+        pmState._id === updatedPracticumModule._id
+          ? updatedPracticumModule
+          : pmState
+      )
+    )
+    toast({
+      title: response.message,
+      status: "success",
+    })
+    setIsUpdating(false)
+    onClose()
   }
 
   useEffect(() => {
@@ -166,11 +193,8 @@ export default function PracticumMaterialPage() {
                 width="full"
                 marginTop="4"
                 onClick={() => {
-                  setOnEditingMaterial(
-                    practicumMaterialState.find(
-                      (pmState) => pmState._id === practicumMaterial._id
-                    )
-                  )
+                  setOnEditingMaterial(practicumMaterial)
+                  setCanUpdate(false)
                   onOpen()
                 }}
                 colorScheme="blue"
@@ -188,6 +212,7 @@ export default function PracticumMaterialPage() {
               8
             )}
         </SimpleGrid>
+
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
           <ModalContent marginX="4" rounded="xl">
@@ -214,7 +239,7 @@ export default function PracticumMaterialPage() {
                   </Box>
                 </Flex>
                 <Flex direction="column" gap="1" marginTop="6">
-                  <Text>Link soal TP</Text>
+                  <Heading size="sm">Link Soal TP</Heading>
                   <Flex
                     justifyContent="space-between"
                     gap="2"
@@ -228,6 +253,7 @@ export default function PracticumMaterialPage() {
                         e.target.select()
                       }}
                       onChange={(e) => {
+                        setCanUpdate(true)
                         setOnEditingMaterial({
                           ...onEditingMaterial,
                           preTask: {
@@ -241,6 +267,7 @@ export default function PracticumMaterialPage() {
                       defaultChecked={onEditingMaterial?.preTask?.isActive}
                       colorScheme="green"
                       onChange={() => {
+                        setCanUpdate(true)
                         setOnEditingMaterial({
                           ...onEditingMaterial,
                           preTask: {
@@ -251,7 +278,7 @@ export default function PracticumMaterialPage() {
                       }}
                     />
                   </Flex>
-                  <Text>Link video</Text>
+                  <Heading size="sm">Link Video</Heading>
                   <Flex
                     justifyContent="space-between"
                     gap="2"
@@ -265,6 +292,7 @@ export default function PracticumMaterialPage() {
                         e.target.select()
                       }}
                       onChange={(e) => {
+                        setCanUpdate(true)
                         setOnEditingMaterial({
                           ...onEditingMaterial,
                           video: {
@@ -278,6 +306,7 @@ export default function PracticumMaterialPage() {
                       defaultChecked={onEditingMaterial?.video?.isActive}
                       colorScheme="green"
                       onChange={() => {
+                        setCanUpdate(true)
                         setOnEditingMaterial({
                           ...onEditingMaterial,
                           video: {
@@ -288,7 +317,7 @@ export default function PracticumMaterialPage() {
                       }}
                     />
                   </Flex>
-                  <Text>Link cover jurnal</Text>
+                  <Heading size="sm">Link Cover Jurnal</Heading>
                   <Flex
                     justifyContent="space-between"
                     gap="2"
@@ -302,6 +331,7 @@ export default function PracticumMaterialPage() {
                         e.target.select()
                       }}
                       onChange={(e) => {
+                        setCanUpdate(true)
                         setOnEditingMaterial({
                           ...onEditingMaterial,
                           journalCover: {
@@ -315,6 +345,7 @@ export default function PracticumMaterialPage() {
                       defaultChecked={onEditingMaterial?.journalCover?.isActive}
                       colorScheme="green"
                       onChange={() => {
+                        setCanUpdate(true)
                         setOnEditingMaterial({
                           ...onEditingMaterial,
                           journalCover: {
@@ -326,7 +357,7 @@ export default function PracticumMaterialPage() {
                       }}
                     />
                   </Flex>
-                  <Text>Link Simulator</Text>
+                  <Heading size="sm">Link Simulator</Heading>
                   <Flex
                     justifyContent="space-between"
                     gap="2"
@@ -340,6 +371,7 @@ export default function PracticumMaterialPage() {
                         e.target.select()
                       }}
                       onChange={(e) => {
+                        setCanUpdate(true)
                         setOnEditingMaterial({
                           ...onEditingMaterial,
                           simulator: {
@@ -353,6 +385,7 @@ export default function PracticumMaterialPage() {
                       defaultChecked={onEditingMaterial?.simulator?.isActive}
                       colorScheme="green"
                       onChange={() => {
+                        setCanUpdate(true)
                         setOnEditingMaterial({
                           ...onEditingMaterial,
                           simulator: {
@@ -369,35 +402,12 @@ export default function PracticumMaterialPage() {
                 <Button
                   type="submit"
                   isLoading={isUpdating}
+                  isDisabled={!canUpdate}
                   colorScheme="blue"
                   width="full"
                   onClick={async (e) => {
                     e.preventDefault()
-                    setIsUpdating(true)
-                    const response = await practicumMaterialService.update(
-                      onEditingMaterial
-                    )
-                    if (!response?.isSuccess) {
-                      toast({
-                        title: response.message,
-                        status: "error",
-                      })
-                      return
-                    }
-                    const { updatedPracticumModule } = response.data
-                    setPracticumMaterialState(
-                      practicumMaterialState?.map((pmState) =>
-                        pmState._id === updatedPracticumModule._id
-                          ? updatedPracticumModule
-                          : pmState
-                      )
-                    )
-                    toast({
-                      title: response.message,
-                      status: "success",
-                    })
-                    setIsUpdating(false)
-                    onClose()
+                    handlePracticumMaterialUpdate()
                   }}
                 >
                   Simpan

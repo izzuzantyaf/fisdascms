@@ -36,6 +36,7 @@ export default function HandoutPage() {
   const [onEditingHandout, setOnEditingHandout] = useState<object>()
   const toast = useToast()
   const [isHandoutUpdating, setIsHandoutUpdating] = useState(false)
+  const [canUpdate, setCanUpdate] = useState(false)
 
   const getHandouts = async () => {
     const handouts = await handoutService.getAll()
@@ -124,11 +125,8 @@ export default function HandoutPage() {
                 width="full"
                 marginTop="4"
                 onClick={() => {
-                  setOnEditingHandout(
-                    handoutsState.find(
-                      (handoutState) => handoutState._id === handout._id
-                    )
-                  )
+                  setOnEditingHandout(handout)
+                  setCanUpdate(false)
                   onOpen()
                 }}
                 colorScheme="blue"
@@ -146,10 +144,11 @@ export default function HandoutPage() {
               4
             )}
         </SimpleGrid>
-        <Modal isOpen={isOpen} onClose={onClose}>
+
+        <Modal isOpen={isOpen} onClose={onClose} isCentered={true}>
           <ModalOverlay />
           <ModalContent marginX="4">
-            <form action="#">
+            <form>
               <ModalHeader>Edit Modul</ModalHeader>
               <ModalCloseButton />
               <ModalBody>
@@ -174,7 +173,7 @@ export default function HandoutPage() {
                   </Box>
                 </Flex>
                 <Heading size="sm" marginTop="6">
-                  Link dokumen
+                  Link File
                 </Heading>
                 <Input
                   type="url"
@@ -184,10 +183,11 @@ export default function HandoutPage() {
                     e.target.select()
                   }}
                   onChange={(e) => {
-                    setOnEditingHandout({
-                      ...onEditingHandout,
+                    setCanUpdate(true)
+                    setOnEditingHandout((prevState) => ({
+                      ...prevState,
                       url: e.target.value,
-                    })
+                    }))
                   }}
                 />
                 <Flex alignItems="center" marginTop="4">
@@ -202,10 +202,11 @@ export default function HandoutPage() {
                     defaultChecked={onEditingHandout?.isActive}
                     colorScheme="green"
                     onChange={(e) => {
-                      setOnEditingHandout({
-                        ...onEditingHandout,
+                      setCanUpdate(true)
+                      setOnEditingHandout((prevState) => ({
+                        ...prevState,
                         isActive: !onEditingHandout?.isActive,
-                      })
+                      }))
                     }}
                   />
                 </Flex>
@@ -214,6 +215,7 @@ export default function HandoutPage() {
                 <Button
                   type="submit"
                   isLoading={isHandoutUpdating}
+                  isDisabled={!canUpdate}
                   colorScheme="blue"
                   width="full"
                   onClick={(e) => {

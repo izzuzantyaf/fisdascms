@@ -1,5 +1,7 @@
 import {
   Button,
+  FormControl,
+  FormHelperText,
   Heading,
   Input,
   SimpleGrid,
@@ -16,14 +18,23 @@ export default function OrganigramPage() {
   const [isOrganigramUpdating, setIsOrganigramUpdating] = useState(false)
   const [organigramState, setOrganigramState] = useState()
   const toast = useToast()
+  const [isError, setIsError] = useState(false)
+  const [canSubmit, setCanSubmit] = useState(false)
 
-  useEffect(() => {
-    const getOrganigram = async () => {
-      const organigram = await organigramService.getAll()
-      setOrganigramState(organigram)
-    }
-    getOrganigram()
-  }, [])
+  const getOrganigram = async () => {
+    const organigram = await organigramService.getAll()
+    setOrganigramState(organigram)
+  }
+
+  const validateUrl = () => {
+    if (organigramState?.url)
+      try {
+        new URL(organigramState?.url)
+        setIsError(false)
+      } catch (e) {
+        // setIsError(true)
+      }
+  }
 
   const handleUpdateOrganigram = async () => {
     const newOrganigram = {
@@ -45,7 +56,16 @@ export default function OrganigramPage() {
       title: updateResponse.message,
       status: "success",
     })
+    setCanSubmit(false)
   }
+
+  useEffect(() => {
+    getOrganigram()
+  }, [])
+
+  useEffect(() => {
+    validateUrl()
+  }, [organigramState])
 
   return (
     <>
@@ -68,20 +88,29 @@ export default function OrganigramPage() {
               height="256px"
             ></iframe>
           </Skeleton>
-          <form action="#">
+          <form>
             <Skeleton isLoaded={organigramState}>
-              <Input
-                type="url"
-                placeholder="Link Google Drive organigram"
-                defaultValue={organigramState?.url}
-                onFocus={(e) => e.target.select()} //* select all ketika user klik input field
-                onChange={(e) =>
-                  setOrganigramState({
-                    ...organigramState,
-                    url: e.target.value,
-                  })
-                }
-              />
+              <FormControl isInvalid={isError}>
+                <Heading size="sm">Link File</Heading>
+                <Input
+                  type="url"
+                  placeholder="Link Google Drive organigram"
+                  defaultValue={organigramState?.url}
+                  onFocus={(e) => e.target.select()} //* select all ketika user klik input field
+                  onChange={(e) => {
+                    setOrganigramState({
+                      ...organigramState,
+                      url: e.target.value,
+                    })
+                    setCanSubmit(true)
+                  }}
+                />
+                {isError ? (
+                  <FormHelperText color="red.500">
+                    Link tidak valid
+                  </FormHelperText>
+                ) : null}
+              </FormControl>
             </Skeleton>
             <Button
               type="submit"
@@ -89,6 +118,7 @@ export default function OrganigramPage() {
               width="full"
               marginTop={4}
               isLoading={isOrganigramUpdating}
+              isDisabled={!canSubmit}
               onClick={(e) => {
                 e.preventDefault()
                 handleUpdateOrganigram()

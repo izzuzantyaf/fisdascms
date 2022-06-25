@@ -1,6 +1,5 @@
 import Head from "next/head"
 import {
-  Box,
   Button,
   FormControl,
   FormHelperText,
@@ -90,11 +89,13 @@ export default function CodeOfCoductPage() {
               height="256px"
             ></iframe>
           </Skeleton>
-          <form action="#">
+          <form>
             <Skeleton isLoaded={codeOfConductState}>
               <FormControl isInvalid={isError}>
+                <Heading size="sm">Link File</Heading>
                 <Input
                   type="url"
+                  marginTop="2"
                   placeholder="Link Google Drive file tata tertib"
                   defaultValue={codeOfConductState?.url}
                   onFocus={(e) => e.target.select()} //* select all ketika user klik input field

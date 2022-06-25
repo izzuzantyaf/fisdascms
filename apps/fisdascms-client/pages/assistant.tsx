@@ -604,7 +604,7 @@ const DeleteAssistantModal = ({
       isCentered={true}
     >
       <AlertDialogOverlay>
-        <AlertDialogContent>
+        <AlertDialogContent marginX="4">
           <AlertDialogHeader fontSize="lg" fontWeight="bold">
             Hapus asisten
           </AlertDialogHeader>
