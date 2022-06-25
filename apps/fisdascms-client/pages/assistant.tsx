@@ -8,6 +8,9 @@ import {
   Box,
   Button,
   Flex,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
   Heading,
   Icon,
   IconButton,
@@ -26,7 +29,6 @@ import {
   Tag,
   TagLabel,
   TagRightIcon,
-  Text,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react"
@@ -59,12 +61,14 @@ export default function Assistant() {
     onOpen: onDeleteModalOpen,
     onClose: onDeleteModalClose,
   } = useDisclosure()
+  const newAssistantRef = useRef({})
   const onEditingAssistantRef = useRef<object>()
   const onDeletingAssistantIdRef = useRef()
   const [isCreating, setIsCreating] = useState(false)
   const [isUpdating, setIsUpdating] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
   const toast = useToast()
+  const [errors, setErrors] = useState()
 
   const handleGetAssistants = async () => {
     setAssistantsState(await assistantService.getAll())
@@ -77,12 +81,15 @@ export default function Assistant() {
   const handleCreateAssistant = async (newAssistant) => {
     setIsCreating(true)
     const response = await assistantService.create(newAssistant)
+    setIsCreating(false)
     if (!response?.isSuccess) {
+      setErrors(response?.data?.errors)
       toast({
         title: response.message,
         status: "error",
       })
     } else {
+      setErrors(undefined)
       toast({
         title: response.message,
         status: "success",
@@ -90,7 +97,6 @@ export default function Assistant() {
       onCreateModalClose()
       handleGetAssistants()
     }
-    setIsCreating(false)
   }
 
   const handleUpdateAssistant = async () => {
@@ -179,7 +185,13 @@ export default function Assistant() {
           />
         </InputGroup>
 
-        <TableContainer marginTop="4" shadow="xl" rounded="lg">
+        <TableContainer
+          marginTop="4"
+          shadow="xl"
+          rounded="lg"
+          maxHeight="67vh"
+          overflowY="auto"
+        >
           <Table size="sm" bgColor="white">
             <Thead>
               <Tr>
@@ -223,8 +235,31 @@ export default function Assistant() {
                     />
                   </Td>
                   <Td fontWeight="bold">{assistantState?.code}</Td>
-                  <Td>{assistantState?.name}</Td>
-                  <Td textTransform="capitalize">{assistantState?.level}</Td>
+                  <Td maxWidth="60" isTruncated={true}>
+                    {assistantState?.name}
+                  </Td>
+                  <Td textTransform="capitalize">
+                    <Tag
+                      colorScheme={
+                        assistantState?.level === AssistantLevel.JUNIOR
+                          ? "green"
+                          : "orange"
+                      }
+                    >
+                      <TagLabel textTransform="capitalize">
+                        {assistantState?.level}
+                      </TagLabel>
+                      <TagRightIcon>
+                        <FontAwesomeIcon
+                          icon={
+                            assistantState?.level === AssistantLevel.JUNIOR
+                              ? "chess-pawn"
+                              : "chess-queen"
+                          }
+                        />
+                      </TagRightIcon>
+                    </Tag>
+                  </Td>
                   <Td>
                     <Tag
                       colorScheme={
@@ -264,13 +299,170 @@ export default function Assistant() {
           </Table>
         </TableContainer>
 
-        <CreateAssistantModal
-          isCreateModalOpen={isCreateModalOpen}
-          onCreateModalClose={onCreateModalClose}
-          isCreating={isCreating}
-          handleCreateAssistant={handleCreateAssistant}
-        />
-
+        {/* Create Assistant Modal */}
+        <Modal
+          isOpen={isCreateModalOpen}
+          onClose={() => {
+            onCreateModalClose()
+            setErrors(undefined)
+          }}
+          closeOnOverlayClick={false}
+        >
+          <ModalOverlay />
+          <ModalContent marginX="4" rounded="xl">
+            <form>
+              <ModalHeader>Tambah asisten</ModalHeader>
+              <ModalCloseButton />
+              <ModalBody>
+                <Flex direction="column" gap="2">
+                  <FormControl isInvalid={errors?.name} isRequired={true}>
+                    <FormLabel>Nama</FormLabel>
+                    <Input
+                      id="name"
+                      name="name"
+                      type="text"
+                      placeholder="Nama"
+                      onChange={(e) => {
+                        newAssistantRef.current.name = e.target.value
+                      }}
+                    />
+                    {errors?.name ? (
+                      <FormErrorMessage>{errors?.name}</FormErrorMessage>
+                    ) : null}
+                  </FormControl>
+                  <FormControl isInvalid={errors?.code} isRequired={true}>
+                    <FormLabel>Kode</FormLabel>
+                    <Input
+                      id="code"
+                      name="code"
+                      type="text"
+                      placeholder="Kode asisten"
+                      onChange={(e) => {
+                        newAssistantRef.current.code = e.target.value
+                      }}
+                    />
+                    {errors?.code ? (
+                      <FormErrorMessage>{errors?.code}</FormErrorMessage>
+                    ) : null}
+                  </FormControl>
+                  <FormControl isInvalid={errors?.phoneNumber}>
+                    <FormLabel>Nomor HP</FormLabel>
+                    <Input
+                      id="phoneNumber"
+                      name="phoneNumber"
+                      type="tel"
+                      placeholder="Nomor HP"
+                      onChange={(e) => {
+                        newAssistantRef.current.phoneNumber = e.target.value
+                      }}
+                    />
+                    {errors?.phoneNumber ? (
+                      <FormErrorMessage>{errors?.phoneNumber}</FormErrorMessage>
+                    ) : null}
+                  </FormControl>
+                  <FormControl>
+                    <FormLabel>ID Line</FormLabel>
+                    <Input
+                      id="lineId"
+                      name="lineId"
+                      type="text"
+                      placeholder="ID Line"
+                      onChange={(e) => {
+                        newAssistantRef.current.lineId = e.target.value
+                      }}
+                    />
+                  </FormControl>
+                  <FormControl isInvalid={errors?.level} isRequired={true}>
+                    <FormLabel>Level</FormLabel>
+                    <Select
+                      id="level"
+                      name="level"
+                      placeholder="Pilih level"
+                      textTransform="capitalize"
+                      onChange={(e) => {
+                        newAssistantRef.current.level = e.target.value
+                      }}
+                    >
+                      <option
+                        style={{ textTransform: "capitalize" }}
+                        value={AssistantLevel.JUNIOR}
+                      >
+                        {AssistantLevel.JUNIOR}
+                      </option>
+                      <option
+                        style={{ textTransform: "capitalize" }}
+                        value={AssistantLevel.SENIOR}
+                      >
+                        {AssistantLevel.SENIOR}
+                      </option>
+                    </Select>
+                    {errors?.level ? (
+                      <FormErrorMessage>{errors?.level}</FormErrorMessage>
+                    ) : null}
+                  </FormControl>
+                  <FormControl isInvalid={errors?.gender} isRequired={true}>
+                    <FormLabel>Gender</FormLabel>
+                    <Select
+                      id="gender"
+                      name="gender"
+                      placeholder="Pilih gender"
+                      textTransform="capitalize"
+                      onChange={(e) => {
+                        newAssistantRef.current.gender = e.target.value
+                      }}
+                    >
+                      <option
+                        style={{ textTransform: "capitalize" }}
+                        value={Gender.MALE}
+                      >
+                        {Gender.MALE}
+                      </option>
+                      <option
+                        style={{ textTransform: "capitalize" }}
+                        value={Gender.FEMALE}
+                      >
+                        {Gender.FEMALE}
+                      </option>
+                    </Select>
+                    {errors?.gender ? (
+                      <FormErrorMessage>{errors?.gender}</FormErrorMessage>
+                    ) : null}
+                  </FormControl>
+                  <FormControl isInvalid={errors?.feedbackUrl}>
+                    <FormLabel>Link Feedback</FormLabel>
+                    <Input
+                      id="feedbackUrl"
+                      name="feedbackUrl"
+                      type="url"
+                      placeholder="Link feedback"
+                      onChange={(e) => {
+                        newAssistantRef.current.feedbackUrl = e.target.value
+                      }}
+                    />
+                    {errors?.feedbackUrl ? (
+                      <FormErrorMessage>{errors?.feedbackUrl}</FormErrorMessage>
+                    ) : null}
+                  </FormControl>
+                </Flex>
+              </ModalBody>
+              <ModalFooter>
+                <Button
+                  type="submit"
+                  isLoading={isCreating}
+                  colorScheme="blue"
+                  width="full"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    handleCreateAssistant(newAssistantRef.current)
+                  }}
+                >
+                  Simpan
+                </Button>
+              </ModalFooter>
+            </form>
+          </ModalContent>
+        </Modal>
+        {/* Create Assistant Modal */}
         <Modal
           isOpen={isOpen}
           onClose={onClose}
@@ -285,7 +477,7 @@ export default function Assistant() {
               <ModalBody>
                 <Flex direction="column" gap="2">
                   <Box>
-                    <Text fontWeight="semibold">Nama</Text>
+                    <FormLabel>Nama</FormLabel>
                     <Input
                       id="name"
                       name="name"
@@ -298,7 +490,7 @@ export default function Assistant() {
                     />
                   </Box>
                   <Box>
-                    <Text fontWeight="semibold">Kode</Text>
+                    <FormLabel>Kode</FormLabel>
                     <Input
                       id="code"
                       name="code"
@@ -311,7 +503,7 @@ export default function Assistant() {
                     />
                   </Box>
                   <Box>
-                    <Text fontWeight="semibold">Nomor HP</Text>
+                    <FormLabel>Nomor HP</FormLabel>
                     <Input
                       id="phoneNumber"
                       name="phoneNumber"
@@ -325,7 +517,7 @@ export default function Assistant() {
                     />
                   </Box>
                   <Box>
-                    <Text fontWeight="semibold">ID Line</Text>
+                    <FormLabel>ID Line</FormLabel>
                     <Input
                       id="lineId"
                       name="lineId"
@@ -338,7 +530,7 @@ export default function Assistant() {
                     />
                   </Box>
                   <Box>
-                    <Text fontWeight="semibold">Level</Text>
+                    <FormLabel>Level</FormLabel>
                     <Select
                       id="level"
                       name="level"
@@ -364,7 +556,7 @@ export default function Assistant() {
                     </Select>
                   </Box>
                   <Box>
-                    <Text fontWeight="semibold">Gender</Text>
+                    <FormLabel>Gender</FormLabel>
                     <Select
                       id="gender"
                       name="gender"
@@ -390,7 +582,7 @@ export default function Assistant() {
                     </Select>
                   </Box>
                   <Box>
-                    <Text fontWeight="semibold">Link Feedback</Text>
+                    <FormLabel>Link Feedback</FormLabel>
                     <Input
                       id="feedbackUrl"
                       name="feedbackUrl"
@@ -434,160 +626,6 @@ export default function Assistant() {
   )
 }
 
-const CreateAssistantModal = ({
-  isCreateModalOpen,
-  onCreateModalClose,
-  isCreating,
-  handleCreateAssistant,
-}) => {
-  const newAssistantRef = useRef({})
-
-  return (
-    <Modal
-      isOpen={isCreateModalOpen}
-      onClose={onCreateModalClose}
-      isCentered={true}
-      closeOnOverlayClick={false}
-    >
-      <ModalOverlay />
-      <ModalContent marginX="4" rounded="xl">
-        <form>
-          <ModalHeader>Tambah asisten</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <Flex direction="column" gap="2">
-              <Box>
-                <Text fontWeight="semibold">Nama</Text>
-                <Input
-                  id="name"
-                  name="name"
-                  type="text"
-                  placeholder="Nama"
-                  onChange={(e) => {
-                    newAssistantRef.current.name = e.target.value
-                  }}
-                />
-              </Box>
-              <Box>
-                <Text fontWeight="semibold">Kode</Text>
-                <Input
-                  id="code"
-                  name="code"
-                  type="text"
-                  placeholder="Kode asisten"
-                  onChange={(e) => {
-                    newAssistantRef.current.code = e.target.value
-                  }}
-                />
-              </Box>
-              <Box>
-                <Text fontWeight="semibold">Nomor HP</Text>
-                <Input
-                  id="phoneNumber"
-                  name="phoneNumber"
-                  type="tel"
-                  placeholder="Nomor HP"
-                  onChange={(e) => {
-                    newAssistantRef.current.phoneNumber = e.target.value
-                  }}
-                />
-              </Box>
-              <Box>
-                <Text fontWeight="semibold">ID Line</Text>
-                <Input
-                  id="lineId"
-                  name="lineId"
-                  type="text"
-                  placeholder="ID Line"
-                  onChange={(e) => {
-                    newAssistantRef.current.lineId = e.target.value
-                  }}
-                />
-              </Box>
-              <Box>
-                <Text fontWeight="semibold">Level</Text>
-                <Select
-                  id="level"
-                  name="level"
-                  placeholder="Pilih level"
-                  textTransform="capitalize"
-                  onChange={(e) => {
-                    newAssistantRef.current.level = e.target.value
-                  }}
-                >
-                  <option
-                    style={{ textTransform: "capitalize" }}
-                    value={AssistantLevel.JUNIOR}
-                  >
-                    {AssistantLevel.JUNIOR}
-                  </option>
-                  <option
-                    style={{ textTransform: "capitalize" }}
-                    value={AssistantLevel.SENIOR}
-                  >
-                    {AssistantLevel.SENIOR}
-                  </option>
-                </Select>
-              </Box>
-              <Box>
-                <Text fontWeight="semibold">Gender</Text>
-                <Select
-                  id="gender"
-                  name="gender"
-                  placeholder="Pilih gender"
-                  textTransform="capitalize"
-                  onChange={(e) => {
-                    newAssistantRef.current.gender = e.target.value
-                  }}
-                >
-                  <option
-                    style={{ textTransform: "capitalize" }}
-                    value={Gender.MALE}
-                  >
-                    {Gender.MALE}
-                  </option>
-                  <option
-                    style={{ textTransform: "capitalize" }}
-                    value={Gender.FEMALE}
-                  >
-                    {Gender.FEMALE}
-                  </option>
-                </Select>
-              </Box>
-              <Box>
-                <Text fontWeight="semibold">Link Feedback</Text>
-                <Input
-                  id="feedbackUrl"
-                  name="feedbackUrl"
-                  type="url"
-                  placeholder="Link feedback"
-                  onChange={(e) => {
-                    newAssistantRef.current.feedbackUrl = e.target.value
-                  }}
-                />
-              </Box>
-            </Flex>
-          </ModalBody>
-          <ModalFooter>
-            <Button
-              type="submit"
-              isLoading={isCreating}
-              colorScheme="blue"
-              width="full"
-              onClick={(e) => {
-                e.preventDefault()
-                handleCreateAssistant(newAssistantRef.current)
-              }}
-            >
-              Simpan
-            </Button>
-          </ModalFooter>
-        </form>
-      </ModalContent>
-    </Modal>
-  )
-}
-
 const DeleteAssistantModal = ({
   isDeleteModalOpen,
   onDeleteModalClose,
@@ -604,7 +642,7 @@ const DeleteAssistantModal = ({
       isCentered={true}
     >
       <AlertDialogOverlay>
-        <AlertDialogContent marginX="4">
+        <AlertDialogContent marginX="4" rounded="xl">
           <AlertDialogHeader fontSize="lg" fontWeight="bold">
             Hapus asisten
           </AlertDialogHeader>

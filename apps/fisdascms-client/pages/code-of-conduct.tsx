@@ -2,7 +2,9 @@ import Head from "next/head"
 import {
   Button,
   FormControl,
+  FormErrorMessage,
   FormHelperText,
+  FormLabel,
   Heading,
   Input,
   SimpleGrid,
@@ -26,16 +28,6 @@ export default function CodeOfCoductPage() {
     setCodeOfConductState(codeOfConduct)
   }
 
-  const validateUrl = () => {
-    if (codeOfConductState?.url)
-      try {
-        new URL(codeOfConductState?.url)
-        setIsError(false)
-      } catch (e) {
-        // setIsError(true)
-      }
-  }
-
   const handleUpdateCodeOfConduct = async () => {
     const newCodeOfConduct = {
       _id: codeOfConductState._id,
@@ -52,6 +44,7 @@ export default function CodeOfCoductPage() {
       })
       return
     }
+    setIsError(false)
     setCodeOfConductState(updateResponse?.data?.updatedCodeOfConduct)
     toast({
       title: updateResponse.message,
@@ -63,10 +56,6 @@ export default function CodeOfCoductPage() {
   useEffect(() => {
     getCodeOfConduct()
   }, [])
-
-  useEffect(() => {
-    validateUrl()
-  }, [codeOfConductState])
 
   return (
     <>
@@ -92,10 +81,9 @@ export default function CodeOfCoductPage() {
           <form>
             <Skeleton isLoaded={codeOfConductState}>
               <FormControl isInvalid={isError}>
-                <Heading size="sm">Link File</Heading>
+                <FormLabel>Link file</FormLabel>
                 <Input
                   type="url"
-                  marginTop="2"
                   placeholder="Link Google Drive file tata tertib"
                   defaultValue={codeOfConductState?.url}
                   onFocus={(e) => e.target.select()} //* select all ketika user klik input field
@@ -108,9 +96,7 @@ export default function CodeOfCoductPage() {
                   }}
                 />
                 {isError ? (
-                  <FormHelperText color="red.500">
-                    Link tidak valid
-                  </FormHelperText>
+                  <FormErrorMessage>Link tidak valid</FormErrorMessage>
                 ) : null}
               </FormControl>
             </Skeleton>
