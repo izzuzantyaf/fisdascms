@@ -104,12 +104,15 @@ export default function Assistant() {
     const response = await assistantService.update(
       onEditingAssistantRef.current
     )
+    setIsUpdating(false)
     if (!response?.isSuccess) {
+      setErrors(response?.data?.errors)
       toast({
         title: response.message,
         status: "error",
       })
     } else {
+      setErrors(undefined)
       const { updatedAssistant } = response.data
       setAssistantsState((prevState) =>
         prevState?.map((prev) =>
@@ -122,7 +125,6 @@ export default function Assistant() {
       })
       onClose()
     }
-    setIsUpdating(false)
   }
 
   const handleDeleteAssistant = async () => {
@@ -299,7 +301,7 @@ export default function Assistant() {
           </Table>
         </TableContainer>
 
-        {/* Create Assistant Modal */}
+        {/* modal create asisten */}
         <Modal
           isOpen={isCreateModalOpen}
           onClose={() => {
@@ -462,11 +464,15 @@ export default function Assistant() {
             </form>
           </ModalContent>
         </Modal>
-        {/* Create Assistant Modal */}
+        {/* modal create asisten */}
+
+        {/* modal edit asisten */}
         <Modal
           isOpen={isOpen}
-          onClose={onClose}
-          isCentered={true}
+          onClose={() => {
+            onClose()
+            setErrors(undefined)
+          }}
           closeOnOverlayClick={false}
         >
           <ModalOverlay />
@@ -476,7 +482,7 @@ export default function Assistant() {
               <ModalCloseButton />
               <ModalBody>
                 <Flex direction="column" gap="2">
-                  <Box>
+                  <FormControl isInvalid={errors?.name} isRequired={true}>
                     <FormLabel>Nama</FormLabel>
                     <Input
                       id="name"
@@ -488,8 +494,11 @@ export default function Assistant() {
                         onEditingAssistantRef.current.name = e.target.value
                       }}
                     />
-                  </Box>
-                  <Box>
+                    {errors?.name ? (
+                      <FormErrorMessage>{errors?.name}</FormErrorMessage>
+                    ) : null}
+                  </FormControl>
+                  <FormControl isInvalid={errors?.code} isRequired={true}>
                     <FormLabel>Kode</FormLabel>
                     <Input
                       id="code"
@@ -501,8 +510,11 @@ export default function Assistant() {
                         onEditingAssistantRef.current.code = e.target.value
                       }}
                     />
-                  </Box>
-                  <Box>
+                    {errors?.code ? (
+                      <FormErrorMessage>{errors?.code}</FormErrorMessage>
+                    ) : null}
+                  </FormControl>
+                  <FormControl isInvalid={errors?.phoneNumber}>
                     <FormLabel>Nomor HP</FormLabel>
                     <Input
                       id="phoneNumber"
@@ -515,8 +527,11 @@ export default function Assistant() {
                           e.target.value
                       }}
                     />
-                  </Box>
-                  <Box>
+                    {errors?.phoneNumber ? (
+                      <FormErrorMessage>{errors?.phoneNumber}</FormErrorMessage>
+                    ) : null}
+                  </FormControl>
+                  <FormControl>
                     <FormLabel>ID Line</FormLabel>
                     <Input
                       id="lineId"
@@ -528,8 +543,8 @@ export default function Assistant() {
                         onEditingAssistantRef.current.lineId = e.target.value
                       }}
                     />
-                  </Box>
-                  <Box>
+                  </FormControl>
+                  <FormControl isInvalid={errors?.level} isRequired={true}>
                     <FormLabel>Level</FormLabel>
                     <Select
                       id="level"
@@ -554,8 +569,11 @@ export default function Assistant() {
                         {AssistantLevel.SENIOR}
                       </option>
                     </Select>
-                  </Box>
-                  <Box>
+                    {errors?.level ? (
+                      <FormErrorMessage>{errors?.level}</FormErrorMessage>
+                    ) : null}
+                  </FormControl>
+                  <FormControl isInvalid={errors?.gender} isRequired={true}>
                     <FormLabel>Gender</FormLabel>
                     <Select
                       id="gender"
@@ -580,8 +598,11 @@ export default function Assistant() {
                         {Gender.FEMALE}
                       </option>
                     </Select>
-                  </Box>
-                  <Box>
+                    {errors?.gender ? (
+                      <FormErrorMessage>{errors?.gender}</FormErrorMessage>
+                    ) : null}
+                  </FormControl>
+                  <FormControl isInvalid={errors?.feedbackUrl}>
                     <FormLabel>Link Feedback</FormLabel>
                     <Input
                       id="feedbackUrl"
@@ -594,7 +615,10 @@ export default function Assistant() {
                           e.target.value
                       }}
                     />
-                  </Box>
+                    {errors?.feedbackUrl ? (
+                      <FormErrorMessage>{errors?.feedbackUrl}</FormErrorMessage>
+                    ) : null}
+                  </FormControl>
                 </Flex>
               </ModalBody>
               <ModalFooter>
@@ -614,6 +638,7 @@ export default function Assistant() {
             </form>
           </ModalContent>
         </Modal>
+        {/* modal edit asisten */}
 
         <DeleteAssistantModal
           isDeleteModalOpen={isDeleteModalOpen}
