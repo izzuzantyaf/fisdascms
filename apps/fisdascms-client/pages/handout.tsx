@@ -147,7 +147,7 @@ export default function HandoutPage() {
 
         <Modal isOpen={isOpen} onClose={onClose} isCentered={true}>
           <ModalOverlay />
-          <ModalContent marginX="4">
+          <ModalContent marginX="4" rounded="xl">
             <form>
               <ModalHeader>Edit Modul</ModalHeader>
               <ModalCloseButton />
