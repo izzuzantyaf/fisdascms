@@ -59,7 +59,7 @@ export class Assistant {
   }
 
   protected validatePhoneNumber() {
-    const validationRegex = /^(\+62|62|0)8[1-9][0-9]{6,9}$/;
+    const validationRegex = /^(\+62|62|0)8[1-9][0-9]{6,10}$/;
     if (isNotEmpty(this.phoneNumber))
       if (!validationRegex.test(this.phoneNumber))
         return { phoneNumber: 'Nomor telepon tidak valid' };
