@@ -5,7 +5,6 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogOverlay,
-  Box,
   Button,
   Flex,
   FormControl,
@@ -26,6 +25,7 @@ import {
   ModalHeader,
   ModalOverlay,
   Select,
+  Skeleton,
   Tag,
   TagLabel,
   TagRightIcon,
@@ -187,119 +187,123 @@ export default function Assistant() {
           />
         </InputGroup>
 
-        <TableContainer
-          marginTop="4"
-          shadow="xl"
-          rounded="lg"
-          maxHeight="67vh"
-          overflowY="auto"
-        >
-          <Table size="sm" bgColor="white">
-            <Thead>
-              <Tr>
-                <Th></Th>
-                <Th>Kode</Th>
-                <Th>Nama</Th>
-                <Th>Level</Th>
-                <Th>Gender</Th>
-                <Th>No. HP</Th>
-                <Th>ID Line</Th>
-                <Th>Link Feedback</Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {assistantsState?.map((assistantState, index) => (
-                <Tr key={index}>
-                  <Td>
-                    <IconButton
-                      aria-label="Edit asisten"
-                      size="sm"
-                      icon={<FontAwesomeIcon icon="pen" />}
-                      onClick={() => {
-                        onEditingAssistantRef.current = { ...assistantState }
-                        onOpen()
-                      }}
-                    />
-                    <IconButton
-                      aria-label="Hapus asisten"
-                      size="sm"
-                      icon={<FontAwesomeIcon icon="trash-can" />}
-                      marginLeft="2"
-                      bgColor="red.100"
-                      color="red.500"
-                      colorScheme="red"
-                      variant="unstyled"
-                      _hover={{ backgroundColor: "red.200" }}
-                      onClick={() => {
-                        onDeletingAssistantIdRef.current = assistantState._id
-                        onDeleteModalOpen()
-                      }}
-                    />
-                  </Td>
-                  <Td fontWeight="bold">{assistantState?.code}</Td>
-                  <Td maxWidth="60" isTruncated={true}>
-                    {assistantState?.name}
-                  </Td>
-                  <Td textTransform="capitalize">
-                    <Tag
-                      colorScheme={
-                        assistantState?.level === AssistantLevel.JUNIOR
-                          ? "green"
-                          : "orange"
-                      }
-                    >
-                      <TagLabel textTransform="capitalize">
-                        {assistantState?.level}
-                      </TagLabel>
-                      <TagRightIcon>
-                        <FontAwesomeIcon
-                          icon={
-                            assistantState?.level === AssistantLevel.JUNIOR
-                              ? "chess-pawn"
-                              : "chess-queen"
-                          }
-                        />
-                      </TagRightIcon>
-                    </Tag>
-                  </Td>
-                  <Td>
-                    <Tag
-                      colorScheme={
-                        assistantState?.gender === Gender.MALE ? "blue" : "pink"
-                      }
-                    >
-                      <TagLabel textTransform="capitalize">
-                        {assistantState?.gender}
-                      </TagLabel>
-                      <TagRightIcon>
-                        <FontAwesomeIcon
-                          icon={
-                            assistantState?.gender === Gender.MALE
-                              ? "mars"
-                              : "venus"
-                          }
-                        />
-                      </TagRightIcon>
-                    </Tag>
-                  </Td>
-                  <Td>{assistantState?.phoneNumber}</Td>
-                  <Td>{assistantState?.lineId}</Td>
-                  <Td>
-                    {assistantState?.feedbackUrl ? (
-                      <Link
-                        href={assistantState?.feedbackUrl}
-                        isExternal={true}
-                      >
-                        Open{" "}
-                        <FontAwesomeIcon icon="arrow-up-right-from-square" />
-                      </Link>
-                    ) : null}
-                  </Td>
+        <Skeleton rounded="xl" isLoaded={assistantsState ? true : false}>
+          <TableContainer
+            marginTop="4"
+            shadow="xl"
+            rounded="lg"
+            height="67vh"
+            overflowY="auto"
+          >
+            <Table size="sm" bgColor="white">
+              <Thead>
+                <Tr>
+                  <Th></Th>
+                  <Th>Kode</Th>
+                  <Th>Nama</Th>
+                  <Th>Level</Th>
+                  <Th>Gender</Th>
+                  <Th>No. HP</Th>
+                  <Th>ID Line</Th>
+                  <Th>Link Feedback</Th>
                 </Tr>
-              ))}
-            </Tbody>
-          </Table>
-        </TableContainer>
+              </Thead>
+              <Tbody>
+                {assistantsState?.map((assistantState, index) => (
+                  <Tr key={index}>
+                    <Td>
+                      <IconButton
+                        aria-label="Edit asisten"
+                        size="sm"
+                        icon={<FontAwesomeIcon icon="pen" />}
+                        onClick={() => {
+                          onEditingAssistantRef.current = { ...assistantState }
+                          onOpen()
+                        }}
+                      />
+                      <IconButton
+                        aria-label="Hapus asisten"
+                        size="sm"
+                        icon={<FontAwesomeIcon icon="trash-can" />}
+                        marginLeft="2"
+                        bgColor="red.100"
+                        color="red.500"
+                        colorScheme="red"
+                        variant="unstyled"
+                        _hover={{ backgroundColor: "red.200" }}
+                        onClick={() => {
+                          onDeletingAssistantIdRef.current = assistantState._id
+                          onDeleteModalOpen()
+                        }}
+                      />
+                    </Td>
+                    <Td fontWeight="bold">{assistantState?.code}</Td>
+                    <Td maxWidth="60" isTruncated={true}>
+                      {assistantState?.name}
+                    </Td>
+                    <Td textTransform="capitalize">
+                      <Tag
+                        colorScheme={
+                          assistantState?.level === AssistantLevel.JUNIOR
+                            ? "green"
+                            : "orange"
+                        }
+                      >
+                        <TagLabel textTransform="capitalize">
+                          {assistantState?.level}
+                        </TagLabel>
+                        <TagRightIcon>
+                          <FontAwesomeIcon
+                            icon={
+                              assistantState?.level === AssistantLevel.JUNIOR
+                                ? "chess-pawn"
+                                : "chess-queen"
+                            }
+                          />
+                        </TagRightIcon>
+                      </Tag>
+                    </Td>
+                    <Td>
+                      <Tag
+                        colorScheme={
+                          assistantState?.gender === Gender.MALE
+                            ? "blue"
+                            : "pink"
+                        }
+                      >
+                        <TagLabel textTransform="capitalize">
+                          {assistantState?.gender}
+                        </TagLabel>
+                        <TagRightIcon>
+                          <FontAwesomeIcon
+                            icon={
+                              assistantState?.gender === Gender.MALE
+                                ? "mars"
+                                : "venus"
+                            }
+                          />
+                        </TagRightIcon>
+                      </Tag>
+                    </Td>
+                    <Td>{assistantState?.phoneNumber}</Td>
+                    <Td>{assistantState?.lineId}</Td>
+                    <Td>
+                      {assistantState?.feedbackUrl ? (
+                        <Link
+                          href={assistantState?.feedbackUrl}
+                          isExternal={true}
+                        >
+                          Open{" "}
+                          <FontAwesomeIcon icon="arrow-up-right-from-square" />
+                        </Link>
+                      ) : null}
+                    </Td>
+                  </Tr>
+                ))}
+              </Tbody>
+            </Table>
+          </TableContainer>
+        </Skeleton>
 
         {/* modal create asisten */}
         <Modal
