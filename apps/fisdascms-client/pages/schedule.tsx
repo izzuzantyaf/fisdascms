@@ -19,6 +19,9 @@ import {
   ModalHeader,
   ModalOverlay,
   Switch,
+  FormControl,
+  FormLabel,
+  FormHelperText,
 } from "@chakra-ui/react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Head from "next/head"
@@ -69,6 +72,7 @@ export default function Schedule() {
   useEffect(() => {
     getSchedules()
   }, [])
+
   return (
     <>
       <Head>
@@ -140,7 +144,8 @@ export default function Schedule() {
               3
             )}
         </SimpleGrid>
-        <Modal isOpen={isOpen} onClose={onClose}>
+
+        <Modal isOpen={isOpen} onClose={onClose} isCentered={true}>
           <ModalOverlay />
           <ModalContent marginX="4" rounded="xl">
             <form>
@@ -163,13 +168,9 @@ export default function Schedule() {
                     "Kelas"
                   }`}</Heading>
                 </Flex>
-                <Flex direction="column" gap="1" marginTop="6">
-                  <Heading size="sm">Link File</Heading>
-                  <Flex
-                    justifyContent="space-between"
-                    gap="2"
-                    alignItems="center"
-                  >
+                <Flex direction="column" gap="2" marginTop="6">
+                  <FormControl>
+                    <FormLabel>Link File</FormLabel>
                     <Input
                       type="url"
                       placeholder="Link file jadwal"
@@ -182,6 +183,20 @@ export default function Schedule() {
                         onEditingScheduleRef.current.url = e.target.value
                       }}
                     />
+                  </FormControl>
+
+                  <FormControl
+                    display="flex"
+                    justifyContent="space-between"
+                    gap="2"
+                    alignItems="center"
+                  >
+                    <Box>
+                      <FormLabel>Perlihatkan</FormLabel>
+                      <FormHelperText>
+                        Tampilkan jadwal agar dapat dilihat oleh praktikan
+                      </FormHelperText>
+                    </Box>
                     <Switch
                       defaultChecked={onEditingScheduleRef.current?.isActive}
                       colorScheme="green"
@@ -189,13 +204,9 @@ export default function Schedule() {
                         setCanUpdate(true)
                         onEditingScheduleRef.current.isActive =
                           !onEditingScheduleRef.current.isActive
-                        // setOnEditingSchedule((prevState) => ({
-                        //   ...prevState,
-                        //   isActive: !prevState?.isActive,
-                        // }))
                       }}
                     />
-                  </Flex>
+                  </FormControl>
                 </Flex>
               </ModalBody>
               <ModalFooter>

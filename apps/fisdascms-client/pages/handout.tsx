@@ -20,6 +20,9 @@ import {
   useToast,
   Square,
   Link,
+  FormLabel,
+  FormControl,
+  FormHelperText,
 } from "@chakra-ui/react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Head from "next/head"
@@ -50,6 +53,7 @@ export default function HandoutPage() {
       isActive: onEditingHandout.isActive,
       url: onEditingHandout.url,
     })
+    setIsHandoutUpdating(false)
     if (!handoutUpdateResponse.isSuccess) {
       //! munculkan pesan error
       toast({
@@ -63,7 +67,6 @@ export default function HandoutPage() {
       status: "success",
       title: handoutUpdateResponse.message,
     })
-    setIsHandoutUpdating(false)
     getHandouts()
     onClose()
   }
@@ -172,32 +175,37 @@ export default function HandoutPage() {
                     </Text>
                   </Box>
                 </Flex>
-                <Heading size="sm" marginTop="6">
-                  Link File
-                </Heading>
-                <Input
-                  type="url"
-                  placeholder="Link dokumen"
-                  defaultValue={onEditingHandout?.url}
-                  onFocus={(e) => {
-                    e.target.select()
-                  }}
-                  onChange={(e) => {
-                    setCanUpdate(true)
-                    setOnEditingHandout((prevState) => ({
-                      ...prevState,
-                      url: e.target.value,
-                    }))
-                  }}
-                />
-                <Flex alignItems="center" marginTop="4">
+                <FormControl>
+                  <FormLabel marginTop="6">Link File</FormLabel>
+                  <Input
+                    type="url"
+                    placeholder="Link dokumen"
+                    defaultValue={onEditingHandout?.url}
+                    onFocus={(e) => {
+                      e.target.select()
+                    }}
+                    onChange={(e) => {
+                      setCanUpdate(true)
+                      setOnEditingHandout((prevState) => ({
+                        ...prevState,
+                        url: e.target.value,
+                      }))
+                    }}
+                  />
+                </FormControl>
+                <FormControl
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="space-between"
+                  gap="2"
+                  marginTop="4"
+                >
                   <Box>
-                    <Heading size="sm">Perlihatkan</Heading>
-                    <Text fontSize="sm">
+                    <FormLabel>Perlihatkan</FormLabel>
+                    <FormHelperText>
                       Tampilkan modul agar dapat diakses oleh praktikan
-                    </Text>
+                    </FormHelperText>
                   </Box>
-                  <Spacer />
                   <Switch
                     defaultChecked={onEditingHandout?.isActive}
                     colorScheme="green"
@@ -209,7 +217,7 @@ export default function HandoutPage() {
                       }))
                     }}
                   />
-                </Flex>
+                </FormControl>
               </ModalBody>
               <ModalFooter>
                 <Button

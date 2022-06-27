@@ -2,6 +2,9 @@ import {
   Box,
   Button,
   Flex,
+  FormControl,
+  FormHelperText,
+  FormLabel,
   Heading,
   Input,
   Modal,
@@ -238,13 +241,10 @@ export default function PracticumMaterialPage() {
                     </Text>
                   </Box>
                 </Flex>
-                <Flex direction="column" gap="1" marginTop="6">
-                  <Heading size="sm">Link Soal TP</Heading>
-                  <Flex
-                    justifyContent="space-between"
-                    gap="2"
-                    alignItems="center"
-                  >
+
+                <Flex direction="column" gap="2" marginTop="6">
+                  <FormControl>
+                    <FormLabel>Link Soal TP</FormLabel>
                     <Input
                       type="url"
                       placeholder="Link soal TP"
@@ -263,6 +263,19 @@ export default function PracticumMaterialPage() {
                         })
                       }}
                     />
+                  </FormControl>
+                  <FormControl
+                    display="flex"
+                    gap="2"
+                    alignItems="center"
+                    justifyContent="space-between"
+                  >
+                    <Box>
+                      <FormLabel>Perlihatkan</FormLabel>
+                      <FormHelperText>
+                        Tampilkan soal TP agar dapat diakses oleh praktikan
+                      </FormHelperText>
+                    </Box>
                     <Switch
                       defaultChecked={onEditingMaterial?.preTask?.isActive}
                       colorScheme="green"
@@ -277,13 +290,9 @@ export default function PracticumMaterialPage() {
                         })
                       }}
                     />
-                  </Flex>
-                  <Heading size="sm">Link Video</Heading>
-                  <Flex
-                    justifyContent="space-between"
-                    gap="2"
-                    alignItems="center"
-                  >
+                  </FormControl>
+                  <FormControl>
+                    <FormLabel>Link Video</FormLabel>
                     <Input
                       type="url"
                       placeholder="Link YouTube video praktikum"
@@ -302,6 +311,20 @@ export default function PracticumMaterialPage() {
                         })
                       }}
                     />
+                  </FormControl>
+                  <FormControl
+                    display="flex"
+                    gap="2"
+                    alignItems="center"
+                    justifyContent="space-between"
+                  >
+                    <Box>
+                      <FormLabel>Perlihatkan</FormLabel>
+                      <FormHelperText>
+                        Tampilkan video praktikum agar dapat diakses oleh
+                        praktikan
+                      </FormHelperText>
+                    </Box>
                     <Switch
                       defaultChecked={onEditingMaterial?.video?.isActive}
                       colorScheme="green"
@@ -316,13 +339,9 @@ export default function PracticumMaterialPage() {
                         })
                       }}
                     />
-                  </Flex>
-                  <Heading size="sm">Link Cover Jurnal</Heading>
-                  <Flex
-                    justifyContent="space-between"
-                    gap="2"
-                    alignItems="center"
-                  >
+                  </FormControl>
+                  <FormControl>
+                    <FormLabel>Link Cover Jurnal</FormLabel>
                     <Input
                       type="url"
                       placeholder="Link cover jurnal"
@@ -341,6 +360,19 @@ export default function PracticumMaterialPage() {
                         })
                       }}
                     />
+                  </FormControl>
+                  <FormControl
+                    display="flex"
+                    gap="2"
+                    alignItems="center"
+                    justifyContent="space-between"
+                  >
+                    <Box>
+                      <FormLabel>Perlihatkan</FormLabel>
+                      <FormHelperText>
+                        Tampilkan cover jurnal agar dapat diakses oleh praktikan
+                      </FormHelperText>
+                    </Box>
                     <Switch
                       defaultChecked={onEditingMaterial?.journalCover?.isActive}
                       colorScheme="green"
@@ -356,16 +388,12 @@ export default function PracticumMaterialPage() {
                         })
                       }}
                     />
-                  </Flex>
-                  <Heading size="sm">Link Simulator</Heading>
-                  <Flex
-                    justifyContent="space-between"
-                    gap="2"
-                    alignItems="center"
-                  >
+                  </FormControl>
+                  <FormControl>
+                    <FormLabel>Link Simulator</FormLabel>
                     <Input
                       type="url"
-                      placeholder="Link simulator"
+                      placeholder="Link simulator praktikum"
                       defaultValue={onEditingMaterial?.simulator?.url}
                       onFocus={(e) => {
                         e.target.select()
@@ -381,6 +409,19 @@ export default function PracticumMaterialPage() {
                         })
                       }}
                     />
+                  </FormControl>
+                  <FormControl
+                    display="flex"
+                    gap="2"
+                    alignItems="center"
+                    justifyContent="space-between"
+                  >
+                    <Box>
+                      <FormLabel>Perlihatkan</FormLabel>
+                      <FormHelperText>
+                        Tampilkan simulator agar dapat diakses oleh praktikan
+                      </FormHelperText>
+                    </Box>
                     <Switch
                       defaultChecked={onEditingMaterial?.simulator?.isActive}
                       colorScheme="green"
@@ -395,7 +436,7 @@ export default function PracticumMaterialPage() {
                         })
                       }}
                     />
-                  </Flex>
+                  </FormControl>
                 </Flex>
               </ModalBody>
               <ModalFooter>
