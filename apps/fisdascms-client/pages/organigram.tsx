@@ -2,6 +2,7 @@ import {
   Button,
   FormControl,
   FormHelperText,
+  FormLabel,
   Heading,
   Input,
   SimpleGrid,
@@ -91,7 +92,7 @@ export default function OrganigramPage() {
           <form>
             <Skeleton isLoaded={organigramState}>
               <FormControl isInvalid={isError}>
-                <Heading size="sm">Link File</Heading>
+                <FormLabel>Link File</FormLabel>
                 <Input
                   type="url"
                   placeholder="Link Google Drive organigram"
