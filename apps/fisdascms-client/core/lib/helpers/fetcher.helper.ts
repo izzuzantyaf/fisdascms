@@ -1,15 +1,15 @@
-import { ApiRoute } from "./constants"
+import { MyResponse } from "../../types/my-response.type"
 
-export const getFetch = async (path: ApiRoute, query: string = "") => {
+export const getFetch = async (path: string, query?: string) => {
   const url =
     process.env.NEXT_PUBLIC_SERVER_APP_BASEURL +
     path +
     (query ? `?${query}` : "")
   const response = await fetch(url)
-  return await response.json()
+  return (await response.json()) as MyResponse
 }
 
-export const postFetch = async (path: ApiRoute, body: object | [] = {}) => {
+export const postFetch = async (path: string, body: object = {}) => {
   const response = await fetch(
     process.env.NEXT_PUBLIC_SERVER_APP_BASEURL + path,
     {
@@ -20,10 +20,10 @@ export const postFetch = async (path: ApiRoute, body: object | [] = {}) => {
       body: JSON.stringify(body),
     }
   )
-  return await response.json()
+  return (await response.json()) as MyResponse
 }
 
-export const putFetch = async (path: ApiRoute, body: object = {}) => {
+export const putFetch = async (path: string, body: object = {}) => {
   const response = await fetch(
     process.env.NEXT_PUBLIC_SERVER_APP_BASEURL + path,
     {
@@ -34,13 +34,10 @@ export const putFetch = async (path: ApiRoute, body: object = {}) => {
       body: JSON.stringify(body),
     }
   )
-  return await response.json()
+  return (await response.json()) as MyResponse
 }
 
-export const deleteFetch = async (
-  path: ApiRoute | string,
-  body: object = {}
-) => {
+export const deleteFetch = async (path: string, body: object = {}) => {
   const response = await fetch(
     process.env.NEXT_PUBLIC_SERVER_APP_BASEURL + path,
     {
@@ -51,5 +48,5 @@ export const deleteFetch = async (
       body: JSON.stringify(body),
     }
   )
-  return await response.json()
+  return (await response.json()) as MyResponse
 }

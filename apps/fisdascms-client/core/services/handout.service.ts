@@ -1,5 +1,5 @@
 import { ApiRoute } from "../lib/constants"
-import { getFetch, putFetch } from "../lib/fetcher"
+import { getFetch, putFetch } from "../lib/helpers/fetcher.helper"
 
 export const handoutService = {
   getAll: async () => {
@@ -14,6 +14,6 @@ export const handoutService = {
   }) => {
     const response = await putFetch(ApiRoute.HANDOUT, newHandout)
     console.log("Update handout API response :", response)
-    return await response
+    return response
   },
 }

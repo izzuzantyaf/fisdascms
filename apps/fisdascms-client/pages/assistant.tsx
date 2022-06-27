@@ -35,7 +35,7 @@ import {
 import Head from "next/head"
 import { useEffect, useRef, useState } from "react"
 import PageLayout from "../layouts/page-layout"
-import { assistantService } from "../services/assistant.service"
+import { assistantService } from "../core/services/assistant.service"
 import {
   Table,
   Thead,
@@ -46,7 +46,7 @@ import {
   TableContainer,
 } from "@chakra-ui/react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { AssistantLevel, Gender } from "../lib/constants"
+import { AssistantLevel, Gender } from "../core/lib/constants"
 
 export default function Assistant() {
   const [assistantsState, setAssistantsState] = useState<object[]>()

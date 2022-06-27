@@ -3,7 +3,6 @@ import {
   Button,
   FormControl,
   FormErrorMessage,
-  FormHelperText,
   FormLabel,
   Heading,
   Input,
@@ -11,40 +10,44 @@ import {
   Skeleton,
   useToast,
 } from "@chakra-ui/react"
-import { useEffect, useState } from "react"
-import { codeOfConductService } from "../services/code-of-conduct.service"
+import React, { useEffect, useState } from "react"
+import { codeOfConductService } from "../core/services/code-of-conduct.service"
 import PageLayout from "../layouts/page-layout"
 import shadowedBoxStyle from "../chakra-style-props/shadowed-box"
+import {
+  CodeOfConduct,
+  CodeOfConductValidationError,
+} from "../core/types/code-of-conduct.type"
 
 export default function CodeOfCoductPage() {
   const [isCodeOfConductUpdating, setIsCodeOfConductUpdating] = useState(false)
-  const [codeOfConductState, setCodeOfConductState] = useState()
+  const [codeOfConductState, setCodeOfConductState] = useState<CodeOfConduct>()
   const toast = useToast()
-  const [isError, setIsError] = useState(false)
+  const [validationError, setValidationError] =
+    useState<CodeOfConductValidationError>()
   const [canSubmit, setCanSubmit] = useState(false)
 
-  const getCodeOfConduct = async () => {
+  const hadndleGetCodeOfConduct = async () => {
     const codeOfConduct = await codeOfConductService.getAll()
     setCodeOfConductState(codeOfConduct)
   }
 
   const handleUpdateCodeOfConduct = async () => {
-    const newCodeOfConduct = {
-      _id: codeOfConductState._id,
-      url: codeOfConductState.url,
-    }
     setIsCodeOfConductUpdating(true)
-    const updateResponse = await codeOfConductService.update(newCodeOfConduct)
+    const updateResponse = await codeOfConductService.update({
+      _id: codeOfConductState?._id as string,
+      url: codeOfConductState?.url,
+    })
     setIsCodeOfConductUpdating(false)
     if (!updateResponse.isSuccess) {
-      setIsError(true)
+      setValidationError(updateResponse.data.errors)
       toast({
         title: updateResponse.message,
         status: "error",
       })
       return
     }
-    setIsError(false)
+    setValidationError(undefined)
     setCodeOfConductState(updateResponse?.data?.updatedCodeOfConduct)
     toast({
       title: updateResponse.message,
@@ -54,7 +57,7 @@ export default function CodeOfCoductPage() {
   }
 
   useEffect(() => {
-    getCodeOfConduct()
+    hadndleGetCodeOfConduct()
   }, [])
 
   return (
@@ -71,7 +74,7 @@ export default function CodeOfCoductPage() {
           padding="4"
           {...shadowedBoxStyle}
         >
-          <Skeleton isLoaded={codeOfConductState}>
+          <Skeleton isLoaded={codeOfConductState ? true : false}>
             <iframe
               src={codeOfConductState?.previewUrl}
               width="100%"
@@ -79,8 +82,8 @@ export default function CodeOfCoductPage() {
             ></iframe>
           </Skeleton>
           <form>
-            <Skeleton isLoaded={codeOfConductState}>
-              <FormControl isInvalid={isError}>
+            <Skeleton isLoaded={codeOfConductState ? true : false}>
+              <FormControl isInvalid={validationError?.url ? true : false}>
                 <FormLabel>Link file</FormLabel>
                 <Input
                   type="url"
@@ -88,15 +91,15 @@ export default function CodeOfCoductPage() {
                   defaultValue={codeOfConductState?.url}
                   onFocus={(e) => e.target.select()} //* select all ketika user klik input field
                   onChange={(e) => {
-                    setCodeOfConductState({
-                      ...codeOfConductState,
-                      url: e.target.value,
+                    setCodeOfConductState((prevState) => {
+                      prevState.url = e.target.value
+                      return prevState
                     })
                     setCanSubmit(true)
                   }}
                 />
-                {isError ? (
-                  <FormErrorMessage>Link tidak valid</FormErrorMessage>
+                {validationError?.url ? (
+                  <FormErrorMessage>{validationError.url}</FormErrorMessage>
                 ) : null}
               </FormControl>
             </Skeleton>

@@ -12,8 +12,8 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Link from "next/link"
 import shadowedBoxStyle from "../chakra-style-props/shadowed-box"
-import { menu, Route } from "../lib/constants"
-import { authService } from "../services/auth.service"
+import { menu, Route } from "../core/lib/constants"
+import { authService } from "../core/services/auth.service"
 
 export default function Navbar() {
   const handleSignOut = () => {

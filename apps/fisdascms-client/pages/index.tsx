@@ -1,5 +1,5 @@
 import Head from "next/head"
-import { menu } from "../lib/constants"
+import { menu } from "../core/lib/constants"
 import {
   Box,
   Container,

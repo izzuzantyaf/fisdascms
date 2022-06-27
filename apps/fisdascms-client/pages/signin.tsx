@@ -13,7 +13,7 @@ import {
   useToast,
   VStack,
 } from "@chakra-ui/react"
-import { authService } from "../services/auth.service"
+import { authService } from "../core/services/auth.service"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 export default function SignInPage() {

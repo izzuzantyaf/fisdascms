@@ -1,5 +1,5 @@
 import { ApiRoute, Faculty } from "../lib/constants"
-import { getFetch, putFetch } from "../lib/fetcher"
+import { getFetch, putFetch } from "../lib/helpers/fetcher.helper"
 
 export const scheduleService = {
   getAll: async () => {
@@ -15,6 +15,6 @@ export const scheduleService = {
   }) => {
     const response = await putFetch(ApiRoute.SCHEDULE, newSchedule)
     console.log("Update schedule API response :", response)
-    return await response
+    return response
   },
 }

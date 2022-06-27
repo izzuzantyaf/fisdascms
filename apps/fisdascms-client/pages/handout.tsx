@@ -26,9 +26,9 @@ import Head from "next/head"
 import { useEffect, useState } from "react"
 import shadowedBoxStyle from "../chakra-style-props/shadowed-box"
 import PageLayout from "../layouts/page-layout"
-import { languageCodeMapper } from "../lib/language-code-mapper"
-import { renderSkeleton } from "../lib/render-skeleton"
-import { handoutService } from "../services/handout.service"
+import { languageCodeMapper } from "../core/lib/helpers/language-code-mapper.helper"
+import { handoutService } from "../core/services/handout.service"
+import { repeatElement } from "../core/lib/helpers/repeat-element.helper"
 
 export default function HandoutPage() {
   const [handoutsState, setHandoutState] = useState<object[]>()
@@ -135,7 +135,7 @@ export default function HandoutPage() {
               </Button>
             </Box>
           )) ??
-            renderSkeleton(
+            repeatElement(
               <Skeleton
                 isLoaded={handoutsState ? true : false}
                 rounded="xl"

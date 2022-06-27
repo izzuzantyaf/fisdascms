@@ -1,6 +1,6 @@
 import { NextFetchEvent, NextRequest, NextResponse } from "next/server"
 import * as jose from "jose"
-import { Route } from "../lib/constants"
+import { Route } from "../core/lib/constants"
 
 export function middleware(req: NextRequest, ev: NextFetchEvent) {
   const access_token = req.cookies.jwt

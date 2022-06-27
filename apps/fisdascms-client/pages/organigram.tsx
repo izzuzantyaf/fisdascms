@@ -12,7 +12,7 @@ import Head from "next/head"
 import shadowedBoxStyle from "../chakra-style-props/shadowed-box"
 import PageLayout from "../layouts/page-layout"
 import { useState, useEffect } from "react"
-import { organigramService } from "../services/organigram.service"
+import { organigramService } from "../core/services/organigram.service"
 
 export default function OrganigramPage() {
   const [isOrganigramUpdating, setIsOrganigramUpdating] = useState(false)

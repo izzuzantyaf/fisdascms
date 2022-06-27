@@ -1,5 +1,5 @@
 import { ApiRoute } from "../lib/constants"
-import { getFetch, putFetch } from "../lib/fetcher"
+import { getFetch, putFetch } from "../lib/helpers/fetcher.helper"
 
 export const practicumMaterialService = {
   getAll: async () => {
@@ -13,6 +13,6 @@ export const practicumMaterialService = {
       newPracticumMaterial
     )
     console.log("Update practicum material API response :", response)
-    return await response
+    return response
   },
 }

@@ -1,5 +1,5 @@
 import { ApiRoute } from "../lib/constants"
-import { postFetch } from "../lib/fetcher"
+import { postFetch } from "../lib/helpers/fetcher.helper"
 
 export const authService = {
   signIn: async (email: string, password: string) => {

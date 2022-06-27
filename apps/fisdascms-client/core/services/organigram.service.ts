@@ -1,5 +1,5 @@
 import { ApiRoute } from "../lib/constants"
-import { getFetch, putFetch } from "../lib/fetcher"
+import { getFetch, putFetch } from "../lib/helpers/fetcher.helper"
 
 export const organigramService = {
   getAll: async () => {
@@ -10,6 +10,6 @@ export const organigramService = {
   update: async (newOrganigram: { _id: string; url: string }) => {
     const response = await putFetch(ApiRoute.ORGANIGRAM, newOrganigram)
     console.log("Update organigram API response :", response)
-    return await response
+    return response
   },
 }

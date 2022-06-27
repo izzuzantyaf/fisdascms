@@ -1,11 +1,16 @@
 import { ApiRoute } from "../lib/constants"
-import { deleteFetch, getFetch, postFetch, putFetch } from "../lib/fetcher"
+import {
+  deleteFetch,
+  getFetch,
+  postFetch,
+  putFetch,
+} from "../lib/helpers/fetcher.helper"
 
 export const assistantService = {
   create: async (newAssistant: any) => {
     const response = await postFetch(ApiRoute.ASSISTANT, newAssistant)
     console.log("Create assistant API response :", response)
-    return await response
+    return response
   },
   getAll: async () => {
     const response = await getFetch(ApiRoute.ASSISTANT)
@@ -20,11 +25,11 @@ export const assistantService = {
   update: async (newAssistant: any) => {
     const response = await putFetch(ApiRoute.ASSISTANT, newAssistant)
     console.log("Update assistant API response :", response)
-    return await response
+    return response
   },
   delete: async (id: any) => {
     const response = await deleteFetch(`${ApiRoute.ASSISTANT}/${id}`)
     console.log("Update assistant API response :", response)
-    return await response
+    return response
   },
 }

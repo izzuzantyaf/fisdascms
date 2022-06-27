@@ -25,8 +25,8 @@ import Head from "next/head"
 import { useEffect, useRef, useState } from "react"
 import shadowedBoxStyle from "../chakra-style-props/shadowed-box"
 import PageLayout from "../layouts/page-layout"
-import { renderSkeleton } from "../lib/render-skeleton"
-import { scheduleService } from "../services/schedule.service"
+import { scheduleService } from "../core/services/schedule.service"
+import { repeatElement } from "../core/lib/helpers/repeat-element.helper"
 
 export default function Schedule() {
   const [schedulesState, setSchedulesState] = useState<object[]>()
@@ -131,7 +131,7 @@ export default function Schedule() {
               </Button>
             </Box>
           )) ??
-            renderSkeleton(
+            repeatElement(
               <Skeleton
                 isLoaded={schedulesState ? true : false}
                 rounded="xl"

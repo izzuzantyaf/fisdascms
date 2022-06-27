@@ -1,6 +1,6 @@
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from "@chakra-ui/react"
 import Link from "next/link"
-import { breadcrumpStack, Route } from "../lib/constants"
+import { breadcrumpStack, Route } from "../core/lib/constants"
 
 export default function Breadcrump() {
   return (

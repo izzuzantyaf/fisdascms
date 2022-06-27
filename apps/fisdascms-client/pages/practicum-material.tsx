@@ -21,12 +21,12 @@ import {
 } from "@chakra-ui/react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Head from "next/head"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 import shadowedBoxStyle from "../chakra-style-props/shadowed-box"
 import PageLayout from "../layouts/page-layout"
-import { languageCodeMapper } from "../lib/language-code-mapper"
-import { renderSkeleton } from "../lib/render-skeleton"
-import { practicumMaterialService } from "../services/practicum-material.service"
+import { languageCodeMapper } from "../core/lib/helpers/language-code-mapper.helper"
+import { practicumMaterialService } from "../core/services/practicum-material.service"
+import { repeatElement } from "../core/lib/helpers/repeat-element.helper"
 
 export default function PracticumMaterialPage() {
   const [practicumMaterialState, setPracticumMaterialState] =
@@ -203,7 +203,7 @@ export default function PracticumMaterialPage() {
               </Button>
             </Box>
           )) ??
-            renderSkeleton(
+            repeatElement(
               <Skeleton
                 isLoaded={practicumMaterialState ? true : false}
                 rounded="xl"
