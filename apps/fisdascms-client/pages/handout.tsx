@@ -16,30 +16,37 @@ import {
   Switch,
   Input,
   Flex,
-  Spacer,
   useToast,
   Square,
   Link,
   FormLabel,
   FormControl,
   FormHelperText,
+  FormErrorMessage,
 } from "@chakra-ui/react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Head from "next/head"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import shadowedBoxStyle from "../chakra-style-props/shadowed-box"
 import PageLayout from "../layouts/page-layout"
 import { languageCodeMapper } from "../core/lib/helpers/language-code-mapper.helper"
 import { handoutService } from "../core/services/handout.service"
 import { repeatElement } from "../core/lib/helpers/repeat-element.helper"
+import {
+  Handout,
+  HandoutValidationError,
+  UpdateHandoutDto,
+} from "../core/types/handout.type"
 
 export default function HandoutPage() {
-  const [handoutsState, setHandoutState] = useState<object[]>()
+  const [handoutsState, setHandoutState] = useState<Handout[]>()
   const { onOpen, isOpen, onClose } = useDisclosure()
-  const [onEditingHandout, setOnEditingHandout] = useState<object>()
+  const onEditingHandoutRef = useRef<Handout>()
   const toast = useToast()
   const [isHandoutUpdating, setIsHandoutUpdating] = useState(false)
   const [canUpdate, setCanUpdate] = useState(false)
+  const [validationError, setValidationError] =
+    useState<HandoutValidationError>()
 
   const getHandouts = async () => {
     const handouts = await handoutService.getAll()
@@ -49,12 +56,13 @@ export default function HandoutPage() {
   const handleHandoutUpdate = async () => {
     setIsHandoutUpdating(true)
     const handoutUpdateResponse = await handoutService.update({
-      _id: onEditingHandout._id,
-      isActive: onEditingHandout.isActive,
-      url: onEditingHandout.url,
-    })
+      _id: onEditingHandoutRef.current?._id,
+      isActive: onEditingHandoutRef.current?.isActive,
+      url: onEditingHandoutRef.current?.url,
+    } as UpdateHandoutDto)
     setIsHandoutUpdating(false)
     if (!handoutUpdateResponse.isSuccess) {
+      setValidationError(handoutUpdateResponse.data.validationErrors)
       //! munculkan pesan error
       toast({
         status: "error",
@@ -62,12 +70,18 @@ export default function HandoutPage() {
       })
       return
     }
+    const { updatedHandout } = handoutUpdateResponse.data
+    setHandoutState((prevState) =>
+      prevState?.map((state) =>
+        state._id === updatedHandout._id ? updatedHandout : state
+      )
+    )
     // munculkan pesan sukses
     toast({
       status: "success",
       title: handoutUpdateResponse.message,
     })
-    getHandouts()
+    setValidationError(undefined)
     onClose()
   }
 
@@ -128,8 +142,9 @@ export default function HandoutPage() {
                 width="full"
                 marginTop="4"
                 onClick={() => {
-                  setOnEditingHandout(handout)
+                  onEditingHandoutRef.current = { ...handout }
                   setCanUpdate(false)
+                  setValidationError(undefined)
                   onOpen()
                 }}
                 colorScheme="blue"
@@ -168,30 +183,32 @@ export default function HandoutPage() {
                   </Square>
                   <Box>
                     <Heading size="md">
-                      {onEditingHandout?.faculty?.toUpperCase()}
+                      {onEditingHandoutRef.current?.faculty?.toUpperCase()}
                     </Heading>
                     <Text>
-                      {languageCodeMapper(onEditingHandout?.language)}
+                      {languageCodeMapper(
+                        onEditingHandoutRef.current?.language
+                      )}
                     </Text>
                   </Box>
                 </Flex>
-                <FormControl>
+                <FormControl isInvalid={validationError?.url ? true : false}>
                   <FormLabel marginTop="6">Link File</FormLabel>
                   <Input
                     type="url"
                     placeholder="Link dokumen"
-                    defaultValue={onEditingHandout?.url}
+                    defaultValue={onEditingHandoutRef.current?.url}
                     onFocus={(e) => {
                       e.target.select()
                     }}
                     onChange={(e) => {
+                      onEditingHandoutRef.current.url = e.target.value
                       setCanUpdate(true)
-                      setOnEditingHandout((prevState) => ({
-                        ...prevState,
-                        url: e.target.value,
-                      }))
                     }}
                   />
+                  {validationError?.url ? (
+                    <FormErrorMessage>{validationError.url}</FormErrorMessage>
+                  ) : null}
                 </FormControl>
                 <FormControl
                   display="flex"
@@ -207,14 +224,12 @@ export default function HandoutPage() {
                     </FormHelperText>
                   </Box>
                   <Switch
-                    defaultChecked={onEditingHandout?.isActive}
+                    defaultChecked={onEditingHandoutRef.current?.isActive}
                     colorScheme="green"
                     onChange={(e) => {
+                      onEditingHandoutRef.current.isActive =
+                        !onEditingHandoutRef.current?.isActive
                       setCanUpdate(true)
-                      setOnEditingHandout((prevState) => ({
-                        ...prevState,
-                        isActive: !onEditingHandout?.isActive,
-                      }))
                     }}
                   />
                 </FormControl>

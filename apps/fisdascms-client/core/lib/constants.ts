@@ -108,3 +108,8 @@ export enum AssistantLevel {
   JUNIOR = "junior",
   SENIOR = "senior",
 }
+
+export enum Language {
+  ID = "id",
+  EN = "en",
+}
