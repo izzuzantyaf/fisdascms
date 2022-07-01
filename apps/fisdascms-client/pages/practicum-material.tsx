@@ -3,6 +3,7 @@ import {
   Button,
   Flex,
   FormControl,
+  FormErrorMessage,
   FormHelperText,
   FormLabel,
   Heading,
@@ -30,15 +31,22 @@ import PageLayout from "../layouts/page-layout"
 import { languageCodeMapper } from "../core/lib/helpers/language-code-mapper.helper"
 import { practicumMaterialService } from "../core/services/practicum-material.service"
 import { repeatElement } from "../core/lib/helpers/repeat-element.helper"
+import {
+  PracticumMaterial,
+  PracticumMaterialValidationError,
+} from "../core/types/practicum-material.type"
 
 export default function PracticumMaterialPage() {
   const [practicumMaterialState, setPracticumMaterialState] =
-    useState<object[]>()
+    useState<PracticumMaterial[]>()
+  const [onEditingMaterialState, setOnEditingMaterialState] =
+    useState<PracticumMaterial>()
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const [onEditingMaterial, setOnEditingMaterial] = useState<object>()
   const [isUpdating, setIsUpdating] = useState(false)
   const [canUpdate, setCanUpdate] = useState(false)
   const toast = useToast()
+  const [validationError, setValidationError] =
+    useState<PracticumMaterialValidationError>()
 
   const getPracticumMaterials = async () => {
     setPracticumMaterialState(await practicumMaterialService.getAll())
@@ -46,27 +54,37 @@ export default function PracticumMaterialPage() {
 
   const handlePracticumMaterialUpdate = async () => {
     setIsUpdating(true)
-    const response = await practicumMaterialService.update(onEditingMaterial)
+    const { _id, preTask, video, simulator, journalCover } =
+      onEditingMaterialState as PracticumMaterial
+    const response = await practicumMaterialService.update({
+      _id,
+      preTask,
+      video,
+      simulator,
+      journalCover,
+    })
+    setIsUpdating(false)
     if (!response?.isSuccess) {
+      setValidationError(response.data.validationError)
       toast({
         title: response.message,
         status: "error",
       })
       return
     }
+    setValidationError(undefined)
     const { updatedPracticumModule } = response.data
-    setPracticumMaterialState(
-      practicumMaterialState?.map((pmState) =>
-        pmState._id === updatedPracticumModule._id
-          ? updatedPracticumModule
-          : pmState
+    setPracticumMaterialState((prevState) => {
+      const oldIndex = prevState?.findIndex(
+        (old) => old._id == updatedPracticumModule._id
       )
-    )
+      prevState[oldIndex] = updatedPracticumModule
+      return prevState
+    })
     toast({
       title: response.message,
       status: "success",
     })
-    setIsUpdating(false)
     onClose()
   }
 
@@ -196,7 +214,7 @@ export default function PracticumMaterialPage() {
                 width="full"
                 marginTop="4"
                 onClick={() => {
-                  setOnEditingMaterial(practicumMaterial)
+                  setOnEditingMaterialState({ ...practicumMaterial })
                   setCanUpdate(false)
                   onOpen()
                 }}
@@ -216,7 +234,14 @@ export default function PracticumMaterialPage() {
             )}
         </SimpleGrid>
 
-        <Modal isOpen={isOpen} onClose={onClose}>
+        <Modal
+          isOpen={isOpen}
+          onClose={() => {
+            onClose()
+            setOnEditingMaterialState(undefined)
+            setValidationError(undefined)
+          }}
+        >
           <ModalOverlay />
           <ModalContent marginX="4" rounded="xl">
             <form>
@@ -232,37 +257,43 @@ export default function PracticumMaterialPage() {
                     borderRadius="full"
                     marginRight="4"
                   >
-                    <FontAwesomeIcon icon={onEditingMaterial?.faIconName} />
+                    <FontAwesomeIcon
+                      icon={onEditingMaterialState?.faIconName}
+                    />
                   </Square>
                   <Box>
-                    <Heading size="md">{onEditingMaterial?.code}</Heading>
+                    <Heading size="md">{onEditingMaterialState?.code}</Heading>
                     <Text fontWeight="normal" fontSize="sm">
-                      {onEditingMaterial?.name}
+                      {onEditingMaterialState?.name}
                     </Text>
                   </Box>
                 </Flex>
 
                 <Flex direction="column" gap="2" marginTop="6">
-                  <FormControl>
+                  <FormControl
+                    isInvalid={validationError?.preTask?.url ? true : false}
+                  >
                     <FormLabel>Link Soal TP</FormLabel>
                     <Input
                       type="url"
                       placeholder="Link soal TP"
-                      defaultValue={onEditingMaterial?.preTask?.url}
-                      onFocus={(e) => {
+                      defaultValue={onEditingMaterialState?.preTask?.url}
+                      onFocus={(e: any) => {
                         e.target.select()
                       }}
-                      onChange={(e) => {
-                        setCanUpdate(true)
-                        setOnEditingMaterial({
-                          ...onEditingMaterial,
-                          preTask: {
-                            ...onEditingMaterial?.preTask,
-                            url: e.target.value,
-                          },
+                      onChange={(e: any) => {
+                        setOnEditingMaterialState((prevState) => {
+                          prevState.preTask.url = e.target.value
+                          return prevState
                         })
+                        setCanUpdate(true)
                       }}
                     />
+                    {validationError?.preTask?.url ? (
+                      <FormErrorMessage>
+                        {validationError.preTask.url}
+                      </FormErrorMessage>
+                    ) : null}
                   </FormControl>
                   <FormControl
                     display="flex"
@@ -277,40 +308,42 @@ export default function PracticumMaterialPage() {
                       </FormHelperText>
                     </Box>
                     <Switch
-                      defaultChecked={onEditingMaterial?.preTask?.isActive}
+                      defaultChecked={onEditingMaterialState?.preTask?.isActive}
                       colorScheme="green"
                       onChange={() => {
-                        setCanUpdate(true)
-                        setOnEditingMaterial({
-                          ...onEditingMaterial,
-                          preTask: {
-                            ...onEditingMaterial?.preTask,
-                            isActive: !onEditingMaterial?.preTask?.isActive,
-                          },
+                        setOnEditingMaterialState((prevState) => {
+                          prevState.preTask.isActive =
+                            !prevState.preTask.isActive
+                          return prevState
                         })
+                        setCanUpdate(true)
                       }}
                     />
                   </FormControl>
-                  <FormControl>
+                  <FormControl
+                    isInvalid={validationError?.video?.url ? true : false}
+                  >
                     <FormLabel>Link Video</FormLabel>
                     <Input
                       type="url"
                       placeholder="Link YouTube video praktikum"
-                      defaultValue={onEditingMaterial?.video?.url}
-                      onFocus={(e) => {
+                      defaultValue={onEditingMaterialState?.video?.url}
+                      onFocus={(e: any) => {
                         e.target.select()
                       }}
-                      onChange={(e) => {
-                        setCanUpdate(true)
-                        setOnEditingMaterial({
-                          ...onEditingMaterial,
-                          video: {
-                            ...onEditingMaterial?.video,
-                            url: e.target.value,
-                          },
+                      onChange={(e: any) => {
+                        setOnEditingMaterialState((prevState) => {
+                          prevState.video.url = e.target.value
+                          return prevState
                         })
+                        setCanUpdate(true)
                       }}
                     />
+                    {validationError?.video?.url ? (
+                      <FormErrorMessage>
+                        {validationError.video.url}
+                      </FormErrorMessage>
+                    ) : null}
                   </FormControl>
                   <FormControl
                     display="flex"
@@ -326,40 +359,43 @@ export default function PracticumMaterialPage() {
                       </FormHelperText>
                     </Box>
                     <Switch
-                      defaultChecked={onEditingMaterial?.video?.isActive}
+                      defaultChecked={onEditingMaterialState?.video?.isActive}
                       colorScheme="green"
                       onChange={() => {
-                        setCanUpdate(true)
-                        setOnEditingMaterial({
-                          ...onEditingMaterial,
-                          video: {
-                            ...onEditingMaterial?.video,
-                            isActive: !onEditingMaterial?.video?.isActive,
-                          },
+                        setOnEditingMaterialState((prevState) => {
+                          prevState.video.isActive = !prevState.video.isActive
+                          return prevState
                         })
+                        setCanUpdate(true)
                       }}
                     />
                   </FormControl>
-                  <FormControl>
+                  <FormControl
+                    isInvalid={
+                      validationError?.journalCover?.url ? true : false
+                    }
+                  >
                     <FormLabel>Link Cover Jurnal</FormLabel>
                     <Input
                       type="url"
                       placeholder="Link cover jurnal"
-                      defaultValue={onEditingMaterial?.journalCover?.url}
-                      onFocus={(e) => {
+                      defaultValue={onEditingMaterialState?.journalCover?.url}
+                      onFocus={(e: any) => {
                         e.target.select()
                       }}
-                      onChange={(e) => {
-                        setCanUpdate(true)
-                        setOnEditingMaterial({
-                          ...onEditingMaterial,
-                          journalCover: {
-                            ...onEditingMaterial?.journalCover,
-                            url: e.target.value,
-                          },
+                      onChange={(e: any) => {
+                        setOnEditingMaterialState((prevState) => {
+                          prevState.journalCover.url = e.target.value
+                          return prevState
                         })
+                        setCanUpdate(true)
                       }}
                     />
+                    {validationError?.journalCover?.url ? (
+                      <FormErrorMessage>
+                        {validationError.journalCover.url}
+                      </FormErrorMessage>
+                    ) : null}
                   </FormControl>
                   <FormControl
                     display="flex"
@@ -374,41 +410,44 @@ export default function PracticumMaterialPage() {
                       </FormHelperText>
                     </Box>
                     <Switch
-                      defaultChecked={onEditingMaterial?.journalCover?.isActive}
+                      defaultChecked={
+                        onEditingMaterialState?.journalCover?.isActive
+                      }
                       colorScheme="green"
                       onChange={() => {
-                        setCanUpdate(true)
-                        setOnEditingMaterial({
-                          ...onEditingMaterial,
-                          journalCover: {
-                            ...onEditingMaterial?.journalCover,
-                            isActive:
-                              !onEditingMaterial?.journalCover?.isActive,
-                          },
+                        setOnEditingMaterialState((prevState) => {
+                          prevState.journalCover.isActive =
+                            !prevState.journalCover.isActive
+                          return prevState
                         })
+                        setCanUpdate(true)
                       }}
                     />
                   </FormControl>
-                  <FormControl>
+                  <FormControl
+                    isInvalid={validationError?.simulator?.url ? true : false}
+                  >
                     <FormLabel>Link Simulator</FormLabel>
                     <Input
                       type="url"
                       placeholder="Link simulator praktikum"
-                      defaultValue={onEditingMaterial?.simulator?.url}
-                      onFocus={(e) => {
+                      defaultValue={onEditingMaterialState?.simulator?.url}
+                      onFocus={(e: any) => {
                         e.target.select()
                       }}
-                      onChange={(e) => {
-                        setCanUpdate(true)
-                        setOnEditingMaterial({
-                          ...onEditingMaterial,
-                          simulator: {
-                            ...onEditingMaterial?.simulator,
-                            url: e.target.value,
-                          },
+                      onChange={(e: any) => {
+                        setOnEditingMaterialState((prevState) => {
+                          prevState.simulator.url = e.target.value
+                          return prevState
                         })
+                        setCanUpdate(true)
                       }}
                     />
+                    {validationError?.simulator?.url ? (
+                      <FormErrorMessage>
+                        {validationError.simulator.url}
+                      </FormErrorMessage>
+                    ) : null}
                   </FormControl>
                   <FormControl
                     display="flex"
@@ -423,17 +462,17 @@ export default function PracticumMaterialPage() {
                       </FormHelperText>
                     </Box>
                     <Switch
-                      defaultChecked={onEditingMaterial?.simulator?.isActive}
+                      defaultChecked={
+                        onEditingMaterialState?.simulator?.isActive
+                      }
                       colorScheme="green"
                       onChange={() => {
-                        setCanUpdate(true)
-                        setOnEditingMaterial({
-                          ...onEditingMaterial,
-                          simulator: {
-                            ...onEditingMaterial?.simulator,
-                            isActive: !onEditingMaterial?.simulator?.isActive,
-                          },
+                        setOnEditingMaterialState((prevState) => {
+                          prevState.simulator.isActive =
+                            !prevState.simulator.isActive
+                          return prevState
                         })
+                        setCanUpdate(true)
                       }}
                     />
                   </FormControl>
@@ -446,7 +485,7 @@ export default function PracticumMaterialPage() {
                   isDisabled={!canUpdate}
                   colorScheme="blue"
                   width="full"
-                  onClick={async (e) => {
+                  onClick={async (e: any) => {
                     e.preventDefault()
                     handlePracticumMaterialUpdate()
                   }}
