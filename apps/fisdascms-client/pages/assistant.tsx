@@ -178,6 +178,7 @@ export default function AssistantPage() {
       <PageLayout>
         <Heading marginTop="4">Asisten</Heading>
 
+        {/* tambah asisten button */}
         <Button
           marginTop="4"
           colorScheme="blue"
@@ -186,7 +187,9 @@ export default function AssistantPage() {
         >
           Tambah asisten
         </Button>
+        {/* tambah asisten button */}
 
+        {/* filter list */}
         <HStack marginTop="4" gap="2" spacing="0" wrap="wrap">
           <Text>Filter : </Text>
           <Tag
@@ -294,7 +297,9 @@ export default function AssistantPage() {
             </TagRightIcon>
           </Tag>
         </HStack>
+        {/* filter list */}
 
+        {/* search bar */}
         <InputGroup marginTop="4">
           <InputLeftElement>
             <Icon color="gray.400">
@@ -311,7 +316,9 @@ export default function AssistantPage() {
             }}
           />
         </InputGroup>
+        {/* search bar */}
 
+        {/* tabel asisten */}
         <Skeleton rounded="xl" isLoaded={assistantsState ? true : false}>
           <TableContainer
             marginTop="4"
@@ -439,6 +446,7 @@ export default function AssistantPage() {
             </Table>
           </TableContainer>
         </Skeleton>
+        {/* tabel asisten */}
 
         {/* modal create asisten */}
         <Modal
