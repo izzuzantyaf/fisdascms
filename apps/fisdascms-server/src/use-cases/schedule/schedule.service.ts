@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
-import { isEmpty } from 'class-validator';
+import { BadRequestException, Injectable } from '@nestjs/common';
+import { isEmpty, isNotEmpty } from 'class-validator';
 import { DataServiceService } from 'src/database/data-service.service';
 import { Schedule } from 'src/database/entity/schedule.entity';
+import { ErrorResponse } from 'src/lib/dtos/response.dto';
 import { ScheduleFactoryService } from './schedule-factory.service';
 
 @Injectable()
@@ -29,6 +30,11 @@ export class ScheduleService {
   async update(updateData: object) {
     console.log('Incoming data :', updateData);
     const newSchedule = this.scheduleFactory.create(updateData);
+    const validationError = newSchedule.validateProps();
+    if (isNotEmpty(validationError))
+      throw new BadRequestException(
+        new ErrorResponse('Data tidak valid', { validationError }),
+      );
     const updatedSchedule = this.scheduleFactory.create(
       await this.dataService.schedules.updateById(newSchedule._id, newSchedule),
     );

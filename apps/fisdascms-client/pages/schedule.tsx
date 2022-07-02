@@ -1,28 +1,5 @@
-import {
-  Box,
-  Button,
-  Flex,
-  Heading,
-  SimpleGrid,
-  Square,
-  Text,
-  Link,
-  Skeleton,
-  useDisclosure,
-  useToast,
-  Input,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  Switch,
-  FormControl,
-  FormLabel,
-  FormHelperText,
-} from "@chakra-ui/react"
+// prettier-ignore
+import { Box, Button, Flex, Heading, SimpleGrid, Square, Text, Link, Skeleton, useDisclosure, useToast, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Switch, FormControl, FormLabel, FormHelperText, FormErrorMessage } from "@chakra-ui/react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Head from "next/head"
 import { useEffect, useRef, useState } from "react"
@@ -30,14 +7,17 @@ import shadowedBoxStyle from "../chakra-style-props/shadowed-box"
 import PageLayout from "../layouts/page-layout"
 import { scheduleService } from "../core/services/schedule.service"
 import { repeatElement } from "../core/lib/helpers/repeat-element.helper"
+import { Schedule, ScheduleValidationError } from "../core/types/schedule.type"
 
-export default function Schedule() {
-  const [schedulesState, setSchedulesState] = useState<object[]>()
-  const onEditingScheduleRef = useRef()
+export default function SchedulePage() {
+  const [schedulesState, setSchedulesState] = useState<Schedule[]>()
+  const onEditingScheduleRef = useRef<Schedule>()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [isUpdating, setIsUpdating] = useState(false)
   const toast = useToast()
   const [canUpdate, setCanUpdate] = useState(false)
+  const [validationError, setValidationError] =
+    useState<ScheduleValidationError>()
 
   const getSchedules = async () => {
     setSchedulesState(await scheduleService.getAll())
@@ -45,14 +25,21 @@ export default function Schedule() {
 
   const handleScheduleUpdate = async () => {
     setIsUpdating(true)
-    const response = await scheduleService.update(onEditingScheduleRef.current)
+    const response = await scheduleService.update({
+      _id: onEditingScheduleRef.current?._id as string,
+      url: onEditingScheduleRef.current?.url,
+      isActive: onEditingScheduleRef.current?.isActive as boolean,
+    })
+    setIsUpdating(false)
     if (!response?.isSuccess) {
+      setValidationError(response.data.validationError)
       toast({
         title: response.message,
         status: "error",
       })
       return
     }
+    setValidationError(undefined)
     const { updatedSchedule } = response.data
     setSchedulesState(
       schedulesState?.map((scheduleState) =>
@@ -65,7 +52,6 @@ export default function Schedule() {
       title: response.message,
       status: "success",
     })
-    setIsUpdating(false)
     onClose()
   }
 
@@ -107,7 +93,7 @@ export default function Schedule() {
                   </Link>
                 </Flex>
                 <Flex justifyContent="space-between" alignItems="center">
-                  <Text>Status</Text>
+                  <Text>Perlihatkan</Text>
                   <Box
                     bgColor={schedule.isActive ? "green.100" : "gray.100"}
                     color={schedule.isActive ? "green.500" : "gray.500"}
@@ -145,7 +131,14 @@ export default function Schedule() {
             )}
         </SimpleGrid>
 
-        <Modal isOpen={isOpen} onClose={onClose} isCentered={true}>
+        <Modal
+          isOpen={isOpen}
+          onClose={() => {
+            onClose()
+            setValidationError(undefined)
+          }}
+          isCentered={true}
+        >
           <ModalOverlay />
           <ModalContent marginX="4" rounded="xl">
             <form>
@@ -169,20 +162,23 @@ export default function Schedule() {
                   }`}</Heading>
                 </Flex>
                 <Flex direction="column" gap="2" marginTop="6">
-                  <FormControl>
+                  <FormControl isInvalid={validationError?.url ? true : false}>
                     <FormLabel>Link File</FormLabel>
                     <Input
                       type="url"
                       placeholder="Link file jadwal"
                       defaultValue={onEditingScheduleRef.current?.url}
-                      onFocus={(e) => {
+                      onFocus={(e: any) => {
                         e.target.select()
                       }}
-                      onChange={(e) => {
+                      onChange={(e: any) => {
                         setCanUpdate(true)
                         onEditingScheduleRef.current.url = e.target.value
                       }}
                     />
+                    {validationError?.url ? (
+                      <FormErrorMessage>{validationError.url}</FormErrorMessage>
+                    ) : null}
                   </FormControl>
 
                   <FormControl
@@ -216,7 +212,7 @@ export default function Schedule() {
                   isDisabled={!canUpdate}
                   colorScheme="blue"
                   width="full"
-                  onClick={async (e) => {
+                  onClick={async (e: any) => {
                     e.preventDefault()
                     handleScheduleUpdate()
                   }}
