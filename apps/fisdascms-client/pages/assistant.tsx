@@ -20,6 +20,8 @@ import {
   AssistantFilter,
   AssistantValidationError,
   CreateAssistantDto,
+  GenderFilter,
+  LevelFilter,
 } from "../core/types/assistant.type"
 
 export default function AssistantPage() {
@@ -132,6 +134,32 @@ export default function AssistantPage() {
     setIsDeleting(false)
   }
 
+  const toggleOrChangeLevelFilter = (levelFilter: LevelFilter) => {
+    if (filterState.level != levelFilter)
+      setFilterState((prevState) => {
+        prevState.level = levelFilter
+        return { ...prevState }
+      })
+    else
+      setFilterState((prevState) => {
+        prevState.level = "all"
+        return { ...prevState }
+      })
+  }
+
+  const toggleOrChangeGenderFilter = (genderFilter: GenderFilter) => {
+    if (filterState.gender != genderFilter)
+      setFilterState((prevState) => {
+        prevState.gender = genderFilter
+        return { ...prevState }
+      })
+    else
+      setFilterState((prevState) => {
+        prevState.gender = "all"
+        return { ...prevState }
+      })
+  }
+
   useEffect(() => {
     handleGetAssistants()
   }, [])
@@ -167,18 +195,7 @@ export default function AssistantPage() {
             variant={
               filterState.level == AssistantLevel.JUNIOR ? "subtle" : "outline"
             }
-            onClick={() => {
-              if (filterState.level != AssistantLevel.JUNIOR)
-                setFilterState((prevState) => {
-                  prevState.level = AssistantLevel.JUNIOR
-                  return { ...prevState }
-                })
-              else
-                setFilterState((prevState) => {
-                  prevState.level = "all"
-                  return { ...prevState }
-                })
-            }}
+            onClick={() => toggleOrChangeLevelFilter(AssistantLevel.JUNIOR)}
           >
             <TagLabel textTransform="capitalize">
               {AssistantLevel.JUNIOR}
@@ -196,18 +213,7 @@ export default function AssistantPage() {
             variant={
               filterState.level == AssistantLevel.SENIOR ? "subtle" : "outline"
             }
-            onClick={() => {
-              if (filterState.level != AssistantLevel.SENIOR)
-                setFilterState((prevState) => {
-                  prevState.level = AssistantLevel.SENIOR
-                  return { ...prevState }
-                })
-              else
-                setFilterState((prevState) => {
-                  prevState.level = "all"
-                  return { ...prevState }
-                })
-            }}
+            onClick={() => toggleOrChangeLevelFilter(AssistantLevel.SENIOR)}
           >
             <TagLabel textTransform="capitalize">
               {AssistantLevel.SENIOR}
@@ -221,18 +227,7 @@ export default function AssistantPage() {
             cursor="pointer"
             colorScheme={filterState.gender == Gender.MALE ? "blue" : "gray"}
             variant={filterState.gender == Gender.MALE ? "subtle" : "outline"}
-            onClick={() => {
-              if (filterState.gender != Gender.MALE)
-                setFilterState((prevState) => {
-                  prevState.gender = Gender.MALE
-                  return { ...prevState }
-                })
-              else
-                setFilterState((prevState) => {
-                  prevState.gender = "all"
-                  return { ...prevState }
-                })
-            }}
+            onClick={() => toggleOrChangeGenderFilter(Gender.MALE)}
           >
             <TagLabel textTransform="capitalize">{Gender.MALE}</TagLabel>
             <TagRightIcon>
@@ -244,18 +239,7 @@ export default function AssistantPage() {
             cursor="pointer"
             colorScheme={filterState.gender == Gender.FEMALE ? "pink" : "gray"}
             variant={filterState.gender == Gender.FEMALE ? "subtle" : "outline"}
-            onClick={() => {
-              if (filterState.gender != Gender.FEMALE)
-                setFilterState((prevState) => {
-                  prevState.gender = Gender.FEMALE
-                  return { ...prevState }
-                })
-              else
-                setFilterState((prevState) => {
-                  prevState.gender = "all"
-                  return { ...prevState }
-                })
-            }}
+            onClick={() => toggleOrChangeGenderFilter(Gender.FEMALE)}
           >
             <TagLabel textTransform="capitalize">{Gender.FEMALE}</TagLabel>
             <TagRightIcon>

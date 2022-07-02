@@ -14,9 +14,12 @@ export type Assistant = {
 
 export type CreateAssistantDto = Omit<Assistant, "_id">
 
+export type LevelFilter = "all" | `${AssistantLevel}`
+export type GenderFilter = "all" | `${Gender}`
+
 export type AssistantFilter = {
-  level: "all" | `${AssistantLevel}`
-  gender: "all" | `${Gender}`
+  level: LevelFilter
+  gender: GenderFilter
 }
 
 export type AssistantValidationError = Partial<
