@@ -11,6 +11,7 @@ import {
   FormErrorMessage,
   FormLabel,
   Heading,
+  HStack,
   Icon,
   IconButton,
   Input,
@@ -29,6 +30,7 @@ import {
   Tag,
   TagLabel,
   TagRightIcon,
+  Text,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react"
@@ -47,9 +49,15 @@ import {
 } from "@chakra-ui/react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { AssistantLevel, Gender } from "../core/lib/constants"
+import {
+  Assistant,
+  AssistantFilter,
+  AssistantValidationError,
+  CreateAssistantDto,
+} from "../core/types/assistant.type"
 
-export default function Assistant() {
-  const [assistantsState, setAssistantsState] = useState<object[]>()
+export default function AssistantPage() {
+  const [assistantsState, setAssistantsState] = useState<Assistant[]>()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const {
     isOpen: isCreateModalOpen,
@@ -61,14 +69,20 @@ export default function Assistant() {
     onOpen: onDeleteModalOpen,
     onClose: onDeleteModalClose,
   } = useDisclosure()
-  const newAssistantRef = useRef({})
-  const onEditingAssistantRef = useRef<object>()
+  const newAssistantRef = useRef<CreateAssistantDto>({} as CreateAssistantDto)
+  const onEditingAssistantRef = useRef<Assistant>()
   const onDeletingAssistantIdRef = useRef()
   const [isCreating, setIsCreating] = useState(false)
   const [isUpdating, setIsUpdating] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
   const toast = useToast()
-  const [errors, setErrors] = useState()
+  const [validationError, setValidationError] =
+    useState<AssistantValidationError>()
+  const [filterState, setFilterState] = useState<AssistantFilter>({
+    level: "all",
+    gender: "all",
+  })
+  const cancelRef = useRef()
 
   const handleGetAssistants = async () => {
     setAssistantsState(await assistantService.getAll())
@@ -78,18 +92,35 @@ export default function Assistant() {
     setAssistantsState(await assistantService.search(keyword))
   }
 
-  const handleCreateAssistant = async (newAssistant) => {
+  const filterAssistant = (
+    assistantState: Assistant,
+    filter: AssistantFilter
+  ) => {
+    if (filter.level == "all" && filter.gender == "all") return true
+    else if (filter.level != "all" && filter.gender == "all") {
+      return assistantState.level == filter.level ? true : false
+    } else if (filter.level == "all" && filter.gender != "all") {
+      return assistantState.gender == filter.gender ? true : false
+    } else {
+      return assistantState.level == filter.level &&
+        assistantState.gender == filter.gender
+        ? true
+        : false
+    }
+  }
+
+  const handleCreateAssistant = async (newAssistant: CreateAssistantDto) => {
     setIsCreating(true)
     const response = await assistantService.create(newAssistant)
     setIsCreating(false)
     if (!response?.isSuccess) {
-      setErrors(response?.data?.errors)
+      setValidationError(response?.data?.errors)
       toast({
         title: response.message,
         status: "error",
       })
     } else {
-      setErrors(undefined)
+      setValidationError(undefined)
       toast({
         title: response.message,
         status: "success",
@@ -102,17 +133,17 @@ export default function Assistant() {
   const handleUpdateAssistant = async () => {
     setIsUpdating(true)
     const response = await assistantService.update(
-      onEditingAssistantRef.current
+      onEditingAssistantRef.current as Assistant
     )
     setIsUpdating(false)
     if (!response?.isSuccess) {
-      setErrors(response?.data?.errors)
+      setValidationError(response?.data?.errors)
       toast({
         title: response.message,
         status: "error",
       })
     } else {
-      setErrors(undefined)
+      setValidationError(undefined)
       const { updatedAssistant } = response.data
       setAssistantsState((prevState) =>
         prevState?.map((prev) =>
@@ -170,6 +201,114 @@ export default function Assistant() {
         >
           Tambah asisten
         </Button>
+        <HStack marginTop="4" gap="2" spacing="0" wrap="wrap">
+          <Text>Filter : </Text>
+          <Tag
+            size="lg"
+            cursor="pointer"
+            colorScheme={
+              filterState.level == AssistantLevel.JUNIOR ? "green" : "gray"
+            }
+            variant={
+              filterState.level == AssistantLevel.JUNIOR ? "subtle" : "outline"
+            }
+            onClick={() => {
+              if (filterState.level != AssistantLevel.JUNIOR)
+                setFilterState((prevState) => {
+                  prevState.level = AssistantLevel.JUNIOR
+                  return { ...prevState }
+                })
+              else
+                setFilterState((prevState) => {
+                  prevState.level = "all"
+                  return { ...prevState }
+                })
+            }}
+          >
+            <TagLabel textTransform="capitalize">
+              {AssistantLevel.JUNIOR}
+            </TagLabel>
+            <TagRightIcon>
+              <FontAwesomeIcon icon="chess-pawn" />
+            </TagRightIcon>
+          </Tag>
+          <Tag
+            size="lg"
+            cursor="pointer"
+            colorScheme={
+              filterState.level == AssistantLevel.SENIOR ? "orange" : "gray"
+            }
+            variant={
+              filterState.level == AssistantLevel.SENIOR ? "subtle" : "outline"
+            }
+            onClick={() => {
+              if (filterState.level != AssistantLevel.SENIOR)
+                setFilterState((prevState) => {
+                  prevState.level = AssistantLevel.SENIOR
+                  return { ...prevState }
+                })
+              else
+                setFilterState((prevState) => {
+                  prevState.level = "all"
+                  return { ...prevState }
+                })
+            }}
+          >
+            <TagLabel textTransform="capitalize">
+              {AssistantLevel.SENIOR}
+            </TagLabel>
+            <TagRightIcon>
+              <FontAwesomeIcon icon="chess-queen" />
+            </TagRightIcon>
+          </Tag>
+          <Tag
+            size="lg"
+            cursor="pointer"
+            colorScheme={filterState.gender == Gender.MALE ? "blue" : "gray"}
+            variant={filterState.gender == Gender.MALE ? "subtle" : "outline"}
+            onClick={() => {
+              if (filterState.gender != Gender.MALE)
+                setFilterState((prevState) => {
+                  prevState.gender = Gender.MALE
+                  return { ...prevState }
+                })
+              else
+                setFilterState((prevState) => {
+                  prevState.gender = "all"
+                  return { ...prevState }
+                })
+            }}
+          >
+            <TagLabel textTransform="capitalize">{Gender.MALE}</TagLabel>
+            <TagRightIcon>
+              <FontAwesomeIcon icon="mars" />
+            </TagRightIcon>
+          </Tag>
+          <Tag
+            size="lg"
+            cursor="pointer"
+            colorScheme={filterState.gender == Gender.FEMALE ? "pink" : "gray"}
+            variant={filterState.gender == Gender.FEMALE ? "subtle" : "outline"}
+            onClick={() => {
+              if (filterState.gender != Gender.FEMALE)
+                setFilterState((prevState) => {
+                  prevState.gender = Gender.FEMALE
+                  return { ...prevState }
+                })
+              else
+                setFilterState((prevState) => {
+                  prevState.gender = "all"
+                  return { ...prevState }
+                })
+            }}
+          >
+            <TagLabel textTransform="capitalize">{Gender.FEMALE}</TagLabel>
+            <TagRightIcon>
+              <FontAwesomeIcon icon="venus" />
+            </TagRightIcon>
+          </Tag>
+        </HStack>
+
         <InputGroup marginTop="4">
           <InputLeftElement>
             <Icon color="gray.400">
@@ -181,7 +320,7 @@ export default function Assistant() {
             defaultValue=""
             placeholder="Cari nama atau kode"
             variant="filled"
-            onChange={(e) => {
+            onChange={(e: any) => {
               handleSearchAssistants(e.target.value)
             }}
           />
@@ -209,97 +348,104 @@ export default function Assistant() {
                 </Tr>
               </Thead>
               <Tbody>
-                {assistantsState?.map((assistantState, index) => (
-                  <Tr key={index}>
-                    <Td>
-                      <IconButton
-                        aria-label="Edit asisten"
-                        size="sm"
-                        icon={<FontAwesomeIcon icon="pen" />}
-                        onClick={() => {
-                          onEditingAssistantRef.current = { ...assistantState }
-                          onOpen()
-                        }}
-                      />
-                      <IconButton
-                        aria-label="Hapus asisten"
-                        size="sm"
-                        icon={<FontAwesomeIcon icon="trash-can" />}
-                        marginLeft="2"
-                        bgColor="red.100"
-                        color="red.500"
-                        colorScheme="red"
-                        variant="unstyled"
-                        _hover={{ backgroundColor: "red.200" }}
-                        onClick={() => {
-                          onDeletingAssistantIdRef.current = assistantState._id
-                          onDeleteModalOpen()
-                        }}
-                      />
-                    </Td>
-                    <Td fontWeight="bold">{assistantState?.code}</Td>
-                    <Td maxWidth="60" isTruncated={true}>
-                      {assistantState?.name}
-                    </Td>
-                    <Td textTransform="capitalize">
-                      <Tag
-                        colorScheme={
-                          assistantState?.level === AssistantLevel.JUNIOR
-                            ? "green"
-                            : "orange"
-                        }
-                      >
-                        <TagLabel textTransform="capitalize">
-                          {assistantState?.level}
-                        </TagLabel>
-                        <TagRightIcon>
-                          <FontAwesomeIcon
-                            icon={
-                              assistantState?.level === AssistantLevel.JUNIOR
-                                ? "chess-pawn"
-                                : "chess-queen"
+                {assistantsState
+                  ?.filter((assistantState) =>
+                    filterAssistant(assistantState, filterState)
+                  )
+                  .map((assistantState, index) => (
+                    <Tr key={index}>
+                      <Td>
+                        <IconButton
+                          aria-label="Edit asisten"
+                          size="sm"
+                          icon={<FontAwesomeIcon icon="pen" />}
+                          onClick={() => {
+                            onEditingAssistantRef.current = {
+                              ...assistantState,
                             }
-                          />
-                        </TagRightIcon>
-                      </Tag>
-                    </Td>
-                    <Td>
-                      <Tag
-                        colorScheme={
-                          assistantState?.gender === Gender.MALE
-                            ? "blue"
-                            : "pink"
-                        }
-                      >
-                        <TagLabel textTransform="capitalize">
-                          {assistantState?.gender}
-                        </TagLabel>
-                        <TagRightIcon>
-                          <FontAwesomeIcon
-                            icon={
-                              assistantState?.gender === Gender.MALE
-                                ? "mars"
-                                : "venus"
-                            }
-                          />
-                        </TagRightIcon>
-                      </Tag>
-                    </Td>
-                    <Td>{assistantState?.phoneNumber}</Td>
-                    <Td>{assistantState?.lineId}</Td>
-                    <Td>
-                      {assistantState?.feedbackUrl ? (
-                        <Link
-                          href={assistantState?.feedbackUrl}
-                          isExternal={true}
+                            onOpen()
+                          }}
+                        />
+                        <IconButton
+                          aria-label="Hapus asisten"
+                          size="sm"
+                          icon={<FontAwesomeIcon icon="trash-can" />}
+                          marginLeft="2"
+                          bgColor="red.100"
+                          color="red.500"
+                          colorScheme="red"
+                          variant="unstyled"
+                          _hover={{ backgroundColor: "red.200" }}
+                          onClick={() => {
+                            onDeletingAssistantIdRef.current =
+                              assistantState._id
+                            onDeleteModalOpen()
+                          }}
+                        />
+                      </Td>
+                      <Td fontWeight="bold">{assistantState?.code}</Td>
+                      <Td maxWidth="60" isTruncated={true}>
+                        {assistantState?.name}
+                      </Td>
+                      <Td textTransform="capitalize">
+                        <Tag
+                          colorScheme={
+                            assistantState?.level === AssistantLevel.JUNIOR
+                              ? "green"
+                              : "orange"
+                          }
                         >
-                          Open{" "}
-                          <FontAwesomeIcon icon="arrow-up-right-from-square" />
-                        </Link>
-                      ) : null}
-                    </Td>
-                  </Tr>
-                ))}
+                          <TagLabel textTransform="capitalize">
+                            {assistantState?.level}
+                          </TagLabel>
+                          <TagRightIcon>
+                            <FontAwesomeIcon
+                              icon={
+                                assistantState?.level === AssistantLevel.JUNIOR
+                                  ? "chess-pawn"
+                                  : "chess-queen"
+                              }
+                            />
+                          </TagRightIcon>
+                        </Tag>
+                      </Td>
+                      <Td>
+                        <Tag
+                          colorScheme={
+                            assistantState?.gender === Gender.MALE
+                              ? "blue"
+                              : "pink"
+                          }
+                        >
+                          <TagLabel textTransform="capitalize">
+                            {assistantState?.gender}
+                          </TagLabel>
+                          <TagRightIcon>
+                            <FontAwesomeIcon
+                              icon={
+                                assistantState?.gender === Gender.MALE
+                                  ? "mars"
+                                  : "venus"
+                              }
+                            />
+                          </TagRightIcon>
+                        </Tag>
+                      </Td>
+                      <Td>{assistantState?.phoneNumber}</Td>
+                      <Td>{assistantState?.lineId}</Td>
+                      <Td>
+                        {assistantState?.feedbackUrl ? (
+                          <Link
+                            href={assistantState?.feedbackUrl}
+                            isExternal={true}
+                          >
+                            Open{" "}
+                            <FontAwesomeIcon icon="arrow-up-right-from-square" />
+                          </Link>
+                        ) : null}
+                      </Td>
+                    </Tr>
+                  ))}
               </Tbody>
             </Table>
           </TableContainer>
@@ -310,7 +456,7 @@ export default function Assistant() {
           isOpen={isCreateModalOpen}
           onClose={() => {
             onCreateModalClose()
-            setErrors(undefined)
+            setValidationError(undefined)
           }}
           closeOnOverlayClick={false}
         >
@@ -321,49 +467,63 @@ export default function Assistant() {
               <ModalCloseButton />
               <ModalBody>
                 <Flex direction="column" gap="2">
-                  <FormControl isInvalid={errors?.name} isRequired={true}>
+                  <FormControl
+                    isInvalid={validationError?.name ? true : false}
+                    isRequired={true}
+                  >
                     <FormLabel>Nama</FormLabel>
                     <Input
                       id="name"
                       name="name"
                       type="text"
                       placeholder="Nama"
-                      onChange={(e) => {
+                      onChange={(e: any) => {
                         newAssistantRef.current.name = e.target.value
                       }}
                     />
-                    {errors?.name ? (
-                      <FormErrorMessage>{errors?.name}</FormErrorMessage>
+                    {validationError?.name ? (
+                      <FormErrorMessage>
+                        {validationError?.name}
+                      </FormErrorMessage>
                     ) : null}
                   </FormControl>
-                  <FormControl isInvalid={errors?.code} isRequired={true}>
+                  <FormControl
+                    isInvalid={validationError?.code ? true : false}
+                    isRequired={true}
+                  >
                     <FormLabel>Kode</FormLabel>
                     <Input
                       id="code"
                       name="code"
                       type="text"
                       placeholder="Kode asisten"
-                      onChange={(e) => {
+                      onChange={(e: any) => {
                         newAssistantRef.current.code = e.target.value
                       }}
                     />
-                    {errors?.code ? (
-                      <FormErrorMessage>{errors?.code}</FormErrorMessage>
+                    {validationError?.code ? (
+                      <FormErrorMessage>
+                        {validationError?.code}
+                      </FormErrorMessage>
                     ) : null}
                   </FormControl>
-                  <FormControl isInvalid={errors?.phoneNumber}>
+                  <FormControl
+                    isInvalid={validationError?.phoneNumber ? true : false}
+                  >
                     <FormLabel>Nomor HP</FormLabel>
                     <Input
                       id="phoneNumber"
                       name="phoneNumber"
                       type="tel"
                       placeholder="Nomor HP"
-                      onChange={(e) => {
+                      onChange={(e: any) => {
                         newAssistantRef.current.phoneNumber = e.target.value
                       }}
                     />
-                    {errors?.phoneNumber ? (
-                      <FormErrorMessage>{errors?.phoneNumber}</FormErrorMessage>
+                    {validationError?.phoneNumber ? (
+                      <FormErrorMessage>
+                        {validationError?.phoneNumber}
+                      </FormErrorMessage>
                     ) : null}
                   </FormControl>
                   <FormControl>
@@ -373,19 +533,22 @@ export default function Assistant() {
                       name="lineId"
                       type="text"
                       placeholder="ID Line"
-                      onChange={(e) => {
+                      onChange={(e: any) => {
                         newAssistantRef.current.lineId = e.target.value
                       }}
                     />
                   </FormControl>
-                  <FormControl isInvalid={errors?.level} isRequired={true}>
+                  <FormControl
+                    isInvalid={validationError?.level ? true : false}
+                    isRequired={true}
+                  >
                     <FormLabel>Level</FormLabel>
                     <Select
                       id="level"
                       name="level"
                       placeholder="Pilih level"
                       textTransform="capitalize"
-                      onChange={(e) => {
+                      onChange={(e: any) => {
                         newAssistantRef.current.level = e.target.value
                       }}
                     >
@@ -402,18 +565,23 @@ export default function Assistant() {
                         {AssistantLevel.SENIOR}
                       </option>
                     </Select>
-                    {errors?.level ? (
-                      <FormErrorMessage>{errors?.level}</FormErrorMessage>
+                    {validationError?.level ? (
+                      <FormErrorMessage>
+                        {validationError?.level}
+                      </FormErrorMessage>
                     ) : null}
                   </FormControl>
-                  <FormControl isInvalid={errors?.gender} isRequired={true}>
+                  <FormControl
+                    isInvalid={validationError?.gender ? true : false}
+                    isRequired={true}
+                  >
                     <FormLabel>Gender</FormLabel>
                     <Select
                       id="gender"
                       name="gender"
                       placeholder="Pilih gender"
                       textTransform="capitalize"
-                      onChange={(e) => {
+                      onChange={(e: any) => {
                         newAssistantRef.current.gender = e.target.value
                       }}
                     >
@@ -430,23 +598,29 @@ export default function Assistant() {
                         {Gender.FEMALE}
                       </option>
                     </Select>
-                    {errors?.gender ? (
-                      <FormErrorMessage>{errors?.gender}</FormErrorMessage>
+                    {validationError?.gender ? (
+                      <FormErrorMessage>
+                        {validationError?.gender}
+                      </FormErrorMessage>
                     ) : null}
                   </FormControl>
-                  <FormControl isInvalid={errors?.feedbackUrl}>
+                  <FormControl
+                    isInvalid={validationError?.feedbackUrl ? true : false}
+                  >
                     <FormLabel>Link Feedback</FormLabel>
                     <Input
                       id="feedbackUrl"
                       name="feedbackUrl"
                       type="url"
                       placeholder="Link feedback"
-                      onChange={(e) => {
+                      onChange={(e: any) => {
                         newAssistantRef.current.feedbackUrl = e.target.value
                       }}
                     />
-                    {errors?.feedbackUrl ? (
-                      <FormErrorMessage>{errors?.feedbackUrl}</FormErrorMessage>
+                    {validationError?.feedbackUrl ? (
+                      <FormErrorMessage>
+                        {validationError?.feedbackUrl}
+                      </FormErrorMessage>
                     ) : null}
                   </FormControl>
                 </Flex>
@@ -457,7 +631,7 @@ export default function Assistant() {
                   isLoading={isCreating}
                   colorScheme="blue"
                   width="full"
-                  onClick={(e) => {
+                  onClick={(e: any) => {
                     e.preventDefault()
                     handleCreateAssistant(newAssistantRef.current)
                   }}
@@ -475,7 +649,7 @@ export default function Assistant() {
           isOpen={isOpen}
           onClose={() => {
             onClose()
-            setErrors(undefined)
+            setValidationError(undefined)
           }}
           closeOnOverlayClick={false}
         >
@@ -486,7 +660,10 @@ export default function Assistant() {
               <ModalCloseButton />
               <ModalBody>
                 <Flex direction="column" gap="2">
-                  <FormControl isInvalid={errors?.name} isRequired={true}>
+                  <FormControl
+                    isInvalid={validationError?.name ? true : false}
+                    isRequired={true}
+                  >
                     <FormLabel>Nama</FormLabel>
                     <Input
                       id="name"
@@ -494,15 +671,20 @@ export default function Assistant() {
                       type="text"
                       placeholder="Nama"
                       defaultValue={onEditingAssistantRef.current?.name}
-                      onChange={(e) => {
+                      onChange={(e: any) => {
                         onEditingAssistantRef.current.name = e.target.value
                       }}
                     />
-                    {errors?.name ? (
-                      <FormErrorMessage>{errors?.name}</FormErrorMessage>
+                    {validationError?.name ? (
+                      <FormErrorMessage>
+                        {validationError?.name}
+                      </FormErrorMessage>
                     ) : null}
                   </FormControl>
-                  <FormControl isInvalid={errors?.code} isRequired={true}>
+                  <FormControl
+                    isInvalid={validationError?.code ? true : false}
+                    isRequired={true}
+                  >
                     <FormLabel>Kode</FormLabel>
                     <Input
                       id="code"
@@ -510,15 +692,19 @@ export default function Assistant() {
                       type="text"
                       placeholder="Kode asisten"
                       defaultValue={onEditingAssistantRef.current?.code}
-                      onChange={(e) => {
+                      onChange={(e: any) => {
                         onEditingAssistantRef.current.code = e.target.value
                       }}
                     />
-                    {errors?.code ? (
-                      <FormErrorMessage>{errors?.code}</FormErrorMessage>
+                    {validationError?.code ? (
+                      <FormErrorMessage>
+                        {validationError?.code}
+                      </FormErrorMessage>
                     ) : null}
                   </FormControl>
-                  <FormControl isInvalid={errors?.phoneNumber}>
+                  <FormControl
+                    isInvalid={validationError?.phoneNumber ? true : false}
+                  >
                     <FormLabel>Nomor HP</FormLabel>
                     <Input
                       id="phoneNumber"
@@ -526,13 +712,15 @@ export default function Assistant() {
                       type="tel"
                       placeholder="Nomor HP"
                       defaultValue={onEditingAssistantRef.current?.phoneNumber}
-                      onChange={(e) => {
+                      onChange={(e: any) => {
                         onEditingAssistantRef.current.phoneNumber =
                           e.target.value
                       }}
                     />
-                    {errors?.phoneNumber ? (
-                      <FormErrorMessage>{errors?.phoneNumber}</FormErrorMessage>
+                    {validationError?.phoneNumber ? (
+                      <FormErrorMessage>
+                        {validationError?.phoneNumber}
+                      </FormErrorMessage>
                     ) : null}
                   </FormControl>
                   <FormControl>
@@ -543,12 +731,15 @@ export default function Assistant() {
                       type="text"
                       placeholder="ID Line"
                       defaultValue={onEditingAssistantRef.current?.lineId}
-                      onChange={(e) => {
+                      onChange={(e: any) => {
                         onEditingAssistantRef.current.lineId = e.target.value
                       }}
                     />
                   </FormControl>
-                  <FormControl isInvalid={errors?.level} isRequired={true}>
+                  <FormControl
+                    isInvalid={validationError?.level ? true : false}
+                    isRequired={true}
+                  >
                     <FormLabel>Level</FormLabel>
                     <Select
                       id="level"
@@ -556,7 +747,7 @@ export default function Assistant() {
                       placeholder="Pilih level"
                       textTransform="capitalize"
                       defaultValue={onEditingAssistantRef.current?.level}
-                      onChange={(e) => {
+                      onChange={(e: any) => {
                         onEditingAssistantRef.current.level = e.target.value
                       }}
                     >
@@ -573,11 +764,16 @@ export default function Assistant() {
                         {AssistantLevel.SENIOR}
                       </option>
                     </Select>
-                    {errors?.level ? (
-                      <FormErrorMessage>{errors?.level}</FormErrorMessage>
+                    {validationError?.level ? (
+                      <FormErrorMessage>
+                        {validationError?.level}
+                      </FormErrorMessage>
                     ) : null}
                   </FormControl>
-                  <FormControl isInvalid={errors?.gender} isRequired={true}>
+                  <FormControl
+                    isInvalid={validationError?.gender ? true : false}
+                    isRequired={true}
+                  >
                     <FormLabel>Gender</FormLabel>
                     <Select
                       id="gender"
@@ -585,7 +781,7 @@ export default function Assistant() {
                       placeholder="Pilih gender"
                       textTransform="capitalize"
                       defaultValue={onEditingAssistantRef.current?.gender}
-                      onChange={(e) => {
+                      onChange={(e: any) => {
                         onEditingAssistantRef.current.gender = e.target.value
                       }}
                     >
@@ -602,11 +798,15 @@ export default function Assistant() {
                         {Gender.FEMALE}
                       </option>
                     </Select>
-                    {errors?.gender ? (
-                      <FormErrorMessage>{errors?.gender}</FormErrorMessage>
+                    {validationError?.gender ? (
+                      <FormErrorMessage>
+                        {validationError?.gender}
+                      </FormErrorMessage>
                     ) : null}
                   </FormControl>
-                  <FormControl isInvalid={errors?.feedbackUrl}>
+                  <FormControl
+                    isInvalid={validationError?.feedbackUrl ? true : false}
+                  >
                     <FormLabel>Link Feedback</FormLabel>
                     <Input
                       id="feedbackUrl"
@@ -614,13 +814,15 @@ export default function Assistant() {
                       type="url"
                       placeholder="Link feedback"
                       defaultValue={onEditingAssistantRef.current?.feedbackUrl}
-                      onChange={(e) => {
+                      onChange={(e: any) => {
                         onEditingAssistantRef.current.feedbackUrl =
                           e.target.value
                       }}
                     />
-                    {errors?.feedbackUrl ? (
-                      <FormErrorMessage>{errors?.feedbackUrl}</FormErrorMessage>
+                    {validationError?.feedbackUrl ? (
+                      <FormErrorMessage>
+                        {validationError?.feedbackUrl}
+                      </FormErrorMessage>
                     ) : null}
                   </FormControl>
                 </Flex>
@@ -631,7 +833,7 @@ export default function Assistant() {
                   isLoading={isUpdating}
                   colorScheme="blue"
                   width="full"
-                  onClick={(e) => {
+                  onClick={(e: any) => {
                     e.preventDefault()
                     handleUpdateAssistant()
                   }}
@@ -644,55 +846,39 @@ export default function Assistant() {
         </Modal>
         {/* modal edit asisten */}
 
-        <DeleteAssistantModal
-          isDeleteModalOpen={isDeleteModalOpen}
-          onDeleteModalClose={onDeleteModalClose}
-          handleDeleteAssistant={handleDeleteAssistant}
-          isDeleting={isDeleting}
-        />
+        {/* modal hapus asisten */}
+        <AlertDialog
+          isOpen={isDeleteModalOpen}
+          onClose={onDeleteModalClose}
+          leastDestructiveRef={cancelRef}
+          isCentered={true}
+        >
+          <AlertDialogOverlay>
+            <AlertDialogContent marginX="4" rounded="xl">
+              <AlertDialogHeader fontSize="lg" fontWeight="bold">
+                Hapus asisten
+              </AlertDialogHeader>
+
+              <AlertDialogBody>Yakin untuk menghapus?</AlertDialogBody>
+
+              <AlertDialogFooter>
+                <Button ref={cancelRef} onClick={onDeleteModalClose}>
+                  Batal
+                </Button>
+                <Button
+                  colorScheme="red"
+                  onClick={handleDeleteAssistant}
+                  marginLeft={3}
+                  isLoading={isDeleting}
+                >
+                  Hapus
+                </Button>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialogOverlay>
+        </AlertDialog>
+        {/* modal hapus asisten */}
       </PageLayout>
     </>
-  )
-}
-
-const DeleteAssistantModal = ({
-  isDeleteModalOpen,
-  onDeleteModalClose,
-  handleDeleteAssistant,
-  isDeleting,
-}) => {
-  const cancelRef = useRef()
-
-  return (
-    <AlertDialog
-      isOpen={isDeleteModalOpen}
-      onClose={onDeleteModalClose}
-      leastDestructiveRef={cancelRef}
-      isCentered={true}
-    >
-      <AlertDialogOverlay>
-        <AlertDialogContent marginX="4" rounded="xl">
-          <AlertDialogHeader fontSize="lg" fontWeight="bold">
-            Hapus asisten
-          </AlertDialogHeader>
-
-          <AlertDialogBody>Yakin untuk menghapus?</AlertDialogBody>
-
-          <AlertDialogFooter>
-            <Button ref={cancelRef} onClick={onDeleteModalClose}>
-              Batal
-            </Button>
-            <Button
-              colorScheme="red"
-              onClick={handleDeleteAssistant}
-              marginLeft={3}
-              isLoading={isDeleting}
-            >
-              Hapus
-            </Button>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialogOverlay>
-    </AlertDialog>
   )
 }
