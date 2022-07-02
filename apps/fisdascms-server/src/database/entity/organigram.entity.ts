@@ -1,4 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { isNotEmpty, isNotEmptyObject, isObject, isURL } from 'class-validator';
 import { Document } from 'mongoose';
 
 export type OrganigramDocument = Organigram & Document;
@@ -19,6 +20,22 @@ export class Organigram {
 
   protected setPreviewUrl() {
     return this.url ? this.url.replace('view', 'preview') : null;
+  }
+
+  protected validateUrl() {
+    if (isNotEmpty(this.url))
+      if (!isURL(this.url)) return { url: 'Link tidak valid' };
+    return true;
+  }
+
+  validateProps() {
+    const validationResults = [this.validateUrl()];
+    const errors = validationResults.reduce(
+      (error, result) => (isObject(result) ? { ...error, ...result } : error),
+      {},
+    );
+    console.log('Validation errors :', errors);
+    return isNotEmptyObject(errors) ? errors : null;
   }
 }
 

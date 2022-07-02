@@ -1,7 +1,7 @@
 import {
   Button,
   FormControl,
-  FormHelperText,
+  FormErrorMessage,
   FormLabel,
   Heading,
   Input,
@@ -14,12 +14,17 @@ import shadowedBoxStyle from "../chakra-style-props/shadowed-box"
 import PageLayout from "../layouts/page-layout"
 import { useState, useEffect } from "react"
 import { organigramService } from "../core/services/organigram.service"
+import {
+  Organigram,
+  OrganigramValidationError,
+} from "../core/types/organigram.type"
 
 export default function OrganigramPage() {
   const [isOrganigramUpdating, setIsOrganigramUpdating] = useState(false)
-  const [organigramState, setOrganigramState] = useState()
+  const [organigramState, setOrganigramState] = useState<Organigram>()
   const toast = useToast()
-  const [isError, setIsError] = useState(false)
+  const [validationError, setValidationError] =
+    useState<OrganigramValidationError>()
   const [canSubmit, setCanSubmit] = useState(false)
 
   const getOrganigram = async () => {
@@ -31,27 +36,28 @@ export default function OrganigramPage() {
     if (organigramState?.url)
       try {
         new URL(organigramState?.url)
-        setIsError(false)
+        setValidationError(undefined)
       } catch (e) {
         // setIsError(true)
       }
   }
 
   const handleUpdateOrganigram = async () => {
-    const newOrganigram = {
-      _id: organigramState._id,
-      url: organigramState.url,
-    }
     setIsOrganigramUpdating(true)
-    const updateResponse = await organigramService.update(newOrganigram)
+    const updateResponse = await organigramService.update({
+      _id: organigramState?._id as string,
+      url: organigramState?.url,
+    })
     setIsOrganigramUpdating(false)
     if (!updateResponse.isSuccess) {
+      setValidationError(updateResponse.data.validationError)
       toast({
         title: updateResponse.message,
         status: "error",
       })
       return
     }
+    setValidationError(undefined)
     setOrganigramState(updateResponse?.data?.updatedOrganigram)
     toast({
       title: updateResponse.message,
@@ -82,7 +88,7 @@ export default function OrganigramPage() {
           padding="4"
           {...shadowedBoxStyle}
         >
-          <Skeleton isLoaded={organigramState}>
+          <Skeleton isLoaded={organigramState ? true : false}>
             <iframe
               src={organigramState?.previewUrl}
               width="100%"
@@ -90,26 +96,26 @@ export default function OrganigramPage() {
             ></iframe>
           </Skeleton>
           <form>
-            <Skeleton isLoaded={organigramState}>
-              <FormControl isInvalid={isError}>
+            <Skeleton isLoaded={organigramState ? true : false}>
+              <FormControl isInvalid={validationError?.url ? true : false}>
                 <FormLabel>Link File</FormLabel>
                 <Input
                   type="url"
                   placeholder="Link Google Drive organigram"
                   defaultValue={organigramState?.url}
-                  onFocus={(e) => e.target.select()} //* select all ketika user klik input field
-                  onChange={(e) => {
-                    setOrganigramState({
-                      ...organigramState,
-                      url: e.target.value,
+                  onFocus={(e: any) => e.target.select()} //* select all ketika user klik input field
+                  onChange={(e: any) => {
+                    setOrganigramState((prevState) => {
+                      prevState.url = e.target.value
+                      return prevState
                     })
                     setCanSubmit(true)
                   }}
                 />
-                {isError ? (
-                  <FormHelperText color="red.500">
-                    Link tidak valid
-                  </FormHelperText>
+                {validationError?.url ? (
+                  <FormErrorMessage color="red.500">
+                    {validationError.url}
+                  </FormErrorMessage>
                 ) : null}
               </FormControl>
             </Skeleton>
@@ -120,7 +126,7 @@ export default function OrganigramPage() {
               marginTop={4}
               isLoading={isOrganigramUpdating}
               isDisabled={!canSubmit}
-              onClick={(e) => {
+              onClick={(e: any) => {
                 e.preventDefault()
                 handleUpdateOrganigram()
               }}
