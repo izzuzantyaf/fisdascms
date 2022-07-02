@@ -1,39 +1,5 @@
-import {
-  AlertDialog,
-  AlertDialogBody,
-  AlertDialogContent,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogOverlay,
-  Button,
-  Flex,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  Heading,
-  HStack,
-  Icon,
-  IconButton,
-  Input,
-  InputGroup,
-  InputLeftElement,
-  Link,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  Select,
-  Skeleton,
-  Tag,
-  TagLabel,
-  TagRightIcon,
-  Text,
-  useDisclosure,
-  useToast,
-} from "@chakra-ui/react"
+// prettier-ignore
+import { AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Button, Flex, FormControl, FormErrorMessage, FormLabel, Heading, HStack, Icon, IconButton, Input, InputGroup, InputLeftElement, Link, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Select, Skeleton, Tag, TagLabel, TagRightIcon, Text, useDisclosure, useToast } from "@chakra-ui/react"
 import Head from "next/head"
 import { useEffect, useRef, useState } from "react"
 import PageLayout from "../layouts/page-layout"
