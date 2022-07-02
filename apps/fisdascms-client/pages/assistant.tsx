@@ -83,30 +83,14 @@ export default function AssistantPage() {
     gender: "all",
   })
   const cancelRef = useRef()
+  const [searchKeyword, setSearchKeyword] = useState("")
 
   const handleGetAssistants = async () => {
     setAssistantsState(await assistantService.getAll())
   }
 
   const handleSearchAssistants = async (keyword: string) => {
-    setAssistantsState(await assistantService.search(keyword))
-  }
-
-  const filterAssistant = (
-    assistantState: Assistant,
-    filter: AssistantFilter
-  ) => {
-    if (filter.level == "all" && filter.gender == "all") return true
-    else if (filter.level != "all" && filter.gender == "all") {
-      return assistantState.level == filter.level ? true : false
-    } else if (filter.level == "all" && filter.gender != "all") {
-      return assistantState.gender == filter.gender ? true : false
-    } else {
-      return assistantState.level == filter.level &&
-        assistantState.gender == filter.gender
-        ? true
-        : false
-    }
+    setSearchKeyword(keyword)
   }
 
   const handleCreateAssistant = async (newAssistant: CreateAssistantDto) => {
@@ -193,6 +177,7 @@ export default function AssistantPage() {
       </Head>
       <PageLayout>
         <Heading marginTop="4">Asisten</Heading>
+
         <Button
           marginTop="4"
           colorScheme="blue"
@@ -201,6 +186,7 @@ export default function AssistantPage() {
         >
           Tambah asisten
         </Button>
+
         <HStack marginTop="4" gap="2" spacing="0" wrap="wrap">
           <Text>Filter : </Text>
           <Tag
@@ -350,7 +336,10 @@ export default function AssistantPage() {
               <Tbody>
                 {assistantsState
                   ?.filter((assistantState) =>
-                    filterAssistant(assistantState, filterState)
+                    assistantService.filter(assistantState, filterState)
+                  )
+                  .filter((assistantState) =>
+                    assistantService.searchLocal(assistantState, searchKeyword)
                   )
                   .map((assistantState, index) => (
                     <Tr key={index}>
