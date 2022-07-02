@@ -1,6 +1,7 @@
 import { ApiRoute } from "../lib/constants"
 import { getFetch, putFetch } from "../lib/helpers/fetcher.helper"
 import {
+  PracticmMaterialFilter,
   PracticumMaterial,
   UpdatePracticumMaterialDto,
 } from "../types/practicum-material.type"
@@ -18,5 +19,12 @@ export const practicumMaterialService = {
     )
     console.log("Update practicum material API response :", response)
     return response
+  },
+  filter: (
+    practicumMaterial: PracticumMaterial,
+    filter: PracticmMaterialFilter
+  ) => {
+    if (filter.language == "all") return true
+    return practicumMaterial.language == filter.language
   },
 }

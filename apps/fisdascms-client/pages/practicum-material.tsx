@@ -1,28 +1,5 @@
-import {
-  Box,
-  Button,
-  Flex,
-  FormControl,
-  FormErrorMessage,
-  FormHelperText,
-  FormLabel,
-  Heading,
-  Input,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  SimpleGrid,
-  Skeleton,
-  Square,
-  Switch,
-  Text,
-  useDisclosure,
-  useToast,
-} from "@chakra-ui/react"
+// prettier-ignore
+import { Box, Button, Flex, FormControl, FormErrorMessage, FormHelperText, FormLabel, Heading, HStack, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, SimpleGrid, Skeleton, Square, Switch, Tag, TagLabel, TagRightIcon, Text, useDisclosure, useToast } from "@chakra-ui/react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Head from "next/head"
 import { useEffect, useState } from "react"
@@ -32,9 +9,12 @@ import { languageCodeMapper } from "../core/lib/helpers/language-code-mapper.hel
 import { practicumMaterialService } from "../core/services/practicum-material.service"
 import { repeatElement } from "../core/lib/helpers/repeat-element.helper"
 import {
+  LanguageFilter,
+  PracticmMaterialFilter,
   PracticumMaterial,
   PracticumMaterialValidationError,
 } from "../core/types/practicum-material.type"
+import { Language } from "../core/lib/constants"
 
 export default function PracticumMaterialPage() {
   const [practicumMaterialState, setPracticumMaterialState] =
@@ -47,6 +27,9 @@ export default function PracticumMaterialPage() {
   const toast = useToast()
   const [validationError, setValidationError] =
     useState<PracticumMaterialValidationError>()
+  const [filterState, setFilterState] = useState<PracticmMaterialFilter>({
+    language: "all",
+  })
 
   const getPracticumMaterials = async () => {
     setPracticumMaterialState(await practicumMaterialService.getAll())
@@ -88,6 +71,19 @@ export default function PracticumMaterialPage() {
     onClose()
   }
 
+  const toggleOrChangeLanguageFilter = (languageFilter: LanguageFilter) => {
+    if (filterState.language != languageFilter)
+      setFilterState((prevState) => {
+        prevState.language = languageFilter
+        return { ...prevState }
+      })
+    else
+      setFilterState((prevState) => {
+        prevState.language = "all"
+        return { ...prevState }
+      })
+  }
+
   useEffect(() => {
     getPracticumMaterials()
   }, [])
@@ -99,131 +95,178 @@ export default function PracticumMaterialPage() {
       </Head>
       <PageLayout>
         <Heading marginTop="4">Konten praktikum</Heading>
+
+        {/* filter list */}
+        <HStack marginTop="4" gap="2" spacing="0" wrap="wrap">
+          <Text>Filter : </Text>
+          <Tag
+            size="lg"
+            cursor="pointer"
+            colorScheme={filterState.language == Language.ID ? "red" : "gray"}
+            variant={filterState.language == Language.ID ? "subtle" : "outline"}
+            onClick={() => toggleOrChangeLanguageFilter(Language.ID)}
+          >
+            <TagLabel textTransform="capitalize">
+              {languageCodeMapper(Language.ID)}
+            </TagLabel>
+            <TagRightIcon>
+              <FontAwesomeIcon icon="language" />
+            </TagRightIcon>
+          </Tag>
+          <Tag
+            size="lg"
+            cursor="pointer"
+            colorScheme={filterState.language == Language.EN ? "blue" : "gray"}
+            variant={filterState.language == Language.EN ? "subtle" : "outline"}
+            onClick={() => toggleOrChangeLanguageFilter(Language.EN)}
+          >
+            <TagLabel textTransform="capitalize">
+              {languageCodeMapper(Language.EN)}
+            </TagLabel>
+            <TagRightIcon>
+              <FontAwesomeIcon icon="language" />
+            </TagRightIcon>
+          </Tag>
+        </HStack>
+        {/* filter list */}
+
         <SimpleGrid columns={[1, 2, 2, 4]} gap="4" marginTop="4">
-          {practicumMaterialState?.map((practicumMaterial) => (
-            <Box padding="4" {...shadowedBoxStyle} key={practicumMaterial._id}>
-              <Flex alignItems="center">
-                <Square
-                  fontSize="xl"
-                  bgColor="blue.50"
-                  color="blue.500"
-                  size="40px"
-                  borderRadius="full"
-                  marginRight="4"
-                >
-                  <FontAwesomeIcon icon={practicumMaterial.faIconName} />
-                </Square>
-                <Box>
-                  <Heading size="md">{practicumMaterial.code}</Heading>
-                  <Text>{languageCodeMapper(practicumMaterial.language)}</Text>
-                </Box>
-              </Flex>
-
-              <Flex direction="column" marginTop="4" gap="2">
-                <Flex justifyContent="space-between" alignItems="center">
-                  <Text>Soal TP</Text>
-                  <Box
-                    bgColor={
-                      practicumMaterial.preTask.isActive
-                        ? "green.100"
-                        : "gray.100"
-                    }
-                    color={
-                      practicumMaterial.preTask.isActive
-                        ? "green.500"
-                        : "gray.500"
-                    }
-                    borderRadius="full"
-                    paddingX="2"
-                    fontWeight="semibold"
-                    fontSize="xs"
-                  >
-                    {practicumMaterial.preTask.isActive ? "Aktif" : "Nonaktif"}
-                  </Box>
-                </Flex>
-                <Flex justifyContent="space-between" alignItems="center">
-                  <Text>Video</Text>
-                  <Box
-                    bgColor={
-                      practicumMaterial.video.isActive
-                        ? "green.100"
-                        : "gray.100"
-                    }
-                    color={
-                      practicumMaterial.video.isActive
-                        ? "green.500"
-                        : "gray.500"
-                    }
-                    borderRadius="full"
-                    paddingX="2"
-                    fontWeight="semibold"
-                    fontSize="xs"
-                  >
-                    {practicumMaterial.video.isActive ? "Aktif" : "Nonaktif"}
-                  </Box>
-                </Flex>
-                <Flex justifyContent="space-between" alignItems="center">
-                  <Text>Cover jurnal</Text>
-                  <Box
-                    bgColor={
-                      practicumMaterial.journalCover.isActive
-                        ? "green.100"
-                        : "gray.100"
-                    }
-                    color={
-                      practicumMaterial.journalCover.isActive
-                        ? "green.500"
-                        : "gray.500"
-                    }
-                    borderRadius="full"
-                    paddingX="2"
-                    fontWeight="semibold"
-                    fontSize="xs"
-                  >
-                    {practicumMaterial.journalCover.isActive
-                      ? "Aktif"
-                      : "Nonaktif"}
-                  </Box>
-                </Flex>
-                <Flex justifyContent="space-between" alignItems="center">
-                  <Text>Simulator</Text>
-                  <Box
-                    bgColor={
-                      practicumMaterial.simulator.isActive
-                        ? "green.100"
-                        : "gray.100"
-                    }
-                    color={
-                      practicumMaterial.simulator.isActive
-                        ? "green.500"
-                        : "gray.500"
-                    }
-                    borderRadius="full"
-                    paddingX="2"
-                    fontWeight="semibold"
-                    fontSize="xs"
-                  >
-                    {practicumMaterial.simulator.isActive
-                      ? "Aktif"
-                      : "Nonaktif"}
-                  </Box>
-                </Flex>
-              </Flex>
-
-              <Button
-                width="full"
-                marginTop="4"
-                onClick={() => {
-                  setOnEditingMaterialState({ ...practicumMaterial })
-                  setCanUpdate(false)
-                  onOpen()
-                }}
-                colorScheme="blue"
+          {practicumMaterialState
+            ?.filter((practicumMaterial) =>
+              practicumMaterialService.filter(practicumMaterial, filterState)
+            )
+            ?.map((practicumMaterial) => (
+              <Box
+                padding="4"
+                {...shadowedBoxStyle}
+                key={practicumMaterial._id}
               >
-                Edit konten
-              </Button>
-            </Box>
-          )) ??
+                <Flex alignItems="center">
+                  <Square
+                    fontSize="xl"
+                    bgColor="blue.50"
+                    color="blue.500"
+                    size="40px"
+                    borderRadius="full"
+                    marginRight="4"
+                  >
+                    <FontAwesomeIcon icon={practicumMaterial.faIconName} />
+                  </Square>
+                  <Box>
+                    <Heading size="md">{practicumMaterial.code}</Heading>
+                    <Text>
+                      {languageCodeMapper(practicumMaterial.language)}
+                    </Text>
+                  </Box>
+                </Flex>
+
+                <Flex direction="column" marginTop="4" gap="2">
+                  <Flex justifyContent="space-between" alignItems="center">
+                    <Text>Soal TP</Text>
+                    <Box
+                      bgColor={
+                        practicumMaterial.preTask.isActive
+                          ? "green.100"
+                          : "gray.100"
+                      }
+                      color={
+                        practicumMaterial.preTask.isActive
+                          ? "green.500"
+                          : "gray.500"
+                      }
+                      borderRadius="full"
+                      paddingX="2"
+                      fontWeight="semibold"
+                      fontSize="xs"
+                    >
+                      {practicumMaterial.preTask.isActive
+                        ? "Aktif"
+                        : "Nonaktif"}
+                    </Box>
+                  </Flex>
+                  <Flex justifyContent="space-between" alignItems="center">
+                    <Text>Video</Text>
+                    <Box
+                      bgColor={
+                        practicumMaterial.video.isActive
+                          ? "green.100"
+                          : "gray.100"
+                      }
+                      color={
+                        practicumMaterial.video.isActive
+                          ? "green.500"
+                          : "gray.500"
+                      }
+                      borderRadius="full"
+                      paddingX="2"
+                      fontWeight="semibold"
+                      fontSize="xs"
+                    >
+                      {practicumMaterial.video.isActive ? "Aktif" : "Nonaktif"}
+                    </Box>
+                  </Flex>
+                  <Flex justifyContent="space-between" alignItems="center">
+                    <Text>Cover jurnal</Text>
+                    <Box
+                      bgColor={
+                        practicumMaterial.journalCover.isActive
+                          ? "green.100"
+                          : "gray.100"
+                      }
+                      color={
+                        practicumMaterial.journalCover.isActive
+                          ? "green.500"
+                          : "gray.500"
+                      }
+                      borderRadius="full"
+                      paddingX="2"
+                      fontWeight="semibold"
+                      fontSize="xs"
+                    >
+                      {practicumMaterial.journalCover.isActive
+                        ? "Aktif"
+                        : "Nonaktif"}
+                    </Box>
+                  </Flex>
+                  <Flex justifyContent="space-between" alignItems="center">
+                    <Text>Simulator</Text>
+                    <Box
+                      bgColor={
+                        practicumMaterial.simulator.isActive
+                          ? "green.100"
+                          : "gray.100"
+                      }
+                      color={
+                        practicumMaterial.simulator.isActive
+                          ? "green.500"
+                          : "gray.500"
+                      }
+                      borderRadius="full"
+                      paddingX="2"
+                      fontWeight="semibold"
+                      fontSize="xs"
+                    >
+                      {practicumMaterial.simulator.isActive
+                        ? "Aktif"
+                        : "Nonaktif"}
+                    </Box>
+                  </Flex>
+                </Flex>
+
+                <Button
+                  width="full"
+                  marginTop="4"
+                  onClick={() => {
+                    setOnEditingMaterialState(practicumMaterial)
+                    setCanUpdate(false)
+                    onOpen()
+                  }}
+                  colorScheme="blue"
+                >
+                  Edit konten
+                </Button>
+              </Box>
+            )) ??
             repeatElement(
               <Skeleton
                 isLoaded={practicumMaterialState ? true : false}

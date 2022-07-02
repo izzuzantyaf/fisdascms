@@ -29,6 +29,12 @@ export type UpdatePracticumMaterialDto = Omit<
   "name" | "code" | "language" | "faIconName"
 >
 
+export type LanguageFilter = "all" | `${Language}`
+
+export type PracticmMaterialFilter = {
+  language?: LanguageFilter
+}
+
 export type PracticumMaterialValidationError = Record<
   keyof Omit<
     PracticumMaterial,

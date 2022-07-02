@@ -3,7 +3,7 @@ import { Language } from "../constants"
 type LanguageCodeMap = Record<Language, string>
 
 const langCodeMap: LanguageCodeMap = {
-  id: "Bahasa Indonesia",
+  id: "Indonesia",
   en: "English",
 }
 
