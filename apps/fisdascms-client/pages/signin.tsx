@@ -1,6 +1,6 @@
 import Head from "next/head"
 import { useState } from "react"
-import * as jwt from "jsonwebtoken"
+import * as jose from "jose"
 import {
   Button,
   Center,
@@ -35,7 +35,7 @@ export default function SignInPage() {
       return
     }
     const { access_token } = signInResponse.data
-    const decodedJwt: any = jwt.decode(access_token)
+    const decodedJwt: any = jose.decodeJwt(access_token)
     document.cookie = `jwt=${access_token}; expires=${new Date(
       decodedJwt?.exp * 1000
     ).toUTCString()}; path=/`
@@ -62,7 +62,7 @@ export default function SignInPage() {
                 id="email"
                 name="email"
                 value={email}
-                onChange={(e) => {
+                onChange={(e: any) => {
                   setEmail(e.target.value)
                 }}
               />
@@ -73,7 +73,7 @@ export default function SignInPage() {
                   id="password"
                   name="password"
                   value={password}
-                  onChange={(e) => {
+                  onChange={(e: any) => {
                     setPassword(e.target.value)
                   }}
                 />
@@ -96,7 +96,7 @@ export default function SignInPage() {
                 isDisabled={!isAbleToSubmit()}
                 colorScheme="blue"
                 w="100%"
-                onClick={async (e) => {
+                onClick={async (e: any) => {
                   e.preventDefault()
                   handleSignIn()
                 }}
