@@ -24,7 +24,7 @@ export default function SignInPage() {
 
   const toast = useToast()
 
-  const isAbleToSubmit = () => (email && password ? true : false)
+  const isAbleToSubmit = email && password ? true : false
 
   const handleSignIn = async () => {
     setIsSignInLoading(true)
@@ -93,7 +93,7 @@ export default function SignInPage() {
               <Button
                 type="submit"
                 isLoading={isSignInLoading}
-                isDisabled={!isAbleToSubmit()}
+                isDisabled={!isAbleToSubmit}
                 colorScheme="blue"
                 w="100%"
                 onClick={async (e: any) => {
