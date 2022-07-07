@@ -330,9 +330,7 @@ export default function AssistantPage() {
                         />
                       </Td>
                       <Td fontWeight="bold">{assistantState?.code}</Td>
-                      <Td maxWidth="60" isTruncated={true}>
-                        {assistantState?.name}
-                      </Td>
+                      <Td maxWidth="60">{assistantState?.name}</Td>
                       <Td textTransform="capitalize">
                         <Tag
                           colorScheme={
