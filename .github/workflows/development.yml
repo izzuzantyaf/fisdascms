@@ -1,0 +1,26 @@
+name: Development
+on:
+  push:
+    branches:
+      - "dev"
+    paths:
+      - "apps/fisdascms-server/**"
+jobs:
+  deploy-server-app:
+    name: Deploy server app
+    runs-on: ubuntu-latest
+    environment: fisdascms-dev
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Deploy to Heroku
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: "fisdascms-server-dev" # Must be unique in Heroku
+          heroku_email: "izzuzantyaf@gmail.com"
+          branch: "dev"
+          appdir: "apps/fisdascms-server"
+        env:
+          HD_MONGO_URI: ${{ secrets.MONGO_URI }}
+          HD_JWT_SECRET: ${{ secrets.JWT_SECRET }}

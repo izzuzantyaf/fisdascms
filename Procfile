@@ -1,1 +1,1 @@
-web: vendor/bin/heroku-php-apache2 public/
+web: cd apps/fisdascms-server && yarn run start:prod

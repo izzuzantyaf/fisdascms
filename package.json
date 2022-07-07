@@ -1,32 +1,24 @@
 {
-    "private": true,
-    "scripts": {
-        "dev": "npm run development",
-        "development": "mix",
-        "watch": "mix watch",
-        "watch-poll": "mix watch -- --watch-options-poll=1000",
-        "hot": "mix watch --hot",
-        "prod": "npm run production",
-        "production": "mix --production"
-    },
-    "devDependencies": {
-        "@fortawesome/fontawesome-free": "^5.15.4",
-        "@fortawesome/fontawesome-svg-core": "^1.2.36",
-        "@fortawesome/free-brands-svg-icons": "^5.15.4",
-        "@fortawesome/free-solid-svg-icons": "^5.15.4",
-        "@tailwindcss/aspect-ratio": "^0.2.1",
-        "@tailwindcss/postcss7-compat": "^2.2.14",
-        "autoprefixer": "^10.3.4",
-        "axios": "^0.21",
-        "browser-sync": "^2.27.5",
-        "browser-sync-webpack-plugin": "^2.3.0",
-        "laravel-mix": "^6.0.31",
-        "lodash": "^4.17.21",
-        "postcss": "^8.3.6",
-        "resolve-url-loader": "^4.0.0",
-        "sass": "^1.41.1",
-        "sass-loader": "^12.1.0",
-        "tailwindcss": "^2.2.15"
-    },
-    "dependencies": {}
+  "name": "fisdascms",
+  "version": "0.1.0",
+  "author": "Izzu Zantya Fawwas",
+  "private": true,
+  "license": "UNLICENSED",
+  "engines": {
+    "yarn": "1.x.x",
+    "node": ">=16.0.0"
+  },
+  "packageManager": "yarn@1.22.19",
+  "scripts": {
+    "install": "yarn install:server && yarn install:client",
+    "install:server": "cd apps/fisdascms-server && yarn install",
+    "install:client": "cd apps/fisdascms-client && yarn install",
+    "build": "yarn build:server && yarn build:client",
+    "build:server": "cd apps/fisdascms-server && yarn build",
+    "build:client": "cd apps/fisdascms-client && yarn build",
+    "heroku-postbuild": "yarn run build:server",
+    "dev:server": "cd apps/fisdascms-server && yarn dev",
+    "dev:client": "cd apps/fisdascms-client && yarn dev",
+    "test:server": "cd apps/fisdascms-server && yarn test"
+  }
 }
