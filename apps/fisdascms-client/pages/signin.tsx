@@ -2,10 +2,14 @@ import Head from "next/head"
 import { useState } from "react"
 import * as jose from "jose"
 import {
+  Box,
   Button,
   Center,
   Container,
+  FormControl,
+  FormLabel,
   Heading,
+  HStack,
   Icon,
   Input,
   InputGroup,
@@ -15,6 +19,8 @@ import {
 } from "@chakra-ui/react"
 import { authService } from "../core/services/auth.service"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import fisdasCMSLogo from "../public/fisdascms-logo.svg"
+import Image from "next/image"
 
 export default function SignInPage() {
   const [email, setEmail] = useState("")
@@ -51,44 +57,58 @@ export default function SignInPage() {
 
       <Center h="100vh">
         <Container maxW="xs">
-          <Heading size="lg" marginBottom={4}>
-            Fisdas CMS
+          <HStack spacing="4" marginBottom="2">
+            <Image src={fisdasCMSLogo} width="32px" alt="Fisdas CMS Logo" />
+            <Heading size="lg" color="blue.600">
+              Fisdas CMS
+            </Heading>
+          </HStack>
+
+          <Heading size="md" marginBottom="4">
+            Masuk
           </Heading>
+
           <form>
             <VStack spacing={4}>
-              <Input
-                placeholder="Email"
-                type="email"
-                id="email"
-                name="email"
-                value={email}
-                onChange={(e: any) => {
-                  setEmail(e.target.value)
-                }}
-              />
-              <InputGroup size="md">
+              <FormControl>
+                <FormLabel>Email</FormLabel>
                 <Input
-                  placeholder="Password"
-                  type={isPasswordShowed ? "text" : "password"}
-                  id="password"
-                  name="password"
-                  value={password}
+                  placeholder="Email"
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={email}
                   onChange={(e: any) => {
-                    setPassword(e.target.value)
+                    setEmail(e.target.value)
                   }}
                 />
-                <InputRightElement>
-                  <Icon
-                    cursor="pointer"
-                    color={isPasswordShowed ? "black" : "gray.500"}
-                    onClick={() => setIsPasswordShowed(!isPasswordShowed)}
-                  >
-                    <FontAwesomeIcon
-                      icon={isPasswordShowed ? "eye" : "eye-slash"}
-                    />
-                  </Icon>
-                </InputRightElement>
-              </InputGroup>
+              </FormControl>
+              <FormControl>
+                <FormLabel>Password</FormLabel>
+                <InputGroup size="md">
+                  <Input
+                    placeholder="Password"
+                    type={isPasswordShowed ? "text" : "password"}
+                    id="password"
+                    name="password"
+                    value={password}
+                    onChange={(e: any) => {
+                      setPassword(e.target.value)
+                    }}
+                  />
+                  <InputRightElement>
+                    <Icon
+                      cursor="pointer"
+                      color={isPasswordShowed ? "black" : "gray.500"}
+                      onClick={() => setIsPasswordShowed(!isPasswordShowed)}
+                    >
+                      <FontAwesomeIcon
+                        icon={isPasswordShowed ? "eye" : "eye-slash"}
+                      />
+                    </Icon>
+                  </InputRightElement>
+                </InputGroup>
+              </FormControl>
 
               <Button
                 type="submit"
@@ -96,7 +116,7 @@ export default function SignInPage() {
                 isDisabled={!isAbleToSubmit}
                 colorScheme="blue"
                 w="100%"
-                onClick={async (e: any) => {
+                onClick={(e: any) => {
                   e.preventDefault()
                   handleSignIn()
                 }}
