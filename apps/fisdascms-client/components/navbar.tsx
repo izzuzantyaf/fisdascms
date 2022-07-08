@@ -8,12 +8,15 @@ import {
   Flex,
   Spacer,
   Heading,
+  HStack,
 } from "@chakra-ui/react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import Image from "next/image"
 import Link from "next/link"
 import shadowedBoxStyle from "../chakra-style-props/shadowed-box"
 import { menu, Route } from "../core/lib/constants"
 import { authService } from "../core/services/auth.service"
+import fisdasCMSLogo from "../public/fisdascms-logo.svg"
 
 export default function Navbar() {
   const handleSignOut = () => {
@@ -27,6 +30,7 @@ export default function Navbar() {
         <Flex
           padding={2}
           paddingX={4}
+          paddingLeft={6}
           alignItems="center"
           // {...shadowedBoxStyle}
           bgColor="gray.100"
@@ -34,9 +38,17 @@ export default function Navbar() {
         >
           <Link href={Route.HOME}>
             <a>
-              <Heading size="md" color="blue.500">
-                Fisdas CMS
-              </Heading>
+              <HStack>
+                <Image
+                  src={fisdasCMSLogo}
+                  width="24px"
+                  height="24px"
+                  alt="Fisdas CMS Logo"
+                />
+                <Heading size="md" color="blue.500">
+                  Fisdas CMS
+                </Heading>
+              </HStack>
             </a>
           </Link>
           <Spacer />
