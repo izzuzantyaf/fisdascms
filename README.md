@@ -36,13 +36,17 @@ yarn dev:client
 ```
 
 ## Struktur folder
-```
-|_ apps
-|__ fisdascms-client -> (aplikasi frontend)
-|___ components -> (berisi komponen-komponen UI. contoh: button, navbar, card)
-|___ core
-|____ lib
-|____ services
-|____ types
-|__ fisdascms-server -> (aplikasi backend)
-```
+- apps
+  - fisdascms-client -> (aplikasi frontend)
+    - components -> (berisi komponen-komponen UI. contoh: button, navbar, card)
+    - core
+      - lib
+        - helpers -> (berisi kumpulan function pembantu)
+        - constants -> (berisi kumpulan variabel yang nilai nya bersifat tetap)
+      - services -> (berisi function untuk menjalankan fitur-fitur / use cases)
+      - types -> (berisi tipe data entitas bisnis)
+    - layouts -> (berisi template layout halaman)
+    - pages -> (berisi file yang akan ditampilkan sebagai halaman di web)
+    - public -> (berisi file statis. contoh: gambar, svg, favicon, dll)
+    - styles -> (berisi file CSS)
+  - fisdascms-server -> (aplikasi backend)
