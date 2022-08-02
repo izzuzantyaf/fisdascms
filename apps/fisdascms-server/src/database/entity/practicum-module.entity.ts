@@ -5,7 +5,7 @@ import { Language } from 'src/lib/constants';
 
 export type PracticumModuleDocument = PracticumModule & Document;
 
-type PreTask = {
+export type PreTask = {
   url: string;
   isActive: boolean;
 };

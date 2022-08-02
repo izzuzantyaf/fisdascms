@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Put } from '@nestjs/common';
+import { Body, Controller, Get, Put, Query } from '@nestjs/common';
 import { SuccessfulResponse } from 'src/lib/dtos/response.dto';
 import { PracticumModuleService } from './practicum-module.service';
 
@@ -10,6 +10,13 @@ export class PracticumModuleController {
   async getAll() {
     const practicumModules = await this.practicumModuleService.getAll();
     return new SuccessfulResponse('Sukses', { practicumModules });
+  }
+
+  @Get('/pretasks')
+  async getPreTasks(@Query() filter) {
+    console.log('Pretask filter :', filter);
+    const preTasks = await this.practicumModuleService.getPreTasks(filter);
+    return new SuccessfulResponse('Sukses', { preTasks });
   }
 
   @Put()

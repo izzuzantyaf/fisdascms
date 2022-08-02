@@ -17,6 +17,12 @@ export class PracticumModuleService {
     );
   }
 
+  async getPreTasks(filter: object) {
+    return this.practicumModuleFactory.createMany(
+      await this.dataService.practicumModules.getPreTasks(filter),
+    );
+  }
+
   async update(updatePracticumModuleDto: object) {
     console.log('updatePracticumModuleDto :', updatePracticumModuleDto);
     const newPracticumModule = this.practicumModuleFactory.create(
