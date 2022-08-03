@@ -9,7 +9,7 @@ export class SuccessfulResponse implements AppResponse {
   message: string;
   data: object | null = null;
 
-  constructor(message: string = 'Sukses', data?: object) {
+  constructor(message: string = 'Sukses', data?: object | []) {
     this.message = message;
     this.data = data;
   }
@@ -20,7 +20,7 @@ export class ErrorResponse implements AppResponse {
   message: string;
   data: object | null = null;
 
-  constructor(message: string = 'Gagal', data?: object) {
+  constructor(message: string = 'Gagal', data?: object | []) {
     this.message = message;
     this.data = data;
   }

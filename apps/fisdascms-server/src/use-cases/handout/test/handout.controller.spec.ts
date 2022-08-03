@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { HandoutController } from './handout.controller';
-import { HandoutModule } from './handout.module';
+import { HandoutController } from '../handout.controller';
+import { HandoutModule } from '../handout.module';
 
 describe('HandoutController', () => {
   let controller: HandoutController;

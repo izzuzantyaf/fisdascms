@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { AssistantController } from './assistant.controller';
-import { AssistantModule } from './assistant.module';
+import { AssistantController } from '../assistant.controller';
+import { AssistantModule } from '../assistant.module';
 
 describe('AssistantController', () => {
   let controller: AssistantController;

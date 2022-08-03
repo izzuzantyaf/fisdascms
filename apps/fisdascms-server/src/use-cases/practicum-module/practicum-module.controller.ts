@@ -14,9 +14,26 @@ export class PracticumModuleController {
 
   @Get('/pretasks')
   async getPreTasks(@Query() filter) {
-    console.log('Pretask filter :', filter);
     const preTasks = await this.practicumModuleService.getPreTasks(filter);
-    return new SuccessfulResponse('Sukses', { preTasks });
+    return new SuccessfulResponse('Sukses', preTasks);
+  }
+
+  @Get('/videos')
+  async getVideos(@Query() filter) {
+    const preTasks = await this.practicumModuleService.getVideos(filter);
+    return new SuccessfulResponse('Sukses', preTasks);
+  }
+
+  @Get('/simulators')
+  async getSimulators(@Query() filter) {
+    const preTasks = await this.practicumModuleService.getSimulators(filter);
+    return new SuccessfulResponse('Sukses', preTasks);
+  }
+
+  @Get('/journal-covers')
+  async getJournalCovers(@Query() filter) {
+    const preTasks = await this.practicumModuleService.getJournalCovers(filter);
+    return new SuccessfulResponse('Sukses', preTasks);
   }
 
   @Put()

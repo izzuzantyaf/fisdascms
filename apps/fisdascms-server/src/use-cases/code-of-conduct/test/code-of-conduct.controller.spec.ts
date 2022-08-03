@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { CodeOfConductController } from './code-of-conduct.controller';
-import { CodeOfConductModule } from './code-of-conduct.module';
+import { CodeOfConductController } from '../code-of-conduct.controller';
+import { CodeOfConductModule } from '../code-of-conduct.module';
 
 describe('CodeOfConductController', () => {
   let controller: CodeOfConductController;

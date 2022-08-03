@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { CodeOfConductModule } from './code-of-conduct.module';
-import { CodeOfConductService } from './code-of-conduct.service';
+import { CodeOfConductModule } from '../code-of-conduct.module';
+import { CodeOfConductService } from '../code-of-conduct.service';
 
 describe('CodeOfConductService', () => {
   let service: CodeOfConductService;

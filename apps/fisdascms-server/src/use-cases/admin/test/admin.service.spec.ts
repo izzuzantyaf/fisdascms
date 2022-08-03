@@ -2,8 +2,8 @@ import { BadRequestException, ConflictException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Admin } from 'src/database/entity/admin.entity';
 import { adminSeeder } from 'src/database/seeds/admin.seed';
-import { AdminModule } from './admin.module';
-import { AdminService } from './admin.service';
+import { AdminModule } from '../admin.module';
+import { AdminService } from '../admin.service';
 
 describe('AdminService', () => {
   let service: AdminService;

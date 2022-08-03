@@ -1,17 +1,17 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { SuccessfulResponse } from 'src/lib/dtos/response.dto';
-import { ScheduleController } from './schedule.controller';
-import { ScheduleModule } from './schedule.module';
+import { PracticumModuleController } from '../practicum-module.controller';
+import { PracticumModuleModule } from '../practicum-module.module';
 
-describe('ScheduleController', () => {
-  let controller: ScheduleController;
+describe('PracticumModuleController', () => {
+  let controller: PracticumModuleController;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [ScheduleModule],
+      imports: [PracticumModuleModule],
     }).compile();
 
-    controller = module.get(ScheduleController);
+    controller = module.get(PracticumModuleController);
   });
 
   it('should be defined', () => {

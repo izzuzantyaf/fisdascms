@@ -17,9 +17,27 @@ export class PracticumModuleService {
     );
   }
 
-  async getPreTasks(filter: object) {
+  async getPreTasks(filter?: object) {
     return this.practicumModuleFactory.createMany(
       await this.dataService.practicumModules.getPreTasks(filter),
+    );
+  }
+
+  async getVideos(filter?: object) {
+    return this.practicumModuleFactory.createMany(
+      await this.dataService.practicumModules.getVideos(filter),
+    );
+  }
+
+  async getSimulators(filter?: object) {
+    return this.practicumModuleFactory.createMany(
+      await this.dataService.practicumModules.getSimulators(filter),
+    );
+  }
+
+  async getJournalCovers(filter?: object) {
+    return this.practicumModuleFactory.createMany(
+      await this.dataService.practicumModules.getJournalCovers(filter),
     );
   }
 

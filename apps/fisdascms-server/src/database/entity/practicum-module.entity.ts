@@ -10,17 +10,17 @@ export type PreTask = {
   isActive: boolean;
 };
 
-type Video = {
+export type Video = {
   url: string;
   isActive: boolean;
 };
 
-type Simulator = {
+export type Simulator = {
   url: string;
   isActive: boolean;
 };
 
-type JournalCover = {
+export type JournalCover = {
   url: string;
   isActive: boolean;
 };

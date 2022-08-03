@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { OrganigramModule } from './organigram.module';
-import { OrganigramService } from './organigram.service';
+import { OrganigramModule } from '../organigram.module';
+import { OrganigramService } from '../organigram.service';
 
 describe('OrganigramService', () => {
   let service: OrganigramService;
