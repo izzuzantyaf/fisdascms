@@ -1,6 +1,6 @@
 import { Admin } from 'src/core/entities/admin.entity';
 import { Injectable } from '@nestjs/common';
-import { CreateAdminDto } from 'src/core/dtos/admin-create.dto';
+import { CreateAdminDto } from 'src/core/dtos/admin/admin-create.dto';
 
 @Injectable()
 export class AdminFactoryService {

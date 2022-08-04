@@ -12,7 +12,7 @@ import {
   maxLength,
   minLength,
 } from 'class-validator';
-import { CreateAdminDto } from '../dtos/admin-create.dto';
+import { CreateAdminDto } from '../dtos/admin/admin-create.dto';
 
 export type AdminDocument = Admin & Document;
 

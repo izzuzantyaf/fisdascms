@@ -4,7 +4,7 @@ import {
   Injectable,
 } from '@nestjs/common';
 import { isEmpty, isNotEmpty } from 'class-validator';
-import { CreateAdminDto } from 'src/core/dtos/admin-create.dto';
+import { CreateAdminDto } from 'src/core/dtos/admin/admin-create.dto';
 import { ErrorResponse } from 'src/core/dtos/response.dto';
 import { DataServiceService } from 'src/database/data-service.service';
 import { AdminFactoryService } from './admin-factory.service';

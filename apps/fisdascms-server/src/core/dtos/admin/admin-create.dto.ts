@@ -1,4 +1,4 @@
-import { Admin } from '../entities/admin.entity';
+import { Admin } from '../../entities/admin.entity';
 
 export type CreateAdminDto = Pick<
   Admin,
