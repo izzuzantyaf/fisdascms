@@ -1,4 +1,5 @@
 import { Body, Controller, Get, Put } from '@nestjs/common';
+import { UpdateOrganigramDto } from 'src/core/dtos/organigram.dto';
 import { SuccessfulResponse } from 'src/core/dtos/response.dto';
 import { OrganigramService } from 'src/use-cases/organigram/organigram.service';
 
@@ -13,8 +14,10 @@ export class OrganigramController {
   }
 
   @Put()
-  async update(@Body() updateData: object) {
-    const updatedOrganigram = await this.organigramService.update(updateData);
+  async update(@Body() updateOrganigramDto: UpdateOrganigramDto) {
+    const updatedOrganigram = await this.organigramService.update(
+      updateOrganigramDto,
+    );
     return new SuccessfulResponse('Organigram berhasil diupdate', {
       updatedOrganigram,
     });

@@ -5,9 +5,14 @@ import { isNotEmpty, isNotEmptyObject, isObject, isURL } from 'class-validator';
 
 export type HandoutDocument = Handout & Document;
 
+export type HandoutConstructorProps = Pick<
+  Handout,
+  '_id' | 'faculty' | 'language' | 'isActive' | 'url'
+>;
+
 @Schema({ timestamps: true })
 export class Handout {
-  _id: string;
+  _id?: string;
   @Prop({ required: true })
   faculty: Faculty;
   @Prop({ required: true })
@@ -17,7 +22,7 @@ export class Handout {
   @Prop()
   url: string;
 
-  constructor(props: any) {
+  constructor(props: HandoutConstructorProps) {
     const { _id, faculty, language, isActive, url } = props;
     this._id = _id;
     this.faculty = faculty;

@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
-import { CreateAdminDto } from 'src/core/dtos/admin/admin-create.dto';
+import { CreateAdminDto } from 'src/core/dtos/admin.dto';
 import { SuccessfulResponse } from 'src/core/dtos/response.dto';
 import { AdminService } from 'src/use-cases/admin/admin.service';
 

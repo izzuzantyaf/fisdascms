@@ -25,9 +25,22 @@ export type JournalCover = {
   isActive: boolean;
 };
 
+export type PracticumModuleConstructorProps = Pick<
+  PracticumModule,
+  | '_id'
+  | 'name'
+  | 'code'
+  | 'language'
+  | 'faIconName'
+  | 'preTask'
+  | 'video'
+  | 'simulator'
+  | 'journalCover'
+>;
+
 @Schema({ timestamps: true, collection: 'practicum_modules' })
 export class PracticumModule {
-  _id: string;
+  _id?: string;
   @Prop({ required: true })
   name: string;
   @Prop({ required: true })
@@ -65,7 +78,7 @@ export class PracticumModule {
   )
   journalCover: JournalCover;
 
-  constructor(props) {
+  constructor(props: PracticumModuleConstructorProps) {
     const {
       _id,
       name,

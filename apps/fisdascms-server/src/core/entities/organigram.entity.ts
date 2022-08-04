@@ -4,14 +4,16 @@ import { Document } from 'mongoose';
 
 export type OrganigramDocument = Organigram & Document;
 
+export type OrganigramConstructorProps = Pick<Organigram, '_id' | 'url'>;
+
 @Schema({ timestamps: true })
 export class Organigram {
-  _id: string;
+  _id?: string;
   @Prop()
   url: string;
   previewUrl: string;
 
-  constructor(initialProps?: { _id?: string; url?: string }) {
+  constructor(initialProps?: OrganigramConstructorProps) {
     const { _id, url } = initialProps;
     this._id = _id;
     this.url = url;

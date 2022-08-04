@@ -3,6 +3,7 @@ import { isNotEmpty } from 'class-validator';
 import { DataServiceService } from 'src/database/data-service.service';
 import { ErrorResponse } from 'src/core/dtos/response.dto';
 import { HandoutFactoryService } from './handout-factory.service';
+import { UpdateHandoutDto } from 'src/core/dtos/handout.dto';
 
 @Injectable()
 export class HandoutService {
@@ -17,7 +18,7 @@ export class HandoutService {
     );
   }
 
-  async update(updateHandoutDto: object) {
+  async update(updateHandoutDto: UpdateHandoutDto) {
     console.log('updateHandoutDto :', updateHandoutDto);
     const newHandout = this.handoutFactory.create(updateHandoutDto);
     const validationErrors = newHandout.validateProps();

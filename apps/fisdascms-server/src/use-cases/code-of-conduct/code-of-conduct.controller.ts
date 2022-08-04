@@ -1,4 +1,5 @@
 import { Body, Controller, Get, Put } from '@nestjs/common';
+import { UpdateCodeOfConductDto } from 'src/core/dtos/code-of-conduct.dto';
 import { SuccessfulResponse } from 'src/core/dtos/response.dto';
 import { CodeOfConductService } from 'src/use-cases/code-of-conduct/code-of-conduct.service';
 
@@ -13,9 +14,9 @@ export class CodeOfConductController {
   }
 
   @Put()
-  async update(@Body() updateData: object) {
+  async update(@Body() updateCodeOfConductDto: UpdateCodeOfConductDto) {
     const updatedCodeOfConduct = await this.codeOfConductService.update(
-      updateData,
+      updateCodeOfConductDto,
     );
     return new SuccessfulResponse('Tata tertib berhasil diupdate', {
       updatedCodeOfConduct,

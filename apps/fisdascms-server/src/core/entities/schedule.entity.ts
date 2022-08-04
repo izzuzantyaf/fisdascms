@@ -5,9 +5,14 @@ import { isNotEmpty, isURL, isObject, isNotEmptyObject } from 'class-validator';
 
 export type ScheduleDocument = Schedule & Document;
 
+export type ScheduleConstructorProps = Pick<
+  Schedule,
+  '_id' | 'faculty' | 'isActive' | 'url'
+>;
+
 @Schema({ timestamps: true })
 export class Schedule {
-  _id: string;
+  _id?: string;
   @Prop()
   faculty: Faculty | null;
   @Prop()
@@ -15,12 +20,7 @@ export class Schedule {
   @Prop()
   url: string;
 
-  constructor(props?: {
-    _id?: string;
-    faculty?: Faculty | null;
-    isActive?: boolean;
-    url?: string;
-  }) {
+  constructor(props: ScheduleConstructorProps) {
     const { _id, faculty, isActive, url } = props;
     this._id = _id;
     this.faculty = faculty;

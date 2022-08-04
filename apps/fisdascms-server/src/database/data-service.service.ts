@@ -116,7 +116,8 @@ export class DataServiceService {
 
   protected seedPracticumModule(): void {
     const practicumModules = practicumModuleSeeder.map(
-      (practicumModule) => new PracticumModule(practicumModule),
+      (practicumModule) =>
+        new PracticumModule(practicumModule as PracticumModule),
     );
     this.practicumModules.seed(practicumModules);
   }

@@ -4,6 +4,7 @@ import { DataServiceService } from 'src/database/data-service.service';
 import { Schedule } from 'src/core/entities/schedule.entity';
 import { ErrorResponse } from 'src/core/dtos/response.dto';
 import { ScheduleFactoryService } from './schedule-factory.service';
+import { UpdateScheduleDto } from 'src/core/dtos/schedule.dto';
 
 @Injectable()
 export class ScheduleService {
@@ -27,9 +28,9 @@ export class ScheduleService {
     return schedules.filter((schedule) => !isEmpty(schedule.faculty));
   }
 
-  async update(updateData: object) {
-    console.log('Incoming data :', updateData);
-    const newSchedule = this.scheduleFactory.create(updateData);
+  async update(updateScheduleDto: UpdateScheduleDto) {
+    console.log('Incoming data :', updateScheduleDto);
+    const newSchedule = this.scheduleFactory.create(updateScheduleDto);
     const validationError = newSchedule.validateProps();
     if (isNotEmpty(validationError))
       throw new BadRequestException(
@@ -42,9 +43,9 @@ export class ScheduleService {
     return updatedSchedule;
   }
 
-  async updateMany(updateData: object[]) {
-    console.log('Incoming data :', updateData);
-    const newSchedules = this.scheduleFactory.createMany(updateData);
+  async updateMany(updateScheduleDtos: UpdateScheduleDto[]) {
+    console.log('Incoming data :', updateScheduleDtos);
+    const newSchedules = this.scheduleFactory.createMany(updateScheduleDtos);
     const updatedSchedules: Schedule[] = [];
     for (const newSchedule of newSchedules) {
       updatedSchedules.push(

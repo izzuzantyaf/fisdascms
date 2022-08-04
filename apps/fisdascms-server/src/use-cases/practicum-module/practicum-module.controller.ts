@@ -1,4 +1,5 @@
 import { Body, Controller, Get, Put, Query } from '@nestjs/common';
+import { UpdatePracticumModuleDto } from 'src/core/dtos/practicum-module.dto';
 import { SuccessfulResponse } from 'src/core/dtos/response.dto';
 import { PracticumModuleService } from './practicum-module.service';
 
@@ -37,7 +38,7 @@ export class PracticumModuleController {
   }
 
   @Put()
-  async update(@Body() updatePracticumModuleDto: object) {
+  async update(@Body() updatePracticumModuleDto: UpdatePracticumModuleDto) {
     const updatedPracticumModule = await this.practicumModuleService.update(
       updatePracticumModuleDto,
     );

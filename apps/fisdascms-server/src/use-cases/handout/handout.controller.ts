@@ -1,4 +1,5 @@
 import { Body, Controller, Get, Put } from '@nestjs/common';
+import { UpdateHandoutDto } from 'src/core/dtos/handout.dto';
 import { SuccessfulResponse } from 'src/core/dtos/response.dto';
 import { HandoutService } from 'src/use-cases/handout/handout.service';
 
@@ -13,8 +14,8 @@ export class HandoutController {
   }
 
   @Put()
-  async update(@Body() updateData: object) {
-    const updatedHandout = await this.handoutService.update(updateData);
+  async update(@Body() updateHandoutDto: UpdateHandoutDto) {
+    const updatedHandout = await this.handoutService.update(updateHandoutDto);
     return new SuccessfulResponse('Modul berhasil diupdate', {
       updatedHandout,
     });

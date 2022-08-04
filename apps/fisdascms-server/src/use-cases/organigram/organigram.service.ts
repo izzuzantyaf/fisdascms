@@ -3,6 +3,7 @@ import { isNotEmpty } from 'class-validator';
 import { DataServiceService } from 'src/database/data-service.service';
 import { ErrorResponse } from 'src/core/dtos/response.dto';
 import { OrganigramFactoryService } from './organigram-factory.service';
+import { UpdateOrganigramDto } from 'src/core/dtos/organigram.dto';
 
 @Injectable()
 export class OrganigramService {
@@ -18,9 +19,9 @@ export class OrganigramService {
     return organigram;
   }
 
-  async update(updateData: object) {
-    console.log('Incoming data :', updateData);
-    const newOrganigram = this.organigramFactory.create(updateData);
+  async update(updateOrganigramDto: UpdateOrganigramDto) {
+    console.log('Incoming data :', updateOrganigramDto);
+    const newOrganigram = this.organigramFactory.create(updateOrganigramDto);
     const validationError = newOrganigram.validateProps();
     if (isNotEmpty(validationError))
       throw new BadRequestException(

@@ -9,6 +9,10 @@ import {
   Query,
 } from '@nestjs/common';
 import { isNotEmpty } from 'class-validator';
+import {
+  CreateAssistantDto,
+  UpdateAssistantDto,
+} from 'src/core/dtos/assistant.dto';
 import { SuccessfulResponse } from 'src/core/dtos/response.dto';
 import { AssistantService } from 'src/use-cases/assistant/assistant.service';
 
@@ -17,7 +21,7 @@ export class AssistantController {
   constructor(private assistantService: AssistantService) {}
 
   @Post()
-  async create(@Body() createAssistantDto: any) {
+  async create(@Body() createAssistantDto: CreateAssistantDto) {
     const storedAssistant = await this.assistantService.create(
       createAssistantDto,
     );
@@ -35,7 +39,7 @@ export class AssistantController {
   }
 
   @Put()
-  async update(@Body() updateAssistantDto: any) {
+  async update(@Body() updateAssistantDto: UpdateAssistantDto) {
     const updatedAssistant = await this.assistantService.update(
       updateAssistantDto,
     );

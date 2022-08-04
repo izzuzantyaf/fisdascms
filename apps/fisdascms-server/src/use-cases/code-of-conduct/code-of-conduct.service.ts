@@ -3,6 +3,7 @@ import { isNotEmpty } from 'class-validator';
 import { DataServiceService } from 'src/database/data-service.service';
 import { ErrorResponse } from 'src/core/dtos/response.dto';
 import { CodeOfConductFactoryService } from './code-of-conduct-factory.service';
+import { UpdateCodeOfConductDto } from 'src/core/dtos/code-of-conduct.dto';
 
 @Injectable()
 export class CodeOfConductService {
@@ -18,9 +19,11 @@ export class CodeOfConductService {
     return codeOfConduct;
   }
 
-  async update(updateData: object) {
-    console.log('Incoming data :', updateData);
-    const newCodeOfConduct = this.codeOfConductFactory.create(updateData);
+  async update(updateCodeOfConductDto: UpdateCodeOfConductDto) {
+    console.log('Incoming data :', updateCodeOfConductDto);
+    const newCodeOfConduct = this.codeOfConductFactory.create(
+      updateCodeOfConductDto,
+    );
     const errors = newCodeOfConduct.validateProps();
     if (isNotEmpty(errors))
       throw new BadRequestException(
