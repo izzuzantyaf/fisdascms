@@ -1,16 +1,15 @@
 import { Admin } from 'src/core/entities/admin.entity';
 import { Injectable } from '@nestjs/common';
+import { CreateAdminDto } from 'src/core/dtos/admin-create.dto';
 
 @Injectable()
 export class AdminFactoryService {
-  create(createAdminDto: object) {
-    return new Admin(createAdminDto);
+  create(props: Pick<Admin, '_id'> & CreateAdminDto) {
+    return new Admin(props);
   }
 
-  createMany(createAdminDtos: object[]) {
-    const admins = createAdminDtos.map(
-      (createAdminDto) => new Admin(createAdminDto),
-    );
+  createMany(arrayOfProps: (Pick<Admin, '_id'> & CreateAdminDto)[]) {
+    const admins = arrayOfProps.map((props) => new Admin(props));
     return admins;
   }
 }

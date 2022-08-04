@@ -12,12 +12,13 @@ import {
   maxLength,
   minLength,
 } from 'class-validator';
+import { CreateAdminDto } from '../dtos/admin-create.dto';
 
 export type AdminDocument = Admin & Document;
 
 @Schema({ timestamps: true })
 export class Admin {
-  _id: string | number;
+  _id?: string;
   @Prop({ required: true })
   name: string;
   @Prop({ required: true, unique: true })
@@ -28,13 +29,7 @@ export class Admin {
   @Prop({ required: true })
   role: AdminRole;
 
-  constructor(props?: {
-    _id?: string | number;
-    name?: string;
-    email?: string;
-    password?: string;
-    role?: AdminRole;
-  }) {
+  constructor(props?: Pick<Admin, '_id'> & CreateAdminDto) {
     const { _id, name, email, password, role } = props;
     this._id = _id;
     this.name = name;

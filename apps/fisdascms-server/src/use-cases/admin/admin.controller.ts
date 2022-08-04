@@ -1,4 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { CreateAdminDto } from 'src/core/dtos/admin-create.dto';
 import { SuccessfulResponse } from 'src/core/dtos/response.dto';
 import { AdminService } from 'src/use-cases/admin/admin.service';
 
@@ -7,7 +8,7 @@ export class AdminController {
   constructor(private readonly adminService: AdminService) {}
 
   @Post()
-  async create(@Body() createAdminDto: object) {
+  async create(@Body() createAdminDto: CreateAdminDto) {
     const storedAdmin = await this.adminService.create(createAdminDto);
     return new SuccessfulResponse('Registrasi berhasil', {
       storedAdmin,
@@ -21,7 +22,7 @@ export class AdminController {
   }
 
   @Delete(':id')
-  async delete(@Param('id') id: any) {
+  async delete(@Param('id') id: string) {
     await this.adminService.delete(id);
     return new SuccessfulResponse('Akun berhasil dihapus');
   }
