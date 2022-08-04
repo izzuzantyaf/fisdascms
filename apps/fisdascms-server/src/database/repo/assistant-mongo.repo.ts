@@ -1,4 +1,4 @@
-import { Assistant } from '../entity/assistant.entity';
+import { Assistant } from '../../core/entities/assistant.entity';
 import { MongoGenericRepository } from './mongo-generic.repo';
 import { Model } from 'mongoose';
 import { isEmpty } from 'class-validator';

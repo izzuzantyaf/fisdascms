@@ -1,8 +1,8 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { isEmpty, isMongoId, isNotEmpty } from 'class-validator';
 import { DataServiceService } from 'src/database/data-service.service';
-import { Assistant } from 'src/database/entity/assistant.entity';
-import { ErrorResponse } from 'src/lib/dtos/response.dto';
+import { Assistant } from 'src/core/entities/assistant.entity';
+import { ErrorResponse } from 'src/core/dtos/response.dto';
 import { AssistantFactoryService } from './assistant-factory.service';
 
 @Injectable()

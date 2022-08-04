@@ -5,7 +5,7 @@ import {
   PreTask,
   Simulator,
   Video,
-} from '../entity/practicum-module.entity';
+} from '../../core/entities/practicum-module.entity';
 import { MongoGenericRepository } from './mongo-generic.repo';
 import { FilterQuery, Model } from 'mongoose';
 import { isEmpty } from 'class-validator';

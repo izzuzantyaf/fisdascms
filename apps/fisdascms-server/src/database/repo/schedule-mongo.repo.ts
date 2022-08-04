@@ -1,4 +1,7 @@
-import { Schedule, ScheduleDocument } from '../entity/schedule.entity';
+import {
+  Schedule,
+  ScheduleDocument,
+} from '../../core/entities/schedule.entity';
 import { MongoGenericRepository } from './mongo-generic.repo';
 import { Model } from 'mongoose';
 import { isEmpty } from 'class-validator';

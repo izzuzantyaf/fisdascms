@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Put, Query } from '@nestjs/common';
-import { SuccessfulResponse } from 'src/lib/dtos/response.dto';
+import { SuccessfulResponse } from 'src/core/dtos/response.dto';
 import { PracticumModuleService } from './practicum-module.service';
 
 @Controller('api/practicum-module')

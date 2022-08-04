@@ -7,7 +7,7 @@ import {
   Request,
   UseGuards,
 } from '@nestjs/common';
-import { SuccessfulResponse } from 'src/lib/dtos/response.dto';
+import { SuccessfulResponse } from 'src/core/dtos/response.dto';
 import { AuthService } from 'src/use-cases/auth/auth.service';
 import { JwtAuthGuard } from 'src/use-cases/auth/guards/jwt-auth.guard';
 import { LocalAuthGuard } from 'src/use-cases/auth/guards/local-auth-guard';

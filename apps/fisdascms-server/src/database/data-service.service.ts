@@ -1,19 +1,25 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Admin, AdminDocument } from './entity/admin.entity';
-import { Assistant, AssistantDocument } from './entity/assistant.entity';
+import { Admin, AdminDocument } from '../core/entities/admin.entity';
+import {
+  Assistant,
+  AssistantDocument,
+} from '../core/entities/assistant.entity';
 import {
   CodeOfConduct,
   CodeOfConductDocument,
-} from './entity/code-of-conduct.entity';
-import { Handout, HandoutDocument } from './entity/handout.entity';
-import { Organigram, OrganigramDocument } from './entity/organigram.entity';
+} from '../core/entities/code-of-conduct.entity';
+import { Handout, HandoutDocument } from '../core/entities/handout.entity';
+import {
+  Organigram,
+  OrganigramDocument,
+} from '../core/entities/organigram.entity';
 import {
   PracticumModule,
   PracticumModuleDocument,
-} from './entity/practicum-module.entity';
-import { Schedule, ScheduleDocument } from './entity/schedule.entity';
+} from '../core/entities/practicum-module.entity';
+import { Schedule, ScheduleDocument } from '../core/entities/schedule.entity';
 import { adminSeeder } from 'src/database/seeds/admin.seed';
 import { assistantSeeder } from 'src/database/seeds/assistant.seed';
 import { codeOfConductSeeder } from 'src/database/seeds/code-of-conduct.seed';

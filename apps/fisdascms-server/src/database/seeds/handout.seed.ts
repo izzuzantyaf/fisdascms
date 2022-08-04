@@ -1,4 +1,4 @@
-import { Faculty, Language } from 'src/lib/constants';
+import { Faculty, Language } from 'src/core/constants';
 
 export const handoutSeeder = [
   {

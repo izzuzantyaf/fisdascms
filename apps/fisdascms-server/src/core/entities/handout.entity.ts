@@ -1,29 +1,27 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Faculty } from 'src/lib/constants';
+import { Faculty, Language } from 'src/core/constants';
 import { Document } from 'mongoose';
-import { isNotEmpty, isURL, isObject, isNotEmptyObject } from 'class-validator';
+import { isNotEmpty, isNotEmptyObject, isObject, isURL } from 'class-validator';
 
-export type ScheduleDocument = Schedule & Document;
+export type HandoutDocument = Handout & Document;
 
 @Schema({ timestamps: true })
-export class Schedule {
+export class Handout {
   _id: string;
-  @Prop()
-  faculty: Faculty | null;
-  @Prop()
+  @Prop({ required: true })
+  faculty: Faculty;
+  @Prop({ required: true })
+  language: Language;
+  @Prop({ required: true })
   isActive: boolean;
   @Prop()
   url: string;
 
-  constructor(props?: {
-    _id?: string;
-    faculty?: Faculty | null;
-    isActive?: boolean;
-    url?: string;
-  }) {
-    const { _id, faculty, isActive, url } = props;
+  constructor(props: any) {
+    const { _id, faculty, language, isActive, url } = props;
     this._id = _id;
     this.faculty = faculty;
+    this.language = language;
     this.isActive = isActive;
     this.url = url;
   }
@@ -45,4 +43,4 @@ export class Schedule {
   }
 }
 
-export const ScheduleSchema = SchemaFactory.createForClass(Schedule);
+export const HandoutSchema = SchemaFactory.createForClass(Handout);

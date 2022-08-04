@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Handout } from 'src/database/entity/handout.entity';
+import { Handout } from 'src/core/entities/handout.entity';
 
 @Injectable()
 export class HandoutFactoryService {

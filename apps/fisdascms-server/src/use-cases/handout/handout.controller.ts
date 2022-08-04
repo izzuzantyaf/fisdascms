@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Put } from '@nestjs/common';
-import { SuccessfulResponse } from 'src/lib/dtos/response.dto';
+import { SuccessfulResponse } from 'src/core/dtos/response.dto';
 import { HandoutService } from 'src/use-cases/handout/handout.service';
 
 @Controller('api/handout')

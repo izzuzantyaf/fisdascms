@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { isNotEmpty } from 'class-validator';
 import { DataServiceService } from 'src/database/data-service.service';
-import { ErrorResponse } from 'src/lib/dtos/response.dto';
+import { ErrorResponse } from 'src/core/dtos/response.dto';
 import { PracticumModuleFactory } from './practicum-module-factory.service';
 
 @Injectable()

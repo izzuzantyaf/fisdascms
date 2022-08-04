@@ -1,4 +1,4 @@
-import { PracticumModule } from 'src/database/entity/practicum-module.entity';
+import { PracticumModule } from 'src/core/entities/practicum-module.entity';
 
 export class PracticumModuleFactory {
   create(props: {}) {

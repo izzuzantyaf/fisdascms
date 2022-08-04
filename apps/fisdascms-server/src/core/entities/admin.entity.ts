@@ -2,7 +2,7 @@ import * as bcrypt from 'bcrypt';
 import { Exclude } from 'class-transformer';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { AdminRole } from 'src/lib/constants';
+import { AdminRole } from 'src/core/constants';
 import {
   isEmail,
   isEmpty,

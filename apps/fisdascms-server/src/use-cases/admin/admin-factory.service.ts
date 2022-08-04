@@ -1,4 +1,4 @@
-import { Admin } from 'src/database/entity/admin.entity';
+import { Admin } from 'src/core/entities/admin.entity';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()

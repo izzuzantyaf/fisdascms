@@ -1,7 +1,7 @@
 import {
   CodeOfConduct,
   CodeOfConductDocument,
-} from '../entity/code-of-conduct.entity';
+} from '../../core/entities/code-of-conduct.entity';
 import { MongoGenericRepository } from './mongo-generic.repo';
 import { Model } from 'mongoose';
 import { isEmpty } from 'class-validator';

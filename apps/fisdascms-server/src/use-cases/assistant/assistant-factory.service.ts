@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Assistant } from 'src/database/entity/assistant.entity';
+import { Assistant } from 'src/core/entities/assistant.entity';
 
 @Injectable()
 export class AssistantFactoryService {

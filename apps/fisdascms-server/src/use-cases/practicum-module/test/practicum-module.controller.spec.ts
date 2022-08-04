@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { SuccessfulResponse } from 'src/lib/dtos/response.dto';
+import { SuccessfulResponse } from 'src/core/dtos/response.dto';
 import { PracticumModuleController } from '../practicum-module.controller';
 import { PracticumModuleModule } from '../practicum-module.module';
 

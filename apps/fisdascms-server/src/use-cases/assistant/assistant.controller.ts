@@ -9,7 +9,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { isNotEmpty } from 'class-validator';
-import { SuccessfulResponse } from 'src/lib/dtos/response.dto';
+import { SuccessfulResponse } from 'src/core/dtos/response.dto';
 import { AssistantService } from 'src/use-cases/assistant/assistant.service';
 
 @Controller('api/assistant')

@@ -1,4 +1,4 @@
-import { Handout, HandoutDocument } from '../entity/handout.entity';
+import { Handout, HandoutDocument } from '../../core/entities/handout.entity';
 import { MongoGenericRepository } from './mongo-generic.repo';
 import { Model } from 'mongoose';
 import { isEmpty } from 'class-validator';

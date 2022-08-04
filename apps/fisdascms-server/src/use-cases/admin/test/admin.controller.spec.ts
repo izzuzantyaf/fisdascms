@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AdminService } from 'src/use-cases/admin/admin.service';
 import { AdminController } from '../admin.controller';
-import { SuccessfulResponse } from 'src/lib/dtos/response.dto';
+import { SuccessfulResponse } from 'src/core/dtos/response.dto';
 import { AdminModule } from 'src/use-cases/admin/admin.module';
 
 describe('AdminController', () => {

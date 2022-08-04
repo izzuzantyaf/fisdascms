@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Organigram } from 'src/database/entity/organigram.entity';
+import { Organigram } from 'src/core/entities/organigram.entity';
 
 @Injectable()
 export class OrganigramFactoryService {

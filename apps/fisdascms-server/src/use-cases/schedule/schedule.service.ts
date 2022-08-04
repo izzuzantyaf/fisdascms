@@ -1,8 +1,8 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { isEmpty, isNotEmpty } from 'class-validator';
 import { DataServiceService } from 'src/database/data-service.service';
-import { Schedule } from 'src/database/entity/schedule.entity';
-import { ErrorResponse } from 'src/lib/dtos/response.dto';
+import { Schedule } from 'src/core/entities/schedule.entity';
+import { ErrorResponse } from 'src/core/dtos/response.dto';
 import { ScheduleFactoryService } from './schedule-factory.service';
 
 @Injectable()
