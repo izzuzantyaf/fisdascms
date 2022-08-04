@@ -70,8 +70,8 @@ export class AssistantService {
 
   async delete(id: string) {
     console.log('Incoming data :', id);
-    if (!isMongoId(id))
-      throw new BadRequestException(new ErrorResponse('Asisten gagal dihapus'));
+    // if (!isMongoId(id))
+    //   throw new BadRequestException(new ErrorResponse('Asisten gagal dihapus'));
     const deleteResult = await this.dataService.assistants.deleteById(id);
     if (isEmpty(deleteResult))
       throw new BadRequestException(new ErrorResponse('Asisten gagal dihapus'));
