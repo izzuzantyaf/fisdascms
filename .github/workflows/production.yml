@@ -15,7 +15,7 @@ jobs:
     if: ${{ github.event_name == 'pull_request' }}
     name: Test server app
     runs-on: ubuntu-latest
-    environment: fisdascms-dev
+    environment: fisdascms-test
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
