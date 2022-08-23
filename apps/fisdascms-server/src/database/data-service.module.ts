@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { DataServiceService } from './data-service.service';
@@ -19,6 +19,7 @@ import {
   PracticumModuleSchema,
 } from '../core/entities/practicum-module.entity';
 
+@Global()
 @Module({
   imports: [
     MongooseModule.forFeature([

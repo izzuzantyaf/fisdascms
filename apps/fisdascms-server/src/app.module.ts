@@ -7,9 +7,11 @@ import { OrganigramModule } from './use-cases/organigram/organigram.module';
 import { ScheduleModule } from './use-cases/schedule/schedule.module';
 import { AssistantModule } from './use-cases/assistant/assistant.module';
 import { PracticumModuleModule } from './use-cases/practicum-module/practicum-module.module';
+import { DataServiceModule } from './database/data-service.module';
 
 @Module({
   imports: [
+    DataServiceModule,
     AdminModule,
     AuthModule,
     HandoutModule,
@@ -19,5 +21,6 @@ import { PracticumModuleModule } from './use-cases/practicum-module/practicum-mo
     AssistantModule,
     PracticumModuleModule,
   ],
+  exports: [DataServiceModule],
 })
 export class AppModule {}
