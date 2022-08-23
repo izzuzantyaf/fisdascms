@@ -10,7 +10,7 @@ export class CodeOfConductController {
   @Get()
   async getAll() {
     const codeOfConduct = await this.codeOfConductService.getOne();
-    return new SuccessfulResponse('Sukses', { codeOfConduct });
+    return new SuccessfulResponse('Sukses', codeOfConduct);
   }
 
   @Put()
@@ -18,8 +18,9 @@ export class CodeOfConductController {
     const updatedCodeOfConduct = await this.codeOfConductService.update(
       updateCodeOfConductDto,
     );
-    return new SuccessfulResponse('Tata tertib berhasil diupdate', {
+    return new SuccessfulResponse(
+      'Tata tertib berhasil diupdate',
       updatedCodeOfConduct,
-    });
+    );
   }
 }
