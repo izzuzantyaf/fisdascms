@@ -10,7 +10,7 @@ export class OrganigramController {
   @Get()
   async getAll() {
     const organigram = await this.organigramService.getOne();
-    return new SuccessfulResponse('Sukses', { organigram });
+    return new SuccessfulResponse('Sukses', organigram);
   }
 
   @Put()
@@ -18,8 +18,9 @@ export class OrganigramController {
     const updatedOrganigram = await this.organigramService.update(
       updateOrganigramDto,
     );
-    return new SuccessfulResponse('Organigram berhasil diupdate', {
+    return new SuccessfulResponse(
+      'Organigram berhasil diupdate',
       updatedOrganigram,
-    });
+    );
   }
 }
