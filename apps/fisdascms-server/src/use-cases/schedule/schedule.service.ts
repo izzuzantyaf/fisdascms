@@ -1,7 +1,10 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { isEmpty, isNotEmpty } from 'class-validator';
 import { DataServiceService } from 'src/database/data-service.service';
-import { Schedule } from 'src/core/entities/schedule.entity';
+import {
+  Schedule,
+  ScheduleConstructorProps,
+} from 'src/core/entities/schedule.entity';
 import { ErrorResponse } from 'src/core/dtos/response.dto';
 import { ScheduleFactoryService } from './schedule-factory.service';
 import { UpdateScheduleDto } from 'src/core/dtos/schedule.dto';
@@ -30,7 +33,9 @@ export class ScheduleService {
 
   async update(updateScheduleDto: UpdateScheduleDto) {
     console.log('Incoming data :', updateScheduleDto);
-    const newSchedule = this.scheduleFactory.create(updateScheduleDto);
+    const newSchedule = this.scheduleFactory.create(
+      updateScheduleDto as ScheduleConstructorProps,
+    );
     const validationError = newSchedule.validateProps();
     if (isNotEmpty(validationError))
       throw new BadRequestException(
@@ -45,7 +50,9 @@ export class ScheduleService {
 
   async updateMany(updateScheduleDtos: UpdateScheduleDto[]) {
     console.log('Incoming data :', updateScheduleDtos);
-    const newSchedules = this.scheduleFactory.createMany(updateScheduleDtos);
+    const newSchedules = this.scheduleFactory.createMany(
+      updateScheduleDtos as ScheduleConstructorProps[],
+    );
     const updatedSchedules: Schedule[] = [];
     for (const newSchedule of newSchedules) {
       updatedSchedules.push(
