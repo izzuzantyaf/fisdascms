@@ -1,15 +1,15 @@
 interface AppResponse {
   isSuccess: boolean;
   message: string;
-  data: object | null;
+  data: any;
 }
 
 export class SuccessfulResponse implements AppResponse {
   isSuccess = true;
   message: string;
-  data: object | null = null;
+  data: any;
 
-  constructor(message: string = 'Sukses', data?: object | []) {
+  constructor(message: string = 'Sukses', data?: any) {
     this.message = message;
     this.data = data;
   }
@@ -18,9 +18,9 @@ export class SuccessfulResponse implements AppResponse {
 export class ErrorResponse implements AppResponse {
   isSuccess = false;
   message: string;
-  data: object | null = null;
+  data: null;
 
-  constructor(message: string = 'Gagal', data?: object | []) {
+  constructor(message: string = 'Gagal', data?: any) {
     this.message = message;
     this.data = data;
   }
