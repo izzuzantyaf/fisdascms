@@ -10,14 +10,12 @@ export class HandoutController {
   @Get()
   async getAll() {
     const handouts = await this.handoutService.getAll();
-    return new SuccessfulResponse('Sukses', { handouts });
+    return new SuccessfulResponse('Sukses', handouts);
   }
 
   @Put()
   async update(@Body() updateHandoutDto: UpdateHandoutDto) {
     const updatedHandout = await this.handoutService.update(updateHandoutDto);
-    return new SuccessfulResponse('Modul berhasil diupdate', {
-      updatedHandout,
-    });
+    return new SuccessfulResponse('Modul berhasil diupdate', updatedHandout);
   }
 }
