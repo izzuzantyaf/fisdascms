@@ -10,15 +10,13 @@ export class AdminController {
   @Post()
   async create(@Body() createAdminDto: CreateAdminDto) {
     const storedAdmin = await this.adminService.create(createAdminDto);
-    return new SuccessfulResponse('Registrasi berhasil', {
-      storedAdmin,
-    });
+    return new SuccessfulResponse('Registrasi berhasil', storedAdmin);
   }
 
   @Get()
   async getAll() {
     const admins = await this.adminService.getAll();
-    return new SuccessfulResponse('Sukses', { admins });
+    return new SuccessfulResponse('Sukses', admins);
   }
 
   @Delete(':id')

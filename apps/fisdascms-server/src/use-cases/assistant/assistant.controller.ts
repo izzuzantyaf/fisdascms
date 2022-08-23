@@ -25,17 +25,18 @@ export class AssistantController {
     const storedAssistant = await this.assistantService.create(
       createAssistantDto,
     );
-    return new SuccessfulResponse('Asisten berhasil ditambahkan', {
+    return new SuccessfulResponse(
+      'Asisten berhasil ditambahkan',
       storedAssistant,
-    });
+    );
   }
 
   @Get()
-  async getAll(@Query('keyword') keyword: string) {
+  async getAll(@Query('keyword') keyword?: string) {
     const assistants = isNotEmpty(keyword)
       ? await this.assistantService.search(keyword)
       : await this.assistantService.getAll();
-    return new SuccessfulResponse('Sukses', { assistants });
+    return new SuccessfulResponse('Sukses', assistants);
   }
 
   @Put()
@@ -43,17 +44,16 @@ export class AssistantController {
     const updatedAssistant = await this.assistantService.update(
       updateAssistantDto,
     );
-    return new SuccessfulResponse('Asisten berhasil diupdate', {
+    return new SuccessfulResponse(
+      'Asisten berhasil diupdate',
       updatedAssistant,
-    });
+    );
   }
 
   @Delete(':id')
   async delete(@Param('id') id: string) {
     const deletedAssistant = await this.assistantService.delete(id);
-    return new SuccessfulResponse('Asisten berhasil dihapus', {
-      deletedAssistant,
-    });
+    return new SuccessfulResponse('Asisten berhasil dihapus', deletedAssistant);
   }
 
   @Delete()
