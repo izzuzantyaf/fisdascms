@@ -10,29 +10,29 @@ export class PracticumModuleController {
   @Get()
   async getAll() {
     const practicumModules = await this.practicumModuleService.getAll();
-    return new SuccessfulResponse('Sukses', { practicumModules });
+    return new SuccessfulResponse('Sukses', practicumModules);
   }
 
   @Get('/pretasks')
-  async getPreTasks(@Query() filter) {
+  async getPreTasks(@Query() filter?: any) {
     const preTasks = await this.practicumModuleService.getPreTasks(filter);
     return new SuccessfulResponse('Sukses', preTasks);
   }
 
   @Get('/videos')
-  async getVideos(@Query() filter) {
+  async getVideos(@Query() filter?: any) {
     const preTasks = await this.practicumModuleService.getVideos(filter);
     return new SuccessfulResponse('Sukses', preTasks);
   }
 
   @Get('/simulators')
-  async getSimulators(@Query() filter) {
+  async getSimulators(@Query() filter?: any) {
     const preTasks = await this.practicumModuleService.getSimulators(filter);
     return new SuccessfulResponse('Sukses', preTasks);
   }
 
   @Get('/journal-covers')
-  async getJournalCovers(@Query() filter) {
+  async getJournalCovers(@Query() filter?: any) {
     const preTasks = await this.practicumModuleService.getJournalCovers(filter);
     return new SuccessfulResponse('Sukses', preTasks);
   }
@@ -42,8 +42,9 @@ export class PracticumModuleController {
     const updatedPracticumModule = await this.practicumModuleService.update(
       updatePracticumModuleDto,
     );
-    return new SuccessfulResponse('Konten praktikum berhasil diupdate', {
+    return new SuccessfulResponse(
+      'Konten praktikum berhasil diupdate',
       updatedPracticumModule,
-    });
+    );
   }
 }
