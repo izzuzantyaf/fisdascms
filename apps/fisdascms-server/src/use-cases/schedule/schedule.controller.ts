@@ -10,7 +10,7 @@ export class ScheduleController {
   @Get()
   async getAll() {
     const schedules = await this.scheduleService.getAll();
-    return new SuccessfulResponse('Sukses', { schedules });
+    return new SuccessfulResponse('Sukses', schedules);
   }
 
   @Put()
@@ -18,8 +18,6 @@ export class ScheduleController {
     const updatedSchedule = await this.scheduleService.update(
       updateScheduleDto,
     );
-    return new SuccessfulResponse('Jadwal berhasil diupdate', {
-      updatedSchedule,
-    });
+    return new SuccessfulResponse('Jadwal berhasil diupdate', updatedSchedule);
   }
 }

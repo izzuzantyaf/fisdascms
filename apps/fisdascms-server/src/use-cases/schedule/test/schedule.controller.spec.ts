@@ -1,17 +1,24 @@
+import { faker } from '@faker-js/faker';
 import { Test, TestingModule } from '@nestjs/testing';
 import { SuccessfulResponse } from 'src/core/dtos/response.dto';
+import { Schedule } from 'src/core/entities/schedule.entity';
 import { ScheduleController } from '../schedule.controller';
 import { ScheduleModule } from '../schedule.module';
 
 describe('ScheduleController', () => {
+  let module: TestingModule;
   let controller: ScheduleController;
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
+  beforeAll(async () => {
+    module = await Test.createTestingModule({
       imports: [ScheduleModule],
     }).compile();
 
     controller = module.get(ScheduleController);
+  });
+
+  afterAll(() => {
+    module.close();
   });
 
   it('should be defined', () => {
@@ -19,8 +26,43 @@ describe('ScheduleController', () => {
   });
 
   describe('getAll()', () => {
-    it('harus mengembalikan object bertipe SuccessfulResponse', async () => {
-      expect(await controller.getAll()).toBeInstanceOf(SuccessfulResponse);
+    it(`harus mengembalikan object bertipe ${SuccessfulResponse.name} dan data berupa array ${Schedule.name}`, async () => {
+      const response = await controller.getAll();
+      const schedules = response.data as Schedule[];
+      expect(response).toBeInstanceOf(SuccessfulResponse);
+      expect(
+        schedules.every((schedule) => schedule instanceof Schedule),
+      ).toBeTruthy();
+    });
+  });
+
+  describe('update()', () => {
+    let schedule: Schedule;
+    beforeAll(async () => {
+      schedule = (await controller.getAll()).data[0];
+    });
+
+    it(`harus berhasil update dan return object bertipe ${SuccessfulResponse.name} berisi data jadwal yang telah diupdate`, async () => {
+      schedule.url = faker.internet.url();
+      schedule.isActive = !schedule.isActive;
+      const response = await controller.update({
+        _id: schedule._id,
+        url: schedule.url,
+        isActive: schedule.isActive,
+      });
+      const updatedSchedule = response.data;
+      expect(response).toBeInstanceOf(SuccessfulResponse);
+      expect(updatedSchedule).toBeInstanceOf(Schedule);
+    });
+    it('harus gagal karena link tidak valid', async () => {
+      schedule.url = 'Link ngasal';
+      await expect(
+        controller.update({
+          _id: schedule._id,
+          url: schedule.url,
+          isActive: schedule.isActive,
+        }),
+      ).rejects.toThrow();
     });
   });
 });
