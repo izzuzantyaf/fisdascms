@@ -8,7 +8,7 @@ import { PracticumModuleModule } from '../practicum-module.module';
 describe('PracticumModuleController', () => {
   let controller: PracticumModuleController;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [PracticumModuleModule],
     }).compile();
