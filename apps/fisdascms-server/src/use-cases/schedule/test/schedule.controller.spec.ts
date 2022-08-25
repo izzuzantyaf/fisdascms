@@ -17,10 +17,6 @@ describe('ScheduleController', () => {
     controller = module.get(ScheduleController);
   });
 
-  afterAll(() => {
-    module.close();
-  });
-
   it('should be defined', () => {
     expect(controller).toBeDefined();
   });
