@@ -56,7 +56,7 @@ export default function PracticumMaterialPage() {
       return
     }
     setValidationError(undefined)
-    const { updatedPracticumModule } = response.data
+    const updatedPracticumModule = response.data
     setPracticumMaterialState((prevState) => {
       const oldIndex = prevState?.findIndex(
         (old) => old._id == updatedPracticumModule._id

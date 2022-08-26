@@ -70,7 +70,7 @@ export default function HandoutPage() {
       })
       return
     }
-    const { updatedHandout } = handoutUpdateResponse.data
+    const updatedHandout = handoutUpdateResponse.data
     setHandoutState((prevState) =>
       prevState?.map((state) =>
         state._id === updatedHandout._id ? updatedHandout : state

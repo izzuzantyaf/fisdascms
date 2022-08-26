@@ -6,7 +6,7 @@ export const scheduleService = {
   getAll: async () => {
     const response = await getFetch(ApiRoute.SCHEDULE)
     console.log("Get schedules API response :", response)
-    return response.data.schedules as Schedule[]
+    return response.data as Schedule[]
   },
   update: async (newSchedule: UpdateScheduleDto) => {
     const response = await putFetch(ApiRoute.SCHEDULE, newSchedule)

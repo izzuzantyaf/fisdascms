@@ -58,7 +58,8 @@ export default function OrganigramPage() {
       return
     }
     setValidationError(undefined)
-    setOrganigramState(updateResponse?.data?.updatedOrganigram)
+    const updatedOrganigram = updateResponse.data
+    setOrganigramState(updatedOrganigram)
     toast({
       title: updateResponse.message,
       status: "success",

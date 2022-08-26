@@ -6,7 +6,7 @@ export const organigramService = {
   getAll: async () => {
     const response = await getFetch(ApiRoute.ORGANIGRAM)
     console.log("Get organigram API response :", response)
-    return response.data.organigram as Organigram
+    return response.data as Organigram
   },
   update: async (newOrganigram: UpdateOrganigramDto) => {
     const response = await putFetch(ApiRoute.ORGANIGRAM, newOrganigram)
