@@ -101,6 +101,7 @@ export class PracticumModule {
     this.simulator = simulator;
     this.journalCover = journalCover;
 
+    if(isNotEmpty(this.video))
     this.video.embedUrl = this.generateVideoEmbedURL();
   }
 
