@@ -12,6 +12,7 @@ export type PreTask = {
 
 export type Video = {
   url: string;
+  embedUrl: string;
   isActive: boolean;
 };
 
@@ -99,6 +100,8 @@ export class PracticumModule {
     this.video = video;
     this.simulator = simulator;
     this.journalCover = journalCover;
+
+    this.video.embedUrl = this.generateVideoEmbedURL();
   }
 
   protected isPreTaskUrlValid() {
@@ -141,6 +144,15 @@ export class PracticumModule {
     );
     console.log('Validation errors :', validationErrors);
     return isNotEmptyObject(validationErrors) ? validationErrors : null;
+  }
+
+  protected generateVideoEmbedURL() {
+    let embedURL: string = undefined;
+    if (isNotEmpty(this.video.url)) {
+      const videoID = this.video.url.split('/')[3];
+      embedURL = `https://www.youtube.com/embed/${videoID}`;
+    }
+    return embedURL;
   }
 }
 
