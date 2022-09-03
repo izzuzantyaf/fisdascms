@@ -19,6 +19,7 @@ export class Schedule {
   isActive: boolean;
   @Prop()
   url: string;
+  embedURL: string;
 
   constructor(props: ScheduleConstructorProps) {
     const { _id, faculty, isActive, url } = props;
@@ -26,6 +27,10 @@ export class Schedule {
     this.faculty = faculty;
     this.isActive = isActive;
     this.url = url;
+
+    this.embedURL = isNotEmpty(this.url)
+      ? this.generateGDriveEmbedLink()
+      : null;
   }
 
   protected isUrlValid() {
@@ -42,6 +47,10 @@ export class Schedule {
     );
     console.log('Validation errors :', validationErrors);
     return isNotEmptyObject(validationErrors) ? validationErrors : null;
+  }
+
+  protected generateGDriveEmbedLink() {
+    return this.url.replace('view', 'preview');
   }
 }
 
