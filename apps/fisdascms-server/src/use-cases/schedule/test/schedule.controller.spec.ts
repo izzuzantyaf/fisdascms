@@ -30,6 +30,14 @@ describe('ScheduleController', () => {
         schedules.every((schedule) => schedule instanceof Schedule),
       ).toBeTruthy();
     });
+
+    it(`harus return data array ${Schedule.name} yang property isActive = true`, async () => {
+      const schedules = (await controller.getAll({ isActive: true }))
+        .data as Schedule[];
+      expect(
+        schedules.every((schedule) => schedule.isActive == true),
+      ).toBeTruthy();
+    });
   });
 
   describe('update()', () => {

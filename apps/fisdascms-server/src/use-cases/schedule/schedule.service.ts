@@ -7,7 +7,7 @@ import {
 } from 'src/core/entities/schedule.entity';
 import { ErrorResponse } from 'src/core/dtos/response.dto';
 import { ScheduleFactoryService } from './schedule-factory.service';
-import { UpdateScheduleDto } from 'src/core/dtos/schedule.dto';
+import { ScheduleQuery, UpdateScheduleDto } from 'src/core/dtos/schedule.dto';
 
 @Injectable()
 export class ScheduleService {
@@ -16,9 +16,11 @@ export class ScheduleService {
     private scheduleFactory: ScheduleFactoryService,
   ) {}
 
-  async getAll() {
+  async getAll(query: ScheduleQuery) {
     const schedules = this.scheduleFactory.createMany(
-      await this.dataService.schedules.getAll(),
+      await this.dataService.schedules.getAll({
+        filter: query,
+      }),
     );
     return schedules;
   }
