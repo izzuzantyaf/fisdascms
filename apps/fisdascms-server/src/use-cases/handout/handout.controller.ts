@@ -1,5 +1,5 @@
-import { Body, Controller, Get, Put } from '@nestjs/common';
-import { UpdateHandoutDto } from 'src/core/dtos/handout.dto';
+import { Body, Controller, Get, Put, Query } from '@nestjs/common';
+import { HandoutQuery, UpdateHandoutDto } from 'src/core/dtos/handout.dto';
 import { SuccessfulResponse } from 'src/core/dtos/response.dto';
 import { HandoutService } from 'src/use-cases/handout/handout.service';
 
@@ -8,8 +8,9 @@ export class HandoutController {
   constructor(private readonly handoutService: HandoutService) {}
 
   @Get()
-  async getAll() {
-    const handouts = await this.handoutService.getAll();
+  async getAll(@Query() query?: HandoutQuery) {
+    console.log('Handout query :', query);
+    const handouts = await this.handoutService.getAll(query);
     return new SuccessfulResponse('Sukses', handouts);
   }
 

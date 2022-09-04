@@ -30,6 +30,14 @@ describe('HandoutController', () => {
         handouts.every((handout) => handout instanceof Handout),
       ).toBeTruthy();
     });
+
+    it(`harus return data array ${Handout.name} yang property isActive = true`, async () => {
+      const activeHandouts = (await controller.getAll({ isActive: true }))
+        .data as Handout[];
+      expect(
+        activeHandouts.every((handout) => handout.isActive == true),
+      ).toBeTruthy();
+    });
   });
 
   describe('update()', () => {

@@ -3,7 +3,7 @@ import { isNotEmpty } from 'class-validator';
 import { DataServiceService } from 'src/database/data-service.service';
 import { ErrorResponse } from 'src/core/dtos/response.dto';
 import { HandoutFactoryService } from './handout-factory.service';
-import { UpdateHandoutDto } from 'src/core/dtos/handout.dto';
+import { HandoutQuery, UpdateHandoutDto } from 'src/core/dtos/handout.dto';
 
 @Injectable()
 export class HandoutService {
@@ -12,9 +12,11 @@ export class HandoutService {
     private handoutFactory: HandoutFactoryService,
   ) {}
 
-  async getAll() {
+  async getAll(query?: HandoutQuery) {
     return this.handoutFactory.createMany(
-      await this.dataService.handouts.getAll(),
+      await this.dataService.handouts.getAll({
+        filter: query,
+      }),
     );
   }
 
