@@ -4,7 +4,8 @@ import {
   Injectable,
 } from '@nestjs/common';
 import { isEmpty, isNotEmpty } from 'class-validator';
-import { ErrorResponse } from 'src/lib/dtos/response.dto';
+import { CreateAdminDto } from 'src/core/dtos/admin.dto';
+import { ErrorResponse } from 'src/core/dtos/response.dto';
 import { DataServiceService } from 'src/database/data-service.service';
 import { AdminFactoryService } from './admin-factory.service';
 
@@ -15,7 +16,7 @@ export class AdminService {
     private adminFactoryService: AdminFactoryService,
   ) {}
 
-  async create(createAdminDto: object) {
+  async create(createAdminDto: CreateAdminDto) {
     console.log('Incoming data :', createAdminDto);
     const newAdmin = this.adminFactoryService.create(createAdminDto);
     const errors = newAdmin.validateProps();

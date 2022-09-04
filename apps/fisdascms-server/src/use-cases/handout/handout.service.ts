@@ -1,8 +1,9 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { isNotEmpty } from 'class-validator';
 import { DataServiceService } from 'src/database/data-service.service';
-import { ErrorResponse } from 'src/lib/dtos/response.dto';
+import { ErrorResponse } from 'src/core/dtos/response.dto';
 import { HandoutFactoryService } from './handout-factory.service';
+import { HandoutQuery, UpdateHandoutDto } from 'src/core/dtos/handout.dto';
 
 @Injectable()
 export class HandoutService {
@@ -11,13 +12,15 @@ export class HandoutService {
     private handoutFactory: HandoutFactoryService,
   ) {}
 
-  async getAll() {
+  async getAll(query?: HandoutQuery) {
     return this.handoutFactory.createMany(
-      await this.dataService.handouts.getAll(),
+      await this.dataService.handouts.getAll({
+        filter: query,
+      }),
     );
   }
 
-  async update(updateHandoutDto: object) {
+  async update(updateHandoutDto: UpdateHandoutDto) {
     console.log('updateHandoutDto :', updateHandoutDto);
     const newHandout = this.handoutFactory.create(updateHandoutDto);
     const validationErrors = newHandout.validateProps();

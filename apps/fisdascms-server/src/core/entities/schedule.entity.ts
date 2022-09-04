@@ -1,29 +1,36 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Faculty, Language } from 'src/lib/constants';
+import { Faculty } from 'src/core/constants';
 import { Document } from 'mongoose';
-import { isNotEmpty, isNotEmptyObject, isObject, isURL } from 'class-validator';
+import { isNotEmpty, isURL, isObject, isNotEmptyObject } from 'class-validator';
 
-export type HandoutDocument = Handout & Document;
+export type ScheduleDocument = Schedule & Document;
+
+export type ScheduleConstructorProps = Pick<
+  Schedule,
+  '_id' | 'faculty' | 'isActive' | 'url'
+>;
 
 @Schema({ timestamps: true })
-export class Handout {
-  _id: string;
-  @Prop({ required: true })
-  faculty: Faculty;
-  @Prop({ required: true })
-  language: Language;
-  @Prop({ required: true })
+export class Schedule {
+  _id?: string;
+  @Prop()
+  faculty: Faculty | null;
+  @Prop()
   isActive: boolean;
   @Prop()
   url: string;
+  embedURL: string;
 
-  constructor(props: any) {
-    const { _id, faculty, language, isActive, url } = props;
+  constructor(props: ScheduleConstructorProps) {
+    const { _id, faculty, isActive, url } = props;
     this._id = _id;
     this.faculty = faculty;
-    this.language = language;
     this.isActive = isActive;
     this.url = url;
+
+    this.embedURL = isNotEmpty(this.url)
+      ? this.generateGDriveEmbedLink()
+      : null;
   }
 
   protected isUrlValid() {
@@ -41,6 +48,10 @@ export class Handout {
     console.log('Validation errors :', validationErrors);
     return isNotEmptyObject(validationErrors) ? validationErrors : null;
   }
+
+  protected generateGDriveEmbedLink() {
+    return this.url.replace('view', 'preview');
+  }
 }
 
-export const HandoutSchema = SchemaFactory.createForClass(Handout);
+export const ScheduleSchema = SchemaFactory.createForClass(Schedule);

@@ -2,7 +2,7 @@ import * as bcrypt from 'bcrypt';
 import { Exclude } from 'class-transformer';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { AdminRole } from 'src/lib/constants';
+import { AdminRole } from 'src/core/constants';
 import {
   isEmail,
   isEmpty,
@@ -15,9 +15,14 @@ import {
 
 export type AdminDocument = Admin & Document;
 
+export type AdminConstructorProps = Pick<
+  Admin,
+  '_id' | 'name' | 'email' | 'password' | 'role'
+>;
+
 @Schema({ timestamps: true })
 export class Admin {
-  _id: string | number;
+  _id?: string;
   @Prop({ required: true })
   name: string;
   @Prop({ required: true, unique: true })
@@ -28,13 +33,7 @@ export class Admin {
   @Prop({ required: true })
   role: AdminRole;
 
-  constructor(props?: {
-    _id?: string | number;
-    name?: string;
-    email?: string;
-    password?: string;
-    role?: AdminRole;
-  }) {
+  constructor(props?: AdminConstructorProps) {
     const { _id, name, email, password, role } = props;
     this._id = _id;
     this.name = name;
@@ -82,8 +81,10 @@ export class Admin {
       (error, result) => (isObject(result) ? { ...error, ...result } : error),
       {},
     );
-    console.log('Validation errors :', errors);
-    return isNotEmptyObject(errors) ? errors : null;
+    if (isNotEmptyObject(errors)) {
+      console.error('Validation errors :', errors);
+      return errors;
+    } else return null;
   }
 
   async hashPassword() {

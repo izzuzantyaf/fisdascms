@@ -1,13 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import { Handout } from 'src/database/entity/handout.entity';
+import {
+  Handout,
+  HandoutConstructorProps,
+} from 'src/core/entities/handout.entity';
 
 @Injectable()
 export class HandoutFactoryService {
-  create(props: object) {
+  create(props: HandoutConstructorProps) {
     return new Handout(props);
   }
 
-  createMany(handoutsProps: object[]) {
-    return handoutsProps.map((handoutProps) => new Handout(handoutProps));
+  createMany(arrayOfProps: HandoutConstructorProps[]) {
+    return arrayOfProps.map((props) => new Handout(props));
   }
 }

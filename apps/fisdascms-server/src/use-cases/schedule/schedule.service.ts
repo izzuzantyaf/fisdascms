@@ -1,9 +1,13 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { isEmpty, isNotEmpty } from 'class-validator';
 import { DataServiceService } from 'src/database/data-service.service';
-import { Schedule } from 'src/database/entity/schedule.entity';
-import { ErrorResponse } from 'src/lib/dtos/response.dto';
+import {
+  Schedule,
+  ScheduleConstructorProps,
+} from 'src/core/entities/schedule.entity';
+import { ErrorResponse } from 'src/core/dtos/response.dto';
 import { ScheduleFactoryService } from './schedule-factory.service';
+import { ScheduleQuery, UpdateScheduleDto } from 'src/core/dtos/schedule.dto';
 
 @Injectable()
 export class ScheduleService {
@@ -12,9 +16,11 @@ export class ScheduleService {
     private scheduleFactory: ScheduleFactoryService,
   ) {}
 
-  async getAll() {
+  async getAll(query: ScheduleQuery) {
     const schedules = this.scheduleFactory.createMany(
-      await this.dataService.schedules.getAll(),
+      await this.dataService.schedules.getAll({
+        filter: query,
+      }),
     );
     return schedules;
   }
@@ -27,9 +33,11 @@ export class ScheduleService {
     return schedules.filter((schedule) => !isEmpty(schedule.faculty));
   }
 
-  async update(updateData: object) {
-    console.log('Incoming data :', updateData);
-    const newSchedule = this.scheduleFactory.create(updateData);
+  async update(updateScheduleDto: UpdateScheduleDto) {
+    console.log('Incoming data :', updateScheduleDto);
+    const newSchedule = this.scheduleFactory.create(
+      updateScheduleDto as ScheduleConstructorProps,
+    );
     const validationError = newSchedule.validateProps();
     if (isNotEmpty(validationError))
       throw new BadRequestException(
@@ -42,9 +50,11 @@ export class ScheduleService {
     return updatedSchedule;
   }
 
-  async updateMany(updateData: object[]) {
-    console.log('Incoming data :', updateData);
-    const newSchedules = this.scheduleFactory.createMany(updateData);
+  async updateMany(updateScheduleDtos: UpdateScheduleDto[]) {
+    console.log('Incoming data :', updateScheduleDtos);
+    const newSchedules = this.scheduleFactory.createMany(
+      updateScheduleDtos as ScheduleConstructorProps[],
+    );
     const updatedSchedules: Schedule[] = [];
     for (const newSchedule of newSchedules) {
       updatedSchedules.push(

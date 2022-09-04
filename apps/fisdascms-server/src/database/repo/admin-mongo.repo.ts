@@ -1,4 +1,4 @@
-import { Admin, AdminDocument } from '../entity/admin.entity';
+import { Admin, AdminDocument } from '../../core/entities/admin.entity';
 import { MongoGenericRepository } from './mongo-generic.repo';
 import { Model } from 'mongoose';
 import { isEmpty } from 'class-validator';

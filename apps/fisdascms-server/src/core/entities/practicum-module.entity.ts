@@ -1,33 +1,47 @@
 import { Prop, raw, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { isNotEmpty, isNotEmptyObject, isObject, isURL } from 'class-validator';
 import { Document } from 'mongoose';
-import { Language } from 'src/lib/constants';
+import { Language } from 'src/core/constants';
 
 export type PracticumModuleDocument = PracticumModule & Document;
 
-type PreTask = {
+export type PreTask = {
   url: string;
   isActive: boolean;
 };
 
-type Video = {
+export type Video = {
+  url: string;
+  embedUrl: string;
+  isActive: boolean;
+};
+
+export type Simulator = {
   url: string;
   isActive: boolean;
 };
 
-type Simulator = {
+export type JournalCover = {
   url: string;
   isActive: boolean;
 };
 
-type JournalCover = {
-  url: string;
-  isActive: boolean;
-};
+export type PracticumModuleConstructorProps = Pick<
+  PracticumModule,
+  | '_id'
+  | 'name'
+  | 'code'
+  | 'language'
+  | 'faIconName'
+  | 'preTask'
+  | 'video'
+  | 'simulator'
+  | 'journalCover'
+>;
 
 @Schema({ timestamps: true, collection: 'practicum_modules' })
 export class PracticumModule {
-  _id: string;
+  _id?: string;
   @Prop({ required: true })
   name: string;
   @Prop({ required: true })
@@ -65,7 +79,7 @@ export class PracticumModule {
   )
   journalCover: JournalCover;
 
-  constructor(props) {
+  constructor(props: PracticumModuleConstructorProps) {
     const {
       _id,
       name,
@@ -86,6 +100,9 @@ export class PracticumModule {
     this.video = video;
     this.simulator = simulator;
     this.journalCover = journalCover;
+
+    if(isNotEmpty(this.video))
+    this.video.embedUrl = this.generateVideoEmbedURL();
   }
 
   protected isPreTaskUrlValid() {
@@ -128,6 +145,15 @@ export class PracticumModule {
     );
     console.log('Validation errors :', validationErrors);
     return isNotEmptyObject(validationErrors) ? validationErrors : null;
+  }
+
+  protected generateVideoEmbedURL() {
+    let embedURL: string = undefined;
+    if (isNotEmpty(this.video.url)) {
+      const videoID = this.video.url.split('/')[3];
+      embedURL = `https://www.youtube.com/embed/${videoID}`;
+    }
+    return embedURL;
   }
 }
 

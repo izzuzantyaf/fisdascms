@@ -96,7 +96,7 @@ export default function AssistantPage() {
       })
     } else {
       setValidationError(undefined)
-      const { updatedAssistant } = response.data
+      const updatedAssistant = response.data
       setAssistantsState((prevState) =>
         prevState?.map((prev) =>
           prev._id === updatedAssistant._id ? updatedAssistant : prev
@@ -121,7 +121,7 @@ export default function AssistantPage() {
         status: "error",
       })
     } else {
-      const { deletedAssistant } = response.data
+      const deletedAssistant = response.data
       setAssistantsState((prevState) =>
         prevState?.filter((prev) => prev._id !== deletedAssistant._id)
       )

@@ -1,4 +1,4 @@
-import { AssistantLevel, Gender } from 'src/lib/constants';
+import { AssistantLevel, Gender } from 'src/core/constants';
 
 export const assistantSeeder = [
   {

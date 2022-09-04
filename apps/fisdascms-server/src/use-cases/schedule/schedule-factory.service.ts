@@ -1,13 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import { Schedule } from 'src/database/entity/schedule.entity';
+import {
+  Schedule,
+  ScheduleConstructorProps,
+} from 'src/core/entities/schedule.entity';
 
 @Injectable()
 export class ScheduleFactoryService {
-  create(props: object) {
+  create(props: ScheduleConstructorProps) {
     return new Schedule(props);
   }
 
-  createMany(schedulesProps: object[]) {
-    return schedulesProps.map((props) => new Schedule(props));
+  createMany(arrayOfProps: ScheduleConstructorProps[]) {
+    return arrayOfProps.map((props) => new Schedule(props));
   }
 }

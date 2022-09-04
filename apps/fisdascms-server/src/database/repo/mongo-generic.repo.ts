@@ -1,4 +1,4 @@
-import { Model } from 'mongoose';
+import { FilterQuery, Model, ProjectionType } from 'mongoose';
 
 export class MongoGenericRepository<T> {
   protected _repository: Model<T>;
@@ -13,8 +13,11 @@ export class MongoGenericRepository<T> {
     return this._repository.create(item);
   }
 
-  getAll() {
-    return this._repository.find().sort({ _id: 'asc' }).exec();
+  getAll(props?: { filter?: FilterQuery<T>; projection?: ProjectionType<T> }) {
+    return this._repository
+      .find(props?.filter, props?.projection)
+      .sort({ _id: 'asc' })
+      .exec();
   }
 
   getFirst() {

@@ -48,7 +48,7 @@ export default function CodeOfCoductPage() {
       return
     }
     setValidationError(undefined)
-    setCodeOfConductState(updateResponse?.data?.updatedCodeOfConduct)
+    setCodeOfConductState(updateResponse?.data)
     toast({
       title: updateResponse.message,
       status: "success",

@@ -2,19 +2,22 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { DataServiceService } from './data-service.service';
-import { Admin, AdminSchema } from './entity/admin.entity';
-import { Handout, HandoutSchema } from './entity/handout.entity';
+import { Admin, AdminSchema } from '../core/entities/admin.entity';
+import { Handout, HandoutSchema } from '../core/entities/handout.entity';
 import {
   CodeOfConduct,
   CodeOfConductSchema,
-} from './entity/code-of-conduct.entity';
-import { Organigram, OrganigramSchema } from './entity/organigram.entity';
-import { Schedule, ScheduleSchema } from './entity/schedule.entity';
-import { Assistant, AssistantSchema } from './entity/assistant.entity';
+} from '../core/entities/code-of-conduct.entity';
+import {
+  Organigram,
+  OrganigramSchema,
+} from '../core/entities/organigram.entity';
+import { Schedule, ScheduleSchema } from '../core/entities/schedule.entity';
+import { Assistant, AssistantSchema } from '../core/entities/assistant.entity';
 import {
   PracticumModule,
   PracticumModuleSchema,
-} from './entity/practicum-module.entity';
+} from '../core/entities/practicum-module.entity';
 
 @Module({
   imports: [

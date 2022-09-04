@@ -1,9 +1,13 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { isEmpty, isMongoId, isNotEmpty } from 'class-validator';
 import { DataServiceService } from 'src/database/data-service.service';
-import { Assistant } from 'src/database/entity/assistant.entity';
-import { ErrorResponse } from 'src/lib/dtos/response.dto';
+import { Assistant } from 'src/core/entities/assistant.entity';
+import { ErrorResponse } from 'src/core/dtos/response.dto';
 import { AssistantFactoryService } from './assistant-factory.service';
+import {
+  CreateAssistantDto,
+  UpdateAssistantDto,
+} from 'src/core/dtos/assistant.dto';
 
 @Injectable()
 export class AssistantService {
@@ -12,7 +16,7 @@ export class AssistantService {
     private assistantFactory: AssistantFactoryService,
   ) {}
 
-  async create(createAssistantDto: any) {
+  async create(createAssistantDto: CreateAssistantDto) {
     console.log('Incoming data :', createAssistantDto);
     const newAssistant = this.assistantFactory.create(createAssistantDto);
     const validationErrors = newAssistant.validateProps();
@@ -43,7 +47,7 @@ export class AssistantService {
     return searchResult;
   }
 
-  async update(updateAssistantDto: any) {
+  async update(updateAssistantDto: UpdateAssistantDto) {
     console.log('Incoming data :', updateAssistantDto);
     const newAssistant = this.assistantFactory.create(updateAssistantDto);
     const validationErrors = newAssistant.validateProps();
@@ -66,8 +70,8 @@ export class AssistantService {
 
   async delete(id: string) {
     console.log('Incoming data :', id);
-    if (!isMongoId(id))
-      throw new BadRequestException(new ErrorResponse('Asisten gagal dihapus'));
+    // if (!isMongoId(id))
+    //   throw new BadRequestException(new ErrorResponse('Asisten gagal dihapus'));
     const deleteResult = await this.dataService.assistants.deleteById(id);
     if (isEmpty(deleteResult))
       throw new BadRequestException(new ErrorResponse('Asisten gagal dihapus'));

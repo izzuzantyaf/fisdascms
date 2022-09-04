@@ -7,31 +7,44 @@ import {
   isObject,
 } from 'class-validator';
 import { Document } from 'mongoose';
-import { AssistantLevel, Gender } from 'src/lib/constants';
+import { AssistantLevel, Gender } from 'src/core/constants';
 
 export type AssistantDocument = Assistant & Document;
 
+export type AssistantConstructorProps = Pick<
+  Assistant,
+  | '_id'
+  | 'name'
+  | 'code'
+  | 'phoneNumber'
+  | 'lineId'
+  | 'gender'
+  | 'level'
+  | 'feedbackUrl'
+  | 'profilePictureUrl'
+>;
+
 @Schema({ timestamps: true })
 export class Assistant {
-  _id: string;
+  _id?: string;
   @Prop({ required: true })
   name: string;
   @Prop({ required: true })
   code: string;
   @Prop()
-  phoneNumber: string;
+  phoneNumber?: string;
   @Prop()
-  lineId: string;
+  lineId?: string;
   @Prop({ required: true })
   gender: Gender;
   @Prop({ required: true })
   level: AssistantLevel;
   @Prop()
-  feedbackUrl: string;
+  feedbackUrl?: string;
   @Prop()
-  profilePictureUrl: string;
+  profilePictureUrl?: string;
 
-  constructor(props) {
+  constructor(props: AssistantConstructorProps) {
     this._id = props._id;
     this.name = props.name;
     this.code = props.code;

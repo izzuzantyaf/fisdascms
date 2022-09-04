@@ -9,7 +9,11 @@ import {
   Query,
 } from '@nestjs/common';
 import { isNotEmpty } from 'class-validator';
-import { SuccessfulResponse } from 'src/lib/dtos/response.dto';
+import {
+  CreateAssistantDto,
+  UpdateAssistantDto,
+} from 'src/core/dtos/assistant.dto';
+import { SuccessfulResponse } from 'src/core/dtos/response.dto';
 import { AssistantService } from 'src/use-cases/assistant/assistant.service';
 
 @Controller('api/assistant')
@@ -17,39 +21,39 @@ export class AssistantController {
   constructor(private assistantService: AssistantService) {}
 
   @Post()
-  async create(@Body() createAssistantDto: any) {
+  async create(@Body() createAssistantDto: CreateAssistantDto) {
     const storedAssistant = await this.assistantService.create(
       createAssistantDto,
     );
-    return new SuccessfulResponse('Asisten berhasil ditambahkan', {
+    return new SuccessfulResponse(
+      'Asisten berhasil ditambahkan',
       storedAssistant,
-    });
+    );
   }
 
   @Get()
-  async getAll(@Query('keyword') keyword: string) {
+  async getAll(@Query('keyword') keyword?: string) {
     const assistants = isNotEmpty(keyword)
       ? await this.assistantService.search(keyword)
       : await this.assistantService.getAll();
-    return new SuccessfulResponse('Sukses', { assistants });
+    return new SuccessfulResponse('Sukses', assistants);
   }
 
   @Put()
-  async update(@Body() updateAssistantDto: any) {
+  async update(@Body() updateAssistantDto: UpdateAssistantDto) {
     const updatedAssistant = await this.assistantService.update(
       updateAssistantDto,
     );
-    return new SuccessfulResponse('Asisten berhasil diupdate', {
+    return new SuccessfulResponse(
+      'Asisten berhasil diupdate',
       updatedAssistant,
-    });
+    );
   }
 
   @Delete(':id')
   async delete(@Param('id') id: string) {
     const deletedAssistant = await this.assistantService.delete(id);
-    return new SuccessfulResponse('Asisten berhasil dihapus', {
-      deletedAssistant,
-    });
+    return new SuccessfulResponse('Asisten berhasil dihapus', deletedAssistant);
   }
 
   @Delete()

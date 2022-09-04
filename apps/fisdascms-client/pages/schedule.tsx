@@ -40,7 +40,7 @@ export default function SchedulePage() {
       return
     }
     setValidationError(undefined)
-    const { updatedSchedule } = response.data
+    const updatedSchedule: Schedule = response.data
     setSchedulesState(
       schedulesState?.map((scheduleState) =>
         scheduleState._id === updatedSchedule._id

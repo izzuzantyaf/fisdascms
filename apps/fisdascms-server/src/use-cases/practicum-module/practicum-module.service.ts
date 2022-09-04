@@ -1,8 +1,9 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { isNotEmpty } from 'class-validator';
 import { DataServiceService } from 'src/database/data-service.service';
-import { ErrorResponse } from 'src/lib/dtos/response.dto';
+import { ErrorResponse } from 'src/core/dtos/response.dto';
 import { PracticumModuleFactory } from './practicum-module-factory.service';
+import { UpdatePracticumModuleDto } from 'src/core/dtos/practicum-module.dto';
 
 @Injectable()
 export class PracticumModuleService {
@@ -17,7 +18,31 @@ export class PracticumModuleService {
     );
   }
 
-  async update(updatePracticumModuleDto: object) {
+  async getPreTasks(filter?: object) {
+    return this.practicumModuleFactory.createMany(
+      await this.dataService.practicumModules.getPreTasks(filter),
+    );
+  }
+
+  async getVideos(filter?: object) {
+    return this.practicumModuleFactory.createMany(
+      await this.dataService.practicumModules.getVideos(filter),
+    );
+  }
+
+  async getSimulators(filter?: object) {
+    return this.practicumModuleFactory.createMany(
+      await this.dataService.practicumModules.getSimulators(filter),
+    );
+  }
+
+  async getJournalCovers(filter?: object) {
+    return this.practicumModuleFactory.createMany(
+      await this.dataService.practicumModules.getJournalCovers(filter),
+    );
+  }
+
+  async update(updatePracticumModuleDto: UpdatePracticumModuleDto) {
     console.log('updatePracticumModuleDto :', updatePracticumModuleDto);
     const newPracticumModule = this.practicumModuleFactory.create(
       updatePracticumModuleDto,

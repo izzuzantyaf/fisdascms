@@ -1,4 +1,7 @@
-import { Organigram, OrganigramDocument } from '../entity/organigram.entity';
+import {
+  Organigram,
+  OrganigramDocument,
+} from '../../core/entities/organigram.entity';
 import { MongoGenericRepository } from './mongo-generic.repo';
 import { Model } from 'mongoose';
 import { isEmpty } from 'class-validator';

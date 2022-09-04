@@ -1,4 +1,4 @@
-import { AdminRole } from 'src/lib/constants';
+import { AdminRole } from 'src/core/constants';
 
 export const adminSeeder = {
   name: 'MSI Fisdas',

@@ -10,7 +10,7 @@ export const practicumMaterialService = {
   getAll: async () => {
     const response = await getFetch(ApiRoute.PRACTICUM_MATERIAL)
     console.log("Get practicum material API response :", response)
-    return response.data.practicumModules as PracticumMaterial[]
+    return response.data as PracticumMaterial[]
   },
   update: async (updatePracticumMaterialDto: UpdatePracticumMaterialDto) => {
     const response = await putFetch(

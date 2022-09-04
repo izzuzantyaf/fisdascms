@@ -15,7 +15,7 @@ jobs:
     if: ${{ github.event_name == 'pull_request' }}
     name: Test server app
     runs-on: ubuntu-latest
-    environment: fisdascms-dev
+    environment: fisdascms-test
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -43,7 +43,7 @@ jobs:
         with:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: "fisdascms-server" # Must be unique in Heroku
-          heroku_email: "izzuzantyaf@gmail.com"
+          heroku_email: ${{ secrets.HEROKU_EMAIL }}
           branch: "main"
           appdir: "apps/fisdascms-server"
         env:
