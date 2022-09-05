@@ -5,10 +5,6 @@
   "author": "Izzu Zantya Fawwas",
   "private": true,
   "license": "UNLICENSED",
-  "engines": {
-    "yarn": "1.x.x",
-    "node": ">=16.0.0"
-  },
   "packageManager": "yarn@1.22.19",
   "scripts": {
     "prebuild": "rimraf dist",
