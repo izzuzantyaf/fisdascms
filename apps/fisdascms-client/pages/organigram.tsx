@@ -93,7 +93,7 @@ export default function OrganigramPage() {
             <iframe
               src={organigramState?.previewUrl}
               width="100%"
-              height="256px"
+              height="556px"
             ></iframe>
           </Skeleton>
           <form>
