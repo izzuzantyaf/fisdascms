@@ -26,7 +26,7 @@ export default function Navbar() {
 
   return (
     <>
-      <Container paddingTop={4} maxWidth="container.lg">
+      <Container paddingTop={4} maxWidth="container.xl">
         <Flex
           padding={2}
           paddingX={4}
