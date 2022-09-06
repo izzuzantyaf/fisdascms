@@ -78,7 +78,7 @@ export default function CodeOfCoductPage() {
             <iframe
               src={codeOfConductState?.previewUrl}
               width="100%"
-              height="256px"
+              height="556px"
             ></iframe>
           </Skeleton>
           <form>
