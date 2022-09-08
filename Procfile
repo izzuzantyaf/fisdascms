@@ -1,1 +1,1 @@
-web: cd apps/fisdascms-server && yarn run start:prod
+web: yarn start:server
