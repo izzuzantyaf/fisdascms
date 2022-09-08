@@ -287,31 +287,28 @@ export default function PracticumMaterialPage() {
         >
           <ModalOverlay />
           <ModalContent marginX="4" rounded="xl">
-            <form>
-              <ModalHeader>Edit konten praktikum</ModalHeader>
-              <ModalCloseButton />
-              <ModalBody>
-                <Flex alignItems="center">
-                  <Square
-                    fontSize="xl"
-                    bgColor="blue.50"
-                    color="blue.500"
-                    size="40px"
-                    borderRadius="full"
-                    marginRight="4"
-                  >
-                    <FontAwesomeIcon
-                      icon={onEditingMaterialState?.faIconName}
-                    />
-                  </Square>
-                  <Box>
-                    <Heading size="md">{onEditingMaterialState?.code}</Heading>
-                    <Text fontWeight="normal" fontSize="sm">
-                      {onEditingMaterialState?.name}
-                    </Text>
-                  </Box>
-                </Flex>
-
+            <ModalHeader>Edit konten praktikum</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+              <Flex alignItems="center">
+                <Square
+                  fontSize="xl"
+                  bgColor="blue.50"
+                  color="blue.500"
+                  size="40px"
+                  borderRadius="full"
+                  marginRight="4"
+                >
+                  <FontAwesomeIcon icon={onEditingMaterialState?.faIconName} />
+                </Square>
+                <Box>
+                  <Heading size="md">{onEditingMaterialState?.code}</Heading>
+                  <Text fontWeight="normal" fontSize="sm">
+                    {onEditingMaterialState?.name}
+                  </Text>
+                </Box>
+              </Flex>
+              <form id="practicum-material-form">
                 <Flex direction="column" gap="2" marginTop="6">
                   <FormControl
                     isInvalid={validationError?.preTask?.url ? true : false}
@@ -364,6 +361,7 @@ export default function PracticumMaterialPage() {
                     />
                   </FormControl>
                   <FormControl
+                    marginTop="8px"
                     isInvalid={validationError?.video?.url ? true : false}
                   >
                     <FormLabel>Link Video</FormLabel>
@@ -414,6 +412,7 @@ export default function PracticumMaterialPage() {
                     />
                   </FormControl>
                   <FormControl
+                    marginTop="8px"
                     isInvalid={
                       validationError?.journalCover?.url ? true : false
                     }
@@ -468,6 +467,7 @@ export default function PracticumMaterialPage() {
                     />
                   </FormControl>
                   <FormControl
+                    marginTop="8px"
                     isInvalid={validationError?.simulator?.url ? true : false}
                   >
                     <FormLabel>Link Simulator</FormLabel>
@@ -520,23 +520,24 @@ export default function PracticumMaterialPage() {
                     />
                   </FormControl>
                 </Flex>
-              </ModalBody>
-              <ModalFooter>
-                <Button
-                  type="submit"
-                  isLoading={isUpdating}
-                  isDisabled={!canUpdate}
-                  colorScheme="blue"
-                  width="full"
-                  onClick={async (e: any) => {
-                    e.preventDefault()
-                    handlePracticumMaterialUpdate()
-                  }}
-                >
-                  Simpan
-                </Button>
-              </ModalFooter>
-            </form>
+              </form>
+            </ModalBody>
+            <ModalFooter>
+              <Button
+                form="practicum-material-form"
+                type="submit"
+                isLoading={isUpdating}
+                isDisabled={!canUpdate}
+                colorScheme="blue"
+                width="full"
+                onClick={async (e: any) => {
+                  e.preventDefault()
+                  handlePracticumMaterialUpdate()
+                }}
+              >
+                Simpan
+              </Button>
+            </ModalFooter>
           </ModalContent>
         </Modal>
       </PageLayout>

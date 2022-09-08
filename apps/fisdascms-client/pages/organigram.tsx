@@ -1,10 +1,14 @@
 import {
+  Box,
   Button,
   FormControl,
   FormErrorMessage,
   FormLabel,
   Heading,
+  Icon,
   Input,
+  ListItem,
+  OrderedList,
   SimpleGrid,
   Skeleton,
   useToast,
@@ -18,6 +22,7 @@ import {
   Organigram,
   OrganigramValidationError,
 } from "../core/types/organigram.type"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 export default function OrganigramPage() {
   const [isOrganigramUpdating, setIsOrganigramUpdating] = useState(false)
@@ -89,6 +94,7 @@ export default function OrganigramPage() {
           padding="4"
           {...shadowedBoxStyle}
         >
+          {/* Organigram preview */}
           <Skeleton isLoaded={organigramState ? true : false}>
             <iframe
               src={organigramState?.previewUrl}
@@ -96,45 +102,79 @@ export default function OrganigramPage() {
               height="556px"
             ></iframe>
           </Skeleton>
-          <form>
-            <Skeleton isLoaded={organigramState ? true : false}>
-              <FormControl isInvalid={validationError?.url ? true : false}>
-                <FormLabel>Link File</FormLabel>
-                <Input
-                  type="url"
-                  placeholder="Link Google Drive organigram"
-                  defaultValue={organigramState?.url}
-                  onFocus={(e: any) => e.target.select()} //* select all ketika user klik input field
-                  onChange={(e: any) => {
-                    setOrganigramState((prevState) => {
-                      prevState.url = e.target.value
-                      return prevState
-                    })
-                    setCanSubmit(true)
-                  }}
-                />
-                {validationError?.url ? (
-                  <FormErrorMessage color="red.500">
-                    {validationError.url}
-                  </FormErrorMessage>
-                ) : null}
-              </FormControl>
-            </Skeleton>
+          {/* Organigram preview ends */}
+
+          <Box>
+            {/* Petunjuk */}
+            <Box
+              className="guide"
+              bgColor="blue.50"
+              padding="8px"
+              paddingX="12px"
+              borderRadius="8px"
+            >
+              <Box className="guide-header" display="flex" alignItems="center">
+                <Icon marginRight="8px" color="blue.500" fontSize="xl">
+                  <FontAwesomeIcon icon="circle-info" />
+                </Icon>
+                <Heading size="sm" color="gray.600">
+                  Petunjuk
+                </Heading>
+              </Box>
+              <OrderedList fontSize="14px" marginTop="8px">
+                <ListItem>
+                  Upload file organigram (pdf/jpg/png) ke Google Drive
+                </ListItem>
+                <ListItem>Ubah akses file menjadi public</ListItem>
+                <ListItem>
+                  Copy paste link file organigram ke field di bawah ini
+                </ListItem>
+              </OrderedList>
+            </Box>
+            {/* Petunjuk ends */}
+            {/* Organigram form */}
+            <form id="organigram-form" style={{ marginTop: "8px" }}>
+              <Skeleton isLoaded={organigramState ? true : false}>
+                <FormControl isInvalid={validationError?.url ? true : false}>
+                  <FormLabel>Link File</FormLabel>
+                  <Input
+                    type="url"
+                    placeholder="Link Google Drive organigram"
+                    defaultValue={organigramState?.url}
+                    onFocus={(e: any) => e.target.select()} //* select all ketika user klik input field
+                    onChange={(e: any) => {
+                      setOrganigramState((prevState) => {
+                        if (prevState) prevState.url = e.target.value
+                        return prevState
+                      })
+                      setCanSubmit(true)
+                    }}
+                  />
+                  {validationError?.url ? (
+                    <FormErrorMessage color="red.500">
+                      {validationError.url}
+                    </FormErrorMessage>
+                  ) : null}
+                </FormControl>
+              </Skeleton>
+            </form>
+            {/* Organigram form ends */}
             <Button
+              form="organigram-form"
               type="submit"
               colorScheme="blue"
               width="full"
               marginTop={4}
               isLoading={isOrganigramUpdating}
               isDisabled={!canSubmit}
-              onClick={(e: any) => {
+              onClick={(e) => {
                 e.preventDefault()
                 handleUpdateOrganigram()
               }}
             >
               Simpan
             </Button>
-          </form>
+          </Box>
         </SimpleGrid>
       </PageLayout>
     </>

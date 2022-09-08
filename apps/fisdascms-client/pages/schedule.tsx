@@ -1,5 +1,5 @@
 // prettier-ignore
-import { Box, Button, Flex, Heading, SimpleGrid, Square, Text, Link, Skeleton, useDisclosure, useToast, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Switch, FormControl, FormLabel, FormHelperText, FormErrorMessage } from "@chakra-ui/react"
+import { Box, Button, Flex, Heading, SimpleGrid, Square, Text, Link, Skeleton, useDisclosure, useToast, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Switch, FormControl, FormLabel, FormHelperText, FormErrorMessage, Icon, ListItem, OrderedList } from "@chakra-ui/react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Head from "next/head"
 import { useEffect, useRef, useState } from "react"
@@ -141,27 +141,57 @@ export default function SchedulePage() {
         >
           <ModalOverlay />
           <ModalContent marginX="4" rounded="xl">
-            <form>
-              <ModalHeader>Edit Jadwal</ModalHeader>
-              <ModalCloseButton />
-              <ModalBody>
-                <Flex alignItems="center">
-                  <Square
-                    fontSize="xl"
-                    bgColor="blue.50"
-                    color="blue.500"
-                    size="40px"
-                    borderRadius="full"
-                    marginRight="4"
-                  >
-                    <FontAwesomeIcon icon="calendar-minus" />
-                  </Square>
-                  <Heading size="md">{`Jadwal ${
-                    onEditingScheduleRef.current?.faculty?.toUpperCase() ??
-                    "Kelas"
-                  }`}</Heading>
-                </Flex>
-                <Flex direction="column" gap="2" marginTop="6">
+            <ModalHeader>Edit Jadwal</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+              <Flex alignItems="center">
+                <Square
+                  fontSize="xl"
+                  bgColor="blue.50"
+                  color="blue.500"
+                  size="40px"
+                  borderRadius="full"
+                  marginRight="4"
+                >
+                  <FontAwesomeIcon icon="calendar-minus" />
+                </Square>
+                <Heading size="md">{`Jadwal ${
+                  onEditingScheduleRef.current?.faculty?.toUpperCase() ??
+                  "Kelas"
+                }`}</Heading>
+              </Flex>
+              <Box
+                className="guide"
+                bgColor="blue.50"
+                padding="8px"
+                paddingX="12px"
+                borderRadius="8px"
+                marginTop="16px"
+              >
+                <Box
+                  className="guide-header"
+                  display="flex"
+                  alignItems="center"
+                >
+                  <Icon marginRight="8px" color="blue.500" fontSize="xl">
+                    <FontAwesomeIcon icon="circle-info" />
+                  </Icon>
+                  <Heading size="sm" color="gray.600">
+                    Petunjuk
+                  </Heading>
+                </Box>
+                <OrderedList fontSize="14px" marginTop="8px">
+                  <ListItem>
+                    Upload jadwal praktikum (pdf/jpg/png) ke Google Drive
+                  </ListItem>
+                  <ListItem>Ubah akses file menjadi public</ListItem>
+                  <ListItem>
+                    Copy paste link jadwal praktikum ke field di bawah ini
+                  </ListItem>
+                </OrderedList>
+              </Box>
+              <form id="schedule-form">
+                <Flex direction="column" gap="2" marginTop="16px">
                   <FormControl isInvalid={validationError?.url ? true : false}>
                     <FormLabel>Link File</FormLabel>
                     <Input
@@ -180,7 +210,6 @@ export default function SchedulePage() {
                       <FormErrorMessage>{validationError.url}</FormErrorMessage>
                     ) : null}
                   </FormControl>
-
                   <FormControl
                     display="flex"
                     justifyContent="space-between"
@@ -204,23 +233,24 @@ export default function SchedulePage() {
                     />
                   </FormControl>
                 </Flex>
-              </ModalBody>
-              <ModalFooter>
-                <Button
-                  type="submit"
-                  isLoading={isUpdating}
-                  isDisabled={!canUpdate}
-                  colorScheme="blue"
-                  width="full"
-                  onClick={async (e: any) => {
-                    e.preventDefault()
-                    handleScheduleUpdate()
-                  }}
-                >
-                  Simpan
-                </Button>
-              </ModalFooter>
-            </form>
+              </form>
+            </ModalBody>
+            <ModalFooter>
+              <Button
+                form="schedule-form"
+                type="submit"
+                isLoading={isUpdating}
+                isDisabled={!canUpdate}
+                colorScheme="blue"
+                width="full"
+                onClick={async (e: any) => {
+                  e.preventDefault()
+                  handleScheduleUpdate()
+                }}
+              >
+                Simpan
+              </Button>
+            </ModalFooter>
           </ModalContent>
         </Modal>
       </PageLayout>

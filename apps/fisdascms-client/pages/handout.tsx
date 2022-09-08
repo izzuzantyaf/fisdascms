@@ -1,29 +1,5 @@
-import {
-  Box,
-  Heading,
-  SimpleGrid,
-  Skeleton,
-  Text,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  useDisclosure,
-  Button,
-  Switch,
-  Input,
-  Flex,
-  useToast,
-  Square,
-  Link,
-  FormLabel,
-  FormControl,
-  FormHelperText,
-  FormErrorMessage,
-} from "@chakra-ui/react"
+// prettier-ignore
+import { Box, Heading, SimpleGrid, Skeleton, Text, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, useDisclosure, Button, Switch, Input, Flex, useToast, Square, Link, FormLabel, FormControl, FormHelperText, FormErrorMessage, Icon, ListItem, OrderedList } from "@chakra-ui/react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Head from "next/head"
 import { useEffect, useRef, useState } from "react"
@@ -92,10 +68,10 @@ export default function HandoutPage() {
   return (
     <>
       <Head>
-        <title>Modul | Fisdas CMS</title>
+        <title>Modul Praktikum | Fisdas CMS</title>
       </Head>
       <PageLayout>
-        <Heading marginTop="4">Modul</Heading>
+        <Heading marginTop="4">Modul Praktikum</Heading>
         <SimpleGrid columns={[1, 2, 2, 4]} gap="4" marginTop="4">
           {handoutsState?.map((handout) => (
             <Box padding="4" {...shadowedBoxStyle} key={handout._id}>
@@ -166,43 +142,72 @@ export default function HandoutPage() {
         <Modal isOpen={isOpen} onClose={onClose} isCentered={true}>
           <ModalOverlay />
           <ModalContent marginX="4" rounded="xl">
-            <form>
-              <ModalHeader>Edit Modul</ModalHeader>
-              <ModalCloseButton />
-              <ModalBody>
-                <Flex alignItems="center">
-                  <Square
-                    fontSize="xl"
-                    bgColor="blue.50"
-                    color="blue.500"
-                    size="40px"
-                    borderRadius="full"
-                    marginRight="4"
-                  >
-                    <FontAwesomeIcon icon="book" />
-                  </Square>
-                  <Box>
-                    <Heading size="md">
-                      {onEditingHandoutRef.current?.faculty?.toUpperCase()}
-                    </Heading>
-                    <Text>
-                      {languageCodeMapper(
-                        onEditingHandoutRef.current?.language
-                      )}
-                    </Text>
-                  </Box>
-                </Flex>
+            <ModalHeader>Edit Modul</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+              <Flex alignItems="center">
+                <Square
+                  fontSize="xl"
+                  bgColor="blue.50"
+                  color="blue.500"
+                  size="40px"
+                  borderRadius="full"
+                  marginRight="4"
+                >
+                  <FontAwesomeIcon icon="book" />
+                </Square>
+                <Box>
+                  <Heading size="md">
+                    Modul {onEditingHandoutRef.current?.faculty?.toUpperCase()}
+                  </Heading>
+                  <Text>
+                    {languageCodeMapper(onEditingHandoutRef.current?.language)}
+                  </Text>
+                </Box>
+              </Flex>
+              <Box
+                className="guide"
+                bgColor="blue.50"
+                padding="8px"
+                paddingX="12px"
+                borderRadius="8px"
+                marginTop="16px"
+              >
+                <Box
+                  className="guide-header"
+                  display="flex"
+                  alignItems="center"
+                >
+                  <Icon marginRight="8px" color="blue.500" fontSize="xl">
+                    <FontAwesomeIcon icon="circle-info" />
+                  </Icon>
+                  <Heading size="sm" color="gray.600">
+                    Petunjuk
+                  </Heading>
+                </Box>
+                <OrderedList fontSize="14px" marginTop="8px">
+                  <ListItem>
+                    Upload modul praktikum (pdf) ke Google Drive
+                  </ListItem>
+                  <ListItem>Ubah akses file menjadi public</ListItem>
+                  <ListItem>
+                    Copy paste link modul praktikum ke field di bawah ini
+                  </ListItem>
+                </OrderedList>
+              </Box>
+              <form id="handout-form" style={{ marginTop: "16px" }}>
                 <FormControl isInvalid={validationError?.url ? true : false}>
-                  <FormLabel marginTop="6">Link File</FormLabel>
+                  <FormLabel>Link File</FormLabel>
                   <Input
                     type="url"
-                    placeholder="Link dokumen"
+                    placeholder="Link file modul"
                     defaultValue={onEditingHandoutRef.current?.url}
                     onFocus={(e) => {
                       e.target.select()
                     }}
                     onChange={(e) => {
-                      onEditingHandoutRef.current.url = e.target.value
+                      if (onEditingHandoutRef.current)
+                        onEditingHandoutRef.current.url = e.target.value
                       setCanUpdate(true)
                     }}
                   />
@@ -227,29 +232,31 @@ export default function HandoutPage() {
                     defaultChecked={onEditingHandoutRef.current?.isActive}
                     colorScheme="green"
                     onChange={(e) => {
-                      onEditingHandoutRef.current.isActive =
-                        !onEditingHandoutRef.current?.isActive
+                      if (onEditingHandoutRef.current)
+                        onEditingHandoutRef.current.isActive =
+                          !onEditingHandoutRef.current?.isActive
                       setCanUpdate(true)
                     }}
                   />
                 </FormControl>
-              </ModalBody>
-              <ModalFooter>
-                <Button
-                  type="submit"
-                  isLoading={isHandoutUpdating}
-                  isDisabled={!canUpdate}
-                  colorScheme="blue"
-                  width="full"
-                  onClick={(e) => {
-                    e.preventDefault()
-                    handleHandoutUpdate()
-                  }}
-                >
-                  Simpan
-                </Button>
-              </ModalFooter>
-            </form>
+              </form>
+            </ModalBody>
+            <ModalFooter>
+              <Button
+                form="handout-form"
+                type="submit"
+                isLoading={isHandoutUpdating}
+                isDisabled={!canUpdate}
+                colorScheme="blue"
+                width="full"
+                onClick={(e) => {
+                  e.preventDefault()
+                  handleHandoutUpdate()
+                }}
+              >
+                Simpan
+              </Button>
+            </ModalFooter>
           </ModalContent>
         </Modal>
       </PageLayout>
