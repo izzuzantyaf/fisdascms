@@ -1,11 +1,15 @@
 import Head from "next/head"
 import {
+  Box,
   Button,
   FormControl,
   FormErrorMessage,
   FormLabel,
   Heading,
+  Icon,
   Input,
+  ListItem,
+  OrderedList,
   SimpleGrid,
   Skeleton,
   useToast,
@@ -18,6 +22,7 @@ import {
   CodeOfConduct,
   CodeOfConductValidationError,
 } from "../core/types/code-of-conduct.type"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 export default function CodeOfCoductPage() {
   const [isCodeOfConductUpdating, setIsCodeOfConductUpdating] = useState(false)
@@ -81,29 +86,57 @@ export default function CodeOfCoductPage() {
               height="556px"
             ></iframe>
           </Skeleton>
-          <form>
+          <Box>
+            <Box
+              className="guide"
+              bgColor="blue.50"
+              padding="8px"
+              paddingX="12px"
+              borderRadius="8px"
+            >
+              <Box className="guide-header" display="flex" alignItems="center">
+                <Icon marginRight="8px" color="blue.500" fontSize="xl">
+                  <FontAwesomeIcon icon="circle-info" />
+                </Icon>
+                <Heading size="sm" color="gray.600">
+                  Petunjuk
+                </Heading>
+              </Box>
+              <OrderedList fontSize="14px" marginTop="8px">
+                <ListItem>
+                  Upload file tata tertib (pdf) ke Google Drive
+                </ListItem>
+                <ListItem>Ubah akses file menjadi public</ListItem>
+                <ListItem>
+                  Copy paste link file tata tertib ke field di bawah ini
+                </ListItem>
+              </OrderedList>
+            </Box>
             <Skeleton isLoaded={codeOfConductState ? true : false}>
-              <FormControl isInvalid={validationError?.url ? true : false}>
-                <FormLabel>Link file</FormLabel>
-                <Input
-                  type="url"
-                  placeholder="Link Google Drive file tata tertib"
-                  defaultValue={codeOfConductState?.url}
-                  onFocus={(e) => e.target.select()} //* select all ketika user klik input field
-                  onChange={(e) => {
-                    setCodeOfConductState((prevState) => {
-                      prevState.url = e.target.value
-                      return prevState
-                    })
-                    setCanSubmit(true)
-                  }}
-                />
-                {validationError?.url ? (
-                  <FormErrorMessage>{validationError.url}</FormErrorMessage>
-                ) : null}
-              </FormControl>
+              <form id="code-of-conduct-form" style={{ marginTop: "8px" }}>
+                <FormControl isInvalid={validationError?.url ? true : false}>
+                  <FormLabel>Link file</FormLabel>
+                  <Input
+                    type="url"
+                    placeholder="Link Google Drive file tata tertib"
+                    defaultValue={codeOfConductState?.url}
+                    onFocus={(e) => e.target.select()} //* select all ketika user klik input field
+                    onChange={(e) => {
+                      setCodeOfConductState((prevState) => {
+                        if (prevState) prevState.url = e.target.value
+                        return prevState
+                      })
+                      setCanSubmit(true)
+                    }}
+                  />
+                  {validationError?.url ? (
+                    <FormErrorMessage>{validationError.url}</FormErrorMessage>
+                  ) : null}
+                </FormControl>
+              </form>
             </Skeleton>
             <Button
+              form="code-of-conduct-form"
               type="submit"
               colorScheme="blue"
               width="full"
@@ -117,7 +150,7 @@ export default function CodeOfCoductPage() {
             >
               Simpan
             </Button>
-          </form>
+          </Box>
         </SimpleGrid>
       </PageLayout>
     </>
