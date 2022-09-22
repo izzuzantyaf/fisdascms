@@ -7,6 +7,7 @@ import { faArrowLeft, faArrowRight, faArrowRightFromBracket, faArrowUpRightFromS
 import { config } from "@fortawesome/fontawesome-svg-core"
 import "@fortawesome/fontawesome-svg-core/styles.css"
 import { faLine } from "@fortawesome/free-brands-svg-icons"
+import { AssistantProvider } from "../contexts/assistant.context"
 config.autoAddCss = false
 // prettier-ignore
 library.add(faUserSecret, faUser, faArrowRightFromBracket, faPager, faBalanceScale, faBook, faTasks, faPlay, faGamepad, faFile, faUsers, faCalendarMinus, faSitemap, faThumbsUp, faArrowLeft, faArrowRight, faBars, faFolderOpen, faSortNumericUpAlt, faCircleNotch, faParachuteBox, faBolt, faWaveSquare, faCalculator, faGripLinesVertical, faSatelliteDish, faMagnet, faPlug, faDrawPolygon, faEye, faEyeSlash, faArrowUpRightFromSquare, faMagnifyingGlass, faPen, faMars, faVenus, faPlus, faTrashCan, faLine, faChessPawn, faChessQueen, faLanguage, faCircleInfo)
@@ -20,9 +21,11 @@ const customizedTheme = extendTheme({
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ChakraProvider theme={customizedTheme}>
-      <Component {...pageProps} />
-    </ChakraProvider>
+    <AssistantProvider>
+      <ChakraProvider theme={customizedTheme}>
+        <Component {...pageProps} />
+      </ChakraProvider>
+    </AssistantProvider>
   )
 }
 

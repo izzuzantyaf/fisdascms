@@ -51,7 +51,7 @@ export const assistantService = {
    * Memfilter asisten berdasarkan level dan gender
    * @param assistant
    * @param filter
-   * @returns
+   * @returns boolean true jika asisten sesuai dengan filter
    */
   filter: (assistant: Assistant, filter: AssistantFilter) => {
     if (filter.level == "all" && filter.gender == "all") return true
