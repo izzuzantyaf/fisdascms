@@ -1,8 +1,10 @@
 import { Body, Controller, Get, Put, Query } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { UpdatePracticumModuleDto } from 'src/core/dtos/practicum-module.dto';
 import { SuccessfulResponse } from 'src/core/dtos/response.dto';
 import { PracticumModuleService } from './practicum-module.service';
 
+@ApiTags('practicum material')
 @Controller('api/practicum-module')
 export class PracticumModuleController {
   constructor(private practicumModuleService: PracticumModuleService) {}

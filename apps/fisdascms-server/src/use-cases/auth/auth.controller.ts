@@ -7,11 +7,13 @@ import {
   Request,
   UseGuards,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { SuccessfulResponse } from 'src/core/dtos/response.dto';
 import { AuthService } from 'src/use-cases/auth/auth.service';
 import { JwtAuthGuard } from 'src/use-cases/auth/guards/jwt-auth.guard';
 import { LocalAuthGuard } from 'src/use-cases/auth/guards/local-auth-guard';
 
+@ApiTags('auth')
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}

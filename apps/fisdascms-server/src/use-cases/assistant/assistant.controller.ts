@@ -8,6 +8,7 @@ import {
   Put,
   Query,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { isNotEmpty } from 'class-validator';
 import {
   CreateAssistantDto,
@@ -16,6 +17,7 @@ import {
 import { SuccessfulResponse } from 'src/core/dtos/response.dto';
 import { AssistantService } from 'src/use-cases/assistant/assistant.service';
 
+@ApiTags('assistant')
 @Controller('api/assistant')
 export class AssistantController {
   constructor(private assistantService: AssistantService) {}
