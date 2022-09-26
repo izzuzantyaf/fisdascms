@@ -11,16 +11,9 @@ async function bootstrap() {
     }),
   );
   const config = new DocumentBuilder()
-    .setTitle('Fisdas CMS API')
-    .setVersion('1.0')
-    .addTag('admin')
-    .addTag('auth')
-    .addTag('assistant')
-    .addTag('code of conduct')
-    .addTag('handout')
-    .addTag('organigram')
-    .addTag('practicum material')
-    .addTag('schedule')
+    .setTitle('Fisdas CMS OpenAPI')
+    .setDescription('Dokumentasi API Fisdas CMS')
+    .setVersion('1.0.0')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);

@@ -1,8 +1,10 @@
 import { Body, Controller, Get, Put, Query } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { HandoutQuery, UpdateHandoutDto } from 'src/core/dtos/handout.dto';
 import { SuccessfulResponse } from 'src/core/dtos/response.dto';
 import { HandoutService } from 'src/use-cases/handout/handout.service';
 
+@ApiTags('handout')
 @Controller('api/handout')
 export class HandoutController {
   constructor(private readonly handoutService: HandoutService) {}

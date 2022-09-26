@@ -12,6 +12,7 @@ import {
   maxLength,
   minLength,
 } from 'class-validator';
+import { ApiHideProperty } from '@nestjs/swagger';
 
 export type AdminDocument = Admin & Document;
 
@@ -25,9 +26,10 @@ export class Admin {
   _id?: string;
   @Prop({ required: true })
   name: string;
+  @Exclude()
   @Prop({ required: true, unique: true })
   email: string;
-  @Exclude()
+  @ApiHideProperty()
   @Prop({ required: true })
   password: string;
   @Prop({ required: true })
