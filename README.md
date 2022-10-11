@@ -12,6 +12,7 @@ Website CMS (Content Management System) Lab Fisika Dasar Telkom University, webs
 Sebelum menjalankan aplikasi ini, install tools dibawah ini:
 - [Git](https://git-scm.com)
 - [Node.js](https://nodejs.org)
+- [MongoDB](https://mongodb.com)
 - [Yarn](https://yarnpkg.com)
 
 ## Menjalankan aplikasi
@@ -50,3 +51,8 @@ yarn dev:client
     - public -> (berisi file statis. contoh: gambar, svg, favicon, dll)
     - styles -> (berisi file CSS)
   - fisdascms-server -> (aplikasi backend)
+    - src -> (berisi source code aplikasi)
+      - core -> (berisi core entities bussiness)
+      - database -> (berisi module untuk handle database)
+      - use-case -> (berisi module-module application domain)
+    - test -> (berisi source code e2e testing)
