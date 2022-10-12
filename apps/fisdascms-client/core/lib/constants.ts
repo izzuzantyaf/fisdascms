@@ -80,11 +80,11 @@ export const menu = [
     faIconName: "sitemap",
     route: Route.ORGANIGRAM,
   },
-  {
-    name: "Social media",
-    faIconName: "thumbs-up",
-    route: Route.SOCIAL_MEDIA,
-  },
+  // {
+  //   name: "Social media",
+  //   faIconName: "thumbs-up",
+  //   route: Route.SOCIAL_MEDIA,
+  // },
 ]
 
 export const breadcrumpStack = [
