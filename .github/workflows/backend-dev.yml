@@ -1,19 +1,13 @@
-name: Production
+name: Backend (development)
 on:
-  pull_request:
-    branches:
-      - main
-    paths:
-      - "apps/fisdascms-server/**"
   push:
-    branches:
+    branches-ignore:
       - main
     paths:
       - "apps/fisdascms-server/**"
 jobs:
-  test-server-app:
-    if: ${{ github.event_name == 'pull_request' }}
-    name: Test server app
+  test:
+    name: Testing
     runs-on: ubuntu-latest
     environment: fisdascms-test
     steps:
@@ -23,28 +17,28 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "16"
-      - name: Install deps and run tests
+      - name: Install dependencies and run tests
         run: |
           yarn install:server
           yarn test:server
         env:
           MONGO_URI: ${{ secrets.MONGO_URI }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
-  deploy-server-app:
-    if: ${{ github.event_name == 'push' }}
-    name: Deploy server app
+  deploy-to-heroku:
+    name: Deploy to Heroku
+    needs: test
     runs-on: ubuntu-latest
-    environment: fisdascms
+    environment: fisdascms-dev
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-      - name: Deploy to Heroku
+      - name: Deploy
         uses: akhileshns/heroku-deploy@v3.12.12
         with:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          heroku_app_name: "fisdascms-server" # Must be unique in Heroku
+          heroku_app_name: "fisdascms-server-dev" # Must be unique in Heroku
           heroku_email: ${{ secrets.HEROKU_EMAIL }}
-          branch: "main"
+          branch: ${{ github.ref_name }}
           appdir: "apps/fisdascms-server"
         env:
           HD_MONGO_URI: ${{ secrets.MONGO_URI }}
