@@ -1,4 +1,4 @@
-name: Production
+name: Backend (production)
 on:
   pull_request:
     branches:
@@ -23,7 +23,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "16"
-      - name: Install deps and run tests
+      - name: Install dependencies and run tests
         run: |
           yarn install:server
           yarn test:server
