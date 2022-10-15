@@ -1,44 +1,19 @@
 name: Backend (production)
 on:
-  pull_request:
-    branches:
-      - main
-    paths:
-      - "apps/fisdascms-server/**"
   push:
     branches:
       - main
     paths:
       - "apps/fisdascms-server/**"
 jobs:
-  test-server-app:
-    if: ${{ github.event_name == 'pull_request' }}
-    name: Test server app
-    runs-on: ubuntu-latest
-    environment: fisdascms-test
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: "16"
-      - name: Install dependencies and run tests
-        run: |
-          yarn install:server
-          yarn test:server
-        env:
-          MONGO_URI: ${{ secrets.MONGO_URI }}
-          JWT_SECRET: ${{ secrets.JWT_SECRET }}
-  deploy-server-app:
-    if: ${{ github.event_name == 'push' }}
-    name: Deploy server app
+  deploy-to-heroku:
+    name: Deploy to Heroku
     runs-on: ubuntu-latest
     environment: fisdascms
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-      - name: Deploy to Heroku
+      - name: Deploy
         uses: akhileshns/heroku-deploy@v3.12.12
         with:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}

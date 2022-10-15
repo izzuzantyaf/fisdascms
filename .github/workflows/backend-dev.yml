@@ -6,8 +6,27 @@ on:
     paths:
       - "apps/fisdascms-server/**"
 jobs:
+  test:
+    name: Testing
+    runs-on: ubuntu-latest
+    environment: fisdascms-test
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+      - name: Install dependencies and run tests
+        run: |
+          yarn install:server
+          yarn test:server
+        env:
+          MONGO_URI: ${{ secrets.MONGO_URI }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
   deploy-to-heroku:
     name: Deploy to Heroku
+    needs: test
     runs-on: ubuntu-latest
     environment: fisdascms-dev
     steps:
