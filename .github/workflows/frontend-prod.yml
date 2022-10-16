@@ -24,7 +24,7 @@ jobs:
         run: yarn global add vercel
       - name: Build project artifacts
         working-directory: ${{ env.working-directory }}
-        run: vercel build --token=${{ secrets.VERCEL_TOKEN }} --yes
+        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }} --yes
       - name: Set up environment variables on Vercel
         working-directory: ${{ env.working-directory }}
         run: |
