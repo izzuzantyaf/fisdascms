@@ -34,6 +34,12 @@ import { HandoutMongoRepository } from './repo/handout-mongo.repo';
 import { OrganigramMongoRepository } from './repo/organigram-mongo.repo';
 import { PracticumModuleMongoRepository } from './repo/practicum-module-mongo.repo';
 import { ScheduleMongoRepository } from './repo/schedule-mongo.repo';
+import { SocialMediaMongoRepository } from './repo/social-media-mongo.repo';
+import {
+  SocialMedia,
+  SocialMediaDocument,
+} from 'src/core/entities/social-media.entity';
+import { socialMediaSeeder } from './seeds/social-media.seed';
 
 @Injectable()
 export class DataServiceService {
@@ -44,6 +50,7 @@ export class DataServiceService {
   schedules: ScheduleMongoRepository;
   assistants: AssistantMongoRepository;
   practicumModules: PracticumModuleMongoRepository;
+  socialMedias: SocialMediaMongoRepository;
 
   constructor(
     @InjectModel(Admin.name) private adminModel: Model<AdminDocument>,
@@ -58,6 +65,8 @@ export class DataServiceService {
     private assistantModel: Model<AssistantDocument>,
     @InjectModel(PracticumModule.name)
     private practicumModuleModel: Model<PracticumModuleDocument>,
+    @InjectModel(SocialMedia.name)
+    private socialMediaModel: Model<SocialMediaDocument>,
   ) {
     this.admins = new AdminMongoRepository(this.adminModel);
     this.handouts = new HandoutMongoRepository(this.handoutModel);
@@ -70,6 +79,7 @@ export class DataServiceService {
     this.practicumModules = new PracticumModuleMongoRepository(
       this.practicumModuleModel,
     );
+    this.socialMedias = new SocialMediaMongoRepository(this.socialMediaModel);
     this.seedAdmin();
     this.seedHandout();
     this.seedCodeOfConduct();
@@ -77,6 +87,7 @@ export class DataServiceService {
     this.seedSchedule();
     this.seedAssistant();
     this.seedPracticumModule();
+    this.seedSocialMedia();
   }
 
   protected async seedAdmin() {
@@ -120,5 +131,12 @@ export class DataServiceService {
         new PracticumModule(practicumModule as PracticumModule),
     );
     this.practicumModules.seed(practicumModules);
+  }
+
+  protected seedSocialMedia(): void {
+    const socialMedias = socialMediaSeeder.map(
+      (socialMedia) => new SocialMedia(socialMedia),
+    );
+    this.socialMedias.seed(socialMedias);
   }
 }
