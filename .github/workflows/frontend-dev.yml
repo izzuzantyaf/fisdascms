@@ -18,6 +18,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+      - name: Install dependencies
+        run: yarn install
+        working-directory: ${{ env.working-directory }}
       - name: Install Vercel CLI
         run: yarn global add vercel
       - name: Build project artifacts
