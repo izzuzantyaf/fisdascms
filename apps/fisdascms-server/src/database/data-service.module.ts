@@ -18,6 +18,10 @@ import {
   PracticumModule,
   PracticumModuleSchema,
 } from '../core/entities/practicum-module.entity';
+import {
+  SocialMedia,
+  SocialMediaSchema,
+} from 'src/core/entities/social-media.entity';
 
 @Module({
   imports: [
@@ -29,6 +33,7 @@ import {
       { name: Schedule.name, schema: ScheduleSchema },
       { name: Assistant.name, schema: AssistantSchema },
       { name: PracticumModule.name, schema: PracticumModuleSchema },
+      { name: SocialMedia.name, schema: SocialMediaSchema },
     ]),
     ConfigModule.forRoot(),
     MongooseModule.forRoot(process.env.MONGO_URI),
