@@ -12,7 +12,7 @@ jobs:
   deploy-to-vercel:
     name: Deploy to Vercel
     runs-on: ubuntu-latest
-    environment: fisdascms-dev
+    environment: development
     env:
       working-directory: apps/fisdascms-client
     steps:
