@@ -24,3 +24,24 @@ jobs:
         env:
           HD_MONGO_URI: ${{ secrets.MONGO_URI }}
           HD_JWT_SECRET: ${{ secrets.JWT_SECRET }}
+  deploy-to-railway:
+    name: Deploy to Railway
+    runs-on: ubuntu-latest
+    env:
+      working-directory: apps/fisdascms-server
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Install dependencies
+        working-directory: ${{ env.working-directory }}
+        run: yarn install
+      - name: Install Railway CLI
+        run: yarn global add @railway/cli
+      - name: Set up environment variables on Railway
+        working-directory: ${{ env.working-directory }}
+        run: |
+          RAILWAY_TOKEN=${{ secrets.RAILWAY_TOKEN }} railway run railway vars set MONGO_URI=${{ secrets.MONGO_URI }}
+          RAILWAY_TOKEN=${{ secrets.RAILWAY_TOKEN }} railway run railway vars set JWT_SECRET=${{ secrets.JWT_SECRET }}
+      - name: Deploy
+        working-directory: ${{ env.working-directory }}
+        run: RAILWAY_TOKEN=${{ secrets.RAILWAY_TOKEN }} railway run railway up
