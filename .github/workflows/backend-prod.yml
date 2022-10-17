@@ -26,7 +26,6 @@ jobs:
           HD_JWT_SECRET: ${{ secrets.JWT_SECRET }}
   deploy-to-railway:
     name: Deploy to Railway
-    needs: test
     runs-on: ubuntu-latest
     env:
       working-directory: apps/fisdascms-server
