@@ -61,7 +61,8 @@ jobs:
       - name: Set up environment variables on Railway
         working-directory: ${{ env.working-directory }}
         run: |
-          RAILWAY_TOKEN=${{ secrets.RAILWAY_TOKEN }} railway run railway vars set MONGO_URI=${{ secrets.MONGO_URI }} JWT_SECRET=${{ secrets.JWT_SECRET }}
+          RAILWAY_TOKEN=${{ secrets.RAILWAY_TOKEN }} railway run railway vars set MONGO_URI=${{ secrets.MONGO_URI }}
+          RAILWAY_TOKEN=${{ secrets.RAILWAY_TOKEN }} railway run railway vars set JWT_SECRET=${{ secrets.JWT_SECRET }}
       - name: Deploy
         working-directory: ${{ env.working-directory }}
         run: RAILWAY_TOKEN=${{ secrets.RAILWAY_TOKEN }} railway run railway up
