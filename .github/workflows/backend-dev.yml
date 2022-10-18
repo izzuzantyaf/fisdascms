@@ -17,10 +17,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "16"
-      - name: Install dependencies and run tests
-        run: |
-          yarn install:server
-          yarn test:server
+      - name: Install dependencies
+        run: yarn install:server
+      - name: Run tests
+        run: yarn test:server
         env:
           MONGO_URI: ${{ secrets.MONGO_URI }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
