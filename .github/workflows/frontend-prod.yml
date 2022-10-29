@@ -23,9 +23,6 @@ jobs:
         working-directory: ${{ env.working-directory }}
       - name: Install Vercel CLI
         run: yarn global add vercel
-      - name: Build project artifacts
-        working-directory: ${{ env.working-directory }}
-        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }} --yes
       - name: Set up environment variables on Vercel
         working-directory: ${{ env.working-directory }}
         run: |
@@ -33,6 +30,9 @@ jobs:
           echo ${{ secrets.API_BASEURL }} | vercel env add NEXT_PUBLIC_API_ENDPOINT_URL production --token=${{ secrets.VERCEL_TOKEN }} --yes | exit 0
           vercel env rm NEXT_PUBLIC_JWT_SECRET production --token=${{ secrets.VERCEL_TOKEN }} --yes | exit 0
           echo ${{ secrets.JWT_SECRET }} | vercel env add NEXT_PUBLIC_JWT_SECRET production --token=${{ secrets.VERCEL_TOKEN }} --yes | exit 0
+      - name: Build project artifacts
+        working-directory: ${{ env.working-directory }}
+        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }} --yes
       - name: Deploy
         working-directory: ${{ env.working-directory }}
         run: vercel deploy --prod --prebuilt --token=${{ secrets.VERCEL_TOKEN }} --yes
