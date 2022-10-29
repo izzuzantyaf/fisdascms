@@ -4,7 +4,7 @@ import { FilterQuery, Model, ProjectionType } from 'mongoose';
 export class MongoGenericRepository<T> {
   protected _repository: Model<T>;
   protected _populateOnFind: string[];
-  private readonly logger = new Logger(MongoGenericRepository.name);
+  protected readonly logger = new Logger(MongoGenericRepository.name);
 
   constructor(repository: Model<T>, populateOnFind: string[] = []) {
     this._repository = repository;
