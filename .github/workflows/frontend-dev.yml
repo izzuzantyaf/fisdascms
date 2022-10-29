@@ -29,10 +29,8 @@ jobs:
       - name: Set up environment variables on Vercel
         working-directory: ${{ env.working-directory }}
         run: |
-          vercel env rm NEXT_PUBLIC_SERVER_APP_BASEURL preview --token=${{ secrets.VERCEL_TOKEN }} --yes | exit 0
-          echo ${{ secrets.SERVER_APP_BASEURL }} | vercel env add NEXT_PUBLIC_SERVER_APP_BASEURL preview --token=${{ secrets.VERCEL_TOKEN }} --yes | exit 0
-          vercel env rm NEXT_PUBLIC_API_BASEURL preview --token=${{ secrets.VERCEL_TOKEN }} --yes | exit 0
-          echo ${{ secrets.API_BASEURL }} | vercel env add NEXT_PUBLIC_API_BASEURL preview --token=${{ secrets.VERCEL_TOKEN }} --yes | exit 0
+          vercel env rm NEXT_PUBLIC_API_ENDPOINT_URL preview --token=${{ secrets.VERCEL_TOKEN }} --yes | exit 0
+          echo ${{ secrets.API_BASEURL }} | vercel env add NEXT_PUBLIC_API_ENDPOINT_URL preview --token=${{ secrets.VERCEL_TOKEN }} --yes | exit 0
           vercel env rm NEXT_PUBLIC_JWT_SECRET preview --token=${{ secrets.VERCEL_TOKEN }} --yes | exit 0
           echo ${{ secrets.JWT_SECRET }} | vercel env add NEXT_PUBLIC_JWT_SECRET preview --token=${{ secrets.VERCEL_TOKEN }} --yes | exit 0
       - name: Deploy
