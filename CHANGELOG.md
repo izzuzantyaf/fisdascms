@@ -1,4 +1,21 @@
-# 0.1.0 (2022-10-27)
+# [1.0.0](https://github.com/izzuzantyaf/fisdascms/compare/v0.1.0...v1.0.0) (2022-10-29)
+
+
+### Bug Fixes
+
+* adjust api endpoint url ([30382e6](https://github.com/izzuzantyaf/fisdascms/commit/30382e66b1e1a3264607438b810145efc8ac1c37))
+* fix typo ([d5e5dd5](https://github.com/izzuzantyaf/fisdascms/commit/d5e5dd561633ec19dd7ce0adc02cf0cc318426ff))
+* set Vercel env var before build ([b15b663](https://github.com/izzuzantyaf/fisdascms/commit/b15b663fdb416df389a59cb5b9a14c2ef83dbdb3))
+
+
+### Features
+
+* **logging:** implement proper logging ([a7f8366](https://github.com/izzuzantyaf/fisdascms/commit/a7f8366b6cec2a10f51a375f01a48b206d8600e9))
+* **logging:** setup logger as middleware ([289ff07](https://github.com/izzuzantyaf/fisdascms/commit/289ff07133624cb75d222be0190e46344824c4ef))
+
+
+
+# [0.1.0](https://github.com/izzuzantyaf/fisdascms/compare/693efbb486fc58a95854e52df303ff544ed8d81c...v0.1.0) (2022-10-27)
 
 
 ### Bug Fixes
