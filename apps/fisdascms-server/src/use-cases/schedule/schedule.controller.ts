@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Put, Query } from '@nestjs/common';
+import { Body, Controller, Get, Logger, Put, Query } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { SuccessfulResponse } from 'src/core/dtos/response.dto';
 import { ScheduleQuery, UpdateScheduleDto } from 'src/core/dtos/schedule.dto';
@@ -7,12 +7,14 @@ import { ScheduleService } from 'src/use-cases/schedule/schedule.service';
 @ApiTags('schedule')
 @Controller('api/schedule')
 export class ScheduleController {
+  private readonly logger = new Logger(ScheduleController.name);
+
   constructor(private scheduleService: ScheduleService) {}
 
   @Get()
-  async getAll(@Query() query?: ScheduleQuery) {
-    console.log('Schedule query :', query);
-    const schedules = await this.scheduleService.getAll(query);
+  async getAll(@Query() filter?: ScheduleQuery) {
+    this.logger.log(`Schedule filter ${JSON.stringify(filter)}`);
+    const schedules = await this.scheduleService.getAll(filter);
     return new SuccessfulResponse('Sukses', schedules);
   }
 

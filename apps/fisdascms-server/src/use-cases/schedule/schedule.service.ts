@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { isEmpty, isNotEmpty } from 'class-validator';
 import { DataServiceService } from 'src/database/data-service.service';
 import {
@@ -11,15 +11,17 @@ import { ScheduleQuery, UpdateScheduleDto } from 'src/core/dtos/schedule.dto';
 
 @Injectable()
 export class ScheduleService {
+  private readonly logger = new Logger(ScheduleService.name);
+
   constructor(
     private dataService: DataServiceService,
     private scheduleFactory: ScheduleFactoryService,
   ) {}
 
-  async getAll(query: ScheduleQuery) {
+  async getAll(filter: ScheduleQuery) {
     const schedules = this.scheduleFactory.createMany(
       await this.dataService.schedules.getAll({
-        filter: query,
+        filter,
       }),
     );
     return schedules;
@@ -34,19 +36,42 @@ export class ScheduleService {
   }
 
   async update(updateScheduleDto: UpdateScheduleDto) {
-    console.log('Incoming data :', updateScheduleDto);
+    this.logger.debug(
+      `updateScheduleDto ${JSON.stringify(updateScheduleDto, undefined, 2)}`,
+    );
     const newSchedule = this.scheduleFactory.create(
       updateScheduleDto as ScheduleConstructorProps,
     );
     const validationError = newSchedule.validateProps();
-    if (isNotEmpty(validationError))
+    if (isNotEmpty(validationError)) {
+      this.logger.log(
+        `Schedule data is not valid ${JSON.stringify(validationError)}`,
+      );
       throw new BadRequestException(
         new ErrorResponse('Data tidak valid', { validationError }),
       );
-    const updatedSchedule = this.scheduleFactory.create(
-      await this.dataService.schedules.updateById(newSchedule._id, newSchedule),
+    }
+    const updateResult = await this.dataService.schedules.updateById(
+      newSchedule._id,
+      newSchedule,
     );
-    console.log('Updated schedules :', updatedSchedule);
+    if (isEmpty(updateResult)) {
+      this.logger.log(
+        `Schedule update failed ${JSON.stringify({
+          scheduleId: newSchedule._id,
+        })}`,
+      );
+      throw new BadRequestException(new ErrorResponse('Jadwal gagal diupdate'));
+    }
+    this.logger.debug(
+      `Updated schedules ${JSON.stringify(updateResult, undefined, 2)}`,
+    );
+    this.logger.log(
+      `Schedule update success ${JSON.stringify({
+        scheduleId: newSchedule._id,
+      })}`,
+    );
+    const updatedSchedule = this.scheduleFactory.create(updateResult);
     return updatedSchedule;
   }
 

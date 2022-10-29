@@ -101,8 +101,8 @@ export class PracticumModule {
     this.simulator = simulator;
     this.journalCover = journalCover;
 
-    if(isNotEmpty(this.video))
-    this.video.embedUrl = this.generateVideoEmbedURL();
+    if (isNotEmpty(this.video))
+      this.video.embedUrl = this.generateVideoEmbedURL();
   }
 
   protected isPreTaskUrlValid() {
@@ -143,7 +143,6 @@ export class PracticumModule {
       (error, result) => (isObject(result) ? { ...error, ...result } : error),
       {},
     );
-    console.log('Validation errors :', validationErrors);
     return isNotEmptyObject(validationErrors) ? validationErrors : null;
   }
 

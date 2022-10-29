@@ -1,5 +1,5 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
-import { isNotEmpty } from 'class-validator';
+import { BadRequestException, Injectable, Logger } from '@nestjs/common';
+import { isEmpty, isNotEmpty } from 'class-validator';
 import { DataServiceService } from 'src/database/data-service.service';
 import { ErrorResponse } from 'src/core/dtos/response.dto';
 import { PracticumModuleFactory } from './practicum-module-factory.service';
@@ -7,6 +7,8 @@ import { UpdatePracticumModuleDto } from 'src/core/dtos/practicum-module.dto';
 
 @Injectable()
 export class PracticumModuleService {
+  private readonly logger = new Logger(PracticumModuleService.name);
+
   constructor(
     private dataService: DataServiceService,
     private practicumModuleFactory: PracticumModuleFactory,
@@ -43,22 +45,49 @@ export class PracticumModuleService {
   }
 
   async update(updatePracticumModuleDto: UpdatePracticumModuleDto) {
-    console.log('updatePracticumModuleDto :', updatePracticumModuleDto);
+    this.logger.debug(
+      `updatePracticumModuleDto ${JSON.stringify(
+        updatePracticumModuleDto,
+        undefined,
+        2,
+      )}`,
+    );
     const newPracticumModule = this.practicumModuleFactory.create(
       updatePracticumModuleDto,
     );
     const validationError = newPracticumModule.validateProps();
-    if (isNotEmpty(validationError))
+    if (isNotEmpty(validationError)) {
+      this.logger.log(
+        `PracticumModule data is not valid ${JSON.stringify(validationError)}`,
+      );
       throw new BadRequestException(
         new ErrorResponse('Data tidak valid', { validationError }),
       );
-    const updatedPracticumModule = this.practicumModuleFactory.create(
-      await this.dataService.practicumModules.updateById(
-        newPracticumModule._id,
-        newPracticumModule,
-      ),
+    }
+    const updateResult = await this.dataService.practicumModules.updateById(
+      newPracticumModule._id,
+      newPracticumModule,
     );
-    console.log('Updated practicum module :', updatedPracticumModule);
+    if (isEmpty(updateResult)) {
+      this.logger.log(
+        `PracticumModule update failed ${JSON.stringify({
+          practicumModuleId: newPracticumModule._id,
+        })}`,
+      );
+      throw new BadRequestException(
+        new ErrorResponse('Konten praktikum gagal diupdate'),
+      );
+    }
+    this.logger.debug(
+      `Updated PracticumModule ${JSON.stringify(updateResult, undefined, 2)}`,
+    );
+    this.logger.log(
+      `PracticumModule update success ${JSON.stringify({
+        practicumModuleId: newPracticumModule._id,
+      })}`,
+    );
+    const updatedPracticumModule =
+      this.practicumModuleFactory.create(updateResult);
     return updatedPracticumModule;
   }
 }

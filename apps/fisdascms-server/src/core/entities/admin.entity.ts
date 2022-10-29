@@ -83,10 +83,7 @@ export class Admin {
       (error, result) => (isObject(result) ? { ...error, ...result } : error),
       {},
     );
-    if (isNotEmptyObject(errors)) {
-      console.error('Validation errors :', errors);
-      return errors;
-    } else return null;
+    return isNotEmptyObject(errors) ? errors : null;
   }
 
   async hashPassword() {

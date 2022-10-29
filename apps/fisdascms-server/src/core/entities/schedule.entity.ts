@@ -45,7 +45,6 @@ export class Schedule {
       (error, result) => (isObject(result) ? { ...error, ...result } : error),
       {},
     );
-    console.log('Validation errors :', validationErrors);
     return isNotEmptyObject(validationErrors) ? validationErrors : null;
   }
 

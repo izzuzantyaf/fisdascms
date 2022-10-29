@@ -3,6 +3,7 @@ import {
   Get,
   HttpCode,
   HttpStatus,
+  Logger,
   Post,
   Request,
   UseGuards,
@@ -14,14 +15,18 @@ import { JwtAuthGuard } from 'src/use-cases/auth/guards/jwt-auth.guard';
 import { LocalAuthGuard } from 'src/use-cases/auth/guards/local-auth-guard';
 
 @ApiTags('auth')
-@Controller('auth')
+@Controller('api/auth')
 export class AuthController {
+  private readonly logger = new Logger(AuthController.name);
+
   constructor(private authService: AuthService) {}
 
   @UseGuards(LocalAuthGuard)
   @Post('signin')
   @HttpCode(HttpStatus.OK)
   async signin(@Request() req) {
+    this.logger.debug(`Request.body ${JSON.stringify(req.body, undefined, 2)}`);
+    this.logger.debug(`Request.user ${JSON.stringify(req.user, undefined, 2)}`);
     const { access_token } = await this.authService.signin(req.user);
     return new SuccessfulResponse('Login berhasil', { access_token });
   }
