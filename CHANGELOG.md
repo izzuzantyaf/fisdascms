@@ -1,3 +1,12 @@
+## [1.0.1](https://github.com/izzuzantyaf/fisdascms/compare/v1.0.0...v1.0.1) (2022-10-29)
+
+
+### Bug Fixes
+
+* change some console.log to logger ([d9db34f](https://github.com/izzuzantyaf/fisdascms/commit/d9db34f604d36b8c174b87a9940b34f9a0f61ecd))
+
+
+
 # [1.0.0](https://github.com/izzuzantyaf/fisdascms/compare/v0.1.0...v1.0.0) (2022-10-29)
 
 
