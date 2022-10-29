@@ -22,6 +22,7 @@ jobs:
       - name: Run tests
         run: yarn test:server
         env:
+          NODE_ENV: ${{ secrets.NODE_ENV }}
           MONGO_URI: ${{ secrets.MONGO_URI }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
   deploy-to-heroku:
@@ -41,6 +42,7 @@ jobs:
           branch: ${{ github.ref_name }}
           appdir: "apps/fisdascms-server"
         env:
+          HD_NODE_ENV: ${{ secrets.NODE_ENV }}
           HD_MONGO_URI: ${{ secrets.MONGO_URI }}
           HD_JWT_SECRET: ${{ secrets.JWT_SECRET }}
   deploy-to-railway:
@@ -61,6 +63,7 @@ jobs:
       - name: Set up environment variables on Railway
         working-directory: ${{ env.working-directory }}
         run: |
+          RAILWAY_TOKEN=${{ secrets.RAILWAY_TOKEN }} railway run railway vars set NODE_ENV=${{ secrets.NODE_ENV }}
           RAILWAY_TOKEN=${{ secrets.RAILWAY_TOKEN }} railway run railway vars set MONGO_URI=${{ secrets.MONGO_URI }}
           RAILWAY_TOKEN=${{ secrets.RAILWAY_TOKEN }} railway run railway vars set JWT_SECRET=${{ secrets.JWT_SECRET }}
       - name: Deploy

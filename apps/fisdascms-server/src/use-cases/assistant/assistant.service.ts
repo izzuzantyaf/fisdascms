@@ -8,26 +8,42 @@ import {
   CreateAssistantDto,
   UpdateAssistantDto,
 } from 'src/core/dtos/assistant.dto';
+import { Logger } from '@nestjs/common/services';
 
 @Injectable()
 export class AssistantService {
+  private readonly logger = new Logger(AssistantService.name);
+
   constructor(
     private dataService: DataServiceService,
     private assistantFactory: AssistantFactoryService,
   ) {}
 
   async create(createAssistantDto: CreateAssistantDto) {
-    console.log('Incoming data :', createAssistantDto);
+    this.logger.debug(
+      `createAssistantDto ${JSON.stringify(createAssistantDto, undefined, 2)}`,
+    );
     const newAssistant = this.assistantFactory.create(createAssistantDto);
     const validationErrors = newAssistant.validateProps();
-    if (isNotEmpty(validationErrors))
+    if (isNotEmpty(validationErrors)) {
+      this.logger.log(
+        `Assistant data is not valid ${JSON.stringify(validationErrors)}`,
+      );
       throw new BadRequestException(
         new ErrorResponse('Data tidak valid', { errors: validationErrors }),
       );
+    }
     const storedAssistant = this.assistantFactory.create(
       await this.dataService.assistants.create(newAssistant),
     );
-    console.log('Stored assistant :', storedAssistant);
+    this.logger.debug(
+      `Stored assistant ${JSON.stringify(storedAssistant, undefined, 2)}`,
+    );
+    this.logger.log(
+      `New assistant created ${JSON.stringify({
+        assistantId: storedAssistant._id,
+      })}`,
+    );
     return storedAssistant;
   }
 
@@ -39,7 +55,6 @@ export class AssistantService {
   }
 
   async search(keyword: string) {
-    console.log('Incoming data :', keyword);
     keyword = keyword.trim();
     const searchResult = this.assistantFactory.createMany(
       await this.dataService.assistants.search(keyword),
@@ -48,35 +63,62 @@ export class AssistantService {
   }
 
   async update(updateAssistantDto: UpdateAssistantDto) {
-    console.log('Incoming data :', updateAssistantDto);
+    this.logger.debug(
+      `updateAssistantDto ${JSON.stringify(updateAssistantDto, undefined, 2)}`,
+    );
     const newAssistant = this.assistantFactory.create(updateAssistantDto);
     const validationErrors = newAssistant.validateProps();
-    if (isNotEmpty(validationErrors))
+    if (isNotEmpty(validationErrors)) {
+      this.logger.log(
+        `Assistant data is not valid ${JSON.stringify(validationErrors)}`,
+      );
       throw new BadRequestException(
         new ErrorResponse('Data tidak valid', { errors: validationErrors }),
       );
+    }
     const updateResult = await this.dataService.assistants.updateById(
       newAssistant._id,
       newAssistant,
     );
-    if (isEmpty(updateResult))
+    if (isEmpty(updateResult)) {
+      this.logger.log(
+        `Assistant update failed ${JSON.stringify({
+          assistantId: newAssistant._id,
+        })}`,
+      );
       throw new BadRequestException(
         new ErrorResponse('Asisten gagal diupdate'),
       );
+    }
     const updatedAssistant = this.assistantFactory.create(updateResult);
-    console.log('Updated assistant :', updatedAssistant);
+    this.logger.debug(
+      `Updated assistant ${JSON.stringify(updateAssistantDto, undefined, 2)}`,
+    );
+    this.logger.log(
+      `Assistant update success ${JSON.stringify({
+        assistantId: updatedAssistant._id,
+      })}`,
+    );
     return updatedAssistant;
   }
 
   async delete(id: string) {
-    console.log('Incoming data :', id);
-    // if (!isMongoId(id))
-    //   throw new BadRequestException(new ErrorResponse('Asisten gagal dihapus'));
     const deleteResult = await this.dataService.assistants.deleteById(id);
-    if (isEmpty(deleteResult))
+    if (isEmpty(deleteResult)) {
+      this.logger.log(
+        `Assistant delete failed ${JSON.stringify({ assistantId: id })}`,
+      );
       throw new BadRequestException(new ErrorResponse('Asisten gagal dihapus'));
+    }
     const deletedAssistant = this.assistantFactory.create(deleteResult);
-    console.log('Deleted assistant :', deletedAssistant);
+    this.logger.debug(
+      `Deleted assistant ${JSON.stringify(deletedAssistant, undefined, 2)}`,
+    );
+    this.logger.log(
+      `Assistant delete success ${JSON.stringify({
+        assistantId: deletedAssistant._id,
+      })}`,
+    );
     return deletedAssistant;
   }
 

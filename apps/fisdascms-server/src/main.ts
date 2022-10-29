@@ -4,7 +4,10 @@ import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { cors: true });
+  const app = await NestFactory.create(AppModule, {
+    cors: true,
+    logger: process.env.NODE_ENV === 'production' ? ['log'] : ['debug'],
+  });
   app.useGlobalPipes(
     new ValidationPipe({
       enableDebugMessages: true, // menampilkan pesan pada console jika terjadi error,

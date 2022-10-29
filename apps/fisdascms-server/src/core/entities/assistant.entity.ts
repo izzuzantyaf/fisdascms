@@ -127,7 +127,6 @@ export class Assistant {
       (error, result) => (isObject(result) ? { ...error, ...result } : error),
       {},
     );
-    console.log('Validation errors :', errors);
     return isNotEmptyObject(errors) ? errors : null;
   }
 }

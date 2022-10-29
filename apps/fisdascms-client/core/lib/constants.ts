@@ -16,12 +16,12 @@ export enum Route {
 
 export enum ApiRoute {
   SIGN_IN = "/auth/signin",
-  CODE_OF_CONDUCT = "/api/code-of-conduct",
-  ORGANIGRAM = "/api/organigram",
-  HANDOUT = "/api/handout",
-  PRACTICUM_MATERIAL = "/api/practicum-module",
-  SCHEDULE = "/api/schedule",
-  ASSISTANT = "/api/assistant",
+  CODE_OF_CONDUCT = "/code-of-conduct",
+  ORGANIGRAM = "/organigram",
+  HANDOUT = "/handout",
+  PRACTICUM_MATERIAL = "/practicum-module",
+  SCHEDULE = "/schedule",
+  ASSISTANT = "/assistant",
 }
 
 export const menu = [
