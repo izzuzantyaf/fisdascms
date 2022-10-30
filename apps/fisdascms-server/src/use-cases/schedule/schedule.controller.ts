@@ -13,7 +13,6 @@ export class ScheduleController {
 
   @Get()
   async getAll(@Query() filter?: ScheduleQuery) {
-    this.logger.log(`Schedule filter ${JSON.stringify(filter)}`);
     const schedules = await this.scheduleService.getAll(filter);
     return new SuccessfulResponse('Sukses', schedules);
   }

@@ -15,6 +15,7 @@ export class HandoutService {
   ) {}
 
   async getAll(filter?: HandoutQuery) {
+    this.logger.debug(`Handout filter ${JSON.stringify(filter, undefined, 2)}`);
     return this.handoutFactory.createMany(
       await this.dataService.handouts.getAll({
         filter,

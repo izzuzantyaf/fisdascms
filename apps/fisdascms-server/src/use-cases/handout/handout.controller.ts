@@ -13,7 +13,6 @@ export class HandoutController {
 
   @Get()
   async getAll(@Query() filter?: HandoutQuery) {
-    this.logger.log(`Handout filter ${JSON.stringify(filter)}`);
     const handouts = await this.handoutService.getAll(filter);
     return new SuccessfulResponse('Sukses', handouts);
   }
