@@ -1,3 +1,19 @@
+# [1.1.0](https://github.com/izzuzantyaf/fisdascms/compare/v1.0.1...v1.1.0) (2022-10-30)
+
+
+### Bug Fixes
+
+* change console.log to logger ([77114ce](https://github.com/izzuzantyaf/fisdascms/commit/77114ce50614888487f3b914823d9914fe361825))
+* disable organigram validation error log ([1a94c7a](https://github.com/izzuzantyaf/fisdascms/commit/1a94c7ae2bbea2900340ab5f174b5194138c2179))
+* move some logging in controller to service ([a77e9e9](https://github.com/izzuzantyaf/fisdascms/commit/a77e9e9575b797097661ccdc2fb363000468fd17))
+
+
+### Features
+
+* show ip in http log ([01fbf82](https://github.com/izzuzantyaf/fisdascms/commit/01fbf829756dd4dc2cbe2edee5ee186eb1d8fa8e))
+
+
+
 ## [1.0.1](https://github.com/izzuzantyaf/fisdascms/compare/v1.0.0...v1.0.1) (2022-10-29)
 
 
