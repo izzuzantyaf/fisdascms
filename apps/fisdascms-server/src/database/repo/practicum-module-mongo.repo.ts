@@ -39,7 +39,7 @@ export class PracticumModuleMongoRepository extends MongoGenericRepository<Pract
       else if (value === 'false') value = false;
       matcher[`preTask.${key}`] = value;
     }
-    this.logger.log(`Matcher ${JSON.stringify(matcher)}`);
+    this.logger.debug(`Matcher ${JSON.stringify(matcher, undefined, 2)}`);
     return this._repository
       .aggregate()
       .project({
@@ -58,7 +58,7 @@ export class PracticumModuleMongoRepository extends MongoGenericRepository<Pract
       else if (value === 'false') value = false;
       matcher[`video.${key}`] = value;
     }
-    this.logger.log(`Matcher ${JSON.stringify(matcher)}`);
+    this.logger.debug(`Matcher ${JSON.stringify(matcher, undefined, 2)}`);
     return this._repository
       .aggregate()
       .project({
@@ -77,7 +77,7 @@ export class PracticumModuleMongoRepository extends MongoGenericRepository<Pract
       else if (value === 'false') value = false;
       matcher[`simulator.${key}`] = value;
     }
-    this.logger.log(`Matcher ${JSON.stringify(matcher)}`);
+    this.logger.debug(`Matcher ${JSON.stringify(matcher, undefined, 2)}`);
     return this._repository
       .aggregate()
       .project({
@@ -96,7 +96,7 @@ export class PracticumModuleMongoRepository extends MongoGenericRepository<Pract
       else if (value === 'false') value = false;
       matcher[`journalCover.${key}`] = value;
     }
-    this.logger.log(`Matcher ${JSON.stringify(matcher)}`);
+    this.logger.debug(`Matcher ${JSON.stringify(matcher, undefined, 2)}`);
     return this._repository
       .aggregate()
       .project({
