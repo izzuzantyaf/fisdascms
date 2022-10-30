@@ -19,6 +19,9 @@ export class ScheduleService {
   ) {}
 
   async getAll(filter: ScheduleQuery) {
+    this.logger.debug(
+      `Schedule filter ${JSON.stringify(filter, undefined, 2)}`,
+    );
     const schedules = this.scheduleFactory.createMany(
       await this.dataService.schedules.getAll({
         filter,
