@@ -9,7 +9,7 @@ export class LoggerMiddleware implements NestMiddleware {
     this.logger.log(
       `${req.method} ${req.path} ${JSON.stringify({
         'user-agent': req.headers['user-agent'],
-        host: req.headers.host,
+        ip: req.ip,
       })}`,
     );
     next();
