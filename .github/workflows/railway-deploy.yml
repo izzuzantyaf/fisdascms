@@ -9,15 +9,6 @@ on:
       working-directory:
         required: false
         type: string
-    secrets:
-      RAILWAY_TOKEN:
-        required: true
-      NODE_ENV:
-        required: true
-      MONGO_URI:
-        required: true
-      JWT_SECRET:
-        required: true
 
 jobs:
   deploy:
