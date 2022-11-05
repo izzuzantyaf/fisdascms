@@ -1,3 +1,20 @@
+# [1.2.0](https://github.com/izzuzantyaf/fisdascms/compare/v1.1.0...v1.2.0) (2022-11-05)
+
+
+### Bug Fixes
+
+* fix typo ([26c99a6](https://github.com/izzuzantyaf/fisdascms/commit/26c99a66b3b0219c9be409128769a8aad1179990))
+* inherit secrets on vercel deploy ([28536b5](https://github.com/izzuzantyaf/fisdascms/commit/28536b5cc5b980efd16f70f164356b95bc73eed2))
+
+
+### Features
+
+* make heroku deploy workflow separated ([4f92ed2](https://github.com/izzuzantyaf/fisdascms/commit/4f92ed203c5a3339434f0093adee412fbbca39f0))
+* make railway deployment workflow separated ([b502c16](https://github.com/izzuzantyaf/fisdascms/commit/b502c16c579562f664ff0a1fd76231d5534a528e))
+* make vercel deployment workflow separated ([911526d](https://github.com/izzuzantyaf/fisdascms/commit/911526d89c44a7aaa106aae6712ed95fc9f566c0))
+
+
+
 # [1.1.0](https://github.com/izzuzantyaf/fisdascms/compare/v1.0.1...v1.1.0) (2022-10-30)
 
 
