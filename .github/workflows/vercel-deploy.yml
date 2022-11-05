@@ -1,0 +1,54 @@
+name: Deploy to Vercel
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+      vercel-environment:
+        required: true
+        type: string
+      working-directory:
+        required: false
+        type: string
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+jobs:
+  deploy:
+    name: Deploy to Vercel
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Install dependencies
+        run: yarn install
+        working-directory: ${{ inputs.working-directory }}
+      - name: Install Vercel CLI
+        run: yarn global add vercel
+      - name: Set up environment variables on Vercel
+        working-directory: ${{ inputs.working-directory }}
+        run: |
+          vercel env rm NEXT_PUBLIC_API_ENDPOINT_URL ${{ inputs.vercel-environment }} --token=${{ secrets.VERCEL_TOKEN }} --yes | exit 0
+          echo ${{ secrets.API_BASEURL }} | vercel env add NEXT_PUBLIC_API_ENDPOINT_URL ${{ inputs.vercel-environment }} --token=${{ secrets.VERCEL_TOKEN }} --yes | exit 0
+          vercel env rm NEXT_PUBLIC_JWT_SECRET ${{ inputs.vercel-environment }} --token=${{ secrets.VERCEL_TOKEN }} --yes | exit 0
+          echo ${{ secrets.JWT_SECRET }} | vercel env add NEXT_PUBLIC_JWT_SECRET ${{ inputs.vercel-environment }} --token=${{ secrets.VERCEL_TOKEN }} --yes | exit 0
+      - name: Build project artifacts (preview)
+        if: ${{ inputs.vercel-environment == 'preview' }}
+        working-directory: ${{ inputs.working-directory }}
+        run: vercel build --token=${{ secrets.VERCEL_TOKEN }} --yes
+      - name: Deploy (preview)
+        if: ${{ inputs.vercel-environment == 'preview' }}
+        working-directory: ${{ inputs.working-directory }}
+        run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }} --yes
+      - name: Build project artifacts (production)
+        if: ${{ inputs.vercel-environment == 'production' }}
+        working-directory: ${{ inputs.working-directory }}
+        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }} --yes
+      - name: Deploy (production)
+        if: ${{ inputs.vercel-environment == 'production' }}
+        working-directory: ${{ inputs.working-directory }}
+        run: vercel deploy --prod --prebuilt --token=${{ secrets.VERCEL_TOKEN }} --yes

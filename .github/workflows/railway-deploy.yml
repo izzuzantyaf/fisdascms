@@ -1,0 +1,34 @@
+name: Deploy to Railway
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+      working-directory:
+        required: false
+        type: string
+
+jobs:
+  deploy:
+    name: Deploy to Railway
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Install dependencies
+        working-directory: ${{ inputs.working-directory }}
+        run: yarn install
+      - name: Install Railway CLI
+        run: yarn global add @railway/cli
+      - name: Set up environment variables on Railway
+        working-directory: ${{ inputs.working-directory }}
+        run: |
+          RAILWAY_TOKEN=${{ secrets.RAILWAY_TOKEN }} railway run railway vars set NODE_ENV=${{ secrets.NODE_ENV }}
+          RAILWAY_TOKEN=${{ secrets.RAILWAY_TOKEN }} railway run railway vars set MONGO_URI=${{ secrets.MONGO_URI }}
+          RAILWAY_TOKEN=${{ secrets.RAILWAY_TOKEN }} railway run railway vars set JWT_SECRET=${{ secrets.JWT_SECRET }}
+      - name: Deploy
+        working-directory: ${{ inputs.working-directory }}
+        run: RAILWAY_TOKEN=${{ secrets.RAILWAY_TOKEN }} railway run railway up

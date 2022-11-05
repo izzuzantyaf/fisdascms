@@ -26,46 +26,17 @@ jobs:
           MONGO_URI: ${{ secrets.MONGO_URI }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
   deploy-to-heroku:
-    name: Deploy to Heroku
     needs: test
-    runs-on: ubuntu-latest
-    environment: development
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-      - name: Deploy
-        uses: akhileshns/heroku-deploy@v3.12.12
-        with:
-          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          heroku_app_name: "fisdascms-server-dev" # Must be unique in Heroku
-          heroku_email: ${{ secrets.HEROKU_EMAIL }}
-          branch: ${{ github.ref_name }}
-          appdir: "apps/fisdascms-server"
-        env:
-          HD_NODE_ENV: ${{ secrets.NODE_ENV }}
-          HD_MONGO_URI: ${{ secrets.MONGO_URI }}
-          HD_JWT_SECRET: ${{ secrets.JWT_SECRET }}
-  deploy-to-railway:
-    name: Deploy to Railway
-    needs: test
-    runs-on: ubuntu-latest
-    environment: development
-    env:
+    uses: ./.github/workflows/heroku-deploy.yml
+    with:
+      heroku-app-name: fisdascms-server-dev
+      environment: development
       working-directory: apps/fisdascms-server
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-      - name: Install dependencies
-        working-directory: ${{ env.working-directory }}
-        run: yarn install
-      - name: Install Railway CLI
-        run: yarn global add @railway/cli
-      - name: Set up environment variables on Railway
-        working-directory: ${{ env.working-directory }}
-        run: |
-          RAILWAY_TOKEN=${{ secrets.RAILWAY_TOKEN }} railway run railway vars set NODE_ENV=${{ secrets.NODE_ENV }}
-          RAILWAY_TOKEN=${{ secrets.RAILWAY_TOKEN }} railway run railway vars set MONGO_URI=${{ secrets.MONGO_URI }}
-          RAILWAY_TOKEN=${{ secrets.RAILWAY_TOKEN }} railway run railway vars set JWT_SECRET=${{ secrets.JWT_SECRET }}
-      - name: Deploy
-        working-directory: ${{ env.working-directory }}
-        run: RAILWAY_TOKEN=${{ secrets.RAILWAY_TOKEN }} railway run railway up
+    secrets: inherit
+  deploy-to-railway:
+    needs: test
+    uses: ./.github/workflows/railway-deploy.yml
+    with:
+      environment: development
+      working-directory: apps/fisdascms-server
+    secrets: inherit
