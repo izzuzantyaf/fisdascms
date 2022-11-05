@@ -26,25 +26,13 @@ jobs:
           MONGO_URI: ${{ secrets.MONGO_URI }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
   deploy-to-heroku:
-    name: Deploy to Heroku
     needs: test
-    runs-on: ubuntu-latest
-    environment: development
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-      - name: Deploy
-        uses: akhileshns/heroku-deploy@v3.12.12
-        with:
-          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          heroku_app_name: "fisdascms-server-dev" # Must be unique in Heroku
-          heroku_email: ${{ secrets.HEROKU_EMAIL }}
-          branch: ${{ github.ref_name }}
-          appdir: "apps/fisdascms-server"
-        env:
-          HD_NODE_ENV: ${{ secrets.NODE_ENV }}
-          HD_MONGO_URI: ${{ secrets.MONGO_URI }}
-          HD_JWT_SECRET: ${{ secrets.JWT_SECRET }}
+    uses: ./.github/workflows/heroku-deploy.yml
+    with:
+      heroku-app-name: fisdascms-server-dev
+      environment: development
+      working-directory: apps/fisdascms-server
+    secrets: inherit
   deploy-to-railway:
     needs: test
     uses: ./.github/workflows/railway-deploy.yml
