@@ -12,5 +12,5 @@ jobs:
     uses: ./.github/workflows/vercel-deploy.yml
     with:
       environment: development
-      vercel-enviroment: preview
+      vercel-environment: preview
       working-directory: apps/fisdascms-client
