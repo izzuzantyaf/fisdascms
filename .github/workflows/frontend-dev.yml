@@ -1,38 +1,16 @@
 name: Frontend (development)
-env:
-  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
 on:
   push:
     branches-ignore:
       - main
     paths:
       - "apps/fisdascms-client/**"
+
 jobs:
   deploy-to-vercel:
-    name: Deploy to Vercel
-    runs-on: ubuntu-latest
-    environment: development
-    env:
+    uses: ./.github/workflows/vercel-deploy.yml
+    with:
+      environment: development
+      vercel-enviroment: preview
       working-directory: apps/fisdascms-client
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-      - name: Install dependencies
-        run: yarn install
-        working-directory: ${{ env.working-directory }}
-      - name: Install Vercel CLI
-        run: yarn global add vercel
-      - name: Set up environment variables on Vercel
-        working-directory: ${{ env.working-directory }}
-        run: |
-          vercel env rm NEXT_PUBLIC_API_ENDPOINT_URL preview --token=${{ secrets.VERCEL_TOKEN }} --yes | exit 0
-          echo ${{ secrets.API_BASEURL }} | vercel env add NEXT_PUBLIC_API_ENDPOINT_URL preview --token=${{ secrets.VERCEL_TOKEN }} --yes | exit 0
-          vercel env rm NEXT_PUBLIC_JWT_SECRET preview --token=${{ secrets.VERCEL_TOKEN }} --yes | exit 0
-          echo ${{ secrets.JWT_SECRET }} | vercel env add NEXT_PUBLIC_JWT_SECRET preview --token=${{ secrets.VERCEL_TOKEN }} --yes | exit 0
-      - name: Build project artifacts
-        working-directory: ${{ env.working-directory }}
-        run: vercel build --token=${{ secrets.VERCEL_TOKEN }} --yes
-      - name: Deploy
-        working-directory: ${{ env.working-directory }}
-        run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }} --yes
