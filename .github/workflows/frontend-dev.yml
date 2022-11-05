@@ -14,3 +14,4 @@ jobs:
       environment: development
       vercel-environment: preview
       working-directory: apps/fisdascms-client
+    secrets: inherit
