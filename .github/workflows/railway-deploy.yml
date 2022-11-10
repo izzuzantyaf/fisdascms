@@ -18,6 +18,10 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 7
       - name: Install dependencies
         working-directory: ${{ inputs.working-directory }}
         run: pnpm install
