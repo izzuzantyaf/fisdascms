@@ -1,3 +1,12 @@
+# [1.3.0](https://github.com/izzuzantyaf/fisdascms/compare/v1.2.0...v1.3.0) (2022-11-10)
+
+
+### Features
+
+* Convert yarn to pnpm ([#73](https://github.com/izzuzantyaf/fisdascms/issues/73)) ([4311fec](https://github.com/izzuzantyaf/fisdascms/commit/4311fec7784a567b2e42da78ebdfa2d8e9c7997b))
+
+
+
 # [1.2.0](https://github.com/izzuzantyaf/fisdascms/compare/v1.1.0...v1.2.0) (2022-11-05)
 
 
