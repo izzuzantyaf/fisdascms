@@ -6,7 +6,7 @@ on:
       environment:
         required: true
         type: string
-      vercel-environment:
+      vercel-environment: # production | preview
         required: true
         type: string
       working-directory:
