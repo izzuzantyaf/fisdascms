@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - "apps/fisdascms-client/**"
+      - apps/fisdascms-client/**
 
 jobs:
   deploy-to-vercel:

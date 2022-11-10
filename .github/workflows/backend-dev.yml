@@ -4,7 +4,7 @@ on:
     branches-ignore:
       - main
     paths:
-      - "apps/fisdascms-server/**"
+      - apps/fisdascms-server/**
 jobs:
   test:
     name: Testing
@@ -16,11 +16,15 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "16"
+          node-version: 16
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 7
       - name: Install dependencies
-        run: yarn install:server
+        run: pnpm install:server
       - name: Run tests
-        run: yarn test:server
+        run: pnpm test:server
         env:
           NODE_ENV: ${{ secrets.NODE_ENV }}
           MONGO_URI: ${{ secrets.MONGO_URI }}

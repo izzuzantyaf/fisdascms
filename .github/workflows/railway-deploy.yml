@@ -18,9 +18,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-      - name: Install dependencies
-        working-directory: ${{ inputs.working-directory }}
-        run: yarn install
       - name: Install Railway CLI
         run: yarn global add @railway/cli
       - name: Set up environment variables on Railway
