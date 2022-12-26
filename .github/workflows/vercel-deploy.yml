@@ -49,7 +49,9 @@ jobs:
       - name: Deploy (preview)
         if: ${{ inputs.vercel-environment == 'preview' }}
         working-directory: ${{ inputs.working-directory }}
-        run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }} --yes
+        run: |
+          vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }} --yes > deployment-url.txt
+          vercel alias $(head -n 1 deployment-url.txt) fisdascms-demo.vercel.app --token=${{ secrets.VERCEL_TOKEN }} --yes
       - name: Build project artifacts (production)
         if: ${{ inputs.vercel-environment == 'production' }}
         working-directory: ${{ inputs.working-directory }}
