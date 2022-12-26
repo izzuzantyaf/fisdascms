@@ -38,12 +38,12 @@ jobs:
     with:
       heroku-app-name: fisdascms-server-dev
       environment: development
-      working-directory: ${{ env.working-directory }}
+      working-directory: apps/fisdascms-server
     secrets: inherit
   deploy-to-railway:
     needs: test
     uses: ./.github/workflows/railway-deploy.yml
     with:
       environment: development
-      working-directory: ${{ env.working-directory }}
+      working-directory: apps/fisdascms-server
     secrets: inherit
