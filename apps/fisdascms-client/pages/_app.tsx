@@ -1,6 +1,6 @@
 import "../styles/globals.css"
 import type { AppProps } from "next/app"
-import { ChakraProvider, extendTheme } from "@chakra-ui/react"
+import { Box, ChakraProvider, extendTheme } from "@chakra-ui/react"
 import { library } from "@fortawesome/fontawesome-svg-core"
 // prettier-ignore
 import { faArrowLeft, faArrowRight, faArrowRightFromBracket, faArrowUpRightFromSquare, faBalanceScale, faBars, faBolt, faBook, faCalculator, faCalendarMinus, faChessPawn, faChessQueen, faCircleInfo, faCircleNotch, faDrawPolygon, faEye, faEyeSlash, faFile, faFolderOpen, faGamepad, faGripLinesVertical, faLanguage, faMagnet, faMagnifyingGlass, faMars, faPager, faParachuteBox, faPen, faPlay, faPlug, faPlus, faSatelliteDish, faSitemap, faSortNumericUpAlt, faTasks, faThumbsUp, faTrashCan, faUser, faUsers, faUserSecret, faVenus, faWaveSquare } from "@fortawesome/free-solid-svg-icons"
@@ -23,6 +23,11 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <AssistantProvider>
       <ChakraProvider theme={customizedTheme}>
+        {process.env.NEXT_PUBLIC_APP_ENV !== "production" ? (
+          <Box bgColor="yellow.300" textAlign="center">
+            Demo version
+          </Box>
+        ) : null}
         <Component {...pageProps} />
       </ChakraProvider>
     </AssistantProvider>

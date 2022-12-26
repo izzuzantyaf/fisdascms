@@ -36,6 +36,8 @@ jobs:
       - name: Set up environment variables on Vercel
         working-directory: ${{ inputs.working-directory }}
         run: |
+          vercel env rm NEXT_PUBLIC_APP_ENV ${{ inputs.vercel-environment }} --token=${{ secrets.VERCEL_TOKEN }} --yes | exit 0
+          echo ${{ secrets.NODE_ENV }} | vercel env add NEXT_PUBLIC_APP_ENV ${{ inputs.vercel-environment }} --token=${{ secrets.VERCEL_TOKEN }} --yes | exit 0
           vercel env rm NEXT_PUBLIC_API_ENDPOINT_URL ${{ inputs.vercel-environment }} --token=${{ secrets.VERCEL_TOKEN }} --yes | exit 0
           echo ${{ secrets.API_BASEURL }} | vercel env add NEXT_PUBLIC_API_ENDPOINT_URL ${{ inputs.vercel-environment }} --token=${{ secrets.VERCEL_TOKEN }} --yes | exit 0
           vercel env rm NEXT_PUBLIC_JWT_SECRET ${{ inputs.vercel-environment }} --token=${{ secrets.VERCEL_TOKEN }} --yes | exit 0
