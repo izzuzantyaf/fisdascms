@@ -11,11 +11,11 @@
     "dev:server": "cd apps/fisdascms-server && pnpm dev",
     "dev:client": "cd apps/fisdascms-client && pnpm dev",
     "test:server": "cd apps/fisdascms-server && pnpm test",
-    "build": "pnpm build:server && pnpm build:client",
-    "build:server": "cd apps/fisdascms-server && pnpm build",
-    "build:client": "cd apps/fisdascms-client && pnpm build",
-    "start:server": "cd apps/fisdascms-server && pnpm start:prod",
-    "start:client": "cd apps/fisdascms-client && pnpm start",
-    "heroku-postbuild": "pnpm run build:server"
+    "build": "yarn build:server && yarn build:client",
+    "build:server": "cd apps/fisdascms-server && yarn build",
+    "build:client": "cd apps/fisdascms-client && yarn build",
+    "start:server": "cd apps/fisdascms-server && yarn start:prod",
+    "start:client": "cd apps/fisdascms-client && yarn start",
+    "heroku-postbuild": "yarn run build:server"
   }
 }
