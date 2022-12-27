@@ -19,30 +19,40 @@ export default function Home() {
       <Head>
         <title>Fisdas CMS</title>
       </Head>
-      <Navbar />
-      <Container maxWidth="container.lg">
-        <Heading marginTop={4}>Dashboard</Heading>
-        <SimpleGrid columns={[2, 3, 4]} spacing={4} marginTop={4}>
-          {menu.map((menu, index) => (
-            <Link href={menu.route} key={index}>
-              <a>
-                <Box padding="4" {...shadowedBoxStyle}>
-                  <Square
-                    fontSize="xl"
-                    bgColor="blue.50"
-                    color="blue.500"
-                    size="40px"
-                    borderRadius="full"
-                  >
-                    <FontAwesomeIcon icon={menu.faIconName} />
-                  </Square>
-                  <Text>{menu.name}</Text>
-                </Box>
-              </a>
-            </Link>
-          ))}
-        </SimpleGrid>
-      </Container>
+      <Box bgColor="gray.50" minHeight="100vh" paddingBottom="16px">
+        <Navbar />
+        <Container>
+          <Heading marginTop={4}>Dashboard</Heading>
+          <SimpleGrid columns={[2, 3, 4]} spacing={4} marginTop={4}>
+            {menu.map((menu, index) => (
+              <Link href={menu.route} key={index}>
+                <a>
+                  <Box padding="4" {...shadowedBoxStyle}>
+                    <Square
+                      fontSize="xl"
+                      bgColor="blue.50"
+                      color="blue.500"
+                      size="48px"
+                      borderRadius="full"
+                    >
+                      <FontAwesomeIcon icon={menu.faIconName} />
+                    </Square>
+                    <Text
+                      marginTop="8px"
+                      fontSize="lg"
+                      whiteSpace="nowrap"
+                      overflowX="hidden"
+                      textOverflow="ellipsis"
+                    >
+                      {menu.name}
+                    </Text>
+                  </Box>
+                </a>
+              </Link>
+            ))}
+          </SimpleGrid>
+        </Container>
+      </Box>
     </>
   )
 }

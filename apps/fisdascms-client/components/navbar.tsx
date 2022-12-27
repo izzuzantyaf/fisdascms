@@ -26,15 +26,19 @@ export default function Navbar() {
 
   return (
     <>
-      <Container paddingTop={4} maxWidth="container.xl">
+      <Container paddingTop={4}>
         <Flex
           padding={2}
           paddingX={4}
           paddingLeft={6}
           alignItems="center"
           // {...shadowedBoxStyle}
-          bgColor="gray.100"
+          bgColor="white"
           rounded="xl"
+          shadow="md"
+          borderWidth="1px"
+          borderColor="gray.100"
+          borderStyle="solid"
         >
           <Link href={Route.HOME}>
             <a>
@@ -52,7 +56,7 @@ export default function Navbar() {
             </a>
           </Link>
           <Spacer />
-          <Menu autoSelect={false} direction="rtl">
+          <Menu autoSelect={false}>
             <MenuButton
               as={IconButton}
               aria-label="Options"
