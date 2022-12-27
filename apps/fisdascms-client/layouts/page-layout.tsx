@@ -6,7 +6,7 @@ export default function PageLayout({ children }) {
     <>
       <Box bgColor="gray.50" minHeight="100vh" minWidth="256px">
         <Navbar />
-        <Container maxWidth="container.lg" paddingBottom="4">
+        <Container paddingBottom="4">
           {/* <Breadcrump /> */}
           {/* <IconButton
           aria-label="back"

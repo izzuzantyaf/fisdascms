@@ -60,7 +60,7 @@ export default function SignInPage() {
       </Head>
 
       <Center h="100vh">
-        <Container maxW="xs">
+        <Container maxWidth="xs">
           <HStack spacing="4" marginBottom="2">
             <Image src={fisdasCMSLogo} width="32px" alt="Fisdas CMS Logo" />
             <Heading size="lg" color="blue.600">

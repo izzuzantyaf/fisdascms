@@ -17,6 +17,13 @@ const customizedTheme = extendTheme({
     body: "Inter, Heebo, system-ui, sans-serif",
     heading: "Inter, Heebo, system-ui, sans-serif",
   },
+  components: {
+    Container: {
+      baseStyle: {
+        maxWidth: "container.lg",
+      },
+    },
+  },
 })
 
 function MyApp({ Component, pageProps }: AppProps) {
