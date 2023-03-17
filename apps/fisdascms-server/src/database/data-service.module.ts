@@ -2,26 +2,35 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { DataServiceService } from './data-service.service';
-import { Admin, AdminSchema } from '../core/entities/admin.entity';
-import { Handout, HandoutSchema } from '../core/entities/handout.entity';
+import { Admin, AdminSchema } from '../domains/admin/entities/admin.entity';
+import {
+  Handout,
+  HandoutSchema,
+} from '../domains/handout/entities/handout.entity';
 import {
   CodeOfConduct,
   CodeOfConductSchema,
-} from '../core/entities/code-of-conduct.entity';
+} from '../domains/code-of-conduct/entities/code-of-conduct.entity';
 import {
   Organigram,
   OrganigramSchema,
-} from '../core/entities/organigram.entity';
-import { Schedule, ScheduleSchema } from '../core/entities/schedule.entity';
-import { Assistant, AssistantSchema } from '../core/entities/assistant.entity';
+} from '../domains/organigram/entities/organigram.entity';
+import {
+  Schedule,
+  ScheduleSchema,
+} from '../domains/schedule/entities/schedule.entity';
+import {
+  Assistant,
+  AssistantSchema,
+} from '../domains/assistant/entities/assistant.entity';
 import {
   PracticumModule,
   PracticumModuleSchema,
-} from '../core/entities/practicum-module.entity';
+} from '../domains/practicum-module/entities/practicum-module.entity';
 import {
   SocialMedia,
   SocialMediaSchema,
-} from 'src/core/entities/social-media.entity';
+} from 'src/domains/social-media/entities/social-media.entity';
 
 @Module({
   imports: [

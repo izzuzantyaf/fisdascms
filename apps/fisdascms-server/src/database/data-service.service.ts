@@ -1,45 +1,51 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Admin, AdminDocument } from '../core/entities/admin.entity';
+import { Admin, AdminDocument } from '../domains/admin/entities/admin.entity';
 import {
   Assistant,
   AssistantDocument,
-} from '../core/entities/assistant.entity';
+} from '../domains/assistant/entities/assistant.entity';
 import {
   CodeOfConduct,
   CodeOfConductDocument,
-} from '../core/entities/code-of-conduct.entity';
-import { Handout, HandoutDocument } from '../core/entities/handout.entity';
+} from '../domains/code-of-conduct/entities/code-of-conduct.entity';
+import {
+  Handout,
+  HandoutDocument,
+} from '../domains/handout/entities/handout.entity';
 import {
   Organigram,
   OrganigramDocument,
-} from '../core/entities/organigram.entity';
+} from '../domains/organigram/entities/organigram.entity';
 import {
   PracticumModule,
   PracticumModuleDocument,
-} from '../core/entities/practicum-module.entity';
-import { Schedule, ScheduleDocument } from '../core/entities/schedule.entity';
-import { adminSeeder } from 'src/database/seeds/admin.seed';
-import { assistantSeeder } from 'src/database/seeds/assistant.seed';
-import { codeOfConductSeeder } from 'src/database/seeds/code-of-conduct.seed';
-import { handoutSeeder } from 'src/database/seeds/handout.seed';
-import { organigramSeeder } from 'src/database/seeds/organigram.seed';
-import { practicumModuleSeeder } from 'src/database/seeds/practicum-module.seed';
-import { scheduleSeeder } from 'src/database/seeds/schedule.seed';
-import { AdminMongoRepository } from './repo/admin-mongo.repo';
-import { AssistantMongoRepository } from './repo/assistant-mongo.repo';
-import { CodeOfConductMongoRepository } from './repo/code-of-conduct-mongo.repo';
-import { HandoutMongoRepository } from './repo/handout-mongo.repo';
-import { OrganigramMongoRepository } from './repo/organigram-mongo.repo';
-import { PracticumModuleMongoRepository } from './repo/practicum-module-mongo.repo';
-import { ScheduleMongoRepository } from './repo/schedule-mongo.repo';
-import { SocialMediaMongoRepository } from './repo/social-media-mongo.repo';
+} from '../domains/practicum-module/entities/practicum-module.entity';
+import {
+  Schedule,
+  ScheduleDocument,
+} from '../domains/schedule/entities/schedule.entity';
+import { adminSeeder } from 'src/domains/admin/seed/admin.seed';
+import { assistantSeeder } from 'src/domains/assistant/seed/assistant.seed';
+import { codeOfConductSeeder } from 'src/domains/code-of-conduct/seed/code-of-conduct.seed';
+import { handoutSeeder } from 'src/domains/handout/seed/handout.seed';
+import { organigramSeeder } from 'src/domains/organigram/seed/organigram.seed';
+import { practicumModuleSeeder } from 'src/domains/practicum-module/seed/practicum-module.seed';
+import { scheduleSeeder } from 'src/domains/schedule/seed/schedule.seed';
+import { AdminMongoRepository } from 'src/domains/admin/repo/admin-mongo.repo';
+import { AssistantMongoRepository } from 'src/domains/assistant/repo/assistant-mongo.repo';
+import { CodeOfConductMongoRepository } from 'src/domains/code-of-conduct/repo/code-of-conduct-mongo.repo';
+import { HandoutMongoRepository } from 'src/domains/handout/repo/handout-mongo.repo';
+import { OrganigramMongoRepository } from 'src/domains/organigram/repo/organigram-mongo.repo';
+import { PracticumModuleMongoRepository } from 'src/domains/practicum-module/repo/practicum-module-mongo.repo';
+import { ScheduleMongoRepository } from 'src/domains/schedule/repo/schedule-mongo.repo';
+import { SocialMediaMongoRepository } from 'src/domains/social-media/repo/social-media-mongo.repo';
 import {
   SocialMedia,
   SocialMediaDocument,
-} from 'src/core/entities/social-media.entity';
-import { socialMediaSeeder } from './seeds/social-media.seed';
+} from 'src/domains/social-media/entities/social-media.entity';
+import { socialMediaSeeder } from 'src/domains/social-media/seed/social-media.seed';
 
 @Injectable()
 export class DataServiceService {
