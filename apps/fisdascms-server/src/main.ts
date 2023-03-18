@@ -1,7 +1,8 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ValidationPipe } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { ResponseInterceptor } from './interceptors/response.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -13,6 +14,7 @@ async function bootstrap() {
       enableDebugMessages: true, // menampilkan pesan pada console jika terjadi error,
     }),
   );
+  app.useGlobalInterceptors(new ResponseInterceptor());
   const config = new DocumentBuilder()
     .setTitle('Fisdas CMS OpenAPI')
     .setDescription('Dokumentasi API Fisdas CMS')
@@ -20,6 +22,13 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
-  await app.listen(process.env.PORT ?? 8080);
+
+  const DEFAULT_PORT = 8080;
+  const logger = new Logger('NestApplication');
+  await app.listen(process.env.PORT ?? DEFAULT_PORT).then(() => {
+    logger.log(
+      `Application started in port ${process.env.PORT ?? DEFAULT_PORT}`,
+    );
+  });
 }
 bootstrap();

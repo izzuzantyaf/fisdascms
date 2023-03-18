@@ -12,9 +12,8 @@ import { OrganigramModule } from './domains/organigram/organigram.module';
 import { ScheduleModule } from './domains/schedule/schedule.module';
 import { AssistantModule } from './domains/assistant/assistant.module';
 import { PracticumModuleModule } from './domains/practicum-module/practicum-module.module';
-import { LoggerMiddleware } from './middleware/logger.middleware';
+import { RequestLoggingMiddleware } from './middleware/request-logging.middleware';
 import { SocialMediaModule } from './domains/social-media/social-media.module';
-
 @Module({
   imports: [
     AdminModule,
@@ -30,7 +29,7 @@ import { SocialMediaModule } from './domains/social-media/social-media.module';
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(LoggerMiddleware).forRoutes({
+    consumer.apply(RequestLoggingMiddleware).forRoutes({
       path: '*',
       method: RequestMethod.ALL,
     });
