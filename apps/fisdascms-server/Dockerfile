@@ -16,6 +16,9 @@ RUN yarn install
 # Build the app
 RUN yarn build
 
+# Remove the dev dependencies
+RUN yarn autoclean --production
+
 # Expose the port that the app will listen on
 EXPOSE 8080
 
