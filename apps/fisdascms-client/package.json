@@ -6,7 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --port 3111",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
