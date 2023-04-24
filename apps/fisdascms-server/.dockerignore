@@ -1,5 +1,6 @@
 # Ignore files and directories that are not needed in the Docker image
 node_modules
+.env
 dist
 npm-debug.log
 yarn-debug.log

@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  mongodb:
+    image: mongo
+    container_name: fdcms-mongo
+    restart: always
+    ports:
+      - 27018:27017
+    networks:
+      - fdcms
+  fdcms-server:
+    build: ./apps/fisdascms-server
+    container_name: fdcms-server
+    restart: always
+    ports:
+      - 8789:8080
+    env_file:
+      - ./apps/fisdascms-server/.env
+    environment:
+      MONGO_URI: mongodb://fdcms-mongo:27017/fisdascms-dev
+    depends_on:
+      - mongodb
+    networks:
+      - fdcms
+networks:
+  fdcms:
+    name: fdcms
