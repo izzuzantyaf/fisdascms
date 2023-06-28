@@ -32,11 +32,6 @@ function MyApp({ Component, pageProps }: AppProps) {
     <AuthProvider>
       <AssistantProvider>
         <ChakraProvider theme={customizedTheme}>
-          {process.env.NEXT_PUBLIC_APP_ENV !== "production" ? (
-            <Box bgColor="yellow.300" textAlign="center">
-              Demo version
-            </Box>
-          ) : null}
           <Component {...pageProps} />
         </ChakraProvider>
       </AssistantProvider>
