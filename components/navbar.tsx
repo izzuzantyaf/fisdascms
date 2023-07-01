@@ -17,6 +17,10 @@ import shadowedBoxStyle from "../chakra-style-props/shadowed-box"
 import { menu, Route } from "../core/lib/constants"
 import { authService } from "../core/services/auth.service"
 import fisdasCMSLogo from "../public/fisdascms-logo.svg"
+import {
+  faArrowRightFromBracket,
+  faBars,
+} from "@fortawesome/free-solid-svg-icons"
 
 export default function Navbar() {
   const handleSignOut = () => {
@@ -60,7 +64,7 @@ export default function Navbar() {
             <MenuButton
               as={IconButton}
               aria-label="Options"
-              icon={<FontAwesomeIcon icon="bars" />}
+              icon={<FontAwesomeIcon icon={faBars} />}
               variant="ghost"
             />
             <MenuList>
@@ -74,7 +78,7 @@ export default function Navbar() {
                 </MenuItem>
               ))} */}
               <MenuItem
-                icon={<FontAwesomeIcon icon="arrow-right-from-bracket" />}
+                icon={<FontAwesomeIcon icon={faArrowRightFromBracket} />}
                 color="red.500"
                 bgColor="red.50"
                 onClick={handleSignOut}

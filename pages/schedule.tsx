@@ -8,6 +8,11 @@ import PageLayout from "../layouts/page-layout"
 import { scheduleService } from "../core/services/schedule.service"
 import { repeatElement } from "../core/lib/helpers/repeat-element.helper"
 import { Schedule, ScheduleValidationError } from "../core/types/schedule.type"
+import {
+  faArrowUpRightFromSquare,
+  faCalendarMinus,
+  faCircleInfo,
+} from "@fortawesome/free-solid-svg-icons"
 
 export default function SchedulePage() {
   const [schedulesState, setSchedulesState] = useState<Schedule[]>()
@@ -78,7 +83,7 @@ export default function SchedulePage() {
                   borderRadius="full"
                   marginRight="4"
                 >
-                  <FontAwesomeIcon icon="calendar-minus" />
+                  <FontAwesomeIcon icon={faCalendarMinus} />
                 </Square>
                 <Heading size="md">{`Jadwal ${
                   schedule.faculty?.toUpperCase() ?? "Kelas"
@@ -89,7 +94,7 @@ export default function SchedulePage() {
                 <Flex justifyContent="space-between" alignItems="center">
                   <Text>File</Text>
                   <Link href={schedule.url} isExternal={true} fontSize="xs">
-                    Buka <FontAwesomeIcon icon="arrow-up-right-from-square" />
+                    Buka <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
                   </Link>
                 </Flex>
                 <Flex justifyContent="space-between" alignItems="center">
@@ -153,7 +158,7 @@ export default function SchedulePage() {
                   borderRadius="full"
                   marginRight="4"
                 >
-                  <FontAwesomeIcon icon="calendar-minus" />
+                  <FontAwesomeIcon icon={faCalendarMinus} />
                 </Square>
                 <Heading size="md">{`Jadwal ${
                   onEditingScheduleRef.current?.faculty?.toUpperCase() ??
@@ -174,7 +179,7 @@ export default function SchedulePage() {
                   alignItems="center"
                 >
                   <Icon marginRight="8px" color="blue.500" fontSize="xl">
-                    <FontAwesomeIcon icon="circle-info" />
+                    <FontAwesomeIcon icon={faCircleInfo} />
                   </Icon>
                   <Heading size="sm" color="gray.600">
                     Petunjuk

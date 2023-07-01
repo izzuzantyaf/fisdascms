@@ -21,6 +21,7 @@ import { authService } from "../core/services/auth.service"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import fisdasCMSLogo from "../public/fisdascms-logo.svg"
 import Image from "next/image"
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons"
 
 export default function SignInPage() {
   const [email, setEmail] = useState(
@@ -107,7 +108,7 @@ export default function SignInPage() {
                       onClick={() => setIsPasswordShowed(!isPasswordShowed)}
                     >
                       <FontAwesomeIcon
-                        icon={isPasswordShowed ? "eye" : "eye-slash"}
+                        icon={isPasswordShowed ? faEye : faEyeSlash}
                       />
                     </Icon>
                   </InputRightElement>

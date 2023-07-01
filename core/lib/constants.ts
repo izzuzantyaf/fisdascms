@@ -1,3 +1,12 @@
+import {
+  faBalanceScale,
+  faBook,
+  faCalendarMinus,
+  faFolderOpen,
+  faSitemap,
+  faUsers,
+} from "@fortawesome/free-solid-svg-icons"
+
 export enum Route {
   HOME = "/",
   SIGN_IN = "/signin",
@@ -32,17 +41,17 @@ export const menu = [
   // },
   {
     name: "Tata tertib",
-    faIconName: "balance-scale",
+    faIconName: faBalanceScale,
     route: Route.CODE_OF_CONDUCT,
   },
   {
     name: "Modul",
-    faIconName: "book",
+    faIconName: faBook,
     route: Route.HANDOUT,
   },
   {
     name: "Konten praktikum",
-    faIconName: "folder-open",
+    faIconName: faFolderOpen,
     route: Route.PRACTICUM_MATERIAL,
   },
   // {
@@ -67,17 +76,17 @@ export const menu = [
   // },
   {
     name: "Asisten",
-    faIconName: "users",
+    faIconName: faUsers,
     route: Route.ASSISTANT,
   },
   {
     name: "Jadwal",
-    faIconName: "calendar-minus",
+    faIconName: faCalendarMinus,
     route: Route.SCHEDULE,
   },
   {
     name: "Organigram",
-    faIconName: "sitemap",
+    faIconName: faSitemap,
     route: Route.ORGANIGRAM,
   },
   // {

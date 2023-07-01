@@ -25,6 +25,17 @@ import { AssistantContext } from "../contexts/assistant.context"
 import { CreateAssistantModal } from "../components/create-assistant-modal"
 import { UpdateAssistantModal } from "../components/update-assistant-modal"
 import { DeleteAssistantModal } from "../components/delete-assistant-modal"
+import {
+  faArrowUpRightFromSquare,
+  faChessPawn,
+  faChessQueen,
+  faMagnifyingGlass,
+  faMars,
+  faPen,
+  faPlus,
+  faTrashCan,
+  faVenus,
+} from "@fortawesome/free-solid-svg-icons"
 
 export default function AssistantPage() {
   const { assistants } = useContext(AssistantContext)
@@ -89,7 +100,7 @@ export default function AssistantPage() {
         <Button
           marginTop="4"
           colorScheme="blue"
-          leftIcon={<FontAwesomeIcon icon="plus" />}
+          leftIcon={<FontAwesomeIcon icon={faPlus} />}
           onClick={onCreateModalOpen}
         >
           Tambah asisten
@@ -114,7 +125,7 @@ export default function AssistantPage() {
               {AssistantLevel.JUNIOR}
             </TagLabel>
             <TagRightIcon>
-              <FontAwesomeIcon icon="chess-pawn" />
+              <FontAwesomeIcon icon={faChessPawn} />
             </TagRightIcon>
           </Tag>
           <Tag
@@ -132,7 +143,7 @@ export default function AssistantPage() {
               {AssistantLevel.SENIOR}
             </TagLabel>
             <TagRightIcon>
-              <FontAwesomeIcon icon="chess-queen" />
+              <FontAwesomeIcon icon={faChessQueen} />
             </TagRightIcon>
           </Tag>
           <Tag
@@ -144,7 +155,7 @@ export default function AssistantPage() {
           >
             <TagLabel textTransform="capitalize">{Gender.MALE}</TagLabel>
             <TagRightIcon>
-              <FontAwesomeIcon icon="mars" />
+              <FontAwesomeIcon icon={faMars} />
             </TagRightIcon>
           </Tag>
           <Tag
@@ -156,7 +167,7 @@ export default function AssistantPage() {
           >
             <TagLabel textTransform="capitalize">{Gender.FEMALE}</TagLabel>
             <TagRightIcon>
-              <FontAwesomeIcon icon="venus" />
+              <FontAwesomeIcon icon={faVenus} />
             </TagRightIcon>
           </Tag>
         </HStack>
@@ -166,7 +177,7 @@ export default function AssistantPage() {
         <InputGroup marginTop="4">
           <InputLeftElement>
             <Icon color="gray.400">
-              <FontAwesomeIcon icon="magnifying-glass" />
+              <FontAwesomeIcon icon={faMagnifyingGlass} />
             </Icon>
           </InputLeftElement>
           <Input
@@ -219,7 +230,7 @@ export default function AssistantPage() {
                             <IconButton
                               aria-label="Edit asisten"
                               size="sm"
-                              icon={<FontAwesomeIcon icon="pen" />}
+                              icon={<FontAwesomeIcon icon={faPen} />}
                               onClick={() => {
                                 onEditingAssistantRef.current = {
                                   ...assistant,
@@ -231,7 +242,7 @@ export default function AssistantPage() {
                             <IconButton
                               aria-label="Hapus asisten"
                               size="sm"
-                              icon={<FontAwesomeIcon icon="trash-can" />}
+                              icon={<FontAwesomeIcon icon={faTrashCan} />}
                               marginLeft="2"
                               bgColor="red.100"
                               color="red.500"
@@ -261,8 +272,8 @@ export default function AssistantPage() {
                                 <FontAwesomeIcon
                                   icon={
                                     assistant?.level === AssistantLevel.JUNIOR
-                                      ? "chess-pawn"
-                                      : "chess-queen"
+                                      ? faChessPawn
+                                      : faChessQueen
                                   }
                                 />
                               </TagRightIcon>
@@ -283,8 +294,8 @@ export default function AssistantPage() {
                                 <FontAwesomeIcon
                                   icon={
                                     assistant?.gender === Gender.MALE
-                                      ? "mars"
-                                      : "venus"
+                                      ? faMars
+                                      : faVenus
                                   }
                                 />
                               </TagRightIcon>
@@ -299,7 +310,9 @@ export default function AssistantPage() {
                                 isExternal={true}
                               >
                                 Open{" "}
-                                <FontAwesomeIcon icon="arrow-up-right-from-square" />
+                                <FontAwesomeIcon
+                                  icon={faArrowUpRightFromSquare}
+                                />
                               </Link>
                             ) : null}
                           </Td>
