@@ -23,6 +23,7 @@ import {
   CodeOfConductValidationError,
 } from "../core/types/code-of-conduct.type"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faCircleInfo } from "@fortawesome/free-solid-svg-icons"
 
 export default function CodeOfCoductPage() {
   const [isCodeOfConductUpdating, setIsCodeOfConductUpdating] = useState(false)
@@ -96,7 +97,7 @@ export default function CodeOfCoductPage() {
             >
               <Box className="guide-header" display="flex" alignItems="center">
                 <Icon marginRight="8px" color="blue.500" fontSize="xl">
-                  <FontAwesomeIcon icon="circle-info" />
+                  <FontAwesomeIcon icon={faCircleInfo} />
                 </Icon>
                 <Heading size="sm" color="gray.600">
                   Petunjuk

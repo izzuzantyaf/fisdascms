@@ -13,6 +13,11 @@ import {
   HandoutValidationError,
   UpdateHandoutDto,
 } from "../core/types/handout.type"
+import {
+  faArrowUpRightFromSquare,
+  faBook,
+  faCircleInfo,
+} from "@fortawesome/free-solid-svg-icons"
 
 export default function HandoutPage() {
   const [handoutsState, setHandoutState] = useState<Handout[]>()
@@ -84,7 +89,7 @@ export default function HandoutPage() {
                   borderRadius="full"
                   marginRight="4"
                 >
-                  <FontAwesomeIcon icon="book" />
+                  <FontAwesomeIcon icon={faBook} />
                 </Square>
                 <Box>
                   <Heading size="md">{handout?.faculty?.toUpperCase()}</Heading>
@@ -96,7 +101,7 @@ export default function HandoutPage() {
                 <Flex justifyContent="space-between" alignItems="center">
                   <Text>File</Text>
                   <Link href={handout.url} isExternal={true} fontSize="xs">
-                    Buka <FontAwesomeIcon icon="arrow-up-right-from-square" />
+                    Buka <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
                   </Link>
                 </Flex>
                 <Flex justifyContent="space-between" alignItems="center">
@@ -154,7 +159,7 @@ export default function HandoutPage() {
                   borderRadius="full"
                   marginRight="4"
                 >
-                  <FontAwesomeIcon icon="book" />
+                  <FontAwesomeIcon icon={faBook} />
                 </Square>
                 <Box>
                   <Heading size="md">
@@ -179,7 +184,7 @@ export default function HandoutPage() {
                   alignItems="center"
                 >
                   <Icon marginRight="8px" color="blue.500" fontSize="xl">
-                    <FontAwesomeIcon icon="circle-info" />
+                    <FontAwesomeIcon icon={faCircleInfo} />
                   </Icon>
                   <Heading size="sm" color="gray.600">
                     Petunjuk

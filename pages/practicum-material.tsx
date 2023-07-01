@@ -15,6 +15,7 @@ import {
   PracticumMaterialValidationError,
 } from "../core/types/practicum-material.type"
 import { Language } from "../core/lib/constants"
+import { faLanguage } from "@fortawesome/free-solid-svg-icons"
 
 export default function PracticumMaterialPage() {
   const [practicumMaterialState, setPracticumMaterialState] =
@@ -110,7 +111,7 @@ export default function PracticumMaterialPage() {
               {languageCodeMapper(Language.ID)}
             </TagLabel>
             <TagRightIcon>
-              <FontAwesomeIcon icon="language" />
+              <FontAwesomeIcon icon={faLanguage} />
             </TagRightIcon>
           </Tag>
           <Tag
@@ -124,7 +125,7 @@ export default function PracticumMaterialPage() {
               {languageCodeMapper(Language.EN)}
             </TagLabel>
             <TagRightIcon>
-              <FontAwesomeIcon icon="language" />
+              <FontAwesomeIcon icon={faLanguage} />
             </TagRightIcon>
           </Tag>
         </HStack>

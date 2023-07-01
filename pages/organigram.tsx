@@ -23,6 +23,7 @@ import {
   OrganigramValidationError,
 } from "../core/types/organigram.type"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faCircleInfo } from "@fortawesome/free-solid-svg-icons"
 
 export default function OrganigramPage() {
   const [isOrganigramUpdating, setIsOrganigramUpdating] = useState(false)
@@ -115,7 +116,7 @@ export default function OrganigramPage() {
             >
               <Box className="guide-header" display="flex" alignItems="center">
                 <Icon marginRight="8px" color="blue.500" fontSize="xl">
-                  <FontAwesomeIcon icon="circle-info" />
+                  <FontAwesomeIcon icon={faCircleInfo} />
                 </Icon>
                 <Heading size="sm" color="gray.600">
                   Petunjuk
