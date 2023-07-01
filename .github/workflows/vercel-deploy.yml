@@ -14,8 +14,8 @@ on:
         type: string
         default: .
 env:
-  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+  VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ vars.VERCEL_PROJECT_ID }}
 
 jobs:
   deploy:
@@ -34,7 +34,7 @@ jobs:
         working-directory: ${{ inputs.working-directory }}
         run: |
           vercel env rm NEXT_PUBLIC_FISDASWEB_BACKEND_URL ${{ inputs.vercel-environment }} --token=${{ secrets.VERCEL_TOKEN }} --yes | exit 0
-          echo ${{ secrets.FISDASWEB_BACKEND_URL }} | vercel env add NEXT_PUBLIC_FISDASWEB_BACKEND_URL ${{ inputs.vercel-environment }} --token=${{ secrets.VERCEL_TOKEN }} --yes | exit 0
+          echo ${{ vars.FISDASWEB_BACKEND_URL }} | vercel env add NEXT_PUBLIC_FISDASWEB_BACKEND_URL ${{ inputs.vercel-environment }} --token=${{ secrets.VERCEL_TOKEN }} --yes | exit 0
           vercel env rm NEXT_PUBLIC_JWT_SECRET ${{ inputs.vercel-environment }} --token=${{ secrets.VERCEL_TOKEN }} --yes | exit 0
           echo ${{ secrets.JWT_SECRET }} | vercel env add NEXT_PUBLIC_JWT_SECRET ${{ inputs.vercel-environment }} --token=${{ secrets.VERCEL_TOKEN }} --yes | exit 0
       - name: Build project artifacts (preview)
