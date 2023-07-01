@@ -24,12 +24,8 @@ import Image from "next/image"
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons"
 
 export default function SignInPage() {
-  const [email, setEmail] = useState(
-    process.env.NEXT_PUBLIC_APP_ENV !== "production" ? "admin@admin.com" : ""
-  )
-  const [password, setPassword] = useState(
-    process.env.NEXT_PUBLIC_APP_ENV !== "production" ? "admin123" : ""
-  )
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
   const [isSignInLoading, setIsSignInLoading] = useState(false)
   const [isPasswordShowed, setIsPasswordShowed] = useState(false)
 
