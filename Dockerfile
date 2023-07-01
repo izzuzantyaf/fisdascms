@@ -8,7 +8,7 @@ WORKDIR /app
 COPY . .
 
 # Update the package manager
-RUN apk update && apk upgrade
+RUN apk update
 
 # Install the app's dependencies
 RUN yarn install
@@ -18,9 +18,6 @@ RUN yarn build
 
 # Remove the dev dependencies
 RUN yarn autoclean --production
-
-# Expose the port that the app will listen on
-EXPOSE 3000
 
 # Start the app using the built code
 CMD ["yarn", "start"]

@@ -12,6 +12,7 @@ on:
       working-directory:
         required: false
         type: string
+        default: .
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
@@ -24,20 +25,16 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 7
       - name: Install dependencies
-        run: pnpm install
+        run: yarn install
         working-directory: ${{ inputs.working-directory }}
       - name: Install Vercel CLI
-        run: pnpm add vercel --global
+        run: yarn add vercel --global
       - name: Set up environment variables on Vercel
         working-directory: ${{ inputs.working-directory }}
         run: |
-          vercel env rm NEXT_PUBLIC_API_ENDPOINT_URL ${{ inputs.vercel-environment }} --token=${{ secrets.VERCEL_TOKEN }} --yes | exit 0
-          echo ${{ secrets.API_BASEURL }} | vercel env add NEXT_PUBLIC_API_ENDPOINT_URL ${{ inputs.vercel-environment }} --token=${{ secrets.VERCEL_TOKEN }} --yes | exit 0
+          vercel env rm NEXT_PUBLIC_FISDASWEB_BACKEND_URL ${{ inputs.vercel-environment }} --token=${{ secrets.VERCEL_TOKEN }} --yes | exit 0
+          echo ${{ secrets.FISDASWEB_BACKEND_URL }} | vercel env add NEXT_PUBLIC_FISDASWEB_BACKEND_URL ${{ inputs.vercel-environment }} --token=${{ secrets.VERCEL_TOKEN }} --yes | exit 0
           vercel env rm NEXT_PUBLIC_JWT_SECRET ${{ inputs.vercel-environment }} --token=${{ secrets.VERCEL_TOKEN }} --yes | exit 0
           echo ${{ secrets.JWT_SECRET }} | vercel env add NEXT_PUBLIC_JWT_SECRET ${{ inputs.vercel-environment }} --token=${{ secrets.VERCEL_TOKEN }} --yes | exit 0
       - name: Build project artifacts (preview)
@@ -49,7 +46,7 @@ jobs:
         working-directory: ${{ inputs.working-directory }}
         run: |
           vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }} --yes > deployment-url.txt
-          vercel alias $(head -n 1 deployment-url.txt) fisdascms-demo.vercel.app --token=${{ secrets.VERCEL_TOKEN }} --yes
+          # vercel alias $(head -n 1 deployment-url.txt) fisdascms-demo.vercel.app --token=${{ secrets.VERCEL_TOKEN }} --yes
       - name: Build project artifacts (production)
         if: ${{ inputs.vercel-environment == 'production' }}
         working-directory: ${{ inputs.working-directory }}
