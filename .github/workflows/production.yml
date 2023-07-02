@@ -1,11 +1,9 @@
-name: Frontend (production)
+name: Production
 
 on:
   push:
     branches:
       - main
-    paths:
-      - apps/fisdascms-client/**
 
 jobs:
   deploy-to-vercel:
@@ -13,5 +11,5 @@ jobs:
     with:
       environment: production
       vercel-environment: production
-      working-directory: apps/fisdascms-client
+      working-directory: .
     secrets: inherit
