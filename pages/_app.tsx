@@ -3,7 +3,7 @@ import type { AppProps } from "next/app"
 import { Box, ChakraProvider, extendTheme } from "@chakra-ui/react"
 import { library } from "@fortawesome/fontawesome-svg-core"
 // prettier-ignore
-import { faArrowLeft, faArrowRight, faArrowRightFromBracket, faArrowUpRightFromSquare, faBalanceScale, faBars, faBolt, faBook, faBowlingBall, faCalculator, faCalendarMinus, faChessPawn, faChessQueen, faCircleInfo, faCircleNotch, faDrawPolygon, faEye, faEyeSlash, faFile, faFolderOpen, faGamepad, faGripLinesVertical, faHurricane, faLanguage, faMagnet, faMagnifyingGlass, faMars, faPager, faParachuteBox, faPen, faPlay, faPlug, faPlus, faSatelliteDish, faSitemap, faSortNumericUpAlt, faTasks, faThumbsUp, faTrashCan, faUser, faUsers, faUserSecret, faVenus, faWaveSquare } from "@fortawesome/free-solid-svg-icons"
+import { faAppleAlt, faArrowLeft, faArrowRight, faArrowRightFromBracket, faArrowUpRightFromSquare, faBalanceScale, faBars, faBolt, faBook, faBowlingBall, faCalculator, faCalendarMinus, faChessPawn, faChessQueen, faCircleInfo, faCircleNotch, faDrawPolygon, faEye, faEyeSlash, faFile, faFolderOpen, faGamepad, faGripLinesVertical, faHurricane, faInfinity, faLanguage, faMagnet, faMagnifyingGlass, faMars, faPager, faParachuteBox, faPen, faPlay, faPlug, faPlus, faSatelliteDish, faSitemap, faSortNumericUpAlt, faTasks, faThumbsUp, faTrashCan, faUser, faUsers, faUserSecret, faVenus, faWaveSquare } from "@fortawesome/free-solid-svg-icons"
 import { config } from "@fortawesome/fontawesome-svg-core"
 import "@fortawesome/fontawesome-svg-core/styles.css"
 import { faLine } from "@fortawesome/free-brands-svg-icons"
@@ -11,7 +11,7 @@ import { AssistantProvider } from "../contexts/assistant.context"
 import { AuthProvider } from "../contexts/auth.context"
 config.autoAddCss = false
 // prettier-ignore
-library.add(faUserSecret, faUser, faArrowRightFromBracket, faPager, faBalanceScale, faBook, faTasks, faPlay, faGamepad, faFile, faUsers, faCalendarMinus, faSitemap, faThumbsUp, faArrowLeft, faArrowRight, faBars, faFolderOpen, faSortNumericUpAlt, faCircleNotch, faParachuteBox, faBolt, faWaveSquare, faCalculator, faGripLinesVertical, faSatelliteDish, faMagnet, faPlug, faDrawPolygon, faEye, faEyeSlash, faArrowUpRightFromSquare, faMagnifyingGlass, faPen, faMars, faVenus, faPlus, faTrashCan, faLine, faChessPawn, faChessQueen, faLanguage, faCircleInfo, faBowlingBall, faHurricane)
+library.add(faUserSecret, faUser, faArrowRightFromBracket, faPager, faBalanceScale, faBook, faTasks, faPlay, faGamepad, faFile, faUsers, faCalendarMinus, faSitemap, faThumbsUp, faArrowLeft, faArrowRight, faBars, faFolderOpen, faSortNumericUpAlt, faCircleNotch, faParachuteBox, faBolt, faWaveSquare, faCalculator, faGripLinesVertical, faSatelliteDish, faMagnet, faPlug, faDrawPolygon, faEye, faEyeSlash, faArrowUpRightFromSquare, faMagnifyingGlass, faPen, faMars, faVenus, faPlus, faTrashCan, faLine, faChessPawn, faChessQueen, faLanguage, faCircleInfo, faBowlingBall, faHurricane, faInfinity, faAppleAlt)
 
 const customizedTheme = extendTheme({
   fonts: {
